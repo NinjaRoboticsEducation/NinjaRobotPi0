@@ -1,0 +1,91 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "NinjaRobotV4"
+version = "0.1.0"
+description = "A modular, AI-powered robot platform for Raspberry Pi Zero with servo control, facial expressions, sound, and distance sensing."
+authors = [
+    { name = "Chihkuang Chang", email = "nilcreator@gmail.com" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.9"
+
+# All dependencies from all sub-packages aggregated
+dependencies = [
+    # Core Python libraries
+    "click",
+    "pydantic",
+    
+    # Hardware control
+    "pigpio",
+    "numpy",
+    "pillow",
+    "blessed",
+    
+    # Web server and networking
+    "fastapi",
+    "uvicorn[standard]",
+    "jinja2",
+    "websockets",
+    "pyngrok",
+    "python-multipart",
+    "qrcode[pil]",
+    "dbus-next>=0.2.3",
+    
+    # AI and utilities
+    "google-generativeai",
+    "googlesearch-python",
+    "python-dotenv",
+    
+    # Local packages (editable installs)
+    "ninja_utils",
+    "pi0buzzer",
+    "pi0vl53l0x",
+    "pi0disp",
+    "pi0servo",
+    "ninja_core",
+    "ninja_ble",
+]
+
+[tool.uv.sources]
+ninja_utils = { path = "./ninja_utils", editable = true }
+pi0buzzer = { path = "./pi0buzzer", editable = true }
+pi0vl53l0x = { path = "./pi0vl53l0x", editable = true }
+pi0disp = { path = "./pi0disp", editable = true }
+pi0servo = { path = "./pi0servo", editable = true }
+ninja_core = { path = "./ninja_core", editable = true }
+ninja_ble = { path = "./ninja_ble", editable = true }
+
+[project.optional-dependencies]
+dev = ["ruff"]
+
+[project.urls]
+Homepage = "https://github.com/Nilcreator/NinjaRobotV4"
+Repository = "https://github.com/Nilcreator/NinjaRobotV4"
+
+# CLI entry points from all packages
+[project.scripts]
+ninja_core = "ninja_core.__main__:main"
+pi0servo = "pi0servo.__main__:cli"
+pi0disp = "pi0disp.__main__:cli"
+pi0buzzer = "pi0buzzer.__main__:cli"
+pi0vl53l0x = "pi0vl53l0x.__main__:cli"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "ninja_utils/src/ninja_utils",
+    "pi0buzzer/src/pi0buzzer",
+    "pi0vl53l0x/src/pi0vl53l0x",
+    "pi0disp/src/pi0disp",
+    "pi0servo/src/pi0servo",
+    "ninja_core/src/ninja_core",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "ruff>=0.14.6",
+]

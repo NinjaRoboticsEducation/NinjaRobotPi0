@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+jinja2
+google-generativeai
+python-dotenv
+websockets
+googlesearch-python
+pyngrok
+python-multipart
+qrcode[pil]
+Pillow
+click
+pydantic
+ninja-ble
+
+[dev]
+ruff

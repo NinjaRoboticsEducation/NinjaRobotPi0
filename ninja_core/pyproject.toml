@@ -1,0 +1,30 @@
+[project]
+name = "ninja_core"
+version = "0.1.0"
+description = "Core application logic for the NinjaRobotV4."
+authors = [{ name = "Nil Creator", email = "nilcreator@gmail.com" }]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "jinja2",
+    "google-generativeai",
+    "python-dotenv",
+    "websockets",
+    "googlesearch-python",
+    "pyngrok",
+    "python-multipart",
+    "qrcode[pil]",
+    "Pillow",
+    "click",
+    "pydantic",
+    "ninja-ble",
+]
+
+[project.optional-dependencies]
+dev = ["ruff"]
+
+[project.scripts]
+ninja_core = "ninja_core.__main__:main"
