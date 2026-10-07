@@ -5,21 +5,25 @@ description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS
   setup, and pigpio compilation.
 status: draft
 generated:
-  by: codex/repository-migration
-  at: '2026-10-07T07:00:29.384460+00:00'
+  by: codex/migration-audit
+  at: '2026-10-07T07:13:37.354382+00:00'
 sources:
 - id: src-20260822-installationguide
   resource: urn:llmwiki:source:src-20260822-installationguide
   title: NinjaRobotPi0 Installation Guide
-  content_hash: sha256:8fe90ec3883948bfa196dc62202ee4c22181f706b5797c17eb6f0374f8994adf
+  content_hash: sha256:3748116db5b7241f6cb501b2bea2ff23d74754cab8776cebcbbbe19ff0e9f088
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
   title: NinjaRobotPi0 Development Guide
-  content_hash: sha256:43e40f7c8db5734b4e8fe2ffd7d1e9c365cf9ceaad16fb4dbbbbe8eb1be71e7c
+  content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration
   content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
+- id: src-20261007-2026-10-07-ninjarobot-pi0-migration-audit
+  resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-migration-audit
+  title: 2026 10 07 Ninjarobot Pi0 Migration Audit
+  content_hash: sha256:6c223e850e920baffe83a0fbcf3f7c4471a97f4fbcc823e93d5cd2e33666d4ab
 ---
 
 # Installation and Hardware Wiring Reference
@@ -100,3 +104,10 @@ cd ninja_webapp && npm install && npm run build && cd ..
 The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0). The local folder is `NinjaRobotPi0/`. The new repository starts with fresh history on `main`; Python packages and robot runtime behavior are retained. Manual links use `blob/HEAD` to follow the GitHub default branch. Historical names and audit findings remain provenance; this migration does not resolve them.[^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
+
+
+## Migration audit follow-up (2026-10-07)
+
+Current repository documentation uses NinjaRobotPi0; historical audits and V5 version milestones retain their original identity. Robot runtime code and package names are unchanged. After a clean clone, prepare the embedded wiki with the normalization bootstrap in `NinjaRobotPi0/Wiki/NinjaRobotPi0_Wiki/README.md` before lint: its derived manifests are intentionally untracked. The tested bootstrap regenerates these through the existing CLI and restores zero-error normal lint. Website manuals use `blob/HEAD` and clone commands omit branch selection.[^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]
+
+[^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]: Audit evidence covering documentation attribution, current naming, default-branch links, and clean-clone wiki normalization.

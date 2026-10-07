@@ -1,6 +1,6 @@
-# NinjaRobot V5 Complete Installation Guide
+# NinjaRobotPi0 Complete Installation Guide
 
-This guide will walk you through every step needed to build and run your NinjaRobot V5 on a Raspberry Pi Zero 2W. No programming experience is required—just follow each step carefully.
+This guide will walk you through every step needed to build and run your NinjaRobotPi0 on a Raspberry Pi Zero 2W. No programming experience is required—just follow each step carefully.
 
 > [!NOTE]
 > V5 introduces a modular architecture with non-blocking drivers. All hardware now uses standardized interfaces.
@@ -1089,14 +1089,14 @@ If you encounter issues not covered here:
 - **Build an Enclosure**: Design a robot body and mount all components
 - **Explore the Code**: Check `ninja_core/README.md` for developer documentation
 
-**Congratulations!** Your NinjaRobot V5 is now ready to use. Enjoy exploring and experimenting with your AI-powered robot! 🤖
+**Congratulations!** Your NinjaRobotPi0 is now ready to use. Enjoy exploring and experimenting with your AI-powered robot! 🤖
 
 ---
 ---
 
-# NinjaRobot V5 完全インストールガイド（日本語版）
+# NinjaRobotPi0 完全インストールガイド（日本語版）
 
-このガイドでは、Raspberry Pi Zero 2WでNinjaRobot V5を構築して実行するために必要なすべての手順を説明します。プログラミング経験は不要です—各ステップを注意深く従ってください。
+このガイドでは、Raspberry Pi Zero 2WでNinjaRobotPi0を構築して実行するために必要なすべての手順を説明します。プログラミング経験は不要です—各ステップを注意深く従ってください。
 
 ---
 
@@ -1947,14 +1947,14 @@ uv pip install -e . --force-reinstall
 - **筐体を作る**: ロボットの本体を設計してすべての部品を取り付ける
 - **コードを探索**: 開発者向けドキュメントは`ninja_core/README.md`を確認
 
-**おめでとうございます！** NinjaRobot V5が使用できる状態になりました。AI搭載ロボットの探索と実験を楽しんでください！🤖
+**おめでとうございます！** NinjaRobotPi0が使用できる状態になりました。AI搭載ロボットの探索と実験を楽しんでください！🤖
 
 ---
 ---
 
-# NinjaRobot V5 完整安裝指南（繁體中文版）
+# NinjaRobotPi0 完整安裝指南（繁體中文版）
 
-本指南將引導您完成在 Raspberry Pi Zero 2W 上建置和運行 NinjaRobot V5 所需的每個步驟。不需要程式設計經驗——只需仔細按照每個步驟操作即可。
+本指南將引導您完成在 Raspberry Pi Zero 2W 上建置和運行 NinjaRobotPi0 所需的每個步驟。不需要程式設計經驗——只需仔細按照每個步驟操作即可。
 
 > [!NOTE]
 > V5 引入了具有非阻塞驅動程式的模組化架構。所有硬體現在都使用標準化介面。
@@ -2794,4 +2794,4 @@ uv pip install -e . --force-reinstall
 - **製作外殼**：設計機器人外殼並安裝所有元件
 - **探索程式碼**：查看 `ninja_core/README.md` 了解開發者文件
 
-**恭喜！** 您的 NinjaRobot V5 現在已準備就緒。盡情探索和實驗您的 AI 機器人吧！🤖
+**恭喜！** 您的 NinjaRobotPi0 現在已準備就緒。盡情探索和實驗您的 AI 機器人吧！🤖

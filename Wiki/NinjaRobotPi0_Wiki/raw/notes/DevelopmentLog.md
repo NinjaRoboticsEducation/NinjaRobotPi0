@@ -950,3 +950,12 @@
 - Updated current project documentation, clone instructions, and workflow names. Historical log entries retain their original names.
 - Python packages, package metadata, lockfiles, runtime files, and robot behavior are unchanged.
 - Validation: tracked-snapshot credential-pattern scan found no matches; robot code and package files are compared by Git blob identity before publication. No Raspberry Pi or hardware checks are performed for this migration.
+
+
+## 2026-10-07 — Repository migration audit corrections
+
+- Corrected current product names in multilingual manuals and package README files while retaining Python package identities and historical V5 version milestones.
+- Completed project naming in Cursor and agent descriptors.
+- Added a clean-clone wiki bootstrap that regenerates ignored source manifests before lint, using existing llmwiki commands. The prior zero-error result covered the prepared local checkout.
+- Verified the fresh Git history and preserved robot runtime/package files against the private legacy snapshot. No robot runtime or hardware behavior was changed or exercised.
+- The separate workspace audit report records clean-clone, website, source-mirror, and wiki validation results.

@@ -1,6 +1,6 @@
 # ninja_utils
 
-This library provides shared utilities for the NinjaRobotV4 project, including:
+This library provides shared utilities for the NinjaRobotPi0 project, including:
 - Centralized logging
 - Non-blocking keyboard input
 - Systemd service management for autostart
@@ -10,7 +10,7 @@ This library provides shared utilities for the NinjaRobotV4 project, including:
 To install this library in editable mode for development:
 
 ```bash
-cd /path/to/your/NinjaRobotV4/ninja_utils
+cd /path/to/your/NinjaRobotPi0/ninja_utils
 uv pip install -e .
 ```
 

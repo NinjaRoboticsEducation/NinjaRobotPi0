@@ -5,17 +5,17 @@ description: Mobile-first React 18 SPA frontend providing real-time controls, AI
   telemetry, and internationalization.
 status: draft
 generated:
-  by: codex/repository-migration
-  at: '2026-10-07T07:00:29.384460+00:00'
+  by: codex/migration-audit
+  at: '2026-10-07T07:13:37.354382+00:00'
 sources:
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
   title: NinjaRobotPi0 Development Guide
-  content_hash: sha256:43e40f7c8db5734b4e8fe2ffd7d1e9c365cf9ceaad16fb4dbbbbe8eb1be71e7c
+  content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20260822-readme
   resource: urn:llmwiki:source:src-20260822-readme
   title: NinjaRobotPi0 Readme
-  content_hash: sha256:f8becc32b9999e418981bf11025a09959dd03b9175fdcb7f86dfbd7f190db909
+  content_hash: sha256:3f74856140111a6337bf8b83c58bef7be13f91df9742fc0e36be27ebd35b8df2
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration

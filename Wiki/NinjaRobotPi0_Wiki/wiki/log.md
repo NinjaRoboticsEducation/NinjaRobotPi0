@@ -2,6 +2,8 @@
 
 ## 2026-10-07
 
+* **Update**: Applied plan `2026-10-07-pi0-migration-audit` — Correct migration documentation and explain tested clean-clone wiki bootstrap; refresh changed source hashes.. Sources: `src-20261007-2026-10-07-ninjarobot-pi0-migration-audit`, `src-20260822-readme`, `src-20260822-developmentguide`, `src-20261007-2026-10-07-ninjarobot-pi0-repository-migration`, `src-20260822-readme-2`, `src-20260822-readme-3`, `src-20260822-readme-5`, `src-20260822-readme-6`, `src-20260822-readme-7`, `src-20260822-readme-8`, `src-20260822-installationguide`, `src-20260822-developmentlog`, `src-20260822-readme-4`, `src-20260822-projectupgradeplan`.
+
 * **Update**: Applied plan `2026-10-07-ninjarobot-pi0-migration` — Approved repository name, clone links, default-branch manuals, and source provenance update; robot code unchanged.. Sources: `src-20261007-2026-10-07-ninjarobot-pi0-repository-migration`, `src-20260822-developmentlog`, `src-20260822-developmentguide`, `src-20260822-projectupgradeplan`, `src-20260822-readme-3`, `src-20260822-readme-4`, `src-20260822-readme-2`, `src-20260822-readme`, `src-20260822-readme-7`, `src-20260822-readme-5`, `src-20260822-readme-6`, `src-20260822-readme-8`, `src-20260822-installationguide`.
 
 ## 2026-09-01

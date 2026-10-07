@@ -5,25 +5,25 @@ description: Dual Wi-Fi and Bluetooth Low Energy connectivity, GATT service spec
   and chunked transfer protocols.
 status: draft
 generated:
-  by: codex/repository-migration
-  at: '2026-10-07T07:00:29.384460+00:00'
+  by: codex/migration-audit
+  at: '2026-10-07T07:13:37.354382+00:00'
 sources:
 - id: src-20260822-readme-2
   resource: urn:llmwiki:source:src-20260822-readme-2
   title: ninja_ble Readme
-  content_hash: sha256:76bbd36ab8a5d9d81b4e73fd2e3910e4c8a9b79c82e7558e94044e6c81871910
+  content_hash: sha256:7323f365547e7e9f413122533d7d7ec27ed3367f555540dc8b51df6078b09061
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
   title: NinjaRobotPi0 Development Guide
-  content_hash: sha256:43e40f7c8db5734b4e8fe2ffd7d1e9c365cf9ceaad16fb4dbbbbe8eb1be71e7c
+  content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20260822-readme
   resource: urn:llmwiki:source:src-20260822-readme
   title: NinjaRobotPi0 Readme
-  content_hash: sha256:f8becc32b9999e418981bf11025a09959dd03b9175fdcb7f86dfbd7f190db909
+  content_hash: sha256:3f74856140111a6337bf8b83c58bef7be13f91df9742fc0e36be27ebd35b8df2
 - id: src-20260822-developmentlog
   resource: urn:llmwiki:source:src-20260822-developmentlog
   title: NinjaRobotPi0 Development Log
-  content_hash: sha256:65b40cbc41f1966bee59663ab0e61126fef8b9c38bf3f8ca15e785677ce16607
+  content_hash: sha256:54cdbd7e50fd0cbfbfaba5073d6ed89379181b78bc3d7267d64518f15e9bfe02
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration

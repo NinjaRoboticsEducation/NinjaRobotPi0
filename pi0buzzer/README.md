@@ -2,7 +2,7 @@
 
 A non-blocking passive buzzer driver for Raspberry Pi with musical note support, emotion sounds, and an interactive testing tool.
 
-**Part of the [NinjaRobot V5](../README.md) platform.**
+**Part of the [NinjaRobotPi0](../README.md) platform.**
 
 ---
 

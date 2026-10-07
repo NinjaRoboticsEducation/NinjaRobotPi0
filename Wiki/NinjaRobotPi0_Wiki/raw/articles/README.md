@@ -4,7 +4,6 @@ Official repository: [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/N
 
 This repository starts from the existing NinjaRobotV5 working snapshot, published with fresh Git history on 2026-10-07. Python package names, versions, robot functions, and runtime code are retained. GitHub documentation links use `HEAD` to follow the repository default branch.
 
-# NinjaRobot V5
 
 <div align="center">
 
@@ -27,7 +26,7 @@ This repository starts from the existing NinjaRobotV5 working snapshot, publishe
 
 ## 🎯 Project Overview
 
-**NinjaRobot V5** is an advanced, modular AI robot platform designed for Research and STEAM Education. Built on the Raspberry Pi Zero 2W, it combines cutting-edge AI capabilities with an intuitive web interface, making robotics accessible to learners of all ages.
+**NinjaRobotPi0** is an advanced, modular AI robot platform designed for Research and STEAM Education. Built on the Raspberry Pi Zero 2W, it combines cutting-edge AI capabilities with an intuitive web interface, making robotics accessible to learners of all ages.
 
 Unlike traditional educational robots, NinjaRobot features an **Agentic AI** powered by Google Gemini that can understand natural language, execute commands, and even generate code to learn new behaviors autonomously.
 
@@ -151,7 +150,7 @@ This project is licensed under the **MIT License**.
 
 ## 🎯 プロジェクト概要
 
-**NinjaRobot V5**は、研究およびSTEAM教育向けに設計された先進的なモジュール式AIロボットプラットフォームです。Raspberry Pi Zero 2Wをベースに構築され、最先端のAI機能と直感的なWebインターフェースを組み合わせ、あらゆる年齢の学習者がロボット工学にアクセスできるようにしています。
+**NinjaRobotPi0**は、研究およびSTEAM教育向けに設計された先進的なモジュール式AIロボットプラットフォームです。Raspberry Pi Zero 2Wをベースに構築され、最先端のAI機能と直感的なWebインターフェースを組み合わせ、あらゆる年齢の学習者がロボット工学にアクセスできるようにしています。
 
 従来の教育用ロボットとは異なり、NinjaRobotはGoogle Geminiを搭載した**エージェント型AI**を特徴とし、自然言語を理解し、コマンドを実行し、さらには自律的に新しい動作を学習するためのコードを生成することができます。
 
@@ -273,7 +272,7 @@ Geminiの設定時、NinjaRobotは入力したキーで利用可能なモデル�
 
 ## 🎯 專案概述
 
-**NinjaRobot V5**是一個為研究與STEAM教育設計的先進模組化AI機器人平台。基於Raspberry Pi Zero 2W構建，結合尖端AI功能與直覺的網頁介面，讓各年齡層的學習者都能輕鬆接觸機器人技術。
+**NinjaRobotPi0**是一個為研究與STEAM教育設計的先進模組化AI機器人平台。基於Raspberry Pi Zero 2W構建，結合尖端AI功能與直覺的網頁介面，讓各年齡層的學習者都能輕鬆接觸機器人技術。
 
 與傳統教育機器人不同，NinjaRobot搭載由Google Gemini驅動的**代理式AI**，能夠理解自然語言、執行指令，甚至自主生成程式碼來學習新行為。
 

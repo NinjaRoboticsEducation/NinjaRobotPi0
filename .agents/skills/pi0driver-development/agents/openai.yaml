@@ -1,7 +1,7 @@
 interface:
   display_name: "NinjaRobot Pi0 Driver Development"
   short_description: "Audit, plan, validate, and document pi0* driver work"
-  default_prompt: "Use $pi0driver-development to safely audit and implement a change in a NinjaRobotV5 pi0* library."
+  default_prompt: "Use $pi0driver-development to safely audit and implement a change in a NinjaRobotPi0 pi0* library."
 policy:
   allow_implicit_invocation: true
 dependencies:

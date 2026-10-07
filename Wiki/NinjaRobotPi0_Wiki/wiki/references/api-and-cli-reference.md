@@ -5,25 +5,25 @@ description: Unified reference of all Python driver classes, wrapper APIs, REST/
   endpoints, and CLI tools.
 status: draft
 generated:
-  by: codex/repository-migration
-  at: '2026-10-07T07:00:29.384460+00:00'
+  by: codex/migration-audit
+  at: '2026-10-07T07:13:37.354382+00:00'
 sources:
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
   title: NinjaRobotPi0 Development Guide
-  content_hash: sha256:43e40f7c8db5734b4e8fe2ffd7d1e9c365cf9ceaad16fb4dbbbbe8eb1be71e7c
+  content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20260822-readme-2
   resource: urn:llmwiki:source:src-20260822-readme-2
   title: ninja_ble Readme
-  content_hash: sha256:76bbd36ab8a5d9d81b4e73fd2e3910e4c8a9b79c82e7558e94044e6c81871910
+  content_hash: sha256:7323f365547e7e9f413122533d7d7ec27ed3367f555540dc8b51df6078b09061
 - id: src-20260822-readme-3
   resource: urn:llmwiki:source:src-20260822-readme-3
   title: ninja_core Readme
-  content_hash: sha256:c13dcf9055a532fefb03664983e9b5bafcb384e7ff16b65feca801cdbff23ba5
+  content_hash: sha256:502427fd1c9031fea178cc56a037d30e880c5b5c78875618d2ab173a8543d2df
 - id: src-20260822-readme-5
   resource: urn:llmwiki:source:src-20260822-readme-5
   title: pi0buzzer Readme
-  content_hash: sha256:36d873a14fdbdb3bc1f1c5e49ea41fbc1f812fe97fe64ba5ba9310d0ab164595
+  content_hash: sha256:2d45a1426b50788922f073ae4e8236e7e16e63c22c329fce016c782ce7b127fa
 - id: src-20260822-readme-6
   resource: urn:llmwiki:source:src-20260822-readme-6
   title: pi0disp Readme

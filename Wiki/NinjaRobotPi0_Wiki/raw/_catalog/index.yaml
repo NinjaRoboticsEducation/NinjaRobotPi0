@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-07T07:00:54Z'
+generated_at: '2026-10-07T07:14:56Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -59,6 +59,11 @@ sources:
 - id: src-20260822-readme
   title: Readme
   path: raw/articles/README.md
+  kind: text
+  state: ingested
+- id: src-20261007-2026-10-07-ninjarobot-pi0-migration-audit
+  title: 2026 10 07 Ninjarobot Pi0 Migration Audit
+  path: raw/notes/changes/2026-10-07-ninjarobot-pi0-migration-audit.md
   kind: text
   state: ingested
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration

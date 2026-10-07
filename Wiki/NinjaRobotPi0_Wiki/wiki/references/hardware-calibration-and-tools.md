@@ -5,17 +5,17 @@ description: Comprehensive guide to interactive calibration TUIs, setup wizards,
   diagnostic tools.
 status: draft
 generated:
-  by: codex/repository-migration
-  at: '2026-10-07T07:00:29.384460+00:00'
+  by: codex/migration-audit
+  at: '2026-10-07T07:13:37.354382+00:00'
 sources:
 - id: src-20260822-installationguide
   resource: urn:llmwiki:source:src-20260822-installationguide
   title: NinjaRobotPi0 Installation Guide
-  content_hash: sha256:8fe90ec3883948bfa196dc62202ee4c22181f706b5797c17eb6f0374f8994adf
+  content_hash: sha256:3748116db5b7241f6cb501b2bea2ff23d74754cab8776cebcbbbe19ff0e9f088
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
   title: NinjaRobotPi0 Development Guide
-  content_hash: sha256:43e40f7c8db5734b4e8fe2ffd7d1e9c365cf9ceaad16fb4dbbbbe8eb1be71e7c
+  content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20260822-readme-7
   resource: urn:llmwiki:source:src-20260822-readme-7
   title: pi0servo Readme
@@ -27,7 +27,7 @@ sources:
 - id: src-20260822-readme-5
   resource: urn:llmwiki:source:src-20260822-readme-5
   title: pi0buzzer Readme
-  content_hash: sha256:36d873a14fdbdb3bc1f1c5e49ea41fbc1f812fe97fe64ba5ba9310d0ab164595
+  content_hash: sha256:2d45a1426b50788922f073ae4e8236e7e16e63c22c329fce016c782ce7b127fa
 - id: src-20260822-readme-8
   resource: urn:llmwiki:source:src-20260822-readme-8
   title: pi0vl53l0x Readme

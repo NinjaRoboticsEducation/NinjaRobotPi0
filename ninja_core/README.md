@@ -1,6 +1,6 @@
 # Ninja Core
 
-This package contains the main application logic for NinjaRobot V5. It integrates all the individual hardware libraries (`pi0servo`, `pi0buzzer`, etc.) into a cohesive system managed by a central configuration and a Hardware Abstraction Layer (HAL).
+This package contains the main application logic for NinjaRobotPi0. It integrates all the individual hardware libraries (`pi0servo`, `pi0buzzer`, etc.) into a cohesive system managed by a central configuration and a Hardware Abstraction Layer (HAL).
 
 ## Key Components
 
@@ -86,7 +86,7 @@ When recording, you define each step using a special command syntax:
 
 ## Testing the Core Components
 
-This guide assumes you are in the root directory of the `NinjaRobotV4` project and have already installed all dependencies.
+This guide assumes you are in the root directory of the `NinjaRobotPi0` project and have already installed all dependencies.
 
 ### Prerequisites
 

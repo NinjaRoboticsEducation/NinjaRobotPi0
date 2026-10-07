@@ -1,10 +1,10 @@
-# NinjaRobot V5 Development Guide
+# NinjaRobotPi0 Development Guide
 
 **Version:** 5.2.13
 **Last Updated:** 2026-09-01
 **Target Audience:** Experienced Developers
 
-This guide provides a comprehensive technical reference for the NinjaRobot V5 project. It serves as the source of truth for understanding the project architecture, library APIs, and development workflows.
+This guide provides a comprehensive technical reference for the NinjaRobotPi0 project. It serves as the source of truth for understanding the project architecture, library APIs, and development workflows.
 
 ---
 
@@ -215,7 +215,7 @@ uv run ninja_core config import
 
 ### 1.1 Overall Structure
 
-NinjaRobot V5 follows a **layered monorepo architecture** with 7 independent Python packages:
+NinjaRobotPi0 follows a **layered monorepo architecture** with 7 independent Python packages:
 
 ```
 NinjaRobotPi0/

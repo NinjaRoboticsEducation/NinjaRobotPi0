@@ -4,7 +4,30 @@ This repository is a local-first framework for building a personal knowledge bas
 
 The wiki in `wiki/` follows [Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md). It uses normal Markdown links, structured source provenance, visible verification history, and optional freshness dates.
 
-## Quick start
+## After cloning NinjaRobotPi0
+
+This is an existing populated wiki. From `NinjaRobotPi0/Wiki/NinjaRobotPi0_Wiki`, install its locked tooling and rebuild the ignored normalization cache before running lint. Do not initialize a nested Git repository or reinitialize the wiki.
+
+```bash
+uv sync --frozen
+uv run python - <<'PYTHON'
+import json
+import subprocess
+import sys
+
+cli = [sys.executable, "-m", "llmwiki.cli"]
+records = json.loads(subprocess.check_output(
+    [*cli, "source", "list", "--json-output"], text=True
+))
+for record in records:
+    subprocess.run([*cli, "source", "normalize", record["id"]], check=True)
+PYTHON
+uv run llmwiki lint
+```
+
+`raw/_derived/` is intentionally ignored by Git. A clean clone reports `missing-derived-manifest` until this cache is rebuilt; the original migration's zero-error lint result applied to its prepared local checkout. Normalization verifies the registered source hashes and regenerates manifests through the CLI; it may refresh catalog processing metadata. If a source hash differs, stop and review that drift. Never re-register changed evidence merely to make lint pass. Run the same sequence after restoring a checkout whose cache is absent. Semantic-review warnings remain separate from this structural check.
+
+## Quick start for a new, empty template
 
 After copying this template for a real topic, initialize Git and make a clean baseline commit **before the first ingestion**. Git is strongly recommended for history and recovery, but the template never initializes, commits, pushes, or creates a remote for you.
 

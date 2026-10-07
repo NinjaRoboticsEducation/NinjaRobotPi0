@@ -1,5 +1,5 @@
 ---
-description: Apply the canonical NinjaRobotV5 development and local-wiki workflow
+description: Apply the canonical NinjaRobotPi0 development and local-wiki workflow
 globs:
 alwaysApply: true
 ---

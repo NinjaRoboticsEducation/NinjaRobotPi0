@@ -1,6 +1,6 @@
 # ninja_ble
 
-Bluetooth Low Energy (BLE) control service for NinjaRobot V5. Enables direct, zero-network-setup communication with the robot via standardized GATT protocol.
+Bluetooth Low Energy (BLE) control service for NinjaRobotPi0. Enables direct, zero-network-setup communication with the robot via standardized GATT protocol.
 
 ## Features
 
