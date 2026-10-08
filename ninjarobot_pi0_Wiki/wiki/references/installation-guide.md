@@ -31,11 +31,19 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
+- id: src-20261008-2026-10-08-readme-audit
+  title: Pi0 README audit evidence and validation limits
+  content_hash: sha256:7a945023f45ad2e179e5cae529665df9ed050bfe5cf36f440f857a02e28cfea4
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-readme-audit
+- id: src-20261008-readme-5
+  title: 'Pi0 four-language manual: audited content and rebased links'
+  content_hash: sha256:7695f000c17ae1c1c206d9866184e934bd071867ecc218ebe087cd77442d4d73
+  resource: urn:llmwiki:source:src-20261008-readme-5
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T05:58:11.230446+00:00'
-  target_hash: sha256:1698b560eb8c5df38e899372944717d11a840a3744f2e31666ebee0e0e1bc946
+  performed_at: '2026-10-08T14:34:37.958505+00:00'
+  target_hash: sha256:c24a790bb32ed0b3024439a8e1b0bb4f4b0825d7cc6613d683971d46553afd14
   result: passed
   checks:
     source_support: passed
@@ -44,13 +52,14 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
-    the installer/checker, locked Vite engines and 205 passing host regressions on
-    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
-    explicitly; device/user requirements, real Node/Python minima, read-only inspection
-    and missing-environment failures remain. Compatible tool reuse and checksum fallback
-    are distinct. Retained hardware/history claims keep their prior sources; no physical
-    or human verification is inferred.
+  - Reviewed the owner-authored four-language README and registered audit evidence
+    against installer preflight, service-manager uv/PATH and enable behavior, ngrok
+    presence/connection checks, core movement parser, GPIO terminology and shutdown
+    permission/animation limits. Corrections retain the manual structure; optional
+    recovery/status details remain in Troubleshooting/Appendix C. All 54 shell examples
+    parse and four isolated core parser examples pass. No runtime code or physical
+    hardware operation is claimed. Earlier historical sources remain cited; draft/unverified
+    status is preserved.
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
@@ -102,3 +111,14 @@ Missing project Python/CLI means an incomplete or broken environment. Run ./inst
 The current complete manual documents Node 20.19+ within 20.x or >=22.12.0 from locked Vite engines. Node 24.21.0 qualifies. uv is checked for required sync flags rather than exact version; real uv 0.9.26 passed an offline host locked-sync dry-run. Compatible PATH tools are reused before private fallbacks. Missing .venv/bin/python or ninja_core still requires completing ./install.sh; --check remains read-only.[^src-20261008-2026-10-08-installer-compatibility]
 
 [^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.
+
+
+## Multilingual user manual audit
+
+The multilingual README explains that an active pigpiod or ninjarobot service stops installation before dependencies. The initial preflight PASS is not Software installed. Recovery supports the robot, disconnects actuator power, stops the robot service before pigpiod and retries the existing checkout without deleting calibration. After successful installation, pigpiod must be started explicitly; boot enablement is optional. The README uses compatible uv discovery for legacy autostart and corrects ngrok/token, actual hostname, QR and shutdown limitations. Software checks and saved onboarding state do not certify physical results.[^src-20261008-2026-10-08-readme-audit]
+
+[^src-20261008-2026-10-08-readme-audit]: Four-language README correctness audit and code evidence.
+
+The complete public walkthrough is preserved in the current README source.[^src-20261008-readme-5]
+
+[^src-20261008-readme-5]: Pi0 four-language user manual.

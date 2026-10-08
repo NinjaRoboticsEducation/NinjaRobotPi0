@@ -1,0 +1,16 @@
+id: src-20261008-developmentlog-4
+path: raw/notes/ninjarobotpi0/2026-10-08-readme-audit/DevelopmentLog.md
+media_type: text/markdown
+kind: text
+title: 'Pi0 development log: multilingual manual audit'
+added_at: '2026-10-08T14:31:50Z'
+content_hash: sha256:5f036bf4ec4a29be102c9bcbf0a1749ab31975702de8a83979fe8155d4cf45c4
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-developmentlog-4
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-08T14:34:03Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-08T14:35:17Z'
+last_plan: pi0-readme-audit-review-261008-development-history-and-evolution

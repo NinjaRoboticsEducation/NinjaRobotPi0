@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-08-compatibility/DevelopmentLog.md",
-      "source_id": "src-20261008-developmentlog-3",
-      "content_hash": "sha256:b91064c29682b237cdabff4f636a4c47b9193187e8c94bc83a0fa5eb9b7c943c",
+      "path": "raw/notes/ninjarobotpi0/2026-10-08-readme-audit/DevelopmentLog.md",
+      "source_id": "src-20261008-developmentlog-4",
+      "content_hash": "sha256:5f036bf4ec4a29be102c9bcbf0a1749ab31975702de8a83979fe8155d4cf45c4",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -1811,8 +1811,8 @@
       "pages": [
         "wiki/overview.md"
       ],
-      "content_hash": "sha256:67ddf26539f72e07ed446e8bf9d7bacbf70703a40c0483f5159d9ac23ea0baab",
-      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
+      "content_hash": "sha256:e216199572abae4fd9d6a5b388a18b5b5fbd6da591444633498ea276ccac9dda",
+      "review_note": "Reviewed owner-expanded English/Japanese/Traditional/Simplified Chinese README against actual installer, service manager, server, onboarding and core movement parser. Narrow correctness changes preserve omitted scope; recovery/checks in Troubleshooting/Appendix C. No runtime edit; 54 Bash blocks and four isolated parser examples passed."
     }
   },
   "adapters": [

@@ -12,7 +12,7 @@ retrieved_at: null
 normalized_at: '2026-10-07T07:13:40Z'
 normalizer: llmwiki-text/0.2
 error: null
-ingested_at: '2026-10-08T05:58:55Z'
-last_plan: pi0-compatibility-review-261008-development-history-and-evolution
+ingested_at: '2026-10-08T14:35:17Z'
+last_plan: pi0-readme-audit-review-261008-development-history-and-evolution
 previous_content_hash: sha256:43e40f7c8db5734b4e8fe2ffd7d1e9c365cf9ceaad16fb4dbbbbe8eb1be71e7c
 changed_at: '2026-10-07T07:13:39Z'

@@ -40,10 +40,10 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
-- id: src-20261008-readme-3
-  resource: urn:llmwiki:source:src-20261008-readme-3
-  title: Readme
-  content_hash: sha256:c9ced856b42efefacbb3800f8abc7048b8f65b5b0237f4d2d640619a39926121
+- id: src-20261008-readme-5
+  title: 'Pi0 four-language manual: audited content and rebased links'
+  content_hash: sha256:7695f000c17ae1c1c206d9866184e934bd071867ecc218ebe087cd77442d4d73
+  resource: urn:llmwiki:source:src-20261008-readme-5
 - id: src-20261008-2026-10-08-trixie-support
   resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
@@ -56,11 +56,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
+- id: src-20261008-2026-10-08-readme-audit
+  title: Pi0 README audit evidence and validation limits
+  content_hash: sha256:7a945023f45ad2e179e5cae529665df9ed050bfe5cf36f440f857a02e28cfea4
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-readme-audit
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T05:58:09.896854+00:00'
-  target_hash: sha256:90ccdee791ac4c5d3728048d79b0fde38e2ec74fee6350d62a07638d89f18645
+  performed_at: '2026-10-08T14:34:36.833728+00:00'
+  target_hash: sha256:50a7267de857f7048b201d24b078fdde2d761971b637cc5c9eb3afeedeeacfef
   result: passed
   checks:
     source_support: passed
@@ -69,13 +73,14 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
-    the installer/checker, locked Vite engines and 205 passing host regressions on
-    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
-    explicitly; device/user requirements, real Node/Python minima, read-only inspection
-    and missing-environment failures remain. Compatible tool reuse and checksum fallback
-    are distinct. Retained hardware/history claims keep their prior sources; no physical
-    or human verification is inferred.
+  - Reviewed the owner-authored four-language README and registered audit evidence
+    against installer preflight, service-manager uv/PATH and enable behavior, ngrok
+    presence/connection checks, core movement parser, GPIO terminology and shutdown
+    permission/animation limits. Corrections retain the manual structure; optional
+    recovery/status details remain in Troubleshooting/Appendix C. All 54 shell examples
+    parse and four isolated core parser examples pass. No runtime code or physical
+    hardware operation is claimed. Earlier historical sources remain cited; draft/unverified
+    status is preserved.
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
@@ -166,9 +171,9 @@ A comprehensive public README now follows Pi5 introduction, hardware/OS preparat
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 
-The public walkthrough is preserved as versioned README evidence.[^src-20261008-readme-3]
+The public walkthrough is preserved as versioned README evidence.[^src-20261008-readme-5]
 
-[^src-20261008-readme-3]: Pi0 public README — audit 2026-10-08.
+[^src-20261008-readme-5]: Pi0 public README — audit 2026-10-08.
 
 
 ## Historical Trixie support correction (superseded policy)
@@ -194,3 +199,10 @@ The current README provides explicit recovery steps: update Git by fetching defa
 Installer checks now use compatibility instead of exact OS/Node/uv versions. No OS codename allowlist remains. The device, Linux aarch64, Debian-family OS, normal-user and Python 3.10+ requirements remain; optional wiki needs Python 3.11+. Bookworm/Trixie are reference targets, not a complete allowlist or proof of physical acceptance.[^src-20261008-2026-10-08-installer-compatibility]
 
 [^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.
+
+
+## Multilingual user manual audit
+
+The owner-expanded README has English, Japanese, Traditional Chinese and Simplified Chinese manuals. A documentation-only audit retained their structure and intentional omissions. It corrected service lifecycle, autostart uv discovery, ngrok behavior, hostname/shutdown assumptions and the unsupported core movement example. Necessary recovery/check details live in Troubleshooting/Appendix C. Robot implementation and dependencies are unchanged; physical acceptance remains separate.[^src-20261008-2026-10-08-readme-audit]
+
+[^src-20261008-2026-10-08-readme-audit]: Four-language README correctness audit and code evidence.

@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-08T05:58:55Z'
+generated_at: '2026-10-08T14:35:17Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -141,6 +141,11 @@ sources:
   path: raw/notes/changes/2026-10-08-installer-recovery.md
   kind: text
   state: ingested
+- id: src-20261008-2026-10-08-readme-audit
+  title: Pi0 README audit evidence and validation limits
+  path: raw/notes/changes/2026-10-08-readme-audit.md
+  kind: text
+  state: ingested
 - id: src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
   path: raw/notes/changes/2026-10-08-trixie-support.md
@@ -171,6 +176,11 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-08-compatibility/DevelopmentLog.md
   kind: text
   state: ingested
+- id: src-20261008-developmentlog-4
+  title: 'Pi0 development log: multilingual manual audit'
+  path: raw/notes/ninjarobotpi0/2026-10-08-readme-audit/DevelopmentLog.md
+  kind: text
+  state: ingested
 - id: src-20261008-developmentlog
   title: 'Pi0 log: Trixie rejection correction'
   path: raw/notes/ninjarobotpi0/2026-10-08-trixie/DevelopmentLog.md
@@ -199,6 +209,16 @@ sources:
 - id: src-20261008-readme-3
   title: Readme
   path: raw/articles/ninjarobotpi0/2026-10-08-compatibility/README.md
+  kind: text
+  state: ingested
+- id: src-20261008-readme-4
+  title: 'Pi0 four-language user manual: correctness audit'
+  path: raw/articles/ninjarobotpi0/2026-10-08-readme-audit/README.md
+  kind: text
+  state: pending
+- id: src-20261008-readme-5
+  title: 'Pi0 four-language manual: audited content and rebased links'
+  path: raw/articles/ninjarobotpi0/2026-10-08-readme-audit-final/README.md
   kind: text
   state: ingested
 - id: src-20261008-readme

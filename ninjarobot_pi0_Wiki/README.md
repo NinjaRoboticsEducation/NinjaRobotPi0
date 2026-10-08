@@ -5,7 +5,7 @@ Current full manuals:
 
 - [InstallationGuide.md](raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md)
 - [DevelopmentGuide.md](raw/articles/ninjarobotpi0/2026-10-08-compatibility/DevelopmentGuide.md)
-- [DevelopmentLog.md](raw/notes/ninjarobotpi0/2026-10-08-compatibility/DevelopmentLog.md)
+- [DevelopmentLog.md](raw/notes/ninjarobotpi0/2026-10-08-readme-audit/DevelopmentLog.md)
 
 The [knowledge map](project-knowledge.json) resolves active source versions and reviewed code.
 Curated pages begin at [overview](wiki/overview.md). Registered raw originals are immutable.

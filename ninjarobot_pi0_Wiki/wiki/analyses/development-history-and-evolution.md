@@ -20,10 +20,10 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration
   content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
-- id: src-20261008-developmentlog-3
-  resource: urn:llmwiki:source:src-20261008-developmentlog-3
-  title: Developmentlog
-  content_hash: sha256:b91064c29682b237cdabff4f636a4c47b9193187e8c94bc83a0fa5eb9b7c943c
+- id: src-20261008-developmentlog-4
+  title: 'Pi0 development log: multilingual manual audit'
+  content_hash: sha256:5f036bf4ec4a29be102c9bcbf0a1749ab31975702de8a83979fe8155d4cf45c4
+  resource: urn:llmwiki:source:src-20261008-developmentlog-4
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -44,11 +44,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
+- id: src-20261008-2026-10-08-readme-audit
+  title: Pi0 README audit evidence and validation limits
+  content_hash: sha256:7a945023f45ad2e179e5cae529665df9ed050bfe5cf36f440f857a02e28cfea4
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-readme-audit
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T05:58:16.294543+00:00'
-  target_hash: sha256:2605818aa6193a5d2333c97632c51fae8d8a35a713729c292b7ae0b88a25ebc2
+  performed_at: '2026-10-08T14:34:39.927213+00:00'
+  target_hash: sha256:13ad720c9d6cdd702a1c037cba171badcfb74eda9459fca7ee56891e08586959
   result: passed
   checks:
     source_support: passed
@@ -57,13 +61,14 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
-    the installer/checker, locked Vite engines and 205 passing host regressions on
-    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
-    explicitly; device/user requirements, real Node/Python minima, read-only inspection
-    and missing-environment failures remain. Compatible tool reuse and checksum fallback
-    are distinct. Retained hardware/history claims keep their prior sources; no physical
-    or human verification is inferred.
+  - Reviewed the owner-authored four-language README and registered audit evidence
+    against installer preflight, service-manager uv/PATH and enable behavior, ngrok
+    presence/connection checks, core movement parser, GPIO terminology and shutdown
+    permission/animation limits. Corrections retain the manual structure; optional
+    recovery/status details remain in Troubleshooting/Appendix C. All 54 shell examples
+    parse and four isolated core parser examples pass. No runtime code or physical
+    hardware operation is claimed. Earlier historical sources remain cited; draft/unverified
+    status is preserved.
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
@@ -72,7 +77,7 @@ semantic_review:
 
 ## 2026-10-07 implementation checkpoint
 
-Approved installation/onboarding tooling, wiki relocation and immutable manual workflow, and Pi5-derived Pi0 web presentation were implemented with host validation. Historical V5 milestones remain history. Real Raspberry Pi and live account validation remain owner-manual; no release publication occurred during this task.[^src-20261008-developmentlog-3]
+Approved installation/onboarding tooling, wiki relocation and immutable manual workflow, and Pi5-derived Pi0 web presentation were implemented with host validation. Historical V5 milestones remain history. Real Raspberry Pi and live account validation remain owner-manual; no release publication occurred during this task.[^src-20261008-developmentlog-4]
 
 
 The NinjaRobot project evolved from a monolithic educational robot into the modular, AI-powered NinjaRobot V5 platform.[^src-20260822-developmentguide] This document records the chronological milestones, architectural phases, and reliability audits throughout development.[^src-20260822-developmentlog] [^src-20260822-developmentguide]
@@ -112,7 +117,7 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
 
-[^src-20261008-developmentlog-3]: Current versioned Developmentlog.
+[^src-20261008-developmentlog-4]: Current versioned Developmentlog.
 
 ## Implementation evidence and acceptance limits
 
@@ -153,3 +158,10 @@ A follow-up request clarified checkout updates versus software installation. The
 After the earlier Bookworm/Trixie and diagnostic fixes, the owner requested genuine minimum/capability checks. The follow-up removes exact Node/uv equality and OS codename gates, reuses compatible tools and retains checked download fallbacks. A real uv 0.9.26 offline host dry-run read the unchanged lockfile. No Pi installation, hardware activation or publication is claimed.[^src-20261008-2026-10-08-installer-compatibility]
 
 [^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.
+
+
+## Multilingual user manual audit
+
+The owner supplied an expanded four-language README and requested a narrow correctness audit. Corrections preserved its sections and intentional omissions, moved recovery/optional checks to troubleshooting/appendices, and translated the copied Traditional Chinese autostart prose into Simplified Chinese. All 54 shell blocks parsed and four movement examples passed the isolated core parser; command parity, links and core protection checks passed. No installation, service, hardware or live account operation occurred.[^src-20261008-2026-10-08-readme-audit]
+
+[^src-20261008-2026-10-08-readme-audit]: Four-language README correctness audit and code evidence.
