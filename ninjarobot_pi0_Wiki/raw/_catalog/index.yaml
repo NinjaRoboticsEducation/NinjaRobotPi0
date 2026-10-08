@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-08T01:12:26Z'
+generated_at: '2026-10-08T05:58:55Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -131,6 +131,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-08/README.md
   kind: text
   state: ingested
+- id: src-20261008-2026-10-08-installer-compatibility
+  title: 2026 10 08 Installer Compatibility
+  path: raw/notes/changes/2026-10-08-installer-compatibility.md
+  kind: text
+  state: ingested
 - id: src-20261008-2026-10-08-installer-recovery
   title: Installer diagnostics and recovery validation
   path: raw/notes/changes/2026-10-08-installer-recovery.md
@@ -146,6 +151,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-08-recovery/DevelopmentGuide.md
   kind: text
   state: ingested
+- id: src-20261008-developmentguide-3
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-08-compatibility/DevelopmentGuide.md
+  kind: text
+  state: ingested
 - id: src-20261008-developmentguide
   title: 'Pi0 development: dual Python target'
   path: raw/articles/ninjarobotpi0/2026-10-08-trixie/DevelopmentGuide.md
@@ -154,6 +164,11 @@ sources:
 - id: src-20261008-developmentlog-2
   title: 'Pi0 log: installer recovery'
   path: raw/notes/ninjarobotpi0/2026-10-08-recovery/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261008-developmentlog-3
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-08-compatibility/DevelopmentLog.md
   kind: text
   state: ingested
 - id: src-20261008-developmentlog
@@ -166,6 +181,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-08-recovery/InstallationGuide.md
   kind: text
   state: ingested
+- id: src-20261008-installationguide-3
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md
+  kind: text
+  state: ingested
 - id: src-20261008-installationguide
   title: 'Pi0 installation: Bookworm and Trixie'
   path: raw/articles/ninjarobotpi0/2026-10-08-trixie/InstallationGuide.md
@@ -174,6 +194,11 @@ sources:
 - id: src-20261008-readme-2
   title: 'Pi0 README: explicit recovery walkthrough'
   path: raw/articles/ninjarobotpi0/2026-10-08-recovery/README.md
+  kind: text
+  state: ingested
+- id: src-20261008-readme-3
+  title: Readme
+  path: raw/articles/ninjarobotpi0/2026-10-08-compatibility/README.md
   kind: text
   state: ingested
 - id: src-20261008-readme

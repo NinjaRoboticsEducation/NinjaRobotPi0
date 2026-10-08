@@ -1,7 +1,7 @@
 ---
 type: Reference
 title: Installation and Hardware Wiring Reference
-description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS Bookworm/Trixie/Trixie
+description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS 64-bit
   setup, and pigpio compilation.
 status: draft
 generated:
@@ -24,10 +24,10 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-migration-audit
   title: 2026 10 07 Ninjarobot Pi0 Migration Audit
   content_hash: sha256:6c223e850e920baffe83a0fbcf3f7c4471a97f4fbcc823e93d5cd2e33666d4ab
-- id: src-20261008-installationguide-2
-  resource: urn:llmwiki:source:src-20261008-installationguide-2
-  title: Pi0 installation and recovery instructions
-  content_hash: sha256:76054ec1dd83d36e06b781440e8334da800ed659301cbeb0adcd7fd3a960d382
+- id: src-20261008-installationguide-3
+  resource: urn:llmwiki:source:src-20261008-installationguide-3
+  title: Installationguide
+  content_hash: sha256:734051f87ce7f447ae50bee7863118612f55b5747cd42e3cb047662a5408081f
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -44,11 +44,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
   title: Installer diagnostics and recovery validation
   content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
+- id: src-20261008-2026-10-08-installer-compatibility
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
+  title: 2026 10 08 Installer Compatibility
+  content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T01:11:36.960166+00:00'
-  target_hash: sha256:f661d53bd8079c494fb77ebb287e869e2a8b35b1741c5c6db57b39a9ebed410a
+  performed_at: '2026-10-08T05:58:12.277510+00:00'
+  target_hash: sha256:574e4c44daa58e991751a181fb42d958578749ba11ce89ec96ad19c71958309e
   result: passed
   checks:
     source_support: passed
@@ -57,11 +61,13 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - 'Checked the current recovery manual/evidence against checker and installer diffs
-    and inert regression results: read-only inspection, actual software install, and
-    Git update are separate. Version/path diagnostics and stage/exit/retry reporting
-    preserve calibration and core behavior. Retained claims preserve original citations;
-    physical acceptance and publication remain pending.'
+  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
+    the installer/checker, locked Vite engines and 205 passing host regressions on
+    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
+    explicitly; device/user requirements, real Node/Python minima, read-only inspection
+    and missing-environment failures remain. Compatible tool reuse and checksum fallback
+    are distinct. Retained hardware/history claims keep their prior sources; no physical
+    or human verification is inferred.
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
@@ -70,7 +76,7 @@ semantic_review:
 
 ## Current installer and onboarding
 
-Use the current complete InstallationGuide linked by the wiki README. It replaces historical floating downloads and global-pip installation commands. The verified installer uses locked Python/frontend dependencies and pinned tool inputs. It does not activate hardware/services or start the robot. Onboarding opens a selected existing tool only after readiness confirmation; opening the servo tool can center calibrated servos immediately.[^src-20261008-installationguide-2]
+Use the current complete InstallationGuide linked by the wiki README. It replaces historical floating downloads and global-pip installation commands. The verified installer uses locked Python/frontend dependencies and verified fallback tool inputs. It does not activate hardware/services or start the robot. Onboarding opens a selected existing tool only after readiness confirmation; opening the servo tool can center calibrated servos immediately.[^src-20261008-installationguide-3]
 
 
 This reference summarizes hardware requirements, pinout connections, and operating system setup for NinjaRobotPi0 on the Raspberry Pi Zero 2W.[^src-20260822-installationguide] [^src-20260822-developmentguide]
@@ -157,7 +163,7 @@ Current repository documentation uses NinjaRobotPi0; historical audits and V5 ve
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]: Audit evidence covering documentation attribution, current naming, default-branch links, and clean-clone wiki normalization.
 
-[^src-20261008-installationguide-2]: Current versioned Installationguide.
+[^src-20261008-installationguide-3]: Current versioned Installationguide.
 
 ## Implementation evidence and acceptance limits
 
@@ -166,22 +172,35 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 [^src-20261007-2026-10-07-install-onboard-wiki-ui-2]: Pi0 upgrade implementation and current UI contracts.
 
 
-## 2026-10-08 audit follow-up
+## Historical 2026-10-08 audit follow-up (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 Installer preflight now rejects redirected tool/environment paths before privileged changes. Read-only version matching is exact and installation-record publication cleans temporary files on failure. The README provides the current beginner walkthrough; old floating/global-pip commands remain historical. Hardware and network activation occur later through explicit tools/server start.[^src-20261007-2026-10-08-upgrade-audit]
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 
 
-## Trixie support correction
+## Historical Trixie support correction (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 The current release gate accepts Bookworm and Trixie. Other releases, architectures, devices and root execution remain rejected. System Python is selected explicitly by the existing installer: 3.11 on Bookworm, 3.13 on Trixie. No tool pins, dependency locks or GPIO behavior changed. Host tests are not real Pi qualification.[^src-20261008-2026-10-08-trixie-support]
 
 [^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.
 
 
-## Installation recovery and diagnostics
+## Historical Installation recovery and diagnostics (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 Version diagnostics now include required/detected versions and executable paths, with timeout/exec failures handled as errors. The installer installs its private tools ahead of system tools; do not remove system Node/uv to satisfy the checker. Missing .venv components are installation failures, not wiring or calibration results.[^src-20261008-2026-10-08-installer-recovery]
 
 [^src-20261008-2026-10-08-installer-recovery]: Installer diagnostics and recovery validation.
+
+
+## Current software compatibility policy
+
+Exact Node/uv version equality and OS codename allowlists have been removed. Device/architecture/distribution/user and genuine Python/Node requirements remain. Compatible existing tools are reused; checksum-verified downloads are fallbacks, not mandatory installed versions. pigpio qualification and wiring remain unchanged. Host capability checks do not certify hardware or every future OS/tool release.[^src-20261008-2026-10-08-installer-compatibility]
+
+[^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.

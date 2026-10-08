@@ -29,7 +29,7 @@ main() {
       --check) check=1 ;; --dry-run) preview=1 ;; --yes) yes=1 ;; --with-wiki) wiki=1 ;;
       --help|-h)
         echo 'Usage: ./install.sh [--yes] [--with-wiki] [--dry-run | --check]'
-        echo 'Bookworm/Trixie 64-bit Zero 2 W software only. Run ./onboard.sh afterward.'
+        echo 'Raspberry Pi OS 64-bit Zero 2 W software only. Run ./onboard.sh afterward.'
         echo '--check reports status only; run ./install.sh without flags to install or retry.'; return ;;
       *) echo "Unknown/local-checkout-inapplicable option: $1" >&2; return 2 ;;
     esac
@@ -38,20 +38,36 @@ main() {
   (( !(check && preview) )) || return 2
   # Always own the checkout environment; do not inherit a developer venv override.
   unset VIRTUAL_ENV UV_PROJECT_ENVIRONMENT UV_PROJECT
-  export PATH="$tools/uv:$tools/node/bin:$PATH"
-  if ((check)); then python3 -B "$root/scripts/install_check.py" --root "$root"; return; fi
+  if ((!check)); then
   cat <<EOF
 NinjaRobotPi0 software installation:
   checkout: $root (existing files and Git revision retained)
-  uv $UV_VERSION, Node $NODE_VERSION, pigpio commit $PIGPIO_COMMIT
+  reuse compatible Node/uv; fallback downloads: uv $UV_VERSION, Node $NODE_VERSION
+  pigpio commit $PIGPIO_COMMIT
   apt: build-essential ca-certificates curl git python3-dev python3-venv xz-utils bluez dbus
   privileged files: pigpiod /usr/local/bin, library /usr/local/lib, optional inactive systemd unit
   Python: locked production .venv; frontend: npm ci and build
   wiki environment: $wiki (0=skip, 1=explicit setup)
 No hardware/service activation, calibration, credentials, robot start, or reboot.
 EOF
+  fi
   ((preview)) && return
-  python3 -B "$root/scripts/install_check.py" --platform
+  # Reuse compatible system/user tools; private pinned downloads are fallbacks.
+  local selected_node selected_uv python
+  python="$(command -v python3)"
+  selected_node="$("$python" -B "$root/scripts/install_check.py" --find-tool node)" || selected_node=""
+  if [[ -n "$selected_node" && "$selected_node" != "$(command -v node || true)" ]]; then
+    PATH="$(dirname -- "$selected_node"):$PATH"
+    export PATH
+  fi
+  selected_uv="$("$python" -B "$root/scripts/install_check.py" --find-tool uv)" || selected_uv=""
+  if [[ -n "$selected_uv" && "$selected_uv" != "$(command -v uv || true)" ]]; then
+    PATH="$(dirname -- "$selected_uv"):$PATH"
+    export PATH
+  fi
+  if ((check)); then "$python" -B "$root/scripts/install_check.py" --root "$root"; return; fi
+
+  "$python" -B "$root/scripts/install_check.py" --platform
   for item in pigpiod ninjarobot; do
     if systemctl is-active --quiet "$item"; then echo "Stop $item in a controlled maintenance session first." >&2; return 1; fi
   done
@@ -72,19 +88,21 @@ EOF
   mkdir -p -- "$tools"
   download() { curl --fail --location --silent --show-error --retry 2 --connect-timeout 20 "$1" -o "$2"; }
   verify() { printf '%s  %s\n' "$2" "$1" | sha256sum --check --status || { echo 'Artifact checksum mismatch.' >&2; return 1; }; }
-  install_stage "Pinned uv tooling"
-  if [[ ! -x "$tools/uv/uv" ]] || [[ "$("$tools/uv/uv" --version)" != "uv $UV_VERSION"* ]]; then
+  install_stage "Compatible uv tooling"
+  if [[ -z "$selected_uv" ]]; then
     download "https://astral.sh/uv/$UV_VERSION/install.sh" "$work/uv.sh"
     verify "$work/uv.sh" "$UV_INSTALLER_SHA256"
     UV_INSTALL_DIR="$tools/uv" UV_NO_MODIFY_PATH=1 sh "$work/uv.sh"
+    export PATH="$tools/uv:$PATH"
   fi
-  install_stage "Pinned Node tooling"
-  if [[ ! -x "$tools/node/bin/node" ]] || [[ "$("$tools/node/bin/node" --version)" != "v$NODE_VERSION" ]]; then
-    [[ ! -e "$tools/node" && ! -L "$tools/node" ]] || { echo 'Existing Node tool directory has a different version; preserve and review it.' >&2; return 1; }
+  install_stage "Compatible Node tooling"
+  if [[ -z "$selected_node" ]] || ! npm --version >/dev/null 2>&1; then
+    [[ ! -e "$tools/node" && ! -L "$tools/node" ]] || { echo 'Existing private Node installation is incompatible or lacks npm; preserve and repair it before retrying.' >&2; return 1; }
     download "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.xz" "$work/node.tar.xz"
     verify "$work/node.tar.xz" "$NODE_ARM64_SHA256"
     tar -xJf "$work/node.tar.xz" -C "$work"
     mv -- "$work/node-v$NODE_VERSION-linux-arm64" "$tools/node"
+    export PATH="$tools/node/bin:$PATH"
   fi
   install_stage "pigpio daemon and inactive service"
   if ! command -v pigpiod >/dev/null; then
@@ -116,10 +134,10 @@ EOF
   install_stage "Frontend dependencies and build"
   (cd "$root/ninja_webapp"; npm ci --include=dev --no-audit --no-fund; npm run build)
   install_stage "Optional wiki setup"
-  if ((wiki)); then python3 -B "$root/scripts/wiki.py" setup; python3 -B "$root/scripts/wiki.py" prepare; fi
+  if ((wiki)); then "$python" -B "$root/scripts/wiki.py" setup; "$python" -B "$root/scripts/wiki.py" prepare; fi
   install_stage "Final software verification"
-  python3 -B "$root/scripts/install_check.py" --root "$root"
-  python3 -B "$root/scripts/install_record.py" "$root"
+  "$python" -B "$root/scripts/install_check.py" --root "$root"
+  "$python" -B "$root/scripts/install_record.py" "$root"
   rm -rf -- "$work"; work=""; rmdir -- "$root/.ninjarobot-install.lock"; trap - EXIT INT TERM
   echo 'Software installed. Hardware setup remains pending. Next: ./onboard.sh'
 }

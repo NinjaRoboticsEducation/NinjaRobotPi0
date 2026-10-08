@@ -3,6 +3,8 @@
 import argparse
 import os
 import platform
+import re
+import sys
 import shutil
 import shlex
 import subprocess
@@ -27,17 +29,17 @@ def platform_errors(
             if "=" in line
         )
         fields = {key: value.strip('"') for key, value in fields.items()}
-    if fields.get("VERSION_CODENAME") not in ("bookworm", "trixie") or fields.get(
-        "ID"
-    ) not in (
+    if fields.get("ID") not in (
         "debian",
         "raspbian",
     ):
         errors.append(
-            "Raspberry Pi OS Bookworm (12) or Trixie (13) required; "
+            "Debian-based Raspberry Pi OS required; "
             f"detected ID={fields.get('ID', 'missing')}, "
             f"VERSION_CODENAME={fields.get('VERSION_CODENAME', 'missing')}."
         )
+    if sys.version_info < (3, 10):
+        errors.append("Python 3.10+ required by robot runtime type annotations.")
     return errors
 
 
@@ -56,48 +58,68 @@ def path_errors(root):
     return []
 
 
+# Vite 7 and @vitejs/plugin-react engines in the committed package-lock.json.
+NODE_REQUIREMENT = "Node 20.19+ in 20.x, or >=22.12.0"
+UV_FLAGS = ("--locked", "--no-dev", "--python", "--directory", "--all-extras")
+
+
+def tool_error(command, executable):
+    """Probe capabilities only; never sync, create a cache, or contact hardware."""
+    if not executable:
+        return f"Missing {command}."
+    option = "-v" if command == "pigpiod" else "--version"
+    try:
+        result = subprocess.run(
+            [str(executable), option], capture_output=True, text=True, timeout=20
+        )
+        actual = result.stdout.strip()
+        if result.returncode:
+            return f"Cannot read {command} version at {executable} (exit {result.returncode})."
+        if command == "node":
+            match = re.fullmatch(r"v(\d+)\.(\d+)\.(\d+)", actual)
+            version = tuple(map(int, match.groups())) if match else (0, 0, 0)
+            if not (
+                version[0] == 20 and version >= (20, 19, 0) or version >= (22, 12, 0)
+            ):
+                return f"Incompatible node: requires {NODE_REQUIREMENT}; detected {actual[:160]!r} at {executable}."
+        elif command == "uv":
+            result = subprocess.run(
+                [str(executable), "sync", "--help"],
+                capture_output=True,
+                text=True,
+                timeout=20,
+            )
+            missing = [flag for flag in UV_FLAGS if flag not in result.stdout.split()]
+            if result.returncode or missing:
+                return f"Incompatible uv at {executable}: uv sync must support {', '.join(UV_FLAGS)}."
+        elif command == "pigpiod" and actual != "79":
+            return f"pigpiod version mismatch: required 79, detected {actual[:160]!r} at {executable}."
+    except (OSError, subprocess.TimeoutExpired):
+        return f"Cannot read {command} version/capabilities at {executable}."
+    return None
+
+
+def compatible_path(command):
+    """Prefer caller PATH, then installer tools, skipping incompatible candidates."""
+    tools = Path.home() / ".local/share/ninjarobot_pi0/tools"
+    paths = os.environ.get("PATH", "").split(os.pathsep)
+    paths += [str(tools / "uv"), str(tools / "node/bin")]
+    for directory in dict.fromkeys(paths):
+        if not directory:
+            continue
+        candidate = Path(directory) / command
+        if candidate.is_file() and os.access(candidate, os.X_OK):
+            if tool_error(command, candidate) is None:
+                return str(candidate.absolute())
+    return None
+
+
 def check(root):
     errors = platform_errors() + path_errors(root)
-    pins = dict(
-        line.split("=", 1)
-        for line in (root / "scripts/install-versions.env").read_text().splitlines()
-        if line and not line.startswith("#")
-    )
-    for command, expected in (
-        ("node", "v" + pins["NODE_VERSION"]),
-        ("uv", "uv " + pins["UV_VERSION"]),
-        ("npm", None),
-        ("pigpiod", "79"),
-    ):
-        executable = shutil.which(command)
-        if executable is None:
-            errors.append(
-                f"Missing {command}"
-                + (f" (required {expected})" if expected else "")
-                + "."
-            )
-            continue
-        if expected is None:
-            continue
-        option = "-v" if command == "pigpiod" else "--version"
-        try:
-            result = subprocess.run(
-                [executable, option], capture_output=True, text=True, timeout=20
-            )
-        except (OSError, subprocess.TimeoutExpired):
-            errors.append(
-                f"Cannot read {command} version at {executable}; required {expected}."
-            )
-            continue
-        actual = result.stdout.strip()
-        matches = actual == expected or (
-            command == "uv" and actual.startswith(expected + " (")
-        )
-        if result.returncode or not matches:
-            errors.append(
-                f"{command} version mismatch: required {expected}, "
-                f"detected {actual[:160]!r} at {executable} (exit {result.returncode})."
-            )
+    for command in ("node", "uv", "npm", "pigpiod"):
+        error = tool_error(command, shutil.which(command))
+        if error:
+            errors.append(error)
     for relative in (
         ".venv/bin/python",
         ".venv/bin/ninja_core",
@@ -136,10 +158,16 @@ def check(root):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--platform", action="store_true")
+    parser.add_argument("--find-tool", choices=("node", "uv"))
     parser.add_argument(
         "--root", type=Path, default=Path(__file__).resolve().parents[1]
     )
     args = parser.parse_args()
+    if args.find_tool:
+        executable = compatible_path(args.find_tool)
+        if executable:
+            print(executable)
+        return 0 if executable else 1
     errors = (
         (platform_errors() + path_errors(args.root))
         if args.platform
@@ -150,16 +178,14 @@ def main():
     for error in errors:
         print(f"FAIL: {error}")
     if errors and not args.platform:
-        print(
-            "Installation is incomplete or does not match the required tool versions."
-        )
+        print("Installation is incomplete or a required tool is incompatible.")
         print(
             "Run the installer as your normal user (it requests sudo only where needed):"
         )
         print(f"  cd -- {shlex.quote(str(args.root.resolve()))} && ./install.sh")
         print("After it reports 'Software installed', run ./install.sh --check again.")
         print(
-            "Private installer tools take precedence over system Node/uv; do not uninstall your system tools."
+            "Compatible tools on your PATH are reused; do not uninstall your system tools."
         )
     if not errors:
         print(

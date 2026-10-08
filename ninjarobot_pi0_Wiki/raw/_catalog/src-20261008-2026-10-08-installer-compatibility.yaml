@@ -1,0 +1,16 @@
+id: src-20261008-2026-10-08-installer-compatibility
+path: raw/notes/changes/2026-10-08-installer-compatibility.md
+media_type: text/markdown
+kind: text
+title: 2026 10 08 Installer Compatibility
+added_at: '2026-10-08T05:55:16Z'
+content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-08T05:57:14Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-08T05:58:55Z'
+last_plan: pi0-compatibility-review-261008-development-history-and-evolution

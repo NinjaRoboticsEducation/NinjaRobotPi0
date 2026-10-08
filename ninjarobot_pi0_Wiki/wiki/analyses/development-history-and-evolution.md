@@ -20,10 +20,10 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration
   content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
-- id: src-20261008-developmentlog-2
-  resource: urn:llmwiki:source:src-20261008-developmentlog-2
-  title: 'Pi0 log: installer recovery'
-  content_hash: sha256:4528907218a3f7b4ee3828784017e0d8db391e5ebc54f2ed2b0226ff338e63d2
+- id: src-20261008-developmentlog-3
+  resource: urn:llmwiki:source:src-20261008-developmentlog-3
+  title: Developmentlog
+  content_hash: sha256:b91064c29682b237cdabff4f636a4c47b9193187e8c94bc83a0fa5eb9b7c943c
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -40,11 +40,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
   title: Installer diagnostics and recovery validation
   content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
+- id: src-20261008-2026-10-08-installer-compatibility
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
+  title: 2026 10 08 Installer Compatibility
+  content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T01:11:39.942509+00:00'
-  target_hash: sha256:99f4f1f496c4b3a597e10d99386fe742bb6041013e052bd72a2c1611cedf2ee8
+  performed_at: '2026-10-08T05:58:16.294543+00:00'
+  target_hash: sha256:2605818aa6193a5d2333c97632c51fae8d8a35a713729c292b7ae0b88a25ebc2
   result: passed
   checks:
     source_support: passed
@@ -53,11 +57,13 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - 'Checked the current recovery manual/evidence against checker and installer diffs
-    and inert regression results: read-only inspection, actual software install, and
-    Git update are separate. Version/path diagnostics and stage/exit/retry reporting
-    preserve calibration and core behavior. Retained claims preserve original citations;
-    physical acceptance and publication remain pending.'
+  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
+    the installer/checker, locked Vite engines and 205 passing host regressions on
+    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
+    explicitly; device/user requirements, real Node/Python minima, read-only inspection
+    and missing-environment failures remain. Compatible tool reuse and checksum fallback
+    are distinct. Retained hardware/history claims keep their prior sources; no physical
+    or human verification is inferred.
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
@@ -66,7 +72,7 @@ semantic_review:
 
 ## 2026-10-07 implementation checkpoint
 
-Approved installation/onboarding tooling, wiki relocation and immutable manual workflow, and Pi5-derived Pi0 web presentation were implemented with host validation. Historical V5 milestones remain history. Real Raspberry Pi and live account validation remain owner-manual; no release publication occurred during this task.[^src-20261008-developmentlog-2]
+Approved installation/onboarding tooling, wiki relocation and immutable manual workflow, and Pi5-derived Pi0 web presentation were implemented with host validation. Historical V5 milestones remain history. Real Raspberry Pi and live account validation remain owner-manual; no release publication occurred during this task.[^src-20261008-developmentlog-3]
 
 
 The NinjaRobot project evolved from a monolithic educational robot into the modular, AI-powered NinjaRobot V5 platform.[^src-20260822-developmentguide] This document records the chronological milestones, architectural phases, and reliability audits throughout development.[^src-20260822-developmentlog] [^src-20260822-developmentguide]
@@ -106,7 +112,7 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
 
-[^src-20261008-developmentlog-2]: Current versioned Developmentlog.
+[^src-20261008-developmentlog-3]: Current versioned Developmentlog.
 
 ## Implementation evidence and acceptance limits
 
@@ -115,22 +121,35 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 [^src-20261007-2026-10-07-install-onboard-wiki-ui-2]: Pi0 upgrade implementation and current UI contracts.
 
 
-## 2026-10-08 audit follow-up
+## Historical 2026-10-08 audit follow-up (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 The 2026-10-08 follow-up audit corrected onboarding validation/privacy/progress/retry, installer preflight/provenance handling and wiki environment isolation. It rewrote the public README and created new immutable manuals/evidence. Host checks do not substitute for physical Pi, live accounts, remote CI or publication; no core robot code was changed.[^src-20261007-2026-10-08-upgrade-audit]
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 
 
-## Trixie support correction
+## Historical Trixie support correction (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 The owner reported the published bootstrap rejecting Debian 13/trixie. A follow-up corrected both release gates and expanded interpreter CI while preserving robot source and locks. This correction is local until publication; physical Trixie acceptance is still pending.[^src-20261008-2026-10-08-trixie-support]
 
 [^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.
 
 
-## Installation recovery and diagnostics
+## Historical Installation recovery and diagnostics (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 A follow-up request clarified checkout updates versus software installation. The installer gained actionable read-only diagnostics, visible stages and failure/retry messages. Documentation includes fast-forward default-HEAD updates for existing detached clones. Real Pi follow-up remains pending; no automatic publication or hardware operation occurred.[^src-20261008-2026-10-08-installer-recovery]
 
 [^src-20261008-2026-10-08-installer-recovery]: Installer diagnostics and recovery validation.
+
+
+## Current software compatibility policy
+
+After the earlier Bookworm/Trixie and diagnostic fixes, the owner requested genuine minimum/capability checks. The follow-up removes exact Node/uv equality and OS codename gates, reuses compatible tools and retains checked download fallbacks. A real uv 0.9.26 offline host dry-run read the unchanged lockfile. No Pi installation, hardware activation or publication is claimed.[^src-20261008-2026-10-08-installer-compatibility]
+
+[^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.

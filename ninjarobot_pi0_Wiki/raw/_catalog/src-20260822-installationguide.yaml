@@ -12,7 +12,7 @@ retrieved_at: null
 normalized_at: '2026-10-07T07:13:41Z'
 normalizer: llmwiki-text/0.2
 error: null
-ingested_at: '2026-10-08T01:12:23Z'
-last_plan: pi0-recovery-review-261008-installation-and-wiring
+ingested_at: '2026-10-08T05:58:49Z'
+last_plan: pi0-compatibility-review-261008-installation-and-wiring
 previous_content_hash: sha256:8fe90ec3883948bfa196dc62202ee4c22181f706b5797c17eb6f0374f8994adf
 changed_at: '2026-10-07T07:13:40Z'

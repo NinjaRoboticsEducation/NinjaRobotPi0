@@ -633,8 +633,9 @@ def main():
         raise ValueError("Use an interactive terminal for onboarding.")
     from install_check import platform_errors
 
-    if platform_errors():
-        raise ValueError("Onboarding requires Bookworm/Trixie 64-bit on Zero 2 W.")
+    errors = platform_errors()
+    if errors:
+        raise ValueError("Onboarding prerequisites: " + " ".join(errors))
     if args.worker:
         return worker(args.worker)
     return wizard(ROOT, state, args)

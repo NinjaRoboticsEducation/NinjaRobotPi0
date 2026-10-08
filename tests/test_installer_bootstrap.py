@@ -156,26 +156,34 @@ def test_stream_does_not_delegate_to_cwd_lookalike(tmp_path):
 
 
 @pytest.mark.parametrize(
-    "bad_download, uv_failure", [(False, False), (True, False), (False, True)]
+    "bad_download, uv_failure, user_tools",
+    [
+        (False, False, False),
+        (True, False, False),
+        (False, True, False),
+        (False, False, True),
+    ],
 )
 def test_local_install_is_rerunnable_or_stops_on_bad_hash(
-    tmp_path, bad_download, uv_failure
+    tmp_path, bad_download, uv_failure, user_tools
 ):
     checkout = tmp_path / "checkout"
     (checkout / "scripts").mkdir(parents=True)
     (checkout / "ninja_webapp").mkdir()
     (checkout / "servo.json").write_text("preserve calibration")
-    for name in ["install-rpi.sh", "install-versions.env"]:
+    for name in ["install-rpi.sh", "install-versions.env", "install_check.py"]:
         shutil_source = ROOT / "scripts" / name
         (checkout / "scripts" / name).write_bytes(shutil_source.read_bytes())
     binaries = tmp_path / "bin"
     binaries.mkdir()
     log = tmp_path / "calls"
     scripts = {
-        "python3": "exit 0",
+        "python3": f'case "$*" in *--find-tool*) exec {__import__("sys").executable} "$@";; *) exit 0;; esac',
         "sudo": 'printf "sudo:%s\\n" "$*" >> "$CALL_LOG"',
         "systemctl": 'case "$1" in is-active) exit 3;; cat) exit 0;; esac',
         "pigpiod": "echo 79",
+        "uv": "exit 1",
+        "node": "exit 1",
         "npm": 'printf "npm:%s\\n" "$*" >> "$CALL_LOG"',
         "curl": 'while [ "$1" != -o ]; do shift; done; printf invalid > "$2"',
     }
@@ -192,9 +200,15 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
         (tools / "uv").mkdir()
         p = tools / "uv/uv"
         p.write_text(
-            '#!/bin/sh\n[ -z "${UV_PROJECT_ENVIRONMENT:-}${UV_PROJECT:-}${VIRTUAL_ENV:-}" ] || exit 7\ncase "$1" in --version) echo "uv 0.11.29";; *) [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; esac\n'
+            '#!/bin/sh\n[ -z "${UV_PROJECT_ENVIRONMENT:-}${UV_PROJECT:-}${VIRTUAL_ENV:-}" ] || exit 7\ncase "$1" in --version) echo "uv 0.9.26";; sync) if [ "${2:-}" = --help ]; then echo "--locked --no-dev --python --directory --all-extras"; exit 0; fi; [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; *) [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; esac\n'
         )
         p.chmod(0o755)
+    if user_tools:
+        (binaries / "node").write_text("#!/bin/sh\necho v24.21.0\n")
+        (binaries / "uv").write_bytes((tools / "uv/uv").read_bytes())
+        # These older private versions must not override compatible user tools.
+        (tools / "node/bin/node").write_text("#!/bin/sh\nexit 91\n")
+        (tools / "uv/uv").write_text("#!/bin/sh\nexit 92\n")
     env = {
         **os.environ,
         "HOME": str(tmp_path / "home"),
@@ -203,7 +217,7 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
         "UV_PROJECT_ENVIRONMENT": str(tmp_path / "unrelated-venv"),
         "UV_PROJECT": str(tmp_path / "unrelated-project"),
         "VIRTUAL_ENV": str(tmp_path / "unrelated-venv"),
-        "PATH": str(binaries) + ":" + os.environ["PATH"],
+        "PATH": str(binaries) + ":/usr/bin:/bin",
     }
     for _ in range(2 if not (bad_download or uv_failure) else 1):
         result = subprocess.run(
@@ -224,11 +238,11 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
             in result.stderr
         )
         assert "./install.sh" in result.stderr
-        assert "npm:" not in calls
+        assert "npm:ci" not in calls and "npm:run" not in calls
     elif bad_download:
-        assert "Installation stopped during: Pinned uv tooling" in result.stderr
+        assert "Installation stopped during: Compatible uv tooling" in result.stderr
         assert "checksum mismatch" in result.stderr
-        assert "npm:" not in calls
+        assert "npm:ci" not in calls and "npm:run" not in calls
     else:
         assert calls.count("npm:ci --include=dev --no-audit --no-fund") == 2
     assert "systemctl start" not in calls and "ninja_core server" not in calls

@@ -5,9 +5,9 @@
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-08-recovery/InstallationGuide.md",
-      "source_id": "src-20261008-installationguide-2",
-      "content_hash": "sha256:76054ec1dd83d36e06b781440e8334da800ed659301cbeb0adcd7fd3a960d382",
+      "path": "raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md",
+      "source_id": "src-20261008-installationguide-3",
+      "content_hash": "sha256:734051f87ce7f447ae50bee7863118612f55b5747cd42e3cb047662a5408081f",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-08-recovery/DevelopmentGuide.md",
-      "source_id": "src-20261008-developmentguide-2",
-      "content_hash": "sha256:d99c59d6cfd0b09ecc4ff0041935818769956cc74aac61670275fa2371f691c6",
+      "path": "raw/articles/ninjarobotpi0/2026-10-08-compatibility/DevelopmentGuide.md",
+      "source_id": "src-20261008-developmentguide-3",
+      "content_hash": "sha256:0fc10ebdf50056c8d26521e3251d265cf5b2a764c98b9b1c13f2204310385178",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-08-recovery/DevelopmentLog.md",
-      "source_id": "src-20261008-developmentlog-2",
-      "content_hash": "sha256:4528907218a3f7b4ee3828784017e0d8db391e5ebc54f2ed2b0226ff338e63d2",
+      "path": "raw/notes/ninjarobotpi0/2026-10-08-compatibility/DevelopmentLog.md",
+      "source_id": "src-20261008-developmentlog-3",
+      "content_hash": "sha256:b91064c29682b237cdabff4f636a4c47b9193187e8c94bc83a0fa5eb9b7c943c",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -253,13 +253,13 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "install.sh": {
-      "content_hash": "sha256:7b9347b2cd8b18a6517d55c97e673423277b47df0cbd5e9bd273aa682189dbf9",
+      "content_hash": "sha256:f5fbd4b008c40891ae5a1aa2b13ff0810a05eadd737873be7d2fc39c6601a44a",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed recovery diagnostics: expected/detected versions and paths, timeout/exec handling, read-only checks, shell-quoted retry command, failure-stage/exit reporting, cleanup and calibration preservation. Explicit fast-forward default-HEAD update instructions; no core or dependency changes."
+      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "ninja_ble/pyproject.toml": {
       "content_hash": "sha256:8cd1b579adc08cf90769a951469681732c03d8d321895583f063002c60d830db",
@@ -1587,31 +1587,31 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "scripts/install-rpi.sh": {
-      "content_hash": "sha256:68093df15423c6fcf5493030ef5aa15df56d22f0c0a2ebd35a1586529a4394db",
+      "content_hash": "sha256:72350511e68bdb992cc6e2d5c51963cd1d136bc147743c49ee8aeb89da47d116",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed recovery diagnostics: expected/detected versions and paths, timeout/exec handling, read-only checks, shell-quoted retry command, failure-stage/exit reporting, cleanup and calibration preservation. Explicit fast-forward default-HEAD update instructions; no core or dependency changes."
+      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "scripts/install-versions.env": {
-      "content_hash": "sha256:10946ffa3101a942d2472c85965d53eb1fde57f6762fab42e838af4ec2690273",
+      "content_hash": "sha256:9677769b8cbc56ca988eebc8d6a3b6403ee02bef3e72869382fd198499643d17",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "scripts/install_check.py": {
-      "content_hash": "sha256:d759fd0cdc4c9a52947deec4253600c58d82185df97be9cbe4f4e90533d3d782",
+      "content_hash": "sha256:5e52189ef5af66064a6066c6f5f2a431268397341988e22aa23041880fafc47e",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed recovery diagnostics: expected/detected versions and paths, timeout/exec handling, read-only checks, shell-quoted retry command, failure-stage/exit reporting, cleanup and calibration preservation. Explicit fast-forward default-HEAD update instructions; no core or dependency changes."
+      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "scripts/install_record.py": {
       "content_hash": "sha256:6f63bf879885e2eaa5220f8159c84c61e8d15fad77e6d964729f1c345be16db2",
@@ -1632,13 +1632,13 @@
       "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
     },
     "scripts/onboard.py": {
-      "content_hash": "sha256:79c6241f6b9fcc9b2d2d5885b9c20d972fa8b898ddf00ff1f78e5a1a2ae62d55",
+      "content_hash": "sha256:332dcc310543cd3cdfa1462ef0d181082bc6eeb321e63a4fe63960849f60b2d0",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
+      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "scripts/verify_core.py": {
       "content_hash": "sha256:bb1943c6120fb7c4daa1cfce815ab92dd895a9a513fddd59aa585c460f97846c",
@@ -1752,11 +1752,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_installer_bootstrap.py": {
-      "content_hash": "sha256:8a6d892a8d8d3a328707bb1ec15cce7a5b8a05af0857e45e1a3a4ab38d740203",
+      "content_hash": "sha256:cc2d3f958597cf123d2c30c752e3fb12d3d5fddf5bb0ffcd0019dc003ae56927",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed recovery diagnostics: expected/detected versions and paths, timeout/exec handling, read-only checks, shell-quoted retry command, failure-stage/exit reporting, cleanup and calibration preservation. Explicit fast-forward default-HEAD update instructions; no core or dependency changes."
+      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "tests/test_ninja_agent_model.py": {
       "content_hash": "sha256:9207aa5211b1023438ebff95561f6ec6d49708793643fbb951eaf984ef3354ba",
@@ -1794,11 +1794,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_upgrade_workflows.py": {
-      "content_hash": "sha256:a520e0ae50aec9c1235bf5d3ff8b6cfa252b7840c4cca8aaf04843dad2954e5c",
+      "content_hash": "sha256:dceb9d0d23438885f1c1fc11f20a36dab63dc63fc49e552c4a2e7c1b7b29ea5f",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed recovery diagnostics: expected/detected versions and paths, timeout/exec handling, read-only checks, shell-quoted retry command, failure-stage/exit reporting, cleanup and calibration preservation. Explicit fast-forward default-HEAD update instructions; no core or dependency changes."
+      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "uv.lock": {
       "content_hash": "sha256:ebd98dea646e54a0329532844d4784ffd51cec2598b1657c23db54735dda0b45",
@@ -1811,8 +1811,8 @@
       "pages": [
         "wiki/overview.md"
       ],
-      "content_hash": "sha256:db8729e26b1e56d4a802e000200c9d60005f590fb944b0b167a8cb381ceac60b",
-      "review_note": "Reviewed recovery diagnostics: expected/detected versions and paths, timeout/exec handling, read-only checks, shell-quoted retry command, failure-stage/exit reporting, cleanup and calibration preservation. Explicit fast-forward default-HEAD update instructions; no core or dependency changes."
+      "content_hash": "sha256:67ddf26539f72e07ed446e8bf9d7bacbf70703a40c0483f5159d9ac23ea0baab",
+      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     }
   },
   "adapters": [

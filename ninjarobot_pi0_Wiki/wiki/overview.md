@@ -24,14 +24,14 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-migration-audit
   title: 2026 10 07 Ninjarobot Pi0 Migration Audit
   content_hash: sha256:6c223e850e920baffe83a0fbcf3f7c4471a97f4fbcc823e93d5cd2e33666d4ab
-- id: src-20261008-installationguide-2
-  resource: urn:llmwiki:source:src-20261008-installationguide-2
-  title: Pi0 installation and recovery instructions
-  content_hash: sha256:76054ec1dd83d36e06b781440e8334da800ed659301cbeb0adcd7fd3a960d382
-- id: src-20261008-developmentguide-2
-  resource: urn:llmwiki:source:src-20261008-developmentguide-2
-  title: 'Pi0 development: installer diagnostics'
-  content_hash: sha256:d99c59d6cfd0b09ecc4ff0041935818769956cc74aac61670275fa2371f691c6
+- id: src-20261008-installationguide-3
+  resource: urn:llmwiki:source:src-20261008-installationguide-3
+  title: Installationguide
+  content_hash: sha256:734051f87ce7f447ae50bee7863118612f55b5747cd42e3cb047662a5408081f
+- id: src-20261008-developmentguide-3
+  resource: urn:llmwiki:source:src-20261008-developmentguide-3
+  title: Developmentguide
+  content_hash: sha256:0fc10ebdf50056c8d26521e3251d265cf5b2a764c98b9b1c13f2204310385178
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -40,10 +40,10 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
-- id: src-20261008-readme-2
-  resource: urn:llmwiki:source:src-20261008-readme-2
-  title: 'Pi0 README: explicit recovery walkthrough'
-  content_hash: sha256:8cca92e768174233e833566a9821cdcd6657c78f92b4d752e70f26aaa248e4fa
+- id: src-20261008-readme-3
+  resource: urn:llmwiki:source:src-20261008-readme-3
+  title: Readme
+  content_hash: sha256:c9ced856b42efefacbb3800f8abc7048b8f65b5b0237f4d2d640619a39926121
 - id: src-20261008-2026-10-08-trixie-support
   resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
@@ -52,11 +52,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
   title: Installer diagnostics and recovery validation
   content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
+- id: src-20261008-2026-10-08-installer-compatibility
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
+  title: 2026 10 08 Installer Compatibility
+  content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T01:11:34.947144+00:00'
-  target_hash: sha256:316a37b2f88e0faa5dd6d24f343d87fd0731ba98368412e6c41a5be9b8241ffb
+  performed_at: '2026-10-08T05:58:09.896854+00:00'
+  target_hash: sha256:90ccdee791ac4c5d3728048d79b0fde38e2ec74fee6350d62a07638d89f18645
   result: passed
   checks:
     source_support: passed
@@ -65,11 +69,13 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - 'Checked the current recovery manual/evidence against checker and installer diffs
-    and inert regression results: read-only inspection, actual software install, and
-    Git update are separate. Version/path diagnostics and stage/exit/retry reporting
-    preserve calibration and core behavior. Retained claims preserve original citations;
-    physical acceptance and publication remain pending.'
+  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
+    the installer/checker, locked Vite engines and 205 passing host regressions on
+    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
+    explicitly; device/user requirements, real Node/Python minima, read-only inspection
+    and missing-environment failures remain. Compatible tool reuse and checksum fallback
+    are distinct. Retained hardware/history claims keep their prior sources; no physical
+    or human verification is inferred.
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
@@ -78,7 +84,7 @@ semantic_review:
 
 ## Current setup and documentation
 
-The supported installer targets Zero 2 W with Bookworm/Trixie 64-bit. `./install.sh` installs software; `./onboard.sh` guides existing hardware tools and Gemini/ngrok settings. Full current manuals are immutable versions inside `ninjarobot_pi0_Wiki`; root manuals preserve public links. Pi0 uses a Pi5-style navy/cyan web presentation with its existing control contracts. Real-device final validation remains pending. Current React metadata is 19.2.0; descriptions of React 18 in earlier reference material are historical. See [guided onboarding](concepts/guided-onboarding.md), [development workflow](concepts/development-workflow.md), [web design](concepts/web-interface-design.md), [installation manual](references/installation-guide.md), and [development manual](references/development-guide.md).[^src-20261008-installationguide-2] [^src-20261008-developmentguide-2]
+The installer targets Zero 2 W with Debian-based Raspberry Pi OS 64-bit; current requirements are below. `./install.sh` installs software; `./onboard.sh` guides existing hardware tools and Gemini/ngrok settings. Full current manuals are immutable versions inside `ninjarobot_pi0_Wiki`; root manuals preserve public links. Pi0 uses a Pi5-style navy/cyan web presentation with its existing control contracts. Real-device final validation remains pending. Current React metadata is 19.2.0; descriptions of React 18 in earlier reference material are historical. See [guided onboarding](concepts/guided-onboarding.md), [development workflow](concepts/development-workflow.md), [web design](concepts/web-interface-design.md), [installation manual](references/installation-guide.md), and [development manual](references/development-guide.md).[^src-20261008-installationguide-3] [^src-20261008-developmentguide-3]
 
 
 **NinjaRobotPi0** is an advanced, modular AI robot platform designed for research and STEAM education, powered by the Raspberry Pi Zero 2W.[^src-20260822-readme] It integrates a Google Gemini agent with a mobile-first web interface, dual connectivity (Wi-Fi and Bluetooth Low Energy), and rebuilt non-blocking hardware drivers.[^src-20260822-readme] [^src-20260822-developmentguide]
@@ -141,9 +147,9 @@ Current repository documentation uses NinjaRobotPi0; historical audits and V5 ve
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]: Audit evidence covering documentation attribution, current naming, default-branch links, and clean-clone wiki normalization.
 
-[^src-20261008-installationguide-2]: Current versioned Installationguide.
+[^src-20261008-installationguide-3]: Current versioned Installationguide.
 
-[^src-20261008-developmentguide-2]: Current versioned DevelopmentGuide.
+[^src-20261008-developmentguide-3]: Current versioned DevelopmentGuide.
 
 ## Implementation evidence and acceptance limits
 
@@ -152,26 +158,39 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 [^src-20261007-2026-10-07-install-onboard-wiki-ui-2]: Pi0 upgrade implementation and current UI contracts.
 
 
-## 2026-10-08 audit follow-up
+## Historical 2026-10-08 audit follow-up (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 A comprehensive public README now follows Pi5 introduction, hardware/OS preparation, curl installation, guided initialization, browser access, first tests and troubleshooting. Japanese and Chinese sections are explicitly summaries. The wizard aligns its console flow with Pi5 while preserving Pi0 capabilities and manual runtime startup. See the current full manuals for the audit corrections and pending device acceptance.[^src-20261007-2026-10-08-upgrade-audit]
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 
-The public walkthrough is preserved as versioned README evidence.[^src-20261008-readme-2]
+The public walkthrough is preserved as versioned README evidence.[^src-20261008-readme-3]
 
-[^src-20261008-readme-2]: Pi0 public README — audit 2026-10-08.
+[^src-20261008-readme-3]: Pi0 public README — audit 2026-10-08.
 
 
-## Trixie support correction
+## Historical Trixie support correction (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 The installer target now includes Bookworm (Debian 12) and Trixie (Debian 13), both 64-bit on Zero 2 W. The earlier rejection was the explicit Bookworm-only release check, not a failure of 64-bit detection. Both bootstrap and local/onboarding preflight have matching allowlists. Real Trixie hardware acceptance remains pending.[^src-20261008-2026-10-08-trixie-support]
 
 [^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.
 
 
-## Installation recovery and diagnostics
+## Historical Installation recovery and diagnostics (superseded policy)
+
+The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
 The current README provides explicit recovery steps: update Git by fetching default HEAD and fast-forwarding, run the installer, then check. Checks remain read-only and report versions, paths and retry commands. Installation failures identify their stage. This does not operate hardware or automatically update Git.[^src-20261008-2026-10-08-installer-recovery]
 
 [^src-20261008-2026-10-08-installer-recovery]: Installer diagnostics and recovery validation.
+
+
+## Current software compatibility policy
+
+Installer checks now use compatibility instead of exact OS/Node/uv versions. No OS codename allowlist remains. The device, Linux aarch64, Debian-family OS, normal-user and Python 3.10+ requirements remain; optional wiki needs Python 3.11+. Bookworm/Trixie are reference targets, not a complete allowlist or proof of physical acceptance.[^src-20261008-2026-10-08-installer-compatibility]
+
+[^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.

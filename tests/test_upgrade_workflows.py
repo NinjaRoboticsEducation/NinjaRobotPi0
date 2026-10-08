@@ -234,23 +234,19 @@ def test_ngrok_failure_restores_selected_file(
     assert not list(tmp_path.glob(".config-restore-*"))
 
 
-def test_bootstrap_release_allowlist_accepts_bookworm_and_trixie(tmp_path):
-    # Exercise the actual shell expression; hardware identity is independently gated.
+def test_bootstrap_distribution_gate_without_codename_allowlist(tmp_path):
     script = (ROOT / "install.sh").read_text()
+    assert "VERSION_CODENAME" not in script
     line = next(
-        line.strip() for line in script.splitlines() if "VERSION_CODENAME=" in line
+        line.strip() for line in script.splitlines() if "grep -Eq '^ID=" in line
     )
     command = line.split(" || ", 1)[0].replace(
         "/etc/os-release", str(tmp_path / "release")
     )
     for release, expected in [
-        ("VERSION_CODENAME=bookworm", 0),
-        ('VERSION_CODENAME="bookworm"', 0),
-        ("VERSION_CODENAME=trixie", 0),
-        ('VERSION_CODENAME="trixie"', 0),
-        ("VERSION_CODENAME=bullseye", 1),
-        ("VERSION_CODENAME=forky", 1),
-        ("VERSION_CODENAME=trixie-testing", 1),
+        ("ID=debian", 0),
+        ('ID="raspbian"', 0),
+        ("ID=ubuntu", 1),
         ("", 1),
     ]:
         (tmp_path / "release").write_text(release + "\n")
@@ -431,7 +427,7 @@ def test_worker_cannot_bypass_supported_platform(tmp_path, monkeypatch):
     monkeypatch.setattr(
         onboard, "worker", lambda _: pytest.fail("Worker bypassed preflight")
     )
-    with pytest.raises(ValueError, match="Bookworm"):
+    with pytest.raises(ValueError, match="unsupported"):
         onboard.main()
 
 
@@ -507,9 +503,7 @@ def test_platform_release_matrix(tmp_path, monkeypatch, codename, quoted):
         f'PRETTY_NAME="Debian GNU/Linux 13 (trixie)"\nID=debian\nVERSION_CODENAME={value}\n'
     )
     errors = check.platform_errors(model, release)
-    assert (not errors) == (codename in ("bookworm", "trixie"))
-    if errors:
-        assert "detected ID=debian" in errors[0]
+    assert not errors
 
 
 @pytest.mark.parametrize(
@@ -548,12 +542,15 @@ def test_incomplete_check_explains_versions_and_repair_without_writes(
     monkeypatch.setattr(check, "platform_errors", lambda: [])
     monkeypatch.setattr(check, "path_errors", lambda _: [])
     monkeypatch.setattr(check.shutil, "which", lambda command: "/system/bin/" + command)
-    versions = {"node": "v20.1.0", "uv": "uv 0.9.0", "pigpiod": "79"}
+    versions = {"node": "v20.1.0", "uv": "uv 0.9.26", "pigpiod": "79", "npm": "10.0.0"}
     monkeypatch.setattr(
         check.subprocess,
         "run",
         lambda command, **kwargs: SimpleNamespace(
-            returncode=0, stdout=versions[Path(command[0]).name]
+            returncode=0,
+            stdout=" ".join(check.UV_FLAGS)
+            if command[1:] == ["sync", "--help"]
+            else versions[Path(command[0]).name],
         ),
     )
     monkeypatch.setattr(sys, "argv", ["install_check.py", "--root", str(tmp_path)])
@@ -561,8 +558,12 @@ def test_incomplete_check_explains_versions_and_repair_without_writes(
     assert check.main() == 1
     output = capsys.readouterr().out
     assert "Read-only" in output
-    assert "required v22.23.3, detected 'v20.1.0' at /system/bin/node" in output
-    assert "required uv 0.11.29, detected 'uv 0.9.0'" in output
+    assert (
+        "requires Node 20.19+ in 20.x, or >=22.12.0; detected 'v20.1.0' at /system/bin/node"
+        in output
+    )
+    assert "Incompatible uv" not in output
+    assert "version mismatch" not in output
     assert "Missing .venv/bin/python; project installation is incomplete" in output
     assert "Missing .venv/bin/ninja_core" in output
     assert "./install.sh" in output
@@ -594,3 +595,89 @@ def test_check_handles_unrunnable_tool_and_venv(tmp_path, monkeypatch, failure):
     errors = check.check(tmp_path)
     assert any("Cannot read node version" in error for error in errors)
     assert any("Project Python could not run" in error for error in errors)
+
+
+@pytest.mark.parametrize(
+    "version,accepted",
+    [
+        ("v20.18.9", False),
+        ("v20.19.0", True),
+        ("v21.9.0", False),
+        ("v22.11.9", False),
+        ("v22.12.0", True),
+        ("v24.21.0", True),
+        ("v26.0.0", True),
+        ("v24.0.0-rc.1", False),
+        ("garbage", False),
+    ],
+)
+def test_node_uses_locked_vite_engine_range(monkeypatch, version, accepted):
+    check = load("install_check")
+    monkeypatch.setattr(
+        check.subprocess,
+        "run",
+        lambda *a, **k: SimpleNamespace(returncode=0, stdout=version),
+    )
+    assert (check.tool_error("node", "/node") is None) == accepted
+
+
+@pytest.mark.parametrize("missing", [False, True])
+def test_uv_capabilities_instead_of_exact_version(monkeypatch, missing):
+    check = load("install_check")
+
+    def run(command, **kwargs):
+        return SimpleNamespace(
+            returncode=0,
+            stdout="uv 0.9.26"
+            if command[-1] == "--version"
+            else " ".join(check.UV_FLAGS[1:] if missing else check.UV_FLAGS),
+        )
+
+    monkeypatch.setattr(check.subprocess, "run", run)
+    assert (check.tool_error("uv", "/uv") is None) != missing
+
+
+def test_compatible_selection_skips_old_tools_and_prefers_user_path(
+    tmp_path, monkeypatch
+):
+    check = load("install_check")
+    for name, version in [
+        ("old", "v18.0.0"),
+        ("user", "v24.21.0"),
+        ("private", "v22.23.3"),
+    ]:
+        directory = tmp_path / name
+        directory.mkdir()
+        executable = directory / "node"
+        executable.write_text("#!/bin/sh\necho " + version + "\n")
+        executable.chmod(0o755)
+    monkeypatch.setenv(
+        "PATH", ":".join(str(tmp_path / n) for n in ["old", "user", "private"])
+    )
+    assert check.compatible_path("node") == str(tmp_path / "user/node")
+
+
+@pytest.mark.parametrize(
+    "python_version,allowed",
+    [((3, 9, 9), False), ((3, 10, 0), True), ((3, 13, 0), True)],
+)
+def test_python_runtime_minimum(tmp_path, monkeypatch, python_version, allowed):
+    check = load("install_check")
+    monkeypatch.setattr(check.platform, "system", lambda: "Linux")
+    monkeypatch.setattr(check.platform, "machine", lambda: "aarch64")
+    monkeypatch.setattr(check.os, "geteuid", lambda: 1000)
+    monkeypatch.setattr(check.sys, "version_info", python_version)
+    model = tmp_path / "model"
+    model.write_text("Raspberry Pi Zero 2 W")
+    release = tmp_path / "os-release"
+    release.write_text("ID=debian\n")
+    assert (not check.platform_errors(model, release)) == allowed
+
+
+def test_node_requirement_matches_committed_build_tool_engines():
+    lock = json.loads((ROOT / "ninja_webapp/package-lock.json").read_text())
+    for package in ("vite", "@vitejs/plugin-react"):
+        assert (
+            lock["packages"]["node_modules/" + package]["engines"]["node"]
+            == "^20.19.0 || >=22.12.0"
+        )
