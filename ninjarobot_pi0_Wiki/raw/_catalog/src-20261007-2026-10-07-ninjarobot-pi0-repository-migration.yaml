@@ -1,0 +1,16 @@
+id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
+path: raw/notes/changes/2026-10-07-ninjarobot-pi0-repository-migration.md
+media_type: text/markdown
+kind: text
+title: 2026 10 07 Ninjarobot Pi0 Repository Migration
+added_at: '2026-10-07T07:00:13Z'
+content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
+state: ingested
+original_uri: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-07T07:00:31Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-07T17:40:22Z'
+last_plan: pi0-audit-review-261008-development-history-and-evolution

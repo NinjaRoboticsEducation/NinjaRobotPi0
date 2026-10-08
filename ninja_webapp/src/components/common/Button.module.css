@@ -20,12 +20,12 @@
 /* Variants */
 .primary {
     background-color: var(--color-primary);
-    color: white;
+    color: #03080c;
     box-shadow: var(--shadow-soft);
 }
 
 .primary:hover:not(:disabled) {
-    background-color: #0066b3;
+    background-color: #0785cb;
     transform: translateY(-1px);
 }
 
@@ -46,18 +46,18 @@
 
 .cta {
     background-color: var(--color-cta);
-    color: white;
+    color: #03080c;
     box-shadow: var(--shadow-soft);
 }
 
 .cta:hover:not(:disabled) {
-    background-color: #e67a00;
+    background-color: #0785cb;
     transform: translateY(-1px);
 }
 
 .danger {
     background-color: var(--color-danger);
-    color: white;
+    color: var(--color-text);
 }
 
 .danger:hover:not(:disabled) {
@@ -66,7 +66,7 @@
 
 .success {
     background-color: var(--color-success);
-    color: white;
+    color: var(--color-text);
 }
 
 .success:hover:not(:disabled) {

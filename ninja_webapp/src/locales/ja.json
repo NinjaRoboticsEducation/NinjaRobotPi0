@@ -7,13 +7,25 @@
     },
     "header": {
         "connected": "接続済み",
-        "disconnected": "未接続"
+        "disconnected": "未接続",
+        "advertising": "BLE広告中",
+        "bleOff": "BLE停止",
+        "openMenu": "ロボットメニューを開く",
+        "closeMenu": "メニューを閉じる",
+        "menuTitle": "ロボットメニュー",
+        "navigation": "ナビゲーション"
     },
     "home": {
         "welcome": "NinjaRobotへようこそ",
         "subtitle": "ロボットとの対話方法を選んでください",
         "chatButton": "ロボットとチャット",
-        "codeButton": "ロボットをプログラム"
+        "codeButton": "ロボットをプログラム",
+        "systemTitle": "システム電源",
+        "sliderText": "スライドして電源を切る",
+        "shutdownConfirm": "ロボットの電源を切りますか？",
+        "shuttingDown": "終了処理中…",
+        "shutdownSuccess": "終了処理中です。ランプが消えるまでお待ちください。",
+        "shutdownError": "終了できませんでした。もう一度お試しください。"
     },
     "agent": {
         "title": "忍者エージェント",
@@ -24,7 +36,15 @@
         "sounds": "サウンド",
         "movements": "動き",
         "distance": "距離",
-        "distanceUnit": "mm"
+        "distanceUnit": "mm",
+        "welcome": "Ninjaです。メッセージを入力するか、マイクをご利用ください。",
+        "systemLog": "システム動作",
+        "logEmpty": "イベントがここに表示されます。",
+        "runExpressions": "表情を実行",
+        "runSounds": "音を再生",
+        "runMovements": "動作を実行",
+        "error": "ロボットに接続できません。",
+        "speechNotSupported": "音声認識を利用できません。"
     },
     "code": {
         "title": "コード",
@@ -45,7 +65,10 @@
         "gettingStarted": "はじめに",
         "gettingStartedText": "Bluetoothでロボットを接続し、ビジュアルブロックでプログラミングするか、AIエージェントとチャットしましょう。",
         "troubleshooting": "トラブルシューティング",
-        "troubleshootingText": "問題が発生した場合は、ページを更新するか、ロボットを再起動してください。"
+        "troubleshootingText": "問題が発生した場合は、ページを更新するか、ロボットを再起動してください。",
+        "onboarding": "初期設定ガイド",
+        "onboardingText": "ロボットの端末で初期設定ツールを実行し、既存デバイスの校正と Gemini／ngrok の設定を行います。",
+        "fullGuide": "完全な導入ガイド"
     },
     "language": {
         "label": "言語",

@@ -1,0 +1,16 @@
+id: src-20261007-developmentlog
+path: raw/notes/ninjarobotpi0/2026-10-07/DevelopmentLog.md
+media_type: text/markdown
+kind: text
+title: Developmentlog
+added_at: '2026-10-07T12:46:50Z'
+content_hash: sha256:9576db7bfbda42c9fbfa93288ad5a302335b09f0a4e9d9a2df706023ebcaaa11
+state: ingested
+original_uri: urn:llmwiki:source:src-20261007-developmentlog
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-07T12:47:18Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-07T13:11:36Z'
+last_plan: pi0-upgrade-review-development-history-and-evolution

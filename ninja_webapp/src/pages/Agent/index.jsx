@@ -6,7 +6,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Button from '../../components/common/Button';
 import styles from './Agent.module.css';
 
 function Agent() {
@@ -232,7 +231,7 @@ function Agent() {
                 <div className={styles.chatMessages}>
                     {messages.length === 0 && (
                         <div className={styles.welcomeMessage}>
-                            <p>{"Hi! I'm Ninja. Please enter your message or click the microphone to speak to me."}</p>
+                            <p>{t('agent.welcome')}</p>
                         </div>
                     )}
                     {messages.map((msg, idx) => (
@@ -255,12 +254,13 @@ function Agent() {
                     <button
                         className={`${styles.micButton} ${isRecording ? styles.recording : ''}`}
                         onClick={toggleVoiceRecording}
-                        title="Voice Input"
+                        title={t('agent.voice')} aria-label={t('agent.voice')} aria-pressed={isRecording}
                     >
                         {isRecording ? '⏹️' : '🎤'}
                     </button>
                     <input
                         type="text"
+                        aria-label={t('agent.placeholder')}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyPress={handleKeyPress}
@@ -286,6 +286,7 @@ function Agent() {
                     <div className={styles.controlRow}>
                         <select
                             className={styles.select}
+                            aria-label={t('agent.expressions')}
                             value={selectedExpr}
                             onChange={(e) => setSelectedExpr(e.target.value)}
                         >
@@ -295,6 +296,7 @@ function Agent() {
                         </select>
                         <button
                             className={styles.execButton}
+                            aria-label={t('agent.runExpressions')}
                             onClick={() => triggerAction('expressions', selectedExpr)}
                         >▶</button>
                     </div>
@@ -306,6 +308,7 @@ function Agent() {
                     <div className={styles.controlRow}>
                         <select
                             className={styles.select}
+                            aria-label={t('agent.sounds')}
                             value={selectedSound}
                             onChange={(e) => setSelectedSound(e.target.value)}
                         >
@@ -315,6 +318,7 @@ function Agent() {
                         </select>
                         <button
                             className={styles.execButton}
+                            aria-label={t('agent.runSounds')}
                             onClick={() => triggerAction('sounds', selectedSound)}
                         >▶</button>
                     </div>
@@ -326,6 +330,7 @@ function Agent() {
                     <div className={styles.controlRow}>
                         <select
                             className={styles.select}
+                            aria-label={t('agent.movements')}
                             value={selectedMove}
                             onChange={(e) => setSelectedMove(e.target.value)}
                         >
@@ -335,6 +340,7 @@ function Agent() {
                         </select>
                         <button
                             className={styles.execButton}
+                            aria-label={t('agent.runMovements')}
                             onClick={() => triggerAction('movements', selectedMove)}
                         >▶</button>
                     </div>
@@ -345,13 +351,15 @@ function Agent() {
             <div className={`${styles.logPanel} ${isLogPanelOpen ? styles.open : ''}`}>
                 <button
                     className={styles.logPanelTab}
+                    aria-expanded={isLogPanelOpen}
+                    aria-controls="robot-activity-log"
                     onClick={() => setIsLogPanelOpen(!isLogPanelOpen)}
                 >
-                    {isLogPanelOpen ? '▼' : '▲'} System Log ({logs.length})
+                    {isLogPanelOpen ? '▼' : '▲'} {t('agent.systemLog')} ({logs.length})
                 </button>
-                <div className={styles.logContent}>
+                <div id="robot-activity-log" className={styles.logContent}>
                     {logs.length === 0 ? (
-                        <div className={styles.logPlaceholder}>Events will appear here...</div>
+                        <div className={styles.logPlaceholder}>{t('agent.logEmpty')}</div>
                     ) : (
                         logs.map((log, i) => (
                             <div key={i} className={styles.logEntry}>{log}</div>

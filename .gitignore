@@ -3,3 +3,19 @@
 /servo.json
 /buzzer.json
 /config_bak.json
+
+# Installer/development environments and private workflow state
+.venv/
+.venv-dev/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ninjarobot-install/
+.ninjarobot-install.lock/
+/onboarding.json
+
+/pi0disp/display.json
+/pi0servo/src/pi0servo/servo.json
+/pi0vl53l0x/src/pi0vl53l0x/config/vl53l0x.json
+/.config-restore-*

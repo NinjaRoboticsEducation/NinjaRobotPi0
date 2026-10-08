@@ -1,0 +1,16 @@
+id: src-20261007-developmentguide-3
+path: raw/articles/ninjarobotpi0/2026-10-08/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Pi0 development guide — audit 2026-10-08
+added_at: '2026-10-07T17:38:04Z'
+content_hash: sha256:af9d4c121796a7373ef9bb02ca590931d7d88e4a86184f870c780c0e067d77d1
+state: ingested
+original_uri: urn:llmwiki:source:src-20261007-developmentguide-3
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-07T17:40:21Z'
+last_plan: pi0-audit-review-261008-overview

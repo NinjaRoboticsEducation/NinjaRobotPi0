@@ -1,0 +1,16 @@
+id: src-20261007-2026-10-08-upgrade-audit
+path: raw/notes/changes/2026-10-08-upgrade-audit.md
+media_type: text/markdown
+kind: text
+title: Pi0 upgrade audit findings and boundaries
+added_at: '2026-10-07T17:38:05Z'
+content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
+state: ingested
+original_uri: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-07T17:40:22Z'
+last_plan: pi0-audit-review-261008-development-history-and-evolution

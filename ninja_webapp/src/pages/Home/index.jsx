@@ -5,7 +5,6 @@
 
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Button from '../../components/common/Button';
 import PowerOffSlider from '../../components/common/PowerOffSlider';
 import styles from './Home.module.css';
 
@@ -25,9 +24,9 @@ function Home() {
                 <p className={styles.subtitle}>{t('home.subtitle')}</p>
 
                 <Link to="/agent" className={styles.ctaLink}>
-                    <Button variant="cta" size="large">
+                    <span className={styles.chatAction}>
                         💬 {t('home.chatButton')}
-                    </Button>
+                    </span>
                 </Link>
             </div>
 

@@ -14,7 +14,7 @@ Never energize servos, GPIO, the buzzer, display backlight, or other hardware me
 
 ## Canonical knowledge base
 
-The local project knowledge base is `Wiki/NinjaRobotPi0_Wiki`.
+The local project knowledge base is `ninjarobot_pi0_Wiki`.
 
 Use the `robot-wiki-query` skill before making or reviewing decisions about:
 
@@ -46,7 +46,7 @@ The wiki can be draft, stale, conflicting, unverified, or semantically unreviewe
 Read and follow the matching skill completely:
 
 - `robot-wiki-query`: retrieve traceable NinjaRobot knowledge without editing the wiki.
-- `robot-wiki-maintain`: synchronize project-owned source snapshots and prepare reviewed wiki updates.
+- `robot-wiki-maintain`: create immutable source versions and prepare reviewed wiki updates.
 - `pi0driver-development`: substantial work in `pi0buzzer`, `pi0servo`, `pi0disp`, or `pi0vl53l0x`.
 - `project-documentation`: any behavior, setup, architecture, workflow, or public API change.
 - `pi-validation`: hardware-facing or deployment-relevant changes.
@@ -61,28 +61,26 @@ The canonical skills live in `.agents/skills/`. Codex, Google Antigravity, and C
 4. For substantial or hardware-relevant work, present a phased plan and wait for approval before risky coding.
 5. Implement small, reviewable diffs and preserve compatibility surfaces unless a change is explicitly approved.
 6. Run the narrowest relevant checks first, then broader checks when changes cross package boundaries.
-7. Update all affected project documentation and append `DevelopmentLog.md`.
-8. Run the `robot-wiki-maintain` completion gate. A task that changes documented knowledge is not complete while the project-source mirror is unexplained or while a required wiki plan has not been prepared.
+7. Create new versions of affected manuals and append the current versioned DevelopmentLog. The three root manual pointers remain navigation only; README is the comprehensive public introduction and quick-start manual requested by the owner.
+8. Run the `robot-wiki-maintain` completion gate. A task that changes documented knowledge is not complete while current source/code mappings disagree or a required wiki plan remains unapplied.
 9. Separate local validation from Raspberry Pi hardware validation. Never imply hardware validation occurred when it did not.
 
 ## Wiki maintenance completion gate
 
-After a feature or documentation change:
+The full current manuals live only as versioned sources in `ninjarobot_pi0_Wiki/raw/`.
+Resolve them through `project-knowledge.json`; root manual files are compatibility pointers.
+Never overwrite registered raw originals. Create a new complete dated version, preserve old
+sources, register and normalize new evidence, then update cited pages through a reviewed
+schema-v2 plan. The owner-approved implementation scope authorizes its named wiki updates:
+show the exact semantic diff before applying it; ask again only if that scope expands.
+Record current source-grounded semantic reviews without inventing human verification.
 
-1. Finish and fact-check the canonical project documentation.
-2. Run:
-
-   ```bash
-   python3 .agents/skills/robot-wiki-maintain/scripts/wiki_source_sync.py --check
-   ```
-
-3. If a mapped project document changed intentionally, use `robot-wiki-maintain` to review the drift and synchronize the exact project file into its registered raw snapshot. Never hand-edit a mirrored raw snapshot.
-4. Normalize each changed registered source, search for affected pages, and prepare the smallest versioned `llmwiki` change plan.
-5. Show `llmwiki plan diff` and obtain explicit user approval before applying semantic wiki changes.
-6. After approval, apply the plan, review affected sourced pages, and run normal lint. Run strict lint for stable/release-quality pages.
-7. Re-run the source-sync check. Report any remaining drift, stale semantic review, or deferred update.
-
-The project-source mirror check detects file drift; it does not decide which side is correct. Never use `--sync` to erase an unexplained conflict.
+Run `python3 scripts/wiki.py check`, `lint --strict`, `link check`, `index check`, and `stats`.
+Review implementation fingerprints and newly unmapped files before updating the map; never
+refresh hashes merely to silence a failure. No-doc-impact changes require a specific reason.
+Explicit setup: `python3 scripts/wiki.py setup`, then `prepare`. Queries and checks never
+install dependencies, normalize sources, or operate hardware. From the wiki root use
+`python3 ../scripts/wiki.py`. See `ninjarobot_pi0_Wiki/docs/PROJECT_WORKFLOW.md`.
 
 ## Technical standards
 
@@ -102,3 +100,12 @@ Prefer package-local checks and repository-defined commands. Use `uv run` where 
 - wiki pages and evidence used;
 - wiki lint/review status and any remaining source drift;
 - remaining risks and follow-up work.
+
+## Installation and presentation boundary
+
+Use `./install.sh --dry-run` before installation; `./onboard.sh` launches guided setup.
+Standalone hardware tools can activate devices immediately; servo-tool can center saved
+servos before its menu. Require explicit readiness before spawning a device tool.
+Protect robot runtime/driver code with `python3 scripts/verify_core.py`. Frontend styling
+may evolve while existing routes, request payloads, and power confirmation stay compatible.
+Never import Pi5-only control features or treat BLE advertising as a connected controller.

@@ -310,7 +310,7 @@ Required files:
 - `InstallationGuide.md`
 - `AGENTS.md` and relevant skills if the workflow itself changed
 - `README.md` in the target `pi0*` package
-- the affected wiki source snapshots/pages through `robot-wiki-maintain`
+- the affected new immutable wiki source versions/pages through `robot-wiki-maintain`
 
 Update expectations:
 
@@ -342,4 +342,4 @@ At handoff, summarize in plain English that even non-developers can understand:
 - what docs were updated
 - remaining risk
 - recommended next step
-- wiki evidence used, mirror status, and any pending reviewed wiki plan
+- wiki evidence used, knowledge-map status, and any pending reviewed wiki plan

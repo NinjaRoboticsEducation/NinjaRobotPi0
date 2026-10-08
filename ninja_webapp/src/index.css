@@ -5,16 +5,16 @@
 /* ---------- CSS Variables (Core Tokens) ---------- */
 :root {
   /* Colors */
-  --color-bg: #FFFFFF;
-  --color-surface: #F6F7F9;
-  --color-text: #1E2428;
-  --color-subtext: #616B70;
-  --color-primary: #0077C8;
-  --color-accent: #00B4E6;
-  --color-cta: #FF8A00;
-  --color-border: rgba(30, 36, 40, 0.08);
-  --color-success: #16A34A;
-  --color-danger: #E03E3E;
+  --color-bg: #03080c;
+  --color-surface: #06131b;
+  --color-text: #f2f6fa;
+  --color-subtext: #bdc4ca;
+  --color-primary: #00a3ff;
+  --color-accent: #75cdff;
+  --color-cta: #00a3ff;
+  --color-border: rgba(0, 163, 255, 0.28);
+  --color-success: #4de2a4;
+  --color-danger: #ff526d;
 
   /* Typography */
   --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
@@ -41,9 +41,9 @@
   --space-md: 18px;
   --space-sm: 12px;
   --space-xs: 8px;
-  --radius: 12px;
+  --radius: 18px;
   --radius-sm: 8px;
-  --shadow-soft: 0 6px 18px rgba(0, 0, 0, 0.06);
+  --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.28);
 
   /* Z-Index Scale */
   --z-header: 100;
@@ -70,7 +70,7 @@ body {
   font-size: var(--type-body);
   line-height: var(--line-height-normal);
   color: var(--color-text);
-  background-color: var(--color-bg);
+  background: radial-gradient(circle at 15% 5%, rgba(0, 163, 255, .14), transparent 31rem), linear-gradient(165deg, #06131b, #03080c 72%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -183,3 +183,9 @@ a:focus-visible {
   background-color: var(--color-accent);
   color: white;
 }
+
+button, input, textarea, select { font: inherit; }
+button, select { touch-action: manipulation; }
+select, input, textarea { color: var(--color-text); color-scheme: dark; }
+:root { color-scheme: dark; --color-warning: #ffc843; --color-power: #ff8a00; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

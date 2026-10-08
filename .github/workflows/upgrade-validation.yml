@@ -1,0 +1,63 @@
+name: Pi0 installation, interface and knowledge validation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  software:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: '0.11.29'
+          python-version: '3.11'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.23.3'
+      - name: Locked host dependencies (no installer or robot activation)
+        run: uv sync --locked
+      - name: Protected core and host tests
+        run: |
+          python scripts/verify_core.py
+          uv run --frozen --no-sync pytest tests -q
+          for package in pi0servo pi0disp pi0buzzer pi0vl53l0x; do
+            (cd "$package" && ../.venv/bin/python -m pytest tests -q)
+          done
+      - name: Installer and onboarding lint
+        run: |
+          uv run --frozen --no-sync ruff check scripts tests/test_upgrade_workflows.py tests/test_installer_bootstrap.py tests/test_project_knowledge.py
+          uv run --frozen --no-sync ruff format --check scripts tests/test_upgrade_workflows.py tests/test_installer_bootstrap.py tests/test_project_knowledge.py
+          uv tool run --from shellcheck-py==0.11.0.1 shellcheck -x --source-path=scripts install.sh onboard.sh scripts/install-rpi.sh
+      - name: Frontend lint and build from existing lock
+        working-directory: ninja_webapp
+        run: |
+          npm ci --no-audit --no-fund
+          npm run lint
+          npm run build
+          git diff --exit-code -- dist
+      - name: Inert browser fixtures
+        run: |
+          npm install --prefix "$RUNNER_TEMP/pi0-browser" --no-audit --no-fund playwright@1.62.1
+          "$RUNNER_TEMP/pi0-browser/node_modules/.bin/playwright" install --with-deps chromium
+          PLAYWRIGHT_MODULE="$RUNNER_TEMP/pi0-browser/node_modules/playwright" node tests/browser_ui.cjs ninja_webapp/dist
+      - name: Explicit independent wiki setup and preparation
+        run: |
+          python scripts/wiki.py setup
+          python scripts/wiki.py prepare
+      - name: Knowledge, source, semantic, link and index checks
+        run: |
+          python scripts/wiki.py check
+          python scripts/wiki.py lint --strict
+          python scripts/wiki.py link check
+          python scripts/wiki.py index check
+          python scripts/wiki.py stats
+          uv run --directory ninjarobot_pi0_Wiki --frozen --no-sync pytest -q
+          git diff --exit-code -- ninjarobot_pi0_Wiki scripts AGENT.md AGENTS.md CLAUDE.md GEMINI.md README.md InstallationGuide.md DevelopmentGuide.md DevelopmentLog.md .agents .claude .cursor

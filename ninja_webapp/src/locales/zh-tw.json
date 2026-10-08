@@ -7,13 +7,25 @@
     },
     "header": {
         "connected": "已連接",
-        "disconnected": "未連接"
+        "disconnected": "未連接",
+        "advertising": "BLE 廣播中",
+        "bleOff": "BLE 已關閉",
+        "openMenu": "開啟機器人選單",
+        "closeMenu": "關閉選單",
+        "menuTitle": "機器人選單",
+        "navigation": "導覽"
     },
     "home": {
         "welcome": "歡迎使用 NinjaRobot",
         "subtitle": "選擇與機器人互動的方式",
         "chatButton": "與機器人對話",
-        "codeButton": "程式設計機器人"
+        "codeButton": "程式設計機器人",
+        "systemTitle": "系統電源",
+        "sliderText": "滑動以關機",
+        "shutdownConfirm": "確定關閉機器人電源？",
+        "shuttingDown": "正在關機…",
+        "shutdownSuccess": "機器人正在關機，請等待指示燈熄滅。",
+        "shutdownError": "無法關機，請重試。"
     },
     "agent": {
         "title": "忍者助手",
@@ -24,7 +36,15 @@
         "sounds": "聲音",
         "movements": "動作",
         "distance": "距離",
-        "distanceUnit": "mm"
+        "distanceUnit": "mm",
+        "welcome": "我是 Ninja。請輸入訊息或使用麥克風。",
+        "systemLog": "系統活動",
+        "logEmpty": "事件將顯示於此。",
+        "runExpressions": "執行表情",
+        "runSounds": "播放聲音",
+        "runMovements": "執行動作",
+        "error": "無法連線至機器人。",
+        "speechNotSupported": "無法使用語音辨識。"
     },
     "code": {
         "title": "程式",
@@ -45,7 +65,10 @@
         "gettingStarted": "開始使用",
         "gettingStartedText": "透過藍牙連接您的機器人，使用視覺化積木程式設計或與 AI 助手聊天。",
         "troubleshooting": "故障排除",
-        "troubleshootingText": "如果遇到問題，請嘗試重新整理頁面或重新啟動機器人。"
+        "troubleshootingText": "如果遇到問題，請嘗試重新整理頁面或重新啟動機器人。",
+        "onboarding": "初始設定導引",
+        "onboardingText": "在機器人終端執行初始設定工具，校準現有裝置並設定 Gemini 與 ngrok。",
+        "fullGuide": "完整安裝指南"
     },
     "language": {
         "label": "語言",

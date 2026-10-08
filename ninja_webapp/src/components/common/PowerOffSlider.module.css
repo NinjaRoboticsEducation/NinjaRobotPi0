@@ -35,12 +35,13 @@
 }
 
 .sliderThumb {
+    color: var(--color-power);
     position: absolute;
     top: 4px;
     left: 4px;
     width: 52px;
     height: 52px;
-    background-color: white;
+    background-color: var(--color-text);
     border-radius: 50%;
     display: flex;
     align-items: center;

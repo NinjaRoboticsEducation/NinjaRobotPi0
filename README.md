@@ -1,397 +1,308 @@
 # NinjaRobotPi0
 
-Official repository: [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0).
-
-This repository starts from the existing NinjaRobotV5 working snapshot, published with fresh Git history on 2026-10-07. Python package names, versions, robot functions, and runtime code are retained. GitHub documentation links use `HEAD` to follow the repository default branch.
-
-
 <div align="center">
 
-![NinjaRobot Logo](assets/logo.png)
+**An educational Raspberry Pi Zero 2 W robot — build it, program it, and bring it to life**
 
-**The Next-Generation AI-Powered Educational Robot Platform**
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![Platform: Raspberry Pi](https://img.shields.io/badge/platform-Raspberry%20Pi%20Zero%202W-red.svg)](https://www.raspberrypi.com/)
-[![AI: Google Gemini](https://img.shields.io/badge/AI-Google%20Gemini-4285F4.svg)](https://ai.google.dev/)
-
-[English](#english) | [日本語](#日本語) | [繁體中文](#繁體中文)
+Raspberry Pi OS Bookworm 64-bit · Python 3.11 · Google Gemini · Browser and BLE control
 
 </div>
 
----
+**Language / 言語 / 語言 / 语言:**
+[English](#english) · [日本語](#日本語) · [繁體中文](#繁體中文) · [简体中文](#简体中文)
 
 # English
 
-## 🎯 Project Overview
+## 1. What Is NinjaRobotPi0?
 
-**NinjaRobotPi0** is an advanced, modular AI robot platform designed for Research and STEAM Education. Built on the Raspberry Pi Zero 2W, it combines cutting-edge AI capabilities with an intuitive web interface, making robotics accessible to learners of all ages.
+NinjaRobotPi0 is a modular educational robot for **Raspberry Pi Zero 2 W**. It brings together servo movement, an expressive LCD face, buzzer sounds, distance sensing, Google Gemini chat, Bluetooth Low Energy (BLE), and a browser interface. Students and makers can explore how software, AI and physical components work together; developers can extend the existing Python packages and web interface.
 
-Unlike traditional educational robots, NinjaRobot features an **Agentic AI** powered by Google Gemini that can understand natural language, execute commands, and even generate code to learn new behaviors autonomously.
+### What can it do?
 
-## 🤖 Robot Specifications
+- **Move and express itself:** use the existing movement library, display expressions and buzzer sounds.
+- **Sense distance:** view readings from a VL53L0X sensor in millimetres.
+- **Use cloud AI:** configure a Google Gemini API key and select a model through the guided setup. Chat can invoke robot actions; keep the robot supported during first tests.
+- **Connect through a browser:** Home, Agent and Help share NinjaRobotPi5's navy/cyan design, with English, Japanese, Traditional Chinese and Simplified Chinese UI text.
+- **Learn incrementally:** calibrate with the existing `pi0*` tools, then explore the core, BLE, utility and frontend packages.
 
-### Hardware
+Pi0 retains its own capabilities and control protocol. Pi5's local model providers, camera, game pad, MCP integrations and authenticated pairing are not included. The original Python package names and robot functions are preserved; some existing tools still display legacy V4/V5 labels.
 
-| Component | Specification |
-|-----------|---------------|
-| **Brain** | Raspberry Pi Zero 2W (Quad-core ARM Cortex-A53, 512MB RAM) |
-| **Display** | 2.0" ST7789V IPS LCD (240×320 pixels) |
-| **Distance Sensor** | VL53L0X Time-of-Flight (up to 2m range) |
-| **Sound** | Passive Buzzer (GPIO 17) |
-| **Movement** | 8× Servo Motors (GPIO 20-27) |
-| **Connectivity** | WiFi 802.11n, Bluetooth 4.2 LE |
+**Release qualification:** host tests and mocked browser checks are recorded in the [audit report](docs/validation/UpgradeAudit-2026-10-08.md). Final installation, calibration and account testing on a physical Pi remain pending. The curl command below becomes usable when these files are published on the official repository's default branch.
 
-### Software Stack
+## 2. Quick Start Guide
 
-| Layer | Technology |
-|-------|------------|
-| **Backend** | FastAPI + Uvicorn |
-| **AI Agent** | Google Gemini (user-selected available model) |
-| **Frontend** | React 18 + Vite + react-i18next |
-| **BLE Service** | bless (GATT Server) |
-| **Hardware Control** | pigpio + Custom Drivers |
+### 2.1 Hardware and supported operating system
 
-## ✨ Key Features
+| Component | Pi0 setup |
+| --- | --- |
+| Computer | Raspberry Pi Zero 2 W with GPIO header |
+| OS | **Raspberry Pi OS Bookworm 64-bit**; other platforms are rejected by the installer |
+| Storage | microSD card, 16 GB or larger; allow free space for dependencies and the frontend build |
+| Pi power | Suitable regulated 5 V supply through the Pi's micro-USB power input |
+| Servos | Appropriate servos for your tire, humanoid or spider build; calibrate every connected servo |
+| Servo power | Separate supply rated for the connected servos, with a common ground to the Pi |
+| Display | ST7789V SPI LCD, 240 × 320 |
+| Sensor | VL53L0X I2C distance sensor |
+| Sound | Passive buzzer |
+| Setup access | Terminal or SSH, internet, and a normal user with sudo access |
 
-### 🧠 Agentic AI
-- **Natural Language Understanding**: Chat with your robot in English, Japanese, or Chinese
-- **Validated Model Selection**: Discover models available to your Gemini API key and save a model only after a bounded generation check succeeds
-- **Gemini 3 Compatibility**: Use low-thinking REST generation with a 60-second bound when the legacy Python SDK cannot express current Gemini 3 thinking controls
-- **Action Planning**: AI automatically translates requests into robot actions
-- **Saved Blockly Actions**: Replay complete Code IDE actions saved over Bluetooth from the robot's local action library
-- **Reliable BLE Save Status**: Code IDE saves are confirmed by robot-cached request status, so missed browser notifications do not look like failed uploads
-- **Code Generation**: AI can write Python code to create new robot behaviors
-- **Voice Input**: Speak commands using your device's microphone
+### 2.2 Wiring and preparation
 
-### 📱 Modern Web Interface
-- **Mobile-First Design**: Optimized for smartphones and tablets
-- **Real-Time Feedback**: WebSocket-powered distance sensor display
-- **Hardware Controls**: Trigger expressions, sounds, and movements
-- **System Log Panel**: Monitor robot activities in real-time
-- **Multi-Language UI**: Switch between EN, JA, ZH-TW, ZH-CN
+Power off before wiring. Keep actuator power disconnected while installing software. Servo supply current must not pass through the Pi's power pins. Connect the external supply ground and Pi ground together.
 
-### 🔗 Dual Connectivity
-- **Local Wi-Fi**: Direct control via `http://ninjarobot.local:8000`
-- **Bluetooth LE**: Zero-setup mobile app connection
-- **BLE Request Recovery**: Dedicated command-status readback for robust Chrome/Raspberry Pi save confirmations
-- **Remote Access**: ngrok tunnel for telepresence
+| Component | Reference connections (BCM GPIO numbers) |
+| --- | --- |
+| Servo signal wires | Existing eight-servo reference uses GPIO20–27; use the pins actually wired for your build |
+| Display SPI | MOSI GPIO10 / physical pin 19; SCLK GPIO11 / pin 23; CE0 GPIO8 / pin 24 |
+| Display control | Configurable DC, RST and backlight; reference layout uses GPIO14, GPIO15 and GPIO16 |
+| Distance sensor | SDA GPIO2 / pin 3; SCL GPIO3 / pin 5; compatible 3.3 V breakout and common ground |
+| Buzzer | Reference signal GPIO17 / pin 11, with ground |
 
-### 🛡️ Safety First
-- **Sandboxed Execution**: User/AI-generated code runs in a restricted environment
-- **Emergency Stop**: Instant halt capability for all motors
-- **Graceful Shutdown**: Safe power-off with "sleepy" animation (face, sound, and pose)
-- **Shutdown Animation**: Robot displays sleepy face, plays sleepy sound, and moves to rest position before powering off
+Use your module's wiring and voltage requirements. Do not allocate the same GPIO to two components. Display pins are configurable; register your actual assignments in the display tool. The [complete installation manual](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08/InstallationGuide.md) retains the detailed wiring reference. Its older manual installation commands are explicitly historical.
 
-## 🚀 Quick Start
+### 2.3 Prepare Raspberry Pi OS
+
+1. Write **Raspberry Pi OS Bookworm 64-bit** to the microSD card using Raspberry Pi Imager. Select Bookworm explicitly, rather than assuming the newest OS image is compatible.
+2. Set your username/password, hostname and Wi-Fi; enable SSH if using a remote terminal. Boot and log in as your normal user.
+3. Run `sudo raspi-config` and enable **I2C** and **SPI** for your components. If using GPIO14/15 for the display, disable the serial login console so it does not own those pins. Reboot manually if requested.
+4. Verify the target before installation:
 
 ```bash
-# Clone the repository
-git clone https://github.com/NinjaRoboticsEducation/NinjaRobotPi0.git
-cd NinjaRobotPi0
-
-# Install dependencies (using uv)
-uv pip install -e .
-
-# Build the web interface
-cd ninja_webapp && npm install && npm run build && cd ..
-
-# Configure the Gemini key and select a validated model
-# Option 1 hides the API key while you enter it.
-uv run ninja_core init-tool
-
-# Start the robot
-uv run ninja_core server
+uname -m                         # aarch64
+cat /etc/os-release              # VERSION_CODENAME=bookworm
+tr -d '\0' < /proc/device-tree/model
 ```
 
-Then open `http://ninjarobot.local:8000` in your browser!
+### 2.4 Install the project
 
-During Gemini setup, NinjaRobot retrieves the models available to the supplied key and runs a minimal generation request before saving the key/model pair. Thinking-model validation can take up to 60 seconds. If lookup, validation, or selection fails, the previous Gemini configuration remains unchanged. The server console reports the configured model and returns a visible timeout instead of waiting indefinitely.
+Run this in your Pi's normal-user terminal **after the upgrade is published**:
 
-## 📚 Documentation
+```bash
+curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash
+```
 
-| Document | Description |
-|----------|-------------|
-| [Installation Guide](InstallationGuide.md) | Hardware setup and software installation |
-| [Development Guide](DevelopmentGuide.md) | API reference and architecture overview |
-| [Project Upgrade Plan](ProjectUpgradePlan.md) | Project roadmap and phase details |
-| [Development Log](DevelopmentLog.md) | Change history and version notes |
-| [AI Development Protocol](AGENTS.md) | Cross-tool development, safety, validation, and wiki rules |
-| [NinjaRobotPi0 Wiki](Wiki/NinjaRobotPi0_Wiki/README.md) | Local, source-traceable knowledge base for AI-assisted development |
-| [Wiki Integration Workflow](WikiIntegrationWorkflowPlan.md) | Integration design, maintenance gates, and rollout checks |
+`HEAD` follows the repository's **default branch**, even if its name changes. Read the displayed operations and type `INSTALL` when prompted. The bootstrap creates `$HOME/NinjaRobotPi0`, records the resolved commit, and runs its local installer. It may ask for confirmation again before the system/package installation stage. Do not prefix the command with sudo.
 
-## 📊 Current Status
+For download-and-inspect installation, use a new temporary file; Bash runs only after a successful download and inspection:
 
-**Version:** 5.3.0  
-**Status:** Phase 5 Complete ✅ + All Hardware Libraries Rebuilt
+```bash
+installer=$(mktemp) &&
+  curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$installer" &&
+  less "$installer" && bash "$installer"
+```
 
-All core features have been implemented and verified:
-- ✅ Modular Hardware Abstraction Layer
-- ✅ Dual Connectivity (Wi-Fi + BLE)
-- ✅ Agentic AI with Action Planning
-- ✅ Saved Blockly Action Library for Code IDE uploads
-- ✅ Safe Code Execution Engine
-- ✅ React Web Application
-- ✅ pi0servo V1.0 (velocity-based motion, per-servo speed, easing curves)
-- ✅ pi0vl53l0x V2.0 (thread-safe I2C, hardened init, CLI)
-- ✅ pi0disp V2.0 (thread-safe SPI, delta rendering, PWM brightness)
-- ✅ pi0buzzer V1.0 (non-blocking queue, emotion sounds, interactive TUI)
+To select a published commit, replace `FULL_COMMIT_SHA` below with its full 40-character hash in both places:
 
-## 📄 License
+```bash
+curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/FULL_COMMIT_SHA/install.sh |
+  bash -s -- --ref FULL_COMMIT_SHA
+```
 
-This project is licensed under the **MIT License**.
+The installer provisions prerequisites, pinned uv/Node/pigpio tooling, locked Python dependencies in `.venv`, and the built web interface. It does **not** calibrate hardware, collect credentials, start the robot, enable boot startup or reboot. Keep hardware activation separate.
 
-**Copyright © 2026 Chihkuang Chang**
+Once installation finishes:
 
----
+```bash
+cd "$HOME/NinjaRobotPi0"
+./install.sh --check
+./onboard.sh --dry-run
+```
+
+If you already have this revision locally, or are validating it before publication:
+
+```bash
+cd /path/to/NinjaRobotPi0
+./install.sh --dry-run
+./install.sh
+./install.sh --check
+```
+
+Rerun the **local** installer after a failed installation. Bootstrap refuses to overwrite an existing destination. Local installation retains the checkout's current revision; it is not an automatic Git updater. `--install-dir /absolute/new/path` and `--ref` are bootstrap options. `--with-wiki` additionally installs the separate developer wiki environment. Tool binaries are private to this installation; the runtime commands below use `.venv/bin` and do not depend on a globally installed `uv`.
+
+### 2.5 Guided initialization and calibration
+
+Stop any existing robot server before standalone calibration. Prepare the wiring and interfaces, support every limb/wheel, and remain ready to remove actuator power. Deliberately activate pigpio when ready:
+
+```bash
+sudo systemctl start pigpiod
+./onboard.sh
+```
+
+The terminal wizard follows Pi5's welcome screen, numbered steps, “What / Why / What to do” guidance, saved-setting reuse, retry, and summary flow. It calls the existing Pi0 tools. Opening the servo tool can immediately center previously configured servos, **before its own menu appears**.
+
+| Step | What you do | Successful check |
+| --- | --- | --- |
+| 1. Display | Open the display tool, enter actual pins, set orientation/brightness and test output | Readable display and valid saved settings |
+| 2. Buzzer | Configure the pin and play a short tone | Audible output followed by silence |
+| 3. Servo | Type `READY` only after supporting the robot; calibrate each connected servo | Appropriate limits/neutral point and valid saved pulses |
+| 4. Distance | Inspect readings, then calibrate against a target at a measured distance | Plausible readings and a saved offset |
+| 5. Import | Import saved display, buzzer and servo settings into `config.json` | Import is blocked until these files validate; sensor settings remain separate |
+| 6. Identity | Set a BLE name and choose `tire`, `humanoid` or `spider` | Name/type match your build |
+| 7. Gemini | Enter your API key privately, choose a discovered model, allow validation | Existing helper saves the validated model/key; internet and account access required |
+| 8. ngrok | Optionally enter your ngrok authtoken privately | Token saved using existing storage; no tunnel opens during onboarding |
+
+When valid settings exist, select **2) Apply existing settings for all modules** to reuse them and configure remaining modules. Each hardware step offers **1) Open setup tool**, **2) Reuse validated settings** when valid, and **Q) Save and exit**. Failed tools can be retried immediately. Review the result and press Enter to continue. Settings/account steps can be skipped without replacing existing values.
+
+Software validation and physical observation are separate. Reuse never invents a physical check. `--resume` skips previously validated hardware only while its file is unchanged and still valid. Changed files clear the recorded physical observation. Account steps remain available on resume; saved credentials are not revalidated automatically.
+
+```bash
+./onboard.sh --status          # Read-only progress and current saved-file validity
+./onboard.sh --resume          # Resume; recheck saved hardware fingerprints
+./onboard.sh --step servo      # Open one step deliberately
+./onboard.sh --step import     # Re-import after changing hardware calibration
+./onboard.sh --step gemini     # Change key or selected model
+./onboard.sh --step ngrok      # Configure remote-access token
+```
+
+Q or Ctrl+C saves progress. Let an active hardware tool complete cleanup; if cleanup is uncertain, disconnect actuator power. Credentials are excluded from progress, which is stored privately under `~/.local/state/ninjarobot_pi0/` or `$XDG_STATE_HOME/ninjarobot_pi0/`. The wizard does not launch the server on exit.
+
+### 2.6 Start the existing robot server deliberately
+
+Keep the robot supported for the first start. From the project root:
+
+```bash
+.venv/bin/ninja_core server
+```
+
+The server initializes devices and can center servos. Its existing startup asks about ngrok; press Enter to keep the token already entered privately through onboarding. If no token was configured, Enter continues without saving a new one, but the existing runtime still attempts ngrok connections. **Skipping onboarding's ngrok step is not a network-isolation mode.** With a usable token, server startup can open a public tunnel and display its URL/QR code.
+
+Pi0's existing control interface does not gain Pi5's pairing/authentication through this design update. Use a trusted network and treat a public control URL as sensitive. No boot service is enabled by this walkthrough.
+
+### 2.7 Open the web interface
+
+Open the server's printed **Local Access** URL, normally `http://<pi-address>:8000`, from a device on the same network. If the runtime reports **Public Access**, that is the ngrok URL. Use the URL actually printed by your Pi.
+
+- **Home:** robot entry page and deliberate power-off control.
+- **Agent:** Gemini chat, existing expressions/sounds/movements, distance and activity messages.
+- **Help:** usage guidance; the menu also selects the interface language.
+
+The BLE badge means **advertising**, not that a controller is connected. Browser speech input depends on browser support and permissions; local HTTP access may restrict it. Typed chat remains available. The shutdown slider asks for confirmation before sending the existing power-off request.
+
+## 3. First Test Checklist
+
+Perform these checks on the physical Pi in order. Host unit tests cannot substitute for them.
+
+1. **Software:** `./install.sh --check` passes. Read `./onboard.sh --status`; resolve any pending/attention items.
+2. **Calibration:** complete each existing device tool, record actual observations and run the import step after changes. Test one component at a time with the robot supported.
+3. **Server start:** start manually and confirm expected startup behavior, readable display and no unexpected motion. Keep hands clear of travel.
+4. **Web display:** open Home, Agent and Help on a phone; check all four UI languages and the menu. Confirm distance changes plausibly when a target moves.
+5. **Single actions:** deliberately select one expression, one short sound, then one movement with the robot supported. Confirm expected physical results before progressing.
+6. **Gemini:** send a simple greeting; then test one intended robot action with supervision. Confirm the selected model/account works and review activity messages.
+7. **Remote access, if needed:** verify the printed ngrok URL using your own device. A saved token alone is not proof of a working tunnel.
+8. **Exit/recovery:** stop the server with Ctrl+C, let cleanup finish, then test onboarding resume. Test power-off separately only when ready for the Pi to shut down.
+
+Record your OS, installer commit, hardware configuration and results. The [host validation report](docs/validation/UpgradeValidation-2026-10-07.md) and [audit report](docs/validation/UpgradeAudit-2026-10-08.md) distinguish automated checks from pending physical acceptance.
+
+## 4. Troubleshooting
+
+| Symptom | Next step |
+| --- | --- |
+| curl returns 404 | The installer must first be published to the official default branch; use the local checkout for pre-publication validation |
+| Unsupported platform | Check Zero 2 W, `aarch64`, Bookworm and normal-user login; do not bypass the platform gate |
+| Destination already exists | Enter that checkout and run `./install.sh`; do not remove calibration/configuration to retry |
+| Installation stops at OS packages | Check the reported apt/network/sudo error. An existing administrator `policy-rc.d` is preserved; resolve it with the administrator |
+| Hardware tool will not open | Stop the server, check pigpiod and I2C/SPI, permissions and saved pin assignments; retry from the wizard |
+| Import blocked | Finish valid display, buzzer and servo configuration; file presence and factory defaults are insufficient |
+| Saved progress rejected | Preserve the original file for inspection. Correct the reported schema/path issue before continuing; never replace it with guessed “complete” results |
+| Lock exists after interruption | Confirm no installer/onboarding process is running before removing its corresponding stale lock; preserve all settings |
+| Gemini/ngrok setup fails | Check internet/account access and retry the individual step. Previous settings are restored on helper failure/cancel |
+| Port 8000 is busy | Stop the already running robot instance deliberately; do not run calibration and the server together |
+| `uv` is not found | Use `.venv/bin/ninja_core` from the root for runtime commands; installation keeps its tools in a private directory |
+
+## Appendix A — Useful Commands and Files
+
+Run from the project root:
+
+```bash
+./install.sh --help
+./onboard.sh --help
+.venv/bin/ninja_core --help
+python3 scripts/verify_core.py
+python3 scripts/wiki.py setup       # Explicit developer dependency installation
+python3 scripts/wiki.py prepare     # Explicit source preparation
+python3 scripts/wiki.py search onboarding
+python3 scripts/wiki.py check
+```
+
+| File/location | Purpose |
+| --- | --- |
+| `config.json` | Existing robot identity, imported hardware and Gemini settings; contains secrets |
+| `servo.json`, `buzzer.json`, `pi0disp/display.json` | Existing device-tool configuration |
+| `pi0vl53l0x/src/pi0vl53l0x/config/vl53l0x.json` | Existing distance offset |
+| pyngrok-selected config path | Existing ngrok token storage; keep private |
+| `.ninjarobot-install/record.json` | Resolved checkout revision and installer input fingerprints |
+| `ninjarobot_pi0_Wiki/` | Independent wiki, immutable source versions and reviewed knowledge |
+
+Keep credentials and calibration backups private. Root package identities remain unchanged; boot startup and legacy CLI actions should be reviewed separately before use.
+
+## Appendix B — Documentation and Development
+
+- [InstallationGuide.md](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08/InstallationGuide.md)
+- [DevelopmentGuide.md](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08/DevelopmentGuide.md)
+- [DevelopmentLog.md](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-08/DevelopmentLog.md)
+- [Wiki entry point](ninjarobot_pi0_Wiki/README.md)
+- [Development policy](AGENTS.md)
+- [Approved implementation plan](DevelopmentPlanDoc/NinjaRobot_Install_wiki_upgrade_261007.md)
+- [License](LICENSE)
+
+The three root manual files remain compatibility links. Full manuals are versioned inside the wiki; this README is the public introduction and practical quick-start manual. Current code and tests determine implemented behavior. Wiki pages remain draft/unverified until actual human verification is recorded.
 
 # 日本語
 
-## 🎯 プロジェクト概要
+NinjaRobotPi0 は Raspberry Pi Zero 2 W 向けの教育ロボットです。サーボ、液晶表情、ブザー、距離センサー、Gemini、BLE、Web 操作を備えています。対応 OS は **Raspberry Pi OS Bookworm 64-bit のみ**です。詳しい配線・テスト手順は上の英語版と [導入マニュアル](InstallationGuide.md) を参照してください。この節は要約です。
 
-**NinjaRobotPi0**は、研究およびSTEAM教育向けに設計された先進的なモジュール式AIロボットプラットフォームです。Raspberry Pi Zero 2Wをベースに構築され、最先端のAI機能と直感的なWebインターフェースを組み合わせ、あらゆる年齢の学習者がロボット工学にアクセスできるようにしています。
-
-従来の教育用ロボットとは異なり、NinjaRobotはGoogle Geminiを搭載した**エージェント型AI**を特徴とし、自然言語を理解し、コマンドを実行し、さらには自律的に新しい動作を学習するためのコードを生成することができます。
-
-## 🤖 ロボット仕様
-
-### ハードウェア
-
-| コンポーネント | 仕様 |
-|---------------|------|
-| **頭脳** | Raspberry Pi Zero 2W（クアッドコアARM Cortex-A53、512MB RAM） |
-| **ディスプレイ** | 2.0インチ ST7789V IPS LCD（240×320ピクセル） |
-| **距離センサー** | VL53L0X ToF（最大2m測定可能） |
-| **音声** | パッシブブザー（GPIO 17） |
-| **動作** | 8×サーボモーター（GPIO 20-27） |
-| **接続** | WiFi 802.11n、Bluetooth 4.2 LE |
-
-### ソフトウェアスタック
-
-| レイヤー | 技術 |
-|---------|------|
-| **バックエンド** | FastAPI + Uvicorn |
-| **AIエージェント** | Google Gemini（利用可能なモデルをユーザーが選択） |
-| **フロントエンド** | React 18 + Vite + react-i18next |
-| **BLEサービス** | bless（GATTサーバー） |
-| **ハードウェア制御** | pigpio + カスタムドライバー |
-
-## ✨ 主な機能
-
-### 🧠 エージェント型AI
-- **自然言語理解**: 英語、日本語、中国語でロボットと会話
-- **検証付きモデル選択**: Gemini APIキーで利用可能なモデルを取得し、時間制限付き生成テストに成功したモデルだけを保存
-- **Gemini 3互換性**: 従来のPython SDKで現在の思考制御を指定できない場合、低思考レベルと60秒の上限を設定したREST生成を使用
-- **アクションプランニング**: AIがリクエストを自動的にロボットのアクションに変換
-- **保存済みBlocklyアクション**: Bluetooth経由で保存したCode IDEの完全な動作をローカルアクションライブラリから再生
-- **コード生成**: AIが新しいロボットの動作を作成するPythonコードを記述
-- **音声入力**: デバイスのマイクを使用してコマンドを話す
-
-### 📱 モダンなWebインターフェース
-- **モバイルファーストデザイン**: スマートフォンやタブレット向けに最適化
-- **リアルタイムフィードバック**: WebSocket対応の距離センサー表示
-- **ハードウェアコントロール**: 表情、音、動きをトリガー
-- **システムログパネル**: ロボットの活動をリアルタイムで監視
-- **多言語UI**: EN、JA、ZH-TW、ZH-CNで切り替え
-
-### 🔗 デュアル接続
-- **ローカルWi-Fi**: `http://ninjarobot.local:8000`経由で直接制御
-- **Bluetooth LE**: セットアップ不要のモバイルアプリ接続
-- **リモートアクセス**: テレプレゼンス用ngrokトンネル
-
-### 🛡️ 安全第一
-- **サンドボックス実行**: ユーザー/AI生成コードは制限された環境で実行
-- **緊急停止**: すべてのモーターを即座に停止する機能
-- **安全なシャットダウン**: 「眠い」アニメーション付きの安全な電源オフ（表情、音、姿勢）
-- **シャットダウンアニメーション**: 電源オフ前に眠い顔を表示、眠い音を再生、休憩姿勢に移動
-
-## 🚀 クイックスタート
+1. 電源を切って配線し、サーボ電源は別電源にします。GND を共有し、ソフト導入中はアクチュエータ電源を切ってください。
+2. Bookworm 64-bit、Wi-Fi/SSH、I2C/SPI を設定します。通常ユーザーで、公開後に下記 curl コマンドを実行します。
+3. 導入後は `./install.sh --check`、準備完了後に `sudo systemctl start pigpiod` と `./onboard.sh` を実行します。
+4. 表示、ブザー、サーボ、距離、設定の取り込み、名前/型、Gemini、ngrok の順に設定します。サーボツールはメニュー前に動く場合があります。手足・車輪を支持してから `READY` を入力してください。
+5. Q で保存終了、`--resume` で再開します。既存設定の再利用は実機確認ではありません。変更された校正の実機確認記録は無効になります。失敗時は再試行できます。
+6. 最後にプロジェクト直下で `.venv/bin/ninja_core server` を手動実行します。機器が初期化され、ngrok 接続も試行されます。表示されたローカル URL を開き、一つずつ動作確認してください。ngrok を省略しても通信遮断モードにはなりません。
 
 ```bash
-# リポジトリをクローン
-git clone https://github.com/NinjaRoboticsEducation/NinjaRobotPi0.git
-cd NinjaRobotPi0
-
-# 依存関係をインストール（uvを使用）
-uv pip install -e .
-
-# Webインターフェースをビルド
-cd ninja_webapp && npm install && npm run build && cd ..
-
-# Gemini APIキーを設定し、検証済みモデルを選択
-# オプション1では入力中のAPIキーが非表示になります。
-uv run ninja_core init-tool
-
-# ロボットを起動
-uv run ninja_core server
+curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash
+cd "$HOME/NinjaRobotPi0"
+./install.sh --check
+./onboard.sh --dry-run
 ```
 
-ブラウザで `http://ninjarobot.local:8000` を開いてください！
-
-Geminiの設定時、NinjaRobotは入力したキーで利用可能なモデルを取得し、キーとモデルを保存する前に最小生成テストを実行します。思考モデルの検証には最大60秒かかる場合があります。取得、検証、または選択に失敗した場合、以前のGemini設定は変更されません。サーバーコンソールには設定中のモデルが表示され、無期限に待機する代わりに明確なタイムアウトが返されます。
-
-## 📚 ドキュメント
-
-| ドキュメント | 説明 |
-|-------------|------|
-| [インストールガイド](InstallationGuide.md) | ハードウェアセットアップとソフトウェアインストール |
-| [開発ガイド](DevelopmentGuide.md) | APIリファレンスとアーキテクチャ概要 |
-| [プロジェクトアップグレード計画](ProjectUpgradePlan.md) | プロジェクトロードマップとフェーズ詳細 |
-| [開発ログ](DevelopmentLog.md) | 変更履歴とバージョンノート |
-| [AI開発プロトコル](AGENTS.md) | AIツール共通の開発、安全、検証、Wiki運用ルール |
-| [NinjaRobotPi0 Wiki](Wiki/NinjaRobotPi0_Wiki/README.md) | AI支援開発向けの出典追跡可能なローカル知識ベース |
-| [Wiki統合ワークフロー](WikiIntegrationWorkflowPlan.md) | 統合設計、保守ゲート、導入確認 |
-
-## 📊 現在のステータス
-
-**バージョン:** 5.3.0  
-**ステータス:** フェーズ5完了 ✅ + 全ハードウェアライブラリ再構築済み
-
-すべてのコア機能が実装・検証されました：
-- ✅ モジュール式ハードウェア抽象化レイヤー
-- ✅ デュアル接続（Wi-Fi + BLE）
-- ✅ アクションプランニング付きエージェント型AI
-- ✅ Code IDEアップロード用の保存済みBlocklyアクションライブラリ
-- ✅ 安全なコード実行エンジン
-- ✅ React Webアプリケーション
-- ✅ pi0servo V1.0（速度ベース制御、サーボ別速度、イージングカーブ）
-- ✅ pi0vl53l0x V2.0（スレッドセーフI2C、堅牢な初期化、CLI）
-- ✅ pi0disp V2.0（スレッドセーフSPI、デルタレンダリング、PWM輝度制御）
-- ✅ pi0buzzer V1.0（ノンブロッキングキュー、感情サウンド、インタラクティブTUI）
-
-## 📄 ライセンス
-
-このプロジェクトは**MITライセンス**の下でライセンスされています。
-
-**Copyright © 2026 Chihkuang Chang**
-
----
+導入・初期設定はサーバー、自動起動、再起動を自動実行しません。キーとトークンは非表示入力です。公開 URL は秘密として扱ってください。実機での最終検証とリポジトリへの公開は別途必要です。
 
 # 繁體中文
 
-## 🎯 專案概述
+NinjaRobotPi0 是 Raspberry Pi Zero 2 W 教育機器人，整合伺服動作、螢幕表情、蜂鳴器、距離感測、Gemini、BLE 與網頁操作。初期僅支援 **Raspberry Pi OS Bookworm 64-bit**。完整接線及測試步驟請參閱上方英文版與[安裝手冊](InstallationGuide.md)；此節為摘要。
 
-**NinjaRobotPi0**是一個為研究與STEAM教育設計的先進模組化AI機器人平台。基於Raspberry Pi Zero 2W構建，結合尖端AI功能與直覺的網頁介面，讓各年齡層的學習者都能輕鬆接觸機器人技術。
-
-與傳統教育機器人不同，NinjaRobot搭載由Google Gemini驅動的**代理式AI**，能夠理解自然語言、執行指令，甚至自主生成程式碼來學習新行為。
-
-## 🤖 機器人規格
-
-### 硬體
-
-| 元件 | 規格 |
-|------|------|
-| **大腦** | Raspberry Pi Zero 2W（四核心 ARM Cortex-A53，512MB RAM） |
-| **顯示器** | 2.0吋 ST7789V IPS LCD（240×320像素） |
-| **距離感測器** | VL53L0X ToF（最遠2公尺） |
-| **音效** | 被動蜂鳴器（GPIO 17） |
-| **動作** | 8×伺服馬達（GPIO 20-27） |
-| **連線** | WiFi 802.11n、藍牙 4.2 LE |
-
-### 軟體架構
-
-| 層級 | 技術 |
-|------|------|
-| **後端** | FastAPI + Uvicorn |
-| **AI代理** | Google Gemini（由使用者選擇可用模型） |
-| **前端** | React 18 + Vite + react-i18next |
-| **BLE服務** | bless（GATT伺服器） |
-| **硬體控制** | pigpio + 自訂驅動程式 |
-
-## ✨ 主要功能
-
-### 🧠 代理式AI
-- **自然語言理解**：用英文、日文或中文與機器人對話
-- **經驗證的模型選擇**：取得Gemini API金鑰可用的模型，並只在有時限的生成測試成功後儲存模型
-- **Gemini 3相容性**：當舊版Python SDK無法設定目前的Gemini 3思考控制時，使用低思考等級與60秒上限的REST生成
-- **動作規劃**：AI自動將請求轉換為機器人動作
-- **已儲存Blockly動作**：可從本機動作庫重播經由藍牙儲存的完整Code IDE動作
-- **程式碼生成**：AI能撰寫Python程式碼來創建新的機器人行為
-- **語音輸入**：使用裝置麥克風說出指令
-
-### 📱 現代化網頁介面
-- **行動優先設計**：針對智慧型手機和平板優化
-- **即時回饋**：WebSocket驅動的距離感測器顯示
-- **硬體控制**：觸發表情、音效和動作
-- **系統日誌面板**：即時監控機器人活動
-- **多語言介面**：支援EN、JA、ZH-TW、ZH-CN切換
-
-### 🔗 雙重連線
-- **本地Wi-Fi**：透過`http://ninjarobot.local:8000`直接控制
-- **藍牙LE**：免設定的行動應用程式連線
-- **遠端存取**：ngrok通道實現遠端遙控
-
-### 🛡️ 安全至上
-- **沙盒執行**：使用者/AI生成的程式碼在受限環境中執行
-- **緊急停止**：即時停止所有馬達的功能
-- **安全關機**：透過「睏倦」動畫安全關閉電源（表情、音效和姿勢）
-- **關機動畫**：電源關閉前顯示睡眠表情、播放睡眠音效並移動至休息姿勢
-
-## 🚀 快速開始
+1. 關閉電源後接線；伺服使用獨立電源並共地，安裝軟體時切斷致動器電源。
+2. 設定 Bookworm 64-bit、Wi-Fi/SSH、I2C/SPI。版本公開後，以一般使用者執行下方 curl 指令。
+3. 安裝後執行 `./install.sh --check`。準備好校準時，執行 `sudo systemctl start pigpiod` 與 `./onboard.sh`。
+4. 依序完成螢幕、蜂鳴器、伺服、距離、匯入設定、名稱/類型、Gemini 與 ngrok。伺服工具可能在顯示選單前立即置中；支撐四肢／輪子後才輸入 `READY`。
+5. Q 保存退出，`--resume` 繼續。有效既有設定可重用，但不等於實體驗證；校準檔改變會清除舊實體觀察紀錄，失敗步驟可重試。
+6. 在專案根目錄手動執行 `.venv/bin/ninja_core server`；它會初始化硬體並嘗試 ngrok 連線。開啟顯示的本機 URL，逐項測試。略過 ngrok 設定不代表禁止對外連線。
 
 ```bash
-# 複製儲存庫
-git clone https://github.com/NinjaRoboticsEducation/NinjaRobotPi0.git
-cd NinjaRobotPi0
-
-# 安裝相依套件（使用uv）
-uv pip install -e .
-
-# 建置網頁介面
-cd ninja_webapp && npm install && npm run build && cd ..
-
-# 設定Gemini API金鑰並選擇經驗證的模型
-# 選項1會在輸入時隱藏API金鑰。
-uv run ninja_core init-tool
-
-# 啟動機器人
-uv run ninja_core server
+curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash
+cd "$HOME/NinjaRobotPi0"
+./install.sh --check
+./onboard.sh --dry-run
 ```
 
-然後在瀏覽器開啟 `http://ninjarobot.local:8000`！
+安裝與初始設定不會自動啟動伺服器、開機服務或重新開機。金鑰及 token 使用隱藏輸入，公開控制 URL 請保密。實機最終驗證與 GitHub 發布仍需另外完成。
 
-設定Gemini時，NinjaRobot會取得此金鑰可用的模型，並在儲存金鑰與模型前執行最小生成測試。思考模型的驗證最多可能需要60秒。若取得、驗證或選擇失敗，先前的Gemini設定不會被變更。伺服器主控台會顯示目前設定的模型，並在逾時時回傳明確錯誤，而不是無限等待。
+# 简体中文
 
-## 📚 文件
+NinjaRobotPi0 是 Raspberry Pi Zero 2 W 教育机器人，包含舵机动作、屏幕表情、蜂鸣器、距离传感、Gemini、BLE 和网页操作。初期仅支持 **Raspberry Pi OS Bookworm 64-bit**。完整接线及测试步骤请阅读上方英文版与[安装手册](InstallationGuide.md)；本节为摘要。
 
-| 文件 | 說明 |
-|------|------|
-| [安裝指南](InstallationGuide.md) | 硬體設定與軟體安裝 |
-| [開發指南](DevelopmentGuide.md) | API參考與架構概述 |
-| [專案升級計畫](ProjectUpgradePlan.md) | 專案路線圖與階段詳情 |
-| [開發日誌](DevelopmentLog.md) | 變更歷史與版本說明 |
-| [AI 開發協定](AGENTS.md) | 跨工具開發、安全、驗證與 Wiki 維護規則 |
-| [NinjaRobotPi0 Wiki](Wiki/NinjaRobotPi0_Wiki/README.md) | 供 AI 輔助開發使用、可追溯來源的本機知識庫 |
-| [Wiki 整合工作流程](WikiIntegrationWorkflowPlan.md) | 整合設計、維護閘門與導入檢查 |
+1. 断电接线，舵机使用独立电源并共地；安装软件时切断执行器电源。
+2. 配置 Bookworm 64-bit、Wi-Fi/SSH、I2C/SPI。版本发布后，以普通用户执行下方 curl 命令。
+3. 安装后运行 `./install.sh --check`。准备好校准后运行 `sudo systemctl start pigpiod` 和 `./onboard.sh`。
+4. 依次完成屏幕、蜂鸣器、舵机、距离、导入配置、名称/类型、Gemini、ngrok。舵机工具可能在菜单出现前立即回中；支撑四肢／轮子后再输入 `READY`。
+5. Q 保存退出，`--resume` 继续。复用有效配置不等于物理验证；校准文件改变会清除旧物理观察记录，失败步骤可以重试。
+6. 在项目根目录手动运行 `.venv/bin/ninja_core server`，它会初始化硬件并尝试 ngrok 连接。打开显示的本地 URL，逐项测试。跳过 ngrok 配置不代表禁止外部连接。
 
-## 📊 目前狀態
+```bash
+curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash
+cd "$HOME/NinjaRobotPi0"
+./install.sh --check
+./onboard.sh --dry-run
+```
 
-**版本：** 5.3.0  
-**狀態：** 第五階段完成 ✅ + 全硬體函式庫重建完成
-
-所有核心功能已實作並驗證：
-- ✅ 模組化硬體抽象層
-- ✅ 雙重連線（Wi-Fi + BLE）
-- ✅ 具動作規劃的代理式AI
-- ✅ 支援Code IDE上傳的已儲存Blockly動作庫
-- ✅ 安全程式碼執行引擎
-- ✅ React網頁應用程式
-- ✅ pi0servo V1.0（速度控制、獨立伺服速度、緩動曲線）
-- ✅ pi0vl53l0x V2.0（線程安全I2C、強化初始化、CLI）
-- ✅ pi0disp V2.0（線程安全SPI、差異渲染、PWM亮度控制）
-- ✅ pi0buzzer V1.0（非阻塞佇列、情緒音效、互動式TUI）
-
-## 📄 授權
-
-本專案採用**MIT授權**。
-
-**Copyright © 2026 Chihkuang Chang**
-
----
-
-<div align="center">
-
-Made with ❤️ for Education and Research
-
-</div>
+安装和初始化不会自动启动服务器、开机服务或重启。密钥与 token 隐藏输入，公开控制 URL 请保密。实机最终验证及 GitHub 发布仍需另行完成。

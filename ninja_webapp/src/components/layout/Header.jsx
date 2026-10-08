@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '../common/LanguageSelector';
@@ -9,9 +9,10 @@ function Header() {
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isBleAdvertising, setIsBleAdvertising] = useState(false);
+    const buttonRef = useRef(null);
+    const menuRef = useRef(null);
 
-    // BLE Advertising Status Check
-    // Note: This checks if the BLE service is advertising, not if a client is connected
+    // This reports advertising only, not a connected or authenticated controller.
     useEffect(() => {
         const checkBleStatus = async () => {
             try {
@@ -19,73 +20,67 @@ function Header() {
                 if (res.ok) {
                     const data = await res.json();
                     setIsBleAdvertising(data.advertising || false);
-                } else {
-                    setIsBleAdvertising(false);
-                }
-            } catch {
-                setIsBleAdvertising(false);
-            }
+                } else { setIsBleAdvertising(false); }
+            } catch { setIsBleAdvertising(false); }
         };
-
         checkBleStatus();
-        const interval = setInterval(checkBleStatus, 5000); // Check every 5s
+        const interval = setInterval(checkBleStatus, 5000);
         return () => clearInterval(interval);
     }, []);
 
-    const navLinks = [
-        { path: '/', label: 'home' },
-        { path: '/agent', label: 'agent' },
-        { path: '/help', label: 'help' },
-    ];
-
-    const isActive = (path) => location.pathname === path;
+    useEffect(() => {
+        if (!isMenuOpen) return;
+        const trigger = buttonRef.current;
+        const focusables = () => [...menuRef.current.querySelectorAll('button, a, select')];
+        focusables()[0]?.focus();
+        const onKeyDown = (event) => {
+            if (event.key === 'Escape') setIsMenuOpen(false);
+            if (event.key !== 'Tab') return;
+            const items = focusables();
+            const first = items[0];
+            const last = items[items.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault(); last?.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault(); first?.focus();
+            }
+        };
+        document.addEventListener('keydown', onKeyDown);
+        return () => { document.removeEventListener('keydown', onKeyDown); trigger?.focus(); };
+    }, [isMenuOpen]);
 
     return (
         <header className={styles.header}>
             <div className={styles.container}>
-                {/* Logo */}
                 <NavLink to="/" className={styles.logo}>
-                    <img src="/logo.png" alt="NinjaRobot" className={styles.logoImage} style={{ height: '32px' }} />
-                    <span className={styles.logoText}>NinjaRobot</span>
+                    <img src="/logo.png" alt="" className={styles.logoImage} />
+                    <span>NINJA ROBOT PI0</span>
                 </NavLink>
-
-                {/* Mobile Menu Button */}
-                <button
-                    className={styles.menuButton}
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    aria-label="Toggle menu"
-                    aria-expanded={isMenuOpen}
-                >
-                    <span className={styles.menuIcon}>{isMenuOpen ? '✕' : '☰'}</span>
-                </button>
-
-                {/* Navigation + Status */}
-                <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
-                    {navLinks.map((link) => (
-                        <NavLink
-                            key={link.path}
-                            to={link.path}
-                            className={`${styles.navLink} ${isActive(link.path) ? styles.active : ''}`}
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            {t(`nav.${link.label}`)}
-                        </NavLink>
-                    ))}
-
-                    <div className={styles.divider} />
-
-                    <LanguageSelector />
-
-                    {/* Bluetooth Status Indicator */}
-                    <div
-                        className={`${styles.bleStatus} ${isBleAdvertising ? styles.connected : ''}`}
-                        title={isBleAdvertising ? 'BLE: Advertising' : 'BLE: Off'}
-                    >
-                        <span className={styles.bleIcon}>{isBleAdvertising ? '📶' : '⚫'}</span>
-                        <span className={styles.bleDot} />
-                    </div>
-                </nav>
+                <span className={`${styles.badge} ${isBleAdvertising ? styles.advertising : ''}`}>
+                    {t(isBleAdvertising ? 'header.advertising' : 'header.bleOff')}
+                </span>
+                <button ref={buttonRef} className={styles.menuButton}
+                    onClick={() => setIsMenuOpen(true)} aria-label={t('header.openMenu')}
+                    aria-expanded={isMenuOpen} aria-controls="robot-menu">☰</button>
             </div>
+            {isMenuOpen && (
+                <div className={styles.backdrop} onClick={() => setIsMenuOpen(false)}>
+                    <div id="robot-menu" ref={menuRef} className={styles.menuSheet} role="dialog"
+                        aria-modal="true" aria-labelledby="robot-menu-title" onClick={(event) => event.stopPropagation()}>
+                        <div className={styles.menuHeading}>
+                            <h2 id="robot-menu-title">{t('header.menuTitle')}</h2>
+                            <button onClick={() => setIsMenuOpen(false)} aria-label={t('header.closeMenu')}>×</button>
+                        </div>
+                        <nav className={styles.nav} aria-label={t('header.navigation')}>
+                            {[['/', 'home'], ['/agent', 'agent'], ['/help', 'help']].map(([path, label]) => (
+                                <NavLink key={path} to={path} className={location.pathname === path ? styles.active : ''}
+                                    onClick={() => setIsMenuOpen(false)}>{t(`nav.${label}`)}</NavLink>
+                            ))}
+                        </nav>
+                        <LanguageSelector />
+                    </div>
+                </div>
+            )}
         </header>
     );
 }

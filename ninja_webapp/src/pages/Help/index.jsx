@@ -15,6 +15,13 @@ function Help() {
                 <h1>{t('help.title')}</h1>
 
                 <section className={styles.section}>
+                    <h2>{t('help.onboarding')}</h2>
+                    <p>{t('help.onboardingText')}</p>
+                    <p><code>./onboard.sh</code></p>
+                    <a href="https://github.com/NinjaRoboticsEducation/NinjaRobotPi0/blob/HEAD/InstallationGuide.md" target="_blank" rel="noopener noreferrer">{t('help.fullGuide')}</a>
+                </section>
+
+                <section className={styles.section}>
                     <h2>📚 {t('help.gettingStarted')}</h2>
                     <p>{t('help.gettingStartedText')}</p>
                 </section>

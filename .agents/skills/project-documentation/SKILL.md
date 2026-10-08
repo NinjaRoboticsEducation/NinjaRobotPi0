@@ -5,92 +5,15 @@ description: Use when implementation work changes behavior, setup, drivers, arch
 
 # Project Documentation Maintainer
 
-Documentation updates are mandatory when implementation changes behavior or developer workflow.
-
-## Review targets
-- README.md
-- DevelopmentGuide.md
-- DevelopmentLog.md
-- InstallationGuide.md when setup, calibration, config import, or hardware bring-up changes
-- the affected package `README.md`
-- AGENT.md and relevant skill files when the project workflow changes
-
-## Source-of-truth rule
-
-Before editing docs, verify important claims against:
-
-1. current code
-2. tests and commands actually run
-3. package metadata and entry points
-4. existing docs
-
-Do not copy stale claims from one document into another.
-
-Before editing project documentation, use `robot-wiki-query` for the affected topic and compare its evidence with current code. The wiki is a knowledge layer, not a substitute for code-backed fact checking.
-
-## Documentation rules
-### README.md
-Ensure it contains:
-- project purpose
-- architecture summary
-- main functions
-- driver overview
-- setup steps
-- usage examples
-- only verified stack/version/tooling claims
-
-### DevelopmentGuide.md
-Ensure it contains:
-- developer workflow
-- file/module layout
-- driver notes
-- lint/test commands
-- Raspberry Pi validation flow
-- common troubleshooting notes
-- public exports and CLI surfaces that match the code
-
-### DevelopmentLog.md
-Append a dated entry with:
-- task summary
-- files changed
-- why the change was made
-- lint/test results
-- Raspberry Pi validation status
-- follow-up work
-
-### InstallationGuide.md
-Ensure it is updated when user-visible setup changes, including:
-- wiring assumptions
-- required system packages or services
-- calibration order
-- config import/export steps
-- first-run validation steps
-
-### Package README
-Ensure the affected package README reflects:
-- package root exports
-- CLI commands and examples
-- config file names and defaults
-- actual current runtime behavior
-- troubleshooting and validation notes
-
-## Completion rule
-If code changed and docs were not reviewed, the task is not complete.
-If docs changed, they are not complete until they have been fact-checked against the code.
-If a mapped project document changed, the task is not complete until `robot-wiki-maintain` has checked the project/wiki source mirror and all remaining drift or pending wiki plans are reported.
-
-Run the mirror gate after the final documentation edit:
-
-```bash
-python3 .agents/skills/robot-wiki-maintain/scripts/wiki_source_sync.py --check
-```
-
-Do not hand-edit the mirrored copies under `Wiki/NinjaRobotPi0_Wiki/raw/` and do not auto-apply semantic wiki changes.
-
-## Tone and style
-- Always provide clear step-by-step instructions for setup, testing, and validation.
-- Give concise explanations of each step's purpose and expected outcome.
-- Use wording that is understandable to non-developer users. If any professional jargon or abbreviations are necessary, explain them in simple terms.
-- If any code examples are included, ensure they are copy-paste ready and well-commented for clarity.
-- If the same information appears in English, Japanese, and Traditional Chinese docs, keep those sections synchronized or explicitly note what still needs translation.
-- Never state that Raspberry Pi validation or test execution happened unless it actually happened.
+Use `robot-wiki-query` and verify claims against code, tests, CLI exports and actual checks.
+Find current InstallationGuide, DevelopmentGuide and DevelopmentLog in the knowledge map.
+Copy a complete manual into a NEW dated wiki raw version before editing; retain registered
+originals unchanged. Root manual files are short compatibility links, not editing authorities.
+README is onboarding/navigation. Package READMEs stay beside packages and require immutable
+new evidence snapshots when their documented behavior changes. Historical plans remain history.
+Update setup, architecture, API, onboarding, UI/locales and safety sections affected by the task.
+Keep English, Japanese and Traditional Chinese guidance consistent; document translation gaps.
+Append outcomes and actual validation to a new development-log version, separating host checks
+from owner-manual Raspberry Pi checks. Follow robot-wiki-maintain for semantic plans and reviews.
+Completion: current pointers/source hashes and implementation mappings agree; knowledge check,
+normal/strict lint, links and indexes pass. Do not mark physical testing performed when pending.

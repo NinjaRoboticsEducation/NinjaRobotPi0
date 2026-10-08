@@ -1,0 +1,1966 @@
+{
+  "version": 1,
+  "integration_status": "ready",
+  "reviewed_at": "2026-10-08",
+  "documents": [
+    {
+      "name": "InstallationGuide.md",
+      "path": "raw/articles/ninjarobotpi0/2026-10-08/InstallationGuide.md",
+      "source_id": "src-20261007-installationguide-3",
+      "content_hash": "sha256:45ef29b63b279aa880cd4858de3e1150be12291f5c2b758219d63847268d1b5b",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/references/installation-and-wiring.md"
+      ]
+    },
+    {
+      "name": "DevelopmentGuide.md",
+      "path": "raw/articles/ninjarobotpi0/2026-10-08/DevelopmentGuide.md",
+      "source_id": "src-20261007-developmentguide-3",
+      "content_hash": "sha256:af9d4c121796a7373ef9bb02ca590931d7d88e4a86184f870c780c0e067d77d1",
+      "pages": [
+        "wiki/references/development-guide.md",
+        "wiki/concepts/development-workflow.md"
+      ]
+    },
+    {
+      "name": "DevelopmentLog.md",
+      "path": "raw/notes/ninjarobotpi0/2026-10-08/DevelopmentLog.md",
+      "source_id": "src-20261007-developmentlog-2",
+      "content_hash": "sha256:d3cb9f70b8b62cfe3609fb4101897a359cb9a843156f3c2ab6de05df3e02e149",
+      "pages": [
+        "wiki/analyses/development-history-and-evolution.md"
+      ]
+    }
+  ],
+  "implementation_patterns": [
+    "install.sh",
+    "onboard.sh",
+    "scripts/*.py",
+    "scripts/*.sh",
+    "scripts/*.env",
+    "pyproject.toml",
+    "uv.lock",
+    "ninja_webapp/package*.json",
+    "ninja_webapp/eslint.config.js",
+    "ninja_webapp/vite.config.js",
+    "ninja_webapp/src/**/*",
+    "tests/*.py",
+    "tests/*.cjs",
+    ".github/workflows/*.yml",
+    "AGENT.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".agents/**/*.md",
+    ".agents/**/*.py",
+    ".agents/**/*.yaml",
+    ".claude/**/*.md",
+    ".cursor/**/*.mdc",
+    "docs/validation/core_baseline.json",
+    "ninjarobot_pi0_Wiki/AGENTS.md",
+    "ninjarobot_pi0_Wiki/.agents/**/*.md",
+    "ninjarobot_pi0_Wiki/.claude/**/*.md",
+    "ninjarobot_pi0_Wiki/.cursor/**/*.mdc",
+    "ninjarobot_pi0_Wiki/CLAUDE.md",
+    "ninjarobot_pi0_Wiki/docs/*.md",
+    "ninjarobot_pi0_Wiki/src/**/*.py",
+    "ninjarobot_pi0_Wiki/pyproject.toml",
+    "ninjarobot_pi0_Wiki/uv.lock",
+    "ninja_core/src/**/*.py",
+    "ninja_core/pyproject.toml",
+    "ninja_ble/src/**/*.py",
+    "ninja_ble/pyproject.toml",
+    "ninja_utils/src/**/*.py",
+    "ninja_utils/pyproject.toml",
+    "pi0servo/src/**/*.py",
+    "pi0servo/pyproject.toml",
+    "pi0disp/src/**/*.py",
+    "pi0disp/pyproject.toml",
+    "pi0buzzer/src/**/*.py",
+    "pi0buzzer/pyproject.toml",
+    "pi0vl53l0x/src/**/*.py",
+    "pi0vl53l0x/pyproject.toml",
+    "README.md"
+  ],
+  "implementation_files": {
+    ".agents/rules/ninjarobot-development.md": {
+      "content_hash": "sha256:b8fc3b36a380117722fa8f3707dfac8b5cad7474bf30608df8b127714eed423e",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/pi-validation/SKILL.md": {
+      "content_hash": "sha256:ee4696efc1bf4783d56dabf718a0e398432bbe22a2c45a6d9314f82c8afb63f5",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/pi-validation/agents/openai.yaml": {
+      "content_hash": "sha256:1b311b96102ecd4a94782ca3cc2ed13692ac8b3adf4474c657ef28826cfd2392",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/pi0driver-development/SKILL.md": {
+      "content_hash": "sha256:4b494d968b8230efca41dbdbfd72a144602b9bafeb6bbd92411636a0fee576fc",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/pi0driver-development/agents/openai.yaml": {
+      "content_hash": "sha256:c2d4e8b005a50b41133b1a5883b2c29f0bef3eec43d2bee61429b56e3891a972",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/project-documentation/SKILL.md": {
+      "content_hash": "sha256:7d173449c7edf337d1327707c4177d3c26f11b7303a9fa6b99767d6803dd667a",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/project-documentation/agents/openai.yaml": {
+      "content_hash": "sha256:79cc7902e5cdaee41ae8c17a0bce9374eb4baea1a2bf2cc9650974f9fdeaa3cc",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/robot-wiki-maintain/SKILL.md": {
+      "content_hash": "sha256:4473beaac8ad3d5308d8fc9dce6ab5f0878a9b994b42dbcb7ad35ad2f3f803b0",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/robot-wiki-maintain/scripts/wiki_source_sync.py": {
+      "content_hash": "sha256:89b6bc5027dc2a6835b94d6df4217b1b8ccc16a252f394182818cb9fa3b0fa94",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/skills/robot-wiki-query/SKILL.md": {
+      "content_hash": "sha256:0c2682c451c0a3bce48fad1380a270e9dc55ab9234158cd5e9e06a1da57d47c6",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/workflows/robot-wiki-maintain.md": {
+      "content_hash": "sha256:2071446a7e36c337a8a7130ee288a7c206b6f17b487449fada70fa3f36bfb03c",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".agents/workflows/robot-wiki-query.md": {
+      "content_hash": "sha256:bcdcd892f46998f3c5cb46acbcdb26feb428c83b5c359c3c7affb1bbdce55c77",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".claude/skills/pi-validation/SKILL.md": {
+      "content_hash": "sha256:5b384ad26b950ca5f5edc69dc8137cd372cefbb1ffb7fc48d72cded709a5c6fb",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".claude/skills/pi0driver-development/SKILL.md": {
+      "content_hash": "sha256:f5c6ea577988d81fea6d538fd04ab76934e0107ef3a3c86f5116f350aa2ed428",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".claude/skills/project-documentation/SKILL.md": {
+      "content_hash": "sha256:d6eccb610641db02aa70a43a3e860642fa812468f09f9a9771682fe07ccbfddc",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".claude/skills/robot-wiki-maintain/SKILL.md": {
+      "content_hash": "sha256:e3b5cb8a8be3a04fe06579861c3c67e41ba0ea8a97b4a0781835a718ba4ec436",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".claude/skills/robot-wiki-query/SKILL.md": {
+      "content_hash": "sha256:1832d7f2010cbd93e55ec86bdfc54c0ae8217843efd78c1494895ccaf08cb160",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".cursor/rules/ninjarobot-development.mdc": {
+      "content_hash": "sha256:e28cb8171035d4982a35d785416389e14df70e907377e465e89d0e7eb6dfafcd",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    ".github/workflows/upgrade-validation.yml": {
+      "content_hash": "sha256:c9bc0123c90b69b74f06569f933eea3a7833f563cae9d81bf2063590029cc2fb",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "AGENT.md": {
+      "content_hash": "sha256:4df3e1eb23432c66269450225f76e378db6c283db6c2b8a316574a7f96b14794",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "AGENTS.md": {
+      "content_hash": "sha256:6f54eaa1eccf038c2a10ebbf6bf6fbc0adbc9e5b2b5aeec00ba8e3aa91cf37ef",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Owner-authorized public README clarified; three root manual files stay immutable-manual compatibility pointers."
+    },
+    "CLAUDE.md": {
+      "content_hash": "sha256:3e237d98602a603ed8f6ffd50d1253f3abb2574e3810cc85c3f7b7ef0b2fbeb2",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "GEMINI.md": {
+      "content_hash": "sha256:d50fb2b678f918a638cc2257666e2d4028365492b821a165d384b0e35eaa1e24",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "docs/validation/core_baseline.json": {
+      "content_hash": "sha256:54b2aec544fbf67eb207a56ffeef290198b1bd1f7602c5dd2103ac1970515f3f",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "install.sh": {
+      "content_hash": "sha256:3dffd8ee118d6f289f8f2dbdcdcf7e247fa2aadb538d8eaca8e9864a783e64a4",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+    },
+    "ninja_ble/pyproject.toml": {
+      "content_hash": "sha256:8cd1b579adc08cf90769a951469681732c03d8d321895583f063002c60d830db",
+      "pages": [
+        "wiki/entities/ninja-ble.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_ble/src/ninja_ble/__init__.py": {
+      "content_hash": "sha256:2e6e061f7ffe1630f14baf1df81d52f421164789d892af8466c43a46f525d302",
+      "pages": [
+        "wiki/entities/ninja-ble.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_ble/src/ninja_ble/chunking.py": {
+      "content_hash": "sha256:123856c9809a02f21f9d8dfe71b19dc434d52f5ecf14cbc1072e17e2081bf802",
+      "pages": [
+        "wiki/entities/ninja-ble.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_ble/src/ninja_ble/service.py": {
+      "content_hash": "sha256:c32833ebc0e0364959e1ccca0e984e47f231e81568eceab64f570440ec6c3dbe",
+      "pages": [
+        "wiki/entities/ninja-ble.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/pyproject.toml": {
+      "content_hash": "sha256:cf90c88786d3a9377499f76c1d8670995851ce2ee6309ce753be5abb9ac03d17",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/__init__.py": {
+      "content_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/__main__.py": {
+      "content_hash": "sha256:8d453d134fb5a2fdeae447caf9c7a8d7d4acd46638c4b93231d2804608078995",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/action_library.py": {
+      "content_hash": "sha256:732ea7a6c2c5ac9ea40dcdffd556522d3d286b715400ee5af752dc253659edcd",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/api_wrappers.py": {
+      "content_hash": "sha256:36f404e54d0652b27f96a73131733640ab30a8fd381c9358c60ec5ebd8b7af3d",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/config.py": {
+      "content_hash": "sha256:3ee530f1d07accff8937cfd221d964d3ad189b3591953a4a16c8940064dd92c7",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/contracts.py": {
+      "content_hash": "sha256:140ebec86ab448cf07bd624d1541fbfd2b3106737e6a976a02c8ab8cf8dc2811",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/dispatcher.py": {
+      "content_hash": "sha256:ce15812bbe9bd47958f4af89b62b7ee8c3513dbccc6fe6bfc77ccc24e946464a",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/facial_expressions.py": {
+      "content_hash": "sha256:aec05c676717ee55c01ce4b7e3dcf0694cefd879929df3654c5fa0582127be46",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/gemini_models.py": {
+      "content_hash": "sha256:ad684b18e37429d82466818b8b1ef0035c47e14b43b434f23bffb5775c61f018",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/gemini_runtime.py": {
+      "content_hash": "sha256:72eb312afd184b724bbd522a0b4773b52f11a3f6cc0d80cc8a9a541bb2ea8c00",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/hal.py": {
+      "content_hash": "sha256:c558fc0ec62e9fbc22674f9efc257e24dc51d2200eb9bc958d1132cd379a0354",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/init_tool.py": {
+      "content_hash": "sha256:b0d39bba282b035c5a9210f00c5f4ca5f67880a657384074eaeb4cd88aa8e474",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/movement_cli.py": {
+      "content_hash": "sha256:eea992cf3fd076a08e0d5e51e23f901ac058b5280911d386b40b1eba763fa5f9",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/movement_controller.py": {
+      "content_hash": "sha256:513b92c8f7e25a687ef66a7713bd9dc315ab8815b0e3d366b2b00c42fe96d027",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/ngrok_config.py": {
+      "content_hash": "sha256:c6b4bff4d18c4eca5b19a184f34554387f301e3540c6f34345986fd93d531422",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/ninja_agent.py": {
+      "content_hash": "sha256:52ed6c3f238510e4e61756edbff84d62fe5ed0cbdf38d90386c96c5165b39032",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/perception.py": {
+      "content_hash": "sha256:6bf64ae493f48110d3196904ec76b8d62cf65aedfaed5617b37b752ddfbd9ace",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/robot_sound.py": {
+      "content_hash": "sha256:8878259eecc7089150c18b320dda5918d748d9a34deef93d79b4f76370492608",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/runtime_pipeline.py": {
+      "content_hash": "sha256:0e7a7da17e9488241a44661d4e235c0634e7ceaba65737b3ce956305032b7211",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/safe_executor.py": {
+      "content_hash": "sha256:e9ffdf3faa169bbce9ec6054103b8913ebcd79d0b1da7de16666cbb657742384",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_core/src/ninja_core/web_server.py": {
+      "content_hash": "sha256:2e7c9b7f90d19907839ca19ff337f97973f606dddc995c4056a5a37074ccdc33",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_utils/pyproject.toml": {
+      "content_hash": "sha256:802a26e85a412dbe9b77595f758dd2e58bb014d2fd27f6e1f2dae555839dcb75",
+      "pages": [
+        "wiki/entities/ninja-utils.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_utils/src/ninja_utils/__init__.py": {
+      "content_hash": "sha256:c3be62445fc9773d4056aac021c270816fa244d8b54d1836baa58444d0cc2d04",
+      "pages": [
+        "wiki/entities/ninja-utils.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_utils/src/ninja_utils/__main__.py": {
+      "content_hash": "sha256:3f447c9e351a9910fecc28ccc741b78046c30cc46ab21b9e5c09dbbb7d646486",
+      "pages": [
+        "wiki/entities/ninja-utils.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_utils/src/ninja_utils/interfaces.py": {
+      "content_hash": "sha256:ba3e7743959b615cdb4915f1c0085cbf9d38f2f46c5fcd05a2b6ecb4940870cf",
+      "pages": [
+        "wiki/entities/ninja-utils.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_utils/src/ninja_utils/keyboard.py": {
+      "content_hash": "sha256:f2f3cd3eedb08405f8c7e53a9ff9ce9464b5f576479268cd71548028ddcac833",
+      "pages": [
+        "wiki/entities/ninja-utils.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_utils/src/ninja_utils/my_logger.py": {
+      "content_hash": "sha256:4f069654e6e19636ebbb73cfff532275207100a89b9ca5074fbdf081e060f279",
+      "pages": [
+        "wiki/entities/ninja-utils.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_utils/src/ninja_utils/service_manager.py": {
+      "content_hash": "sha256:f753652e2370c1d13eb888592cac6a929b1f13e6c73640274081a641fdd10e0f",
+      "pages": [
+        "wiki/entities/ninja-utils.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "ninja_webapp/eslint.config.js": {
+      "content_hash": "sha256:dcec8ea3cebb4509cc533246530c9abe48c7e2859ac8e477ac572427652e6c49",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/package-lock.json": {
+      "content_hash": "sha256:da5a426ac0fb609f6b58f5cd38d40449c73c1f6cdbca3181b32390d5ef4f8486",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/package.json": {
+      "content_hash": "sha256:13543da20f27a16d86fd97895fd8251566643fff109ab11b890e1ee879deda20",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/App.jsx": {
+      "content_hash": "sha256:92186e11c3d89e51b093686b2c7cb9323dfbd173d3bb799bd9f9d182e9cb5191",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/common/Button.jsx": {
+      "content_hash": "sha256:22b676b83869b844f8358fbe2551edb15af19abe130f7623fee4dc872ae49bc9",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/common/Button.module.css": {
+      "content_hash": "sha256:128e0f962ddf4e129e9553fb4113a569ca6721dac0491a7f3ce1805e4005ef1f",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/common/IconButton.jsx": {
+      "content_hash": "sha256:0bd989be54f27728cbce0ca0caaee210dd0ce81983d321cc38cdbdfeadf06a5f",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/common/IconButton.module.css": {
+      "content_hash": "sha256:a594444dd42b061cfa28e4e77f2481d9bca47e5a246776db4fdba3e4e57c3f44",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/common/LanguageSelector.jsx": {
+      "content_hash": "sha256:5390a4692d4aad7c529ab02f5d50800ccf0a1673d7dc40f864b363c383ce119a",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/common/LanguageSelector.module.css": {
+      "content_hash": "sha256:a35aedc431bce3edd7723d0aa22785b6cfcdf60074103b58741ce2507aa58548",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/common/PowerOffSlider.jsx": {
+      "content_hash": "sha256:85bbe0bf3f0fd9f9f7726cb8fe6a84489f5785a8d0297f94ea51808ebaceb211",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/common/PowerOffSlider.module.css": {
+      "content_hash": "sha256:326327fc7dc91f9b21e365f483bd2d7f89eea72ae2c34a1547fa72bc54d6de92",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/layout/Footer.jsx": {
+      "content_hash": "sha256:1b4fc074e9be821b7441c8a4e8fff67fe33600e2656d09e052e43594066b9538",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/layout/Footer.module.css": {
+      "content_hash": "sha256:5bfce96bc129fea10be9808847a6f05a079fc539fa325be734f18b9d558de490",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/layout/Header.jsx": {
+      "content_hash": "sha256:4d740a4eacff987d989a5eb4cd428f037b860c4bca63a68e13feb670bb2e4ad1",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/layout/Header.module.css": {
+      "content_hash": "sha256:c49ca0da1e9a4697ddb28d29a9c8fcaa170b7a7e82d2fe511e794d39678967a0",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/layout/Layout.jsx": {
+      "content_hash": "sha256:0132b26f616d22100b3199c2234631984af4cb0b4336f196ceb5e33358ed781e",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/components/layout/Layout.module.css": {
+      "content_hash": "sha256:b1c32b0c921d42d650aca0c0eb4255d4399402300d2d5753847a5bf3701afc1e",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/i18n.js": {
+      "content_hash": "sha256:52172cea42887cb5bb26f01f05b21b799f63bf6044ea6e92528c5d85c054ee19",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/index.css": {
+      "content_hash": "sha256:b23fae1058d6682792e08c9cffcbe366886fc8156b7c08bf252b8033ece6b572",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/locales/en.json": {
+      "content_hash": "sha256:5433e1e2d167596c9ad7b956569d7200918347bb5b63a23091bf40240c71a1e8",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/locales/ja.json": {
+      "content_hash": "sha256:e2ea95a8b06b5d2cbda0f3ccff10c0f626d8527e1e51fd159d543945f24b2284",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/locales/zh-cn.json": {
+      "content_hash": "sha256:bd200cc59e172e6ea0148e00feb55038f5bba3440a192b85e2df7a42f5cde440",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/locales/zh-tw.json": {
+      "content_hash": "sha256:718b4c453f4e8ed0ca50fedcbd55aed2e8c77c128cf3386ce4470eeba4e1e4e8",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/main.jsx": {
+      "content_hash": "sha256:227fb9cc1dd4c0f0c2384eb498eee6e1d97dd9615fc3c5213335885595304a09",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/pages/Agent/Agent.module.css": {
+      "content_hash": "sha256:2b67d32961dc7cc2b226ff436d3709f16ca636a46fc68e6610bf256f229f910a",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/pages/Agent/index.jsx": {
+      "content_hash": "sha256:b1f282961761a7864b71b7c650d9a0ea0cfd83c1b19164f2b2819a0e7b98672d",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/pages/Help/Help.module.css": {
+      "content_hash": "sha256:ee2060d1ceedd83e8309612efe41d0e98c4b835ef659b30a535a25d8ab3af9b8",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/pages/Help/index.jsx": {
+      "content_hash": "sha256:ae526c6b6f15c9f4917be0f257c0bc36cf9314d55801b4e37f7421c14f2ffef5",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/pages/Home/Home.module.css": {
+      "content_hash": "sha256:2a1b372d58254bf87a4727d0dbce3125ea8098ac0ac85c4042e63a3f45db39c5",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/src/pages/Home/index.jsx": {
+      "content_hash": "sha256:efca99b9d5affb86c78b7964547e171a10fc45c059e1b51d0d063239c86f4a7a",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninja_webapp/vite.config.js": {
+      "content_hash": "sha256:21f56ad70aed71dce16a3e3efdafe7eb80e5ae057a8de9ccd4536ab4e0b33109",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+    },
+    "ninjarobot_pi0_Wiki/.agents/rules/llm-wiki.md": {
+      "content_hash": "sha256:48317f24481664bf375ae9574129dbde73e0394dc289f745ad90a9ae9252e5f4",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/skills/wiki-ingest/SKILL.md": {
+      "content_hash": "sha256:c2f805e0aed94c5ae57f5142c10964b457367a5088a0e6ed0e2aba87fa77efe5",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/skills/wiki-lint/SKILL.md": {
+      "content_hash": "sha256:7537e8f1c70a70103a4d09ac1e701b4ed9dae387a2379851b29d796ea2e6583f",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/skills/wiki-maintain/SKILL.md": {
+      "content_hash": "sha256:82fbdd114a10b83615e2a243da9e81243768a3bb8547fbb08bfa72755d6f05fe",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/skills/wiki-query/SKILL.md": {
+      "content_hash": "sha256:bd623fbfb077d62e42a6967d9a138e2a6c03e219ac7bd62f867b9e24273d9b85",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/skills/wiki-review/SKILL.md": {
+      "content_hash": "sha256:cc76218697b77bd5c5ab433026d553b5d47150cf396855463e7f327a650a34da",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/workflows/wiki-ingest.md": {
+      "content_hash": "sha256:ce3c46ed73870ceaa1e81c908820b8e4879ff3ae533859c504514a0182163b60",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/workflows/wiki-lint.md": {
+      "content_hash": "sha256:0c031192ea2fc2b8bca8310244dde786d1cf52fc04a7bff0725fc658723d934d",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/workflows/wiki-maintain.md": {
+      "content_hash": "sha256:8d083659b7d978bd5db4f1ffaf2173294dff5e537086c2d274ca06dea6847d03",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/workflows/wiki-query.md": {
+      "content_hash": "sha256:a00324d5257aa7134402a0a6fe8568d8c27eeef3d4fc58b6ccc79322208ed808",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.agents/workflows/wiki-review.md": {
+      "content_hash": "sha256:f350bf3c7be857831f1967c3f21ae4e5e113fffc92d4495c4cb207e8974a1c7e",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.claude/skills/wiki-ingest/SKILL.md": {
+      "content_hash": "sha256:c04d73c576081439f71d72c8cced0f3d6a4ab8376899fba02ecfe9efcef6ca63",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.claude/skills/wiki-lint/SKILL.md": {
+      "content_hash": "sha256:b57b770cca602b6d7a5be2d32138edd56447d505c2798f3ee5e0009c1d6f5efc",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.claude/skills/wiki-maintain/SKILL.md": {
+      "content_hash": "sha256:d345f99d27dd5b4306bf3449e3d4bfa574badb550928f8210eaf999c10f1416f",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.claude/skills/wiki-query/SKILL.md": {
+      "content_hash": "sha256:23f7cb688578d1d72c20e60170c0e05b93027cfc175fe412bf72223db6ad9ff0",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.claude/skills/wiki-review/SKILL.md": {
+      "content_hash": "sha256:dd2c78f7dd1563ad0ee971c6d436209611168f2b2a29f71ce4d87b632e332072",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/.cursor/rules/llm-wiki.mdc": {
+      "content_hash": "sha256:7b9b73c9def8bbfd0ced16ea75c8c2c287a8bc3bfa8c6735ac1b42c14dd1f0be",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/AGENTS.md": {
+      "content_hash": "sha256:2f063d66daaa11ce51176069a54203c8c31b8f70a48e30c949e04db0cdeed841",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/CLAUDE.md": {
+      "content_hash": "sha256:2d8a98fcfd7c23c36091c2e20b056f61e1e6c876d267e2b8fc215ade7eac7bb9",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/docs/ANTIGRAVITY.md": {
+      "content_hash": "sha256:ea50707bb383f1859d4cdf9071680d7896a13e75fee473506728283fd7e3f150",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/docs/CONTENT_MODEL.md": {
+      "content_hash": "sha256:ac472fd8477936401d074cd8a9553bcdeec5056acc55939901228ebff38de1f8",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/docs/KNOWN_LIMITS.md": {
+      "content_hash": "sha256:eb9ea94bb789b2ab00e720fbd84507dc3ebdc95e505af41d606f3c6535da21f0",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/docs/PROJECT_WORKFLOW.md": {
+      "content_hash": "sha256:f2b08f672bf6a3ab01d6cf8d64b86a28d5b8844088660f13a6e80310929ad5fa",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/docs/RECOVERY.md": {
+      "content_hash": "sha256:ff981b871376d6625a96911363086481db733bddc4e7220e14facf92f36518b8",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/pyproject.toml": {
+      "content_hash": "sha256:976e3b435393cde383bb23169006e691ea48d2ba7b24eed58b5d3090ccd3cc82",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/__init__.py": {
+      "content_hash": "sha256:898a8037087e822a4c96b316c928450f5ac7379efd229aa4c38c7941614203f7",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/cli.py": {
+      "content_hash": "sha256:104cf2ec7bee685c4299259c458ff46cf279dd43c76a4467de96a01f2693b565",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/config.py": {
+      "content_hash": "sha256:299048740006d099eb829829bf73580ec48c1d1dd2ea414622ecbd5806db28ec",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/frontmatter.py": {
+      "content_hash": "sha256:3ef8f6f077d27a0487bfbfabc2203ddaab866e1bb5547b0333687a2ef23875ab",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/indexes.py": {
+      "content_hash": "sha256:738a65a8dda0b44e3c9ea268cfe64e29d6a9686dd2acd3d9e9f0a2c831199858",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/links.py": {
+      "content_hash": "sha256:71b7b84f417f9dceaf7aa2e13c233aff7088e0b8da5c23604b912ebc479a491a",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/lint.py": {
+      "content_hash": "sha256:e256fbbf30c9af8cf10c5844949501a403f68fe1a837301a434cc0789f97d2e1",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/locks.py": {
+      "content_hash": "sha256:17b4d1fd6a88ccd5ade5dbb85eb0a33c8c626d0003689a083ca60b62c7961d71",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/models.py": {
+      "content_hash": "sha256:94df488821ea9d42786f8898b9cece4d3f8c4d587ccf988c3b3031dc66df841a",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/normalize.py": {
+      "content_hash": "sha256:593468cd2976cbb2b69c88b1e1ae7e61a1a6db2b17813a979a112d4652a7b209",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/paths.py": {
+      "content_hash": "sha256:137723f91ef033bc1df2043283fea6a59538eabe471b777a254dff9471350441",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/plans.py": {
+      "content_hash": "sha256:64c15bc9ce2c55bcb0f1686f23a38023b7698ffb0621bd9e3e400825d66313f4",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/search.py": {
+      "content_hash": "sha256:4dce9a7455a716946e22f307cb4f07d2a166f64ca461fa1ac211c95f1874b197",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/secrets.py": {
+      "content_hash": "sha256:ffecddb54f565ec182dcaee47204ca1b23657f9172b1fe0ef8a5f31748841d13",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/semantic.py": {
+      "content_hash": "sha256:156bc860f15877c44305ed59d165cf3bd5f225b0ba22aee2a54c5eaa2bff8aa6",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/sources.py": {
+      "content_hash": "sha256:a6a4cbceb547c3ecd455fe2611f57b68990bcf2b604b8498ed80b71147cc5f3c",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/src/llmwiki/transactions.py": {
+      "content_hash": "sha256:9152f53e937ecb418d3b7311c11eae15214b773e79b49e41bf4ffcf9b1aab66b",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "ninjarobot_pi0_Wiki/uv.lock": {
+      "content_hash": "sha256:a28241ca6c3ded267830e358f097cba8af73dd29a35327d05008deea9a142237",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "onboard.sh": {
+      "content_hash": "sha256:ac09c363c0a6827e92f006c4499cd78d96942ec86e4c550291acc7f13afd693f",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+    },
+    "pi0buzzer/pyproject.toml": {
+      "content_hash": "sha256:d243267038883b8c45a13a63bd23a6c2fcd37fec4efe17b50fdb71c828eb5174",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/__init__.py": {
+      "content_hash": "sha256:0d1ba548790d0a3338d5abf252fd0c327d8d160aa86d16eb95777add819e83da",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/__main__.py": {
+      "content_hash": "sha256:5b0583c6aceda832d76bed0a65ceb84390426dfd2b0ec68c7850b47f09d82a84",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/cli/__init__.py": {
+      "content_hash": "sha256:5677dd92ef23c5de3bf5ab6e4f9f51a05620cb6088c63b155a50d3edec93107b",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/cli/buzzer_tool.py": {
+      "content_hash": "sha256:538a4f1e447774c7dde6f5000eb540a966a143ecc4858660da7126e3bff95327",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/config/__init__.py": {
+      "content_hash": "sha256:c01bcb5678cbafd40b064445a8a911e33bc374e8864b1ecfcd7a38096f5f0bcf",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/config/config_manager.py": {
+      "content_hash": "sha256:186ac4036c35e30c2114e37ef9260330a04bd949b98daadf286ba1aa57421e2b",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/core/__init__.py": {
+      "content_hash": "sha256:58a163e451bc613a2937e1d0e3c0c35194394be61230b1ff69d958d6acb89de0",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/core/driver.py": {
+      "content_hash": "sha256:cd6fb9f86b02ddef7a5538933156c5c847396a7312dd9932faabc2a2fe953bed",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/core/music.py": {
+      "content_hash": "sha256:1a6b1397a99fa529d2fbf64f40e3e7e02c33cab94ba4df1e77aa53253f7c21d0",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/driver.py": {
+      "content_hash": "sha256:86f2d7a6e240ffdb8d86195fdc6c9b81f2aa5cde85eeada9f4498b8021ec5a2f",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0buzzer/src/pi0buzzer/notes.py": {
+      "content_hash": "sha256:1edaf6be635de0c78441f1c2c7f282ff1bbac367808b6cbc35380c1ead2db4d8",
+      "pages": [
+        "wiki/entities/pi0buzzer.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/pyproject.toml": {
+      "content_hash": "sha256:98d91f99e5f6669c129bc1823b736557cd137777775d501d9db80dc4468fed0b",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/__init__.py": {
+      "content_hash": "sha256:b94b8a2aacd08bea2a0c73e47c297f5b8a9ad0a7361f0a2fb2d08aa9f144eac2",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/__main__.py": {
+      "content_hash": "sha256:fe6d01411d5359d56571fc15817105f62ad88964f2d1056cf49d51a0aba6a315",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/cli/__init__.py": {
+      "content_hash": "sha256:d89d0c558f4684e896bc8abe3a98c54719da9c70255ff245d28e5ffc1b394965",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/cli/demo_cmd.py": {
+      "content_hash": "sha256:747bc106579f45e3c63162edd76b5bc32a7f33c5e5bc1ddcbdec25afb3269894",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/cli/display_tool.py": {
+      "content_hash": "sha256:c9abd9d2df5ba5e8672082190d6000020206ce53f3757879317396a5022b6b2b",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/cli/image_cmd.py": {
+      "content_hash": "sha256:6c35a6ed1acf392c989a54f091ea2c8546230d0dea259dcf023d51d2bed824ed",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/cli/info_cmd.py": {
+      "content_hash": "sha256:9e60025682c61e5d2596c20f417d31e4039dec08f0d29a340283455f16ce657f",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/cli/init_cmd.py": {
+      "content_hash": "sha256:257b9e81f6babd46f6f9c3a538eab2ac59ed52982b5945ba2fed4e178e977abc",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/cli/text_cmd.py": {
+      "content_hash": "sha256:f5a7cecb09699d85778e35ad4af331fdf6339c84daa23a4e227c50f09ec075ad",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/config/__init__.py": {
+      "content_hash": "sha256:d8b253bc2122370a95054f528610ea67aebcc67953e9ab2bb865b73cee5d27ad",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/config/config_manager.py": {
+      "content_hash": "sha256:8b7c229ae01495c6b0d7af3ec45e42f42d5fecd028a3725a29a376b950ee098a",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/core/__init__.py": {
+      "content_hash": "sha256:19af757e8afcb065980a5d21921bda624174a7401d136a3ae540362dd96a8b14",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/core/driver.py": {
+      "content_hash": "sha256:cdd775797e58e7602bd3786846517e3cc4625e3d35bc976ec6b0946b354a3b85",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/core/renderer.py": {
+      "content_hash": "sha256:73aaecc803664e1514626cb0647a5a8cf4fe5cd61e0f1087002078b2f3ebc695",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/effects/__init__.py": {
+      "content_hash": "sha256:8b9b9e794e66dd17e255789c29cf52b84772880c6f7441cb897bdf4c35d88ef7",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0disp/src/pi0disp/effects/text_ticker.py": {
+      "content_hash": "sha256:44aba05e611cf16a0cb2919b048628f2483d3c4391a67ee6d1a323f538c3f149",
+      "pages": [
+        "wiki/entities/pi0disp.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/pyproject.toml": {
+      "content_hash": "sha256:ed152a10e307492ef0ff1374789e0b7bb62f508fafbe0f20b2a42ffea2894bd3",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/__init__.py": {
+      "content_hash": "sha256:4090ad7f952aa1da57273bd62117a98a3c3a89f082386a01d28c1220f1dccb44",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/__main__.py": {
+      "content_hash": "sha256:78fc8c01bb767ea414de940e9a6b3da2164d1a30999bc695135dce3cdc8e2049",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/cli/__init__.py": {
+      "content_hash": "sha256:4bad9ee48699a765d1055fa9f2a0ba6346468ead6abf17455944dd7ad113b872",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/cli/calib.py": {
+      "content_hash": "sha256:414c41f53e172c281353804f0614f3776adef7969ee10c0ee4005cc383b16aad",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/cli/cmd.py": {
+      "content_hash": "sha256:3c8e8a1556c0680620c5cf2a77dafb2d20ed53aa2a0c62d6d6e882e4c633e6ee",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/cli/config_cmd.py": {
+      "content_hash": "sha256:e5579a72db4500565a79f41b213c20af5dbe05be30c71fd15c95c765e6eada84",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/cli/move.py": {
+      "content_hash": "sha256:49396e922c000978c51bc7f6bdbbc5d43676d3eba64cf4dc8de11c98f9ac57e7",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/cli/servo_tool.py": {
+      "content_hash": "sha256:4c3c3605e50e2e8b72d795b82f5519772043806ad8f23ccc7845b6074c947b31",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/cli/status.py": {
+      "content_hash": "sha256:44b8f95a219c528be3ff8df93c87c54e2fa14552d87828c3894f9de3d2791645",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/config/__init__.py": {
+      "content_hash": "sha256:bc1e3cad0636deb82baa0e6282caa46ebdd2ad6284601cedeab571dc123cc006",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/config/config_manager.py": {
+      "content_hash": "sha256:404711e93b243e89bc291cb5cd931fe89a33c2ef8ce04c49cff1441e156af199",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/core/__init__.py": {
+      "content_hash": "sha256:e4c6859768702f9963fbfdd6fb248444e33686bee81274267083beee3b009ee1",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/core/multi_servos.py": {
+      "content_hash": "sha256:d9290691486a8447e778ef966e979380eb1aefece61a994585c799e1333d99ae",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/core/servo.py": {
+      "content_hash": "sha256:8a43bda46209edf0dcf897e76aad4e00b8ea5a74efca7d423fb3b6520ee44e87",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/motion/__init__.py": {
+      "content_hash": "sha256:52fce6dcc951f3802e02b4097afd08c544edcc9c85e33bb9ec28039145a9d66f",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/motion/calculator.py": {
+      "content_hash": "sha256:8941f10306daa9d42a249d2ee6d0c295c3c6095c69f9dc519fed645bcd3a56eb",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/motion/easing.py": {
+      "content_hash": "sha256:5c05ab9be4d5f672a044c98c6c20c80b4e4abb61b778f3c4008c5dbf580215f9",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/parser/__init__.py": {
+      "content_hash": "sha256:db6a93615e3ffbcdc68fbd4870b9aa58a5941cc3d49a56b817c5dc57fd999b78",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0servo/src/pi0servo/parser/command.py": {
+      "content_hash": "sha256:89430792ab9695901631ce02919b8095802f13b49737b44c1cd657f35c0b0060",
+      "pages": [
+        "wiki/entities/pi0servo.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/pyproject.toml": {
+      "content_hash": "sha256:51615f8ee69dc3f88f9ca7feb64e63ef51ebc187fd6107d4b828cb8dcc2d57d0",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/__init__.py": {
+      "content_hash": "sha256:95b85f905aa0cfdf01b6eb8bfb893d697f60c38d84eb593555570b32dfaec649",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/__main__.py": {
+      "content_hash": "sha256:00d8be916630803d457869eb1c8071dccc0eb5d530a1aa1aa23e620fadff5b27",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/cli/__init__.py": {
+      "content_hash": "sha256:d4bf5621be9996cfcf35179978d13829896b6a6748b0f1a5d733cc0a1cd34aaf",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/cli/sensor_tool.py": {
+      "content_hash": "sha256:fec0158a600fdba1a3fb46b9da37dd86e54d0e4ea2bd54a0679cbecb2d876d6d",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/config/__init__.py": {
+      "content_hash": "sha256:3fe2c38c2ab74359c63932143cea9d1dcd0215bb42fae6e9995b709e1682b8dd",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/config/config_manager.py": {
+      "content_hash": "sha256:8b9f8f74ef26fc8b03e4a24955f5de2165615063bbd61991515533bd9aa98899",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/core/__init__.py": {
+      "content_hash": "sha256:b1d17127f36f4e789f7172f5f4b7c52650dc3cd9da5db8300ccc06df3c67fc26",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/core/i2c.py": {
+      "content_hash": "sha256:a56d4f7abcdaf1516f83582e4b547c8d3fcf5fe644a943b9d1cc768608cfdf7a",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/core/sensor.py": {
+      "content_hash": "sha256:4cf45eff8f07676fb53e2aa4b86c45ebad48f2129ab98cb5b1f443f369d27c9a",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/driver.py": {
+      "content_hash": "sha256:5594f27362d558fb8fe7caff5e549fccb502acaac7fa59ceaae8386e45f8f2a4",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pi0vl53l0x/src/pi0vl53l0x/registers.py": {
+      "content_hash": "sha256:cc97b7d5168bd35a2f2ced3da1f7ef30a2e105f65afe0e085ecf2cd5651742e9",
+      "pages": [
+        "wiki/entities/pi0vl53l0x.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+    },
+    "pyproject.toml": {
+      "content_hash": "sha256:619e24a7e9c82dcdf394a5be281d84a6342dd827d440c376772eb5619cadbbaf",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "scripts/install-rpi.sh": {
+      "content_hash": "sha256:b99c938859df5cdbd9ee48fb32c73bc43e1c060f77a35bba98f6bbdf5462d843",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+    },
+    "scripts/install-versions.env": {
+      "content_hash": "sha256:10946ffa3101a942d2472c85965d53eb1fde57f6762fab42e838af4ec2690273",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+    },
+    "scripts/install_check.py": {
+      "content_hash": "sha256:8c498877a06702a20e79c9c061d63e7fba5322a3b3b5decdf7269d5bbb0d8d3e",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Reviewed exact version comparisons and early symlink ancestor checks for installer-owned paths; platform/device check behavior otherwise retained."
+    },
+    "scripts/install_record.py": {
+      "content_hash": "sha256:6f63bf879885e2eaa5220f8159c84c61e8d15fad77e6d964729f1c345be16db2",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Reviewed fsync, atomic replacement and finally cleanup; injected failure leaves no temporary record."
+    },
+    "scripts/install_system.py": {
+      "content_hash": "sha256:eecf0601cc936e757e50be7dfd3ba8cac56b261428ff7b64c4b00ce6ef77ffa8",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+    },
+    "scripts/onboard.py": {
+      "content_hash": "sha256:5a6c363224c9ab6b35e4bd8a4b4c91816d23e122fdaf5fc0279230fc36589968",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Reviewed Pi5-style guidance/reuse/retry/resume/summary, stale observation invalidation, strict progress schema, pulse alias/numeric GPIO gate, private first credential writes and worker preflight. Existing robot helpers unchanged. Cancellation after a tool changes calibration also reconciles saved observations before the final progress write; regression test covers this boundary."
+    },
+    "scripts/verify_core.py": {
+      "content_hash": "sha256:bb1943c6120fb7c4daa1cfce815ab92dd895a9a513fddd59aa585c460f97846c",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+    },
+    "scripts/verify_project_knowledge.py": {
+      "content_hash": "sha256:8754dd060fe41fca177f3d7d3eba5405a24988a1b1a17c8452d7fe9ddaf013ee",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+    },
+    "scripts/wiki.py": {
+      "content_hash": "sha256:0f35c6ef5c405a77efbffe19c5a45d72da2931cac3c174cee6468b0a70ab7b26",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/guided-onboarding.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Reviewed explicit setup-only private uv fallback and cleared inherited UV_PROJECT; query paths remain no-sync."
+    },
+    "tests/browser_ui.cjs": {
+      "content_hash": "sha256:31a6c1bd77cf9ae8baafb7845fc973c1363debdf6eda44afa650f8feb22d0cc5",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/conftest.py": {
+      "content_hash": "sha256:2a6742af9e8c1f1a740334bf56bec080dbb63019ca7ac1240356492036784557",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_action_library.py": {
+      "content_hash": "sha256:e7ff6b55a5d13a4227b4eeb8267eb4d5bc0d7a52584ebc8413c2db79dba920a3",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_api_wrappers.py": {
+      "content_hash": "sha256:2fb0fcd7f60b3703dc817dea995957752806679ac8802648c57a6f22d0793661",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_ble_service.py": {
+      "content_hash": "sha256:47566202af9e69df31e714985ab0104833b48f4d9ea3057271bfeb2c848e642e",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_chunking.py": {
+      "content_hash": "sha256:2ca4c99ce8c3c897af043b15067e4461fe43ac83b37143c0a47e78a5b31484c1",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_config.py": {
+      "content_hash": "sha256:db4a8a064c64f22cd17457b4592b26876968e155f55dec826a2383e8f40674c6",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_contracts.py": {
+      "content_hash": "sha256:80ec24f195c63b2571ec698d814d4f2b910ef5d2706931fb0cd010131d3fcfe6",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_dispatcher.py": {
+      "content_hash": "sha256:29fea1b44c97f8e1f962bc5bb85eaffb0714dba265260c03bfa2296c8bf213c8",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_gemini_models.py": {
+      "content_hash": "sha256:da5d553016776c906791901366d7f615bfe822aff3f68da08ee1d50d992fb20c",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_gemini_runtime.py": {
+      "content_hash": "sha256:bb05ce3a1c3b7cf379616faadb15807c282c47b8de0b18975c83976d8c237a88",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_init_tool.py": {
+      "content_hash": "sha256:3e0da9aa121ee517b09fbcbd3924189d4a8be23c80454c2f440f73108cd65485",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_installer_bootstrap.py": {
+      "content_hash": "sha256:51a942326aa7e447c1f9cbe1a35cb47d6741fb23eec4303ed97091afaf778c2a",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_ninja_agent_model.py": {
+      "content_hash": "sha256:9207aa5211b1023438ebff95561f6ec6d49708793643fbb951eaf984ef3354ba",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_perception.py": {
+      "content_hash": "sha256:da9f0e9f70f0046ffaed91306e544e71b3a2b30d6512a2d5dc1b0c8d346bc128",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_project_knowledge.py": {
+      "content_hash": "sha256:aab84950e07fc973d171849b51cab657fe77d6e467d93914b2e4ae1bc01baff0",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_runtime_pipeline.py": {
+      "content_hash": "sha256:58994bd4bda1a54a17a1085e3ea8a1339124086548d2c49297a26895be5015f2",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_safe_executor.py": {
+      "content_hash": "sha256:3cd247ce580f72a98cdf04925687189820421ffff6b196fa213d7f3bf93ad1c4",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "tests/test_upgrade_workflows.py": {
+      "content_hash": "sha256:64d282bf2d030e5dbeed67221f9867b831abe2de5efa9308452b8b506b066678",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Reviewed regression coverage for audit defects using isolated files/mocked subprocesses; no robot activation. Cancellation after a tool changes calibration also reconciles saved observations before the final progress write; regression test covers this boundary."
+    },
+    "uv.lock": {
+      "content_hash": "sha256:ebd98dea646e54a0329532844d4784ffd51cec2598b1657c23db54735dda0b45",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+    },
+    "README.md": {
+      "pages": [
+        "wiki/overview.md"
+      ],
+      "content_hash": "sha256:f16fccc44c355b2268bcf12acb27893e02af292c1235b019dd5248b5477c1c84",
+      "review_note": "Owner-requested comprehensive Pi5-structured Pi0 manual checked against tools, private uv installation, server/ngrok startup and existing GPIO reference; translations explicitly summaries. Versioned snapshot is cited by overview."
+    }
+  },
+  "adapters": [
+    {
+      "path": "AGENT.md",
+      "target": "AGENTS.md",
+      "reference": "AGENTS.md"
+    },
+    {
+      "path": "CLAUDE.md",
+      "target": "AGENTS.md",
+      "reference": "@AGENTS.md"
+    },
+    {
+      "path": "GEMINI.md",
+      "target": "AGENTS.md",
+      "reference": "AGENTS.md"
+    },
+    {
+      "path": ".cursor/rules/ninjarobot-development.mdc",
+      "target": "AGENTS.md",
+      "reference": "AGENTS.md"
+    },
+    {
+      "path": ".agents/rules/ninjarobot-development.md",
+      "target": "AGENTS.md",
+      "reference": "@../../AGENTS.md"
+    },
+    {
+      "path": ".claude/skills/pi-validation/SKILL.md",
+      "target": ".agents/skills/pi-validation/SKILL.md",
+      "reference": "../../../.agents/skills/pi-validation/SKILL.md"
+    },
+    {
+      "path": ".claude/skills/pi0driver-development/SKILL.md",
+      "target": ".agents/skills/pi0driver-development/SKILL.md",
+      "reference": "../../../.agents/skills/pi0driver-development/SKILL.md"
+    },
+    {
+      "path": ".claude/skills/robot-wiki-query/SKILL.md",
+      "target": ".agents/skills/robot-wiki-query/SKILL.md",
+      "reference": "../../../.agents/skills/robot-wiki-query/SKILL.md"
+    },
+    {
+      "path": ".claude/skills/project-documentation/SKILL.md",
+      "target": ".agents/skills/project-documentation/SKILL.md",
+      "reference": "../../../.agents/skills/project-documentation/SKILL.md"
+    },
+    {
+      "path": ".claude/skills/robot-wiki-maintain/SKILL.md",
+      "target": ".agents/skills/robot-wiki-maintain/SKILL.md",
+      "reference": "../../../.agents/skills/robot-wiki-maintain/SKILL.md"
+    },
+    {
+      "path": ".agents/workflows/robot-wiki-maintain.md",
+      "target": ".agents/skills/robot-wiki-maintain/SKILL.md",
+      "reference": "@../skills/robot-wiki-maintain/SKILL.md"
+    },
+    {
+      "path": ".agents/workflows/robot-wiki-query.md",
+      "target": ".agents/skills/robot-wiki-query/SKILL.md",
+      "reference": "@../skills/robot-wiki-query/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.claude/skills/wiki-ingest/SKILL.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-ingest/SKILL.md",
+      "reference": "../../../.agents/skills/wiki-ingest/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.claude/skills/wiki-lint/SKILL.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-lint/SKILL.md",
+      "reference": "../../../.agents/skills/wiki-lint/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.claude/skills/wiki-review/SKILL.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-review/SKILL.md",
+      "reference": "../../../.agents/skills/wiki-review/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.claude/skills/wiki-maintain/SKILL.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-maintain/SKILL.md",
+      "reference": "../../../.agents/skills/wiki-maintain/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.claude/skills/wiki-query/SKILL.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-query/SKILL.md",
+      "reference": "../../../.agents/skills/wiki-query/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.agents/workflows/wiki-maintain.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-maintain/SKILL.md",
+      "reference": "@../skills/wiki-maintain/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.agents/workflows/wiki-review.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-review/SKILL.md",
+      "reference": "@../skills/wiki-review/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.agents/workflows/wiki-lint.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-lint/SKILL.md",
+      "reference": "@../skills/wiki-lint/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.agents/workflows/wiki-query.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-query/SKILL.md",
+      "reference": "@../skills/wiki-query/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.agents/workflows/wiki-ingest.md",
+      "target": "ninjarobot_pi0_Wiki/.agents/skills/wiki-ingest/SKILL.md",
+      "reference": "@../skills/wiki-ingest/SKILL.md"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/CLAUDE.md",
+      "target": "ninjarobot_pi0_Wiki/AGENTS.md",
+      "reference": "AGENTS.md",
+      "base": "ninjarobot_pi0_Wiki"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.cursor/rules/llm-wiki.mdc",
+      "target": "ninjarobot_pi0_Wiki/AGENTS.md",
+      "reference": "AGENTS.md",
+      "base": "ninjarobot_pi0_Wiki"
+    },
+    {
+      "path": "ninjarobot_pi0_Wiki/.agents/rules/llm-wiki.md",
+      "target": "ninjarobot_pi0_Wiki/AGENTS.md",
+      "reference": "@../../AGENTS.md"
+    }
+  ],
+  "link_documents": [
+    "README.md",
+    "InstallationGuide.md",
+    "DevelopmentGuide.md",
+    "DevelopmentLog.md",
+    "AGENT.md",
+    "AGENTS.md",
+    "ninjarobot_pi0_Wiki/README.md",
+    "ninjarobot_pi0_Wiki/docs/PROJECT_WORKFLOW.md",
+    "DevelopmentPlanDoc/NinjaRobot_Install_wiki_upgrade_261007.md",
+    "docs/validation/UpgradeValidation-2026-10-07.md",
+    "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-07-02/InstallationGuide.md",
+    "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-07-02/DevelopmentGuide.md",
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-07/DevelopmentLog.md"
+  ],
+  "limits": [
+    "AI source-grounded review is not human verification or physical qualification.",
+    "Real Pi/live-account/publication acceptance remains owner-manual."
+  ]
+}

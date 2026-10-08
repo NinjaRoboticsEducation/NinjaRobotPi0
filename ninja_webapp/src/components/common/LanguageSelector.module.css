@@ -14,7 +14,7 @@
 .select {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--color-text);
     font-size: var(--type-small);
     font-weight: 500;
     cursor: pointer;
@@ -24,7 +24,7 @@
 
 .select option {
     background: var(--color-text);
-    color: white;
+    color: var(--color-text);
 }
 
 @media (max-width: 768px) {

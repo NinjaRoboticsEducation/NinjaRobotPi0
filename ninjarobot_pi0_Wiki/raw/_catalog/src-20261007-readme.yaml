@@ -1,0 +1,16 @@
+id: src-20261007-readme
+path: raw/articles/ninjarobotpi0/2026-10-08/README.md
+media_type: text/markdown
+kind: text
+title: Pi0 public README — audit 2026-10-08
+added_at: '2026-10-07T17:38:05Z'
+content_hash: sha256:f69c2112bdf0443090595c6a4e12dbb56ad7de539018d31ac36cc1ee6645351d
+state: ingested
+original_uri: urn:llmwiki:source:src-20261007-readme
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-07T17:40:21Z'
+last_plan: pi0-audit-review-261008-overview

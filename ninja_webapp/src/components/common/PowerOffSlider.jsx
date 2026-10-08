@@ -4,7 +4,7 @@
  * User must slide the thumb completely to the right to trigger shutdown.
  */
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './PowerOffSlider.module.css';
 
@@ -32,7 +32,7 @@ function PowerOffSlider() {
         startXRef.current = clientX - position;
     };
 
-    const handleMove = (e) => {
+    const handleMove = useCallback((e) => {
         if (!isDragging) return;
         e.preventDefault();
 
@@ -45,25 +45,9 @@ function PowerOffSlider() {
 
         setPosition(delta);
         setTextOpacity(1 - delta / maxSlideRef.current);
-    };
+    }, [isDragging]);
 
-    const handleEnd = async () => {
-        if (!isDragging) return;
-        setIsDragging(false);
-
-        if (position >= maxSlideRef.current * 0.9) {
-            // Trigger shutdown
-            setPosition(maxSlideRef.current);
-            setTextOpacity(0);
-            await triggerShutdown();
-        } else {
-            // Reset with animation
-            setPosition(0);
-            setTextOpacity(1);
-        }
-    };
-
-    const triggerShutdown = async () => {
+    const triggerShutdown = useCallback(async () => {
         if (!window.confirm(t('home.shutdownConfirm') || 'Are you sure you want to power off the robot?')) {
             setPosition(0);
             setTextOpacity(1);
@@ -84,7 +68,23 @@ function PowerOffSlider() {
             setTextOpacity(1);
             setIsShuttingDown(false);
         }
-    };
+    }, [t]);
+
+    const handleEnd = useCallback(async () => {
+        if (!isDragging) return;
+        setIsDragging(false);
+
+        if (position >= maxSlideRef.current * 0.9) {
+            // Trigger shutdown
+            setPosition(maxSlideRef.current);
+            setTextOpacity(0);
+            await triggerShutdown();
+        } else {
+            // Reset with animation
+            setPosition(0);
+            setTextOpacity(1);
+        }
+    }, [isDragging, position, triggerShutdown]);
 
     useEffect(() => {
         if (isDragging) {
@@ -100,7 +100,7 @@ function PowerOffSlider() {
             document.removeEventListener('touchmove', handleMove);
             document.removeEventListener('touchend', handleEnd);
         };
-    }, [isDragging, position]);
+    }, [isDragging, handleMove, handleEnd]);
 
     return (
         <div className={styles.sliderContainer} ref={containerRef}>
@@ -113,6 +113,25 @@ function PowerOffSlider() {
             </div>
             <div
                 ref={thumbRef}
+                role="slider"
+                tabIndex={0}
+                aria-label={t('home.sliderText')}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round((1 - textOpacity) * 100)}
+                onKeyDown={(event) => {
+                    if (isShuttingDown) return;
+                    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+                        event.preventDefault();
+                        const next = Math.max(0, Math.min(maxSlideRef.current, position + (event.key === 'ArrowRight' ? 1 : -1) * maxSlideRef.current / 10));
+                        setPosition(next);
+                        setTextOpacity(maxSlideRef.current > 0 ? 1 - next / maxSlideRef.current : 1);
+                    } else if (event.key === 'Escape') {
+                        setPosition(0); setTextOpacity(1);
+                    } else if (event.key === 'Enter' && position >= maxSlideRef.current * 0.9 && maxSlideRef.current > 0) {
+                        event.preventDefault(); triggerShutdown();
+                    }
+                }}
                 className={`${styles.sliderThumb} ${isDragging ? styles.dragging : ''}`}
                 style={{
                     transform: `translateX(${position}px)`,
@@ -121,7 +140,7 @@ function PowerOffSlider() {
                 onMouseDown={handleStart}
                 onTouchStart={handleStart}
             >
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="#FF3B30">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                     <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z" />
                 </svg>
             </div>

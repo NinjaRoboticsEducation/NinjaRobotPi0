@@ -15,7 +15,7 @@ const languages = [
 ];
 
 function LanguageSelector() {
-    const { i18n } = useTranslation();
+    const { i18n, t } = useTranslation();
 
     const handleChange = (e) => {
         i18n.changeLanguage(e.target.value);
@@ -30,7 +30,7 @@ function LanguageSelector() {
                 value={i18n.language}
                 onChange={handleChange}
                 className={styles.select}
-                aria-label="Select language"
+                aria-label={t('language.label')}
             >
                 {languages.map((lang) => (
                     <option key={lang.code} value={lang.code}>

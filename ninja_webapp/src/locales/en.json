@@ -7,13 +7,25 @@
     },
     "header": {
         "connected": "Connected",
-        "disconnected": "Disconnected"
+        "disconnected": "Disconnected",
+        "advertising": "BLE advertising",
+        "bleOff": "BLE off",
+        "openMenu": "Open robot menu",
+        "closeMenu": "Close robot menu",
+        "menuTitle": "Robot menu",
+        "navigation": "Navigation"
     },
     "home": {
         "welcome": "Welcome to NinjaRobot",
         "subtitle": "Choose how you want to interact with your robot",
         "chatButton": "Chat with Robot",
-        "codeButton": "Program Robot"
+        "codeButton": "Program Robot",
+        "systemTitle": "System power",
+        "sliderText": "Slide to power off",
+        "shutdownConfirm": "Power off this robot?",
+        "shuttingDown": "Shutting down…",
+        "shutdownSuccess": "Robot is shutting down. Wait for its light to turn off.",
+        "shutdownError": "Could not shut down. Try again."
     },
     "agent": {
         "title": "Ninja Agent",
@@ -24,7 +36,15 @@
         "sounds": "Sounds",
         "movements": "Movements",
         "distance": "Distance",
-        "distanceUnit": "mm"
+        "distanceUnit": "mm",
+        "welcome": "Hi, I'm Ninja. Type a message or use the microphone.",
+        "systemLog": "System activity",
+        "logEmpty": "Events will appear here.",
+        "runExpressions": "Run expression",
+        "runSounds": "Play sound",
+        "runMovements": "Run movement",
+        "error": "Could not connect to the robot.",
+        "speechNotSupported": "Speech recognition is unavailable."
     },
     "code": {
         "title": "Code",
@@ -45,7 +65,10 @@
         "gettingStarted": "Getting Started",
         "gettingStartedText": "Connect your robot via Bluetooth and start programming with visual blocks or chat with the AI agent.",
         "troubleshooting": "Troubleshooting",
-        "troubleshootingText": "If you experience issues, try refreshing the page or restarting the robot."
+        "troubleshootingText": "If you experience issues, try refreshing the page or restarting the robot.",
+        "onboarding": "Guided setup",
+        "onboardingText": "In the robot terminal, run the onboarding tool to calibrate existing devices and configure Gemini and ngrok.",
+        "fullGuide": "Complete installation guide"
     },
     "language": {
         "label": "Language",

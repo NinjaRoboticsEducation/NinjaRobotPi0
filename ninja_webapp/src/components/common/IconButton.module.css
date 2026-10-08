@@ -42,17 +42,17 @@
 .primary {
     background: var(--color-primary);
     border-color: var(--color-primary);
-    color: white;
+    color: var(--color-text);
 }
 
 .primary:hover:not(:disabled) {
-    background: #0066b3;
+    background: #0785cb;
 }
 
 .success {
     background: var(--color-success);
     border-color: var(--color-success);
-    color: white;
+    color: var(--color-text);
 }
 
 .success:hover:not(:disabled) {
@@ -62,7 +62,7 @@
 .danger {
     background: var(--color-danger);
     border-color: var(--color-danger);
-    color: white;
+    color: var(--color-text);
 }
 
 .danger:hover:not(:disabled) {
@@ -72,5 +72,5 @@
 .active {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: white;
+    color: var(--color-text);
 }

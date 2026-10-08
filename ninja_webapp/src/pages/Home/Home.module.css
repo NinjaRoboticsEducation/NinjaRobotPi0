@@ -41,7 +41,7 @@
     font-size: 28px;
     font-weight: 700;
     margin: 0 0 12px 0;
-    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -99,3 +99,4 @@
         font-size: 14px;
     }
 }
+.chatAction { display: inline-flex; gap: 8px; padding: 14px 24px; border-radius: 12px; background: var(--color-primary); color: #03080c; font-weight: 700; }
