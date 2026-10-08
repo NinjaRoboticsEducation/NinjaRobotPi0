@@ -1,0 +1,16 @@
+id: src-20261008-2026-10-08-installer-recovery
+path: raw/notes/changes/2026-10-08-installer-recovery.md
+media_type: text/markdown
+kind: text
+title: Installer diagnostics and recovery validation
+added_at: '2026-10-08T01:10:40Z'
+content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T01:12:26Z'
+last_plan: pi0-recovery-review-261008-development-history-and-evolution

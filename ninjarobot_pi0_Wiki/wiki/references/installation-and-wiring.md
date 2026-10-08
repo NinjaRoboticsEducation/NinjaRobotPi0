@@ -1,7 +1,7 @@
 ---
 type: Reference
 title: Installation and Hardware Wiring Reference
-description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS Bookworm/Trixie
+description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS Bookworm/Trixie/Trixie
   setup, and pigpio compilation.
 status: draft
 generated:
@@ -24,10 +24,10 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-migration-audit
   title: 2026 10 07 Ninjarobot Pi0 Migration Audit
   content_hash: sha256:6c223e850e920baffe83a0fbcf3f7c4471a97f4fbcc823e93d5cd2e33666d4ab
-- id: src-20261008-installationguide
-  resource: urn:llmwiki:source:src-20261008-installationguide
-  title: 'Pi0 installation: Bookworm and Trixie'
-  content_hash: sha256:2b1dad2fba1ea44f8f380b636658e4aae8aa87961076d23610cbafa1eb00c45e
+- id: src-20261008-installationguide-2
+  resource: urn:llmwiki:source:src-20261008-installationguide-2
+  title: Pi0 installation and recovery instructions
+  content_hash: sha256:76054ec1dd83d36e06b781440e8334da800ed659301cbeb0adcd7fd3a960d382
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -40,11 +40,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
   content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
+- id: src-20261008-2026-10-08-installer-recovery
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
+  title: Installer diagnostics and recovery validation
+  content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T00:53:49.993591+00:00'
-  target_hash: sha256:b41261a20827eed28f143b8c481636bd73b5cfaaaab72c42306bc04c99f51047
+  performed_at: '2026-10-08T01:11:36.960166+00:00'
+  target_hash: sha256:f661d53bd8079c494fb77ebb287e869e2a8b35b1741c5c6db57b39a9ebed410a
   result: passed
   checks:
     source_support: passed
@@ -53,10 +57,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Checked the current full manual and Trixie correction evidence against the narrow
-    release-gate diff and interpreter tests. Prior unrelated claims retain their cited
-    sources. Both Bookworm and Trixie are allowed on Zero 2 W/aarch64; physical Trixie
-    acceptance and publication of this fix are pending.
+  - 'Checked the current recovery manual/evidence against checker and installer diffs
+    and inert regression results: read-only inspection, actual software install, and
+    Git update are separate. Version/path diagnostics and stage/exit/retry reporting
+    preserve calibration and core behavior. Retained claims preserve original citations;
+    physical acceptance and publication remain pending.'
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
@@ -65,7 +70,7 @@ semantic_review:
 
 ## Current installer and onboarding
 
-Use the current complete InstallationGuide linked by the wiki README. It replaces historical floating downloads and global-pip installation commands. The verified installer uses locked Python/frontend dependencies and pinned tool inputs. It does not activate hardware/services or start the robot. Onboarding opens a selected existing tool only after readiness confirmation; opening the servo tool can center calibrated servos immediately.[^src-20261008-installationguide]
+Use the current complete InstallationGuide linked by the wiki README. It replaces historical floating downloads and global-pip installation commands. The verified installer uses locked Python/frontend dependencies and pinned tool inputs. It does not activate hardware/services or start the robot. Onboarding opens a selected existing tool only after readiness confirmation; opening the servo tool can center calibrated servos immediately.[^src-20261008-installationguide-2]
 
 
 This reference summarizes hardware requirements, pinout connections, and operating system setup for NinjaRobotPi0 on the Raspberry Pi Zero 2W.[^src-20260822-installationguide] [^src-20260822-developmentguide]
@@ -152,7 +157,7 @@ Current repository documentation uses NinjaRobotPi0; historical audits and V5 ve
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]: Audit evidence covering documentation attribution, current naming, default-branch links, and clean-clone wiki normalization.
 
-[^src-20261008-installationguide]: Current versioned Installationguide.
+[^src-20261008-installationguide-2]: Current versioned Installationguide.
 
 ## Implementation evidence and acceptance limits
 
@@ -173,3 +178,10 @@ Installer preflight now rejects redirected tool/environment paths before privile
 The current release gate accepts Bookworm and Trixie. Other releases, architectures, devices and root execution remain rejected. System Python is selected explicitly by the existing installer: 3.11 on Bookworm, 3.13 on Trixie. No tool pins, dependency locks or GPIO behavior changed. Host tests are not real Pi qualification.[^src-20261008-2026-10-08-trixie-support]
 
 [^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.
+
+
+## Installation recovery and diagnostics
+
+Version diagnostics now include required/detected versions and executable paths, with timeout/exec failures handled as errors. The installer installs its private tools ahead of system tools; do not remove system Node/uv to satisfy the checker. Missing .venv components are installation failures, not wiring or calibration results.[^src-20261008-2026-10-08-installer-recovery]
+
+[^src-20261008-2026-10-08-installer-recovery]: Installer diagnostics and recovery validation.

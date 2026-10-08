@@ -47,7 +47,7 @@ EOF
     [[ -f "$destination/scripts/install-rpi.sh" && ! -L "$destination" ]] || { echo 'Installation not found.' >&2; return 1; }
     exec bash "$destination/scripts/install-rpi.sh" "${forwarded[@]}"
   fi
-  [[ ! -e "$destination" && ! -L "$destination" ]] || { echo 'Refusing existing destination; run its ./install.sh to retry.' >&2; return 1; }
+  [[ ! -e "$destination" && ! -L "$destination" ]] || { printf 'Existing destination retained. To install or retry there:\n  cd -- %q && ./install.sh\nThis does not update Git files; follow README recovery steps if this checkout is outdated.\n' "$destination" >&2; return 1; }
   parent="$(dirname -- "$destination")"
   [[ -d "$parent" && ! -L "$parent" ]] || { echo 'Destination parent must exist and be a real directory.' >&2; return 1; }
   [[ $EUID -ne 0 && "$(uname -s)" == Linux && "$(uname -m)" == aarch64 ]] || { echo 'Run as a normal user on Bookworm/Trixie 64-bit Zero 2 W.' >&2; return 3; }

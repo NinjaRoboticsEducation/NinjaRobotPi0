@@ -4,6 +4,7 @@ import argparse
 import os
 import platform
 import shutil
+import shlex
 import subprocess
 from pathlib import Path
 
@@ -62,46 +63,73 @@ def check(root):
         for line in (root / "scripts/install-versions.env").read_text().splitlines()
         if line and not line.startswith("#")
     )
-    for command in ("uv", "node", "npm", "pigpiod"):
-        if not shutil.which(command):
-            errors.append(f"Missing {command}.")
     for command, expected in (
         ("node", "v" + pins["NODE_VERSION"]),
         ("uv", "uv " + pins["UV_VERSION"]),
+        ("npm", None),
         ("pigpiod", "79"),
     ):
-        if shutil.which(command):
-            option = "-v" if command == "pigpiod" else "--version"
+        executable = shutil.which(command)
+        if executable is None:
+            errors.append(
+                f"Missing {command}"
+                + (f" (required {expected})" if expected else "")
+                + "."
+            )
+            continue
+        if expected is None:
+            continue
+        option = "-v" if command == "pigpiod" else "--version"
+        try:
             result = subprocess.run(
-                [command, option], capture_output=True, text=True, timeout=20
+                [executable, option], capture_output=True, text=True, timeout=20
             )
-            actual = result.stdout.strip()
-            matches = actual == expected or (
-                command == "uv" and actual.startswith(expected + " (")
+        except (OSError, subprocess.TimeoutExpired):
+            errors.append(
+                f"Cannot read {command} version at {executable}; required {expected}."
             )
-            if result.returncode or not matches:
-                errors.append(f"Unreviewed {command} version.")
+            continue
+        actual = result.stdout.strip()
+        matches = actual == expected or (
+            command == "uv" and actual.startswith(expected + " (")
+        )
+        if result.returncode or not matches:
+            errors.append(
+                f"{command} version mismatch: required {expected}, "
+                f"detected {actual[:160]!r} at {executable} (exit {result.returncode})."
+            )
     for relative in (
         ".venv/bin/python",
         ".venv/bin/ninja_core",
         "ninja_webapp/dist/index.html",
     ):
         if not (root / relative).is_file():
-            errors.append(f"Missing {relative}.")
+            errors.append(f"Missing {relative}; project installation is incomplete.")
+        elif relative.startswith(".venv/bin/") and not os.access(
+            root / relative, os.X_OK
+        ):
+            errors.append(
+                f"Not executable: {relative}; project environment needs repair."
+            )
     python = root / ".venv/bin/python"
-    if python.is_file():
-        result = subprocess.run(
-            [
-                str(python),
-                "-B",
-                "-c",
-                "from importlib.metadata import version; print(version('ninja_core'), version('pigpio'))",
-            ],
-            capture_output=True,
-            timeout=20,
-        )
-        if result.returncode:
-            errors.append("Installed package metadata is incomplete.")
+    if python.is_file() and os.access(python, os.X_OK):
+        try:
+            result = subprocess.run(
+                [
+                    str(python),
+                    "-B",
+                    "-c",
+                    "from importlib.metadata import version; print(version('ninja_core'), version('pigpio'))",
+                ],
+                capture_output=True,
+                timeout=20,
+            )
+            if result.returncode:
+                errors.append("Installed package metadata is incomplete.")
+        except (OSError, subprocess.TimeoutExpired):
+            errors.append(
+                "Project Python could not run; the environment is incomplete or broken."
+            )
     return errors
 
 
@@ -117,8 +145,22 @@ def main():
         if args.platform
         else check(args.root)
     )
+    if not args.platform:
+        print("Read-only installation check: no software was installed or changed.")
     for error in errors:
         print(f"FAIL: {error}")
+    if errors and not args.platform:
+        print(
+            "Installation is incomplete or does not match the required tool versions."
+        )
+        print(
+            "Run the installer as your normal user (it requests sudo only where needed):"
+        )
+        print(f"  cd -- {shlex.quote(str(args.root.resolve()))} && ./install.sh")
+        print("After it reports 'Software installed', run ./install.sh --check again.")
+        print(
+            "Private installer tools take precedence over system Node/uv; do not uninstall your system tools."
+        )
     if not errors:
         print(
             "PASS: software prerequisites. Hardware activation/calibration remains a separate step."

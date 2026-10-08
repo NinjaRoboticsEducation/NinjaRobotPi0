@@ -1,0 +1,16 @@
+id: src-20261008-installationguide-2
+path: raw/articles/ninjarobotpi0/2026-10-08-recovery/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: Pi0 installation and recovery instructions
+added_at: '2026-10-08T01:10:38Z'
+content_hash: sha256:76054ec1dd83d36e06b781440e8334da800ed659301cbeb0adcd7fd3a960d382
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-installationguide-2
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T01:12:23Z'
+last_plan: pi0-recovery-review-261008-installation-and-wiring

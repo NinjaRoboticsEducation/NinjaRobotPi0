@@ -7,10 +7,10 @@ generated:
   by: agent:codex
   at: '2026-10-07T13:03:34.637721+00:00'
 sources:
-- id: src-20261008-installationguide
-  resource: urn:llmwiki:source:src-20261008-installationguide
-  title: 'Pi0 installation: Bookworm and Trixie'
-  content_hash: sha256:2b1dad2fba1ea44f8f380b636658e4aae8aa87961076d23610cbafa1eb00c45e
+- id: src-20261008-installationguide-2
+  resource: urn:llmwiki:source:src-20261008-installationguide-2
+  title: Pi0 installation and recovery instructions
+  content_hash: sha256:76054ec1dd83d36e06b781440e8334da800ed659301cbeb0adcd7fd3a960d382
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -23,11 +23,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
   content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
+- id: src-20261008-2026-10-08-installer-recovery
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
+  title: Installer diagnostics and recovery validation
+  content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T00:53:48.937611+00:00'
-  target_hash: sha256:3f3b426efcdb7fdc0d53d3ae10c729871cd72e777baf46faf5ac7201729186c9
+  performed_at: '2026-10-08T01:11:36.007744+00:00'
+  target_hash: sha256:db7dbd818616ac70bb4a31bdb8be9c39ddab325cbe6bd02b0df8bafb71a6559b
   result: passed
   checks:
     source_support: passed
@@ -36,21 +40,22 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Checked the current full manual and Trixie correction evidence against the narrow
-    release-gate diff and interpreter tests. Prior unrelated claims retain their cited
-    sources. Both Bookworm and Trixie are allowed on Zero 2 W/aarch64; physical Trixie
-    acceptance and publication of this fix are pending.
+  - 'Checked the current recovery manual/evidence against checker and installer diffs
+    and inert regression results: read-only inspection, actual software install, and
+    Git update are separate. Version/path diagnostics and stage/exit/retry reporting
+    preserve calibration and core behavior. Retained claims preserve original citations;
+    physical acceptance and publication remain pending.'
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
 
 # Current installation manual
 
-Resolve the complete current InstallationGuide through project-knowledge.json or the wiki README. It covers the Bookworm/Trixie 64-bit targets, software installation, explicit onboarding, prerequisites, calibration warnings and recovery. Root InstallationGuide.md is a compatibility pointer. Earlier detailed material is preserved as historical reference, with current installation instructions clearly identified.[^src-20261008-installationguide]
+Resolve the complete current InstallationGuide through project-knowledge.json or the wiki README. It covers the Bookworm/Trixie 64-bit targets, software installation, explicit onboarding, prerequisites, calibration warnings and recovery. Root InstallationGuide.md is a compatibility pointer. Earlier detailed material is preserved as historical reference, with current installation instructions clearly identified.[^src-20261008-installationguide-2]
 
 [Project overview](/overview.md).
 
-[^src-20261008-installationguide]: Current versioned Installationguide.
+[^src-20261008-installationguide-2]: Current versioned Installationguide.
 
 ## Implementation evidence and acceptance limits
 
@@ -71,3 +76,10 @@ The 2026-10-08 full manual documents the corrected guided flow and uses `.venv/b
 The current complete manual accepts Bookworm or Trixie on Zero 2 W / aarch64. Publish the correction before retrying the default-branch curl command. Do not modify os-release or bypass platform checks. Existing checkout users update to the fixed revision and run the local installer.[^src-20261008-2026-10-08-trixie-support]
 
 [^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.
+
+
+## Installation recovery and diagnostics
+
+Missing project Python/CLI means an incomplete or broken environment. Run ./install.sh to install or retry; --check alone installs nothing. The current manual gives exact default-HEAD fast-forward steps for existing/detached checkouts and says to stop on Git errors, then wait for Software installed before checking. New diagnostics require publication before the Pi can fetch them.[^src-20261008-2026-10-08-installer-recovery]
+
+[^src-20261008-2026-10-08-installer-recovery]: Installer diagnostics and recovery validation.

@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-08T00:54:35Z'
+generated_at: '2026-10-08T01:12:26Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -131,9 +131,19 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-08/README.md
   kind: text
   state: ingested
+- id: src-20261008-2026-10-08-installer-recovery
+  title: Installer diagnostics and recovery validation
+  path: raw/notes/changes/2026-10-08-installer-recovery.md
+  kind: text
+  state: ingested
 - id: src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
   path: raw/notes/changes/2026-10-08-trixie-support.md
+  kind: text
+  state: ingested
+- id: src-20261008-developmentguide-2
+  title: 'Pi0 development: installer diagnostics'
+  path: raw/articles/ninjarobotpi0/2026-10-08-recovery/DevelopmentGuide.md
   kind: text
   state: ingested
 - id: src-20261008-developmentguide
@@ -141,14 +151,29 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-08-trixie/DevelopmentGuide.md
   kind: text
   state: ingested
+- id: src-20261008-developmentlog-2
+  title: 'Pi0 log: installer recovery'
+  path: raw/notes/ninjarobotpi0/2026-10-08-recovery/DevelopmentLog.md
+  kind: text
+  state: ingested
 - id: src-20261008-developmentlog
   title: 'Pi0 log: Trixie rejection correction'
   path: raw/notes/ninjarobotpi0/2026-10-08-trixie/DevelopmentLog.md
   kind: text
   state: ingested
+- id: src-20261008-installationguide-2
+  title: Pi0 installation and recovery instructions
+  path: raw/articles/ninjarobotpi0/2026-10-08-recovery/InstallationGuide.md
+  kind: text
+  state: ingested
 - id: src-20261008-installationguide
   title: 'Pi0 installation: Bookworm and Trixie'
   path: raw/articles/ninjarobotpi0/2026-10-08-trixie/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261008-readme-2
+  title: 'Pi0 README: explicit recovery walkthrough'
+  path: raw/articles/ninjarobotpi0/2026-10-08-recovery/README.md
   kind: text
   state: ingested
 - id: src-20261008-readme

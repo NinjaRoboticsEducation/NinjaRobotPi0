@@ -155,11 +155,16 @@ def test_stream_does_not_delegate_to_cwd_lookalike(tmp_path):
     assert "Preview: official Pi0 repository" in result.stdout
 
 
-@pytest.mark.parametrize("bad_download", [False, True])
-def test_local_install_is_rerunnable_or_stops_on_bad_hash(tmp_path, bad_download):
+@pytest.mark.parametrize(
+    "bad_download, uv_failure", [(False, False), (True, False), (False, True)]
+)
+def test_local_install_is_rerunnable_or_stops_on_bad_hash(
+    tmp_path, bad_download, uv_failure
+):
     checkout = tmp_path / "checkout"
     (checkout / "scripts").mkdir(parents=True)
     (checkout / "ninja_webapp").mkdir()
+    (checkout / "servo.json").write_text("preserve calibration")
     for name in ["install-rpi.sh", "install-versions.env"]:
         shutil_source = ROOT / "scripts" / name
         (checkout / "scripts" / name).write_bytes(shutil_source.read_bytes())
@@ -187,29 +192,41 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(tmp_path, bad_download
         (tools / "uv").mkdir()
         p = tools / "uv/uv"
         p.write_text(
-            '#!/bin/sh\n[ -z "${UV_PROJECT_ENVIRONMENT:-}${UV_PROJECT:-}${VIRTUAL_ENV:-}" ] || exit 7\ncase "$1" in --version) echo "uv 0.11.29";; *) printf "uv:%s\\n" "$*" >> "$CALL_LOG";; esac\n'
+            '#!/bin/sh\n[ -z "${UV_PROJECT_ENVIRONMENT:-}${UV_PROJECT:-}${VIRTUAL_ENV:-}" ] || exit 7\ncase "$1" in --version) echo "uv 0.11.29";; *) [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; esac\n'
         )
         p.chmod(0o755)
     env = {
         **os.environ,
         "HOME": str(tmp_path / "home"),
         "CALL_LOG": str(log),
+        "UV_FAIL": "1" if uv_failure else "0",
         "UV_PROJECT_ENVIRONMENT": str(tmp_path / "unrelated-venv"),
         "UV_PROJECT": str(tmp_path / "unrelated-project"),
         "VIRTUAL_ENV": str(tmp_path / "unrelated-venv"),
         "PATH": str(binaries) + ":" + os.environ["PATH"],
     }
-    for _ in range(2 if not bad_download else 1):
+    for _ in range(2 if not (bad_download or uv_failure) else 1):
         result = subprocess.run(
             ["bash", str(checkout / "scripts/install-rpi.sh"), "--yes"],
             env=env,
             capture_output=True,
             text=True,
         )
-        assert result.returncode == (1 if bad_download else 0), result.stderr
+        assert result.returncode == (1 if bad_download else 7 if uv_failure else 0), (
+            result.stderr
+        )
+        assert (checkout / "servo.json").read_text() == "preserve calibration"
         assert not (checkout / ".ninjarobot-install.lock").exists()
     calls = log.read_text()
-    if bad_download:
+    if uv_failure:
+        assert (
+            "Installation stopped during: Locked Python environment (.venv) (exit 7)"
+            in result.stderr
+        )
+        assert "./install.sh" in result.stderr
+        assert "npm:" not in calls
+    elif bad_download:
+        assert "Installation stopped during: Pinned uv tooling" in result.stderr
         assert "checksum mismatch" in result.stderr
         assert "npm:" not in calls
     else:

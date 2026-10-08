@@ -533,3 +533,64 @@ def test_trixie_keeps_hardware_arch_user_distribution_gates(
     release = tmp_path / "release"
     release.write_text(f"ID={identity}\nVERSION_CODENAME=trixie\n")
     assert check.platform_errors(model, release)
+
+
+def test_incomplete_check_explains_versions_and_repair_without_writes(
+    tmp_path, monkeypatch, capsys
+):
+    import sys
+
+    check = load("install_check")
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts/install-versions.env").write_text(
+        "NODE_VERSION=22.23.3\nUV_VERSION=0.11.29\n"
+    )
+    monkeypatch.setattr(check, "platform_errors", lambda: [])
+    monkeypatch.setattr(check, "path_errors", lambda _: [])
+    monkeypatch.setattr(check.shutil, "which", lambda command: "/system/bin/" + command)
+    versions = {"node": "v20.1.0", "uv": "uv 0.9.0", "pigpiod": "79"}
+    monkeypatch.setattr(
+        check.subprocess,
+        "run",
+        lambda command, **kwargs: SimpleNamespace(
+            returncode=0, stdout=versions[Path(command[0]).name]
+        ),
+    )
+    monkeypatch.setattr(sys, "argv", ["install_check.py", "--root", str(tmp_path)])
+    before = sorted(str(p) for p in tmp_path.rglob("*"))
+    assert check.main() == 1
+    output = capsys.readouterr().out
+    assert "Read-only" in output
+    assert "required v22.23.3, detected 'v20.1.0' at /system/bin/node" in output
+    assert "required uv 0.11.29, detected 'uv 0.9.0'" in output
+    assert "Missing .venv/bin/python; project installation is incomplete" in output
+    assert "Missing .venv/bin/ninja_core" in output
+    assert "./install.sh" in output
+    assert "do not uninstall your system tools" in output
+    assert before == sorted(str(p) for p in tmp_path.rglob("*"))
+
+
+@pytest.mark.parametrize("failure", ["timeout", "oserror"])
+def test_check_handles_unrunnable_tool_and_venv(tmp_path, monkeypatch, failure):
+    check = load("install_check")
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts/install-versions.env").write_text(
+        "NODE_VERSION=22.23.3\nUV_VERSION=0.11.29\n"
+    )
+    python = tmp_path / ".venv/bin/python"
+    python.parent.mkdir(parents=True)
+    python.write_text("unrunnable interpreter")
+    python.chmod(0o700)
+    monkeypatch.setattr(check, "platform_errors", lambda: [])
+    monkeypatch.setattr(check, "path_errors", lambda _: [])
+    monkeypatch.setattr(check.shutil, "which", lambda command: "/system/bin/" + command)
+
+    def fail(*args, **kwargs):
+        if failure == "timeout":
+            raise subprocess.TimeoutExpired("fixture", 20)
+        raise OSError("fixture exec failure")
+
+    monkeypatch.setattr(check.subprocess, "run", fail)
+    errors = check.check(tmp_path)
+    assert any("Cannot read node version" in error for error in errors)
+    assert any("Project Python could not run" in error for error in errors)

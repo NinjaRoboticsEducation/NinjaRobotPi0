@@ -7,10 +7,10 @@ generated:
   by: agent:codex
   at: '2026-10-07T13:03:34.637721+00:00'
 sources:
-- id: src-20261008-developmentguide
-  resource: urn:llmwiki:source:src-20261008-developmentguide
-  title: 'Pi0 development: dual Python target'
-  content_hash: sha256:2cbe76f7887674f3c4974297f9f1ef85e9ecd3b4d88eeea802abc04c669d41d1
+- id: src-20261008-developmentguide-2
+  resource: urn:llmwiki:source:src-20261008-developmentguide-2
+  title: 'Pi0 development: installer diagnostics'
+  content_hash: sha256:d99c59d6cfd0b09ecc4ff0041935818769956cc74aac61670275fa2371f691c6
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -23,11 +23,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
   content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
+- id: src-20261008-2026-10-08-installer-recovery
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
+  title: Installer diagnostics and recovery validation
+  content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T00:53:53.204074+00:00'
-  target_hash: sha256:8154b4eb48313c04a00cc58a30b2bb54c13196e4df4b384fa19e900bf5206e2a
+  performed_at: '2026-10-08T01:11:38.949449+00:00'
+  target_hash: sha256:a54393a8023adddbfe92e6dc72559f5e3f63973b25aaf51503f300746e68c844
   result: passed
   checks:
     source_support: passed
@@ -36,21 +40,22 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Checked the current full manual and Trixie correction evidence against the narrow
-    release-gate diff and interpreter tests. Prior unrelated claims retain their cited
-    sources. Both Bookworm and Trixie are allowed on Zero 2 W/aarch64; physical Trixie
-    acceptance and publication of this fix are pending.
+  - 'Checked the current recovery manual/evidence against checker and installer diffs
+    and inert regression results: read-only inspection, actual software install, and
+    Git update are separate. Version/path diagnostics and stage/exit/retry reporting
+    preserve calibration and core behavior. Retained claims preserve original citations;
+    physical acceptance and publication remain pending.'
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
 
 # Development and immutable documentation workflow
 
-Read the current wiki/manual map and verify important claims against code before development. Create a new dated full manual version instead of replacing registered sources. Register/normalize explicitly, validate/show a schema-v2 page diff, apply within owner-approved scope, and review changed sourced pages. Update current pointers and implementation classifications after review; do not refresh fingerprints merely to silence errors. Wiki setup/prepare is explicit; queries and checks do not install dependencies.[^src-20261008-developmentguide]
+Read the current wiki/manual map and verify important claims against code before development. Create a new dated full manual version instead of replacing registered sources. Register/normalize explicitly, validate/show a schema-v2 page diff, apply within owner-approved scope, and review changed sourced pages. Update current pointers and implementation classifications after review; do not refresh fingerprints merely to silence errors. Wiki setup/prepare is explicit; queries and checks do not install dependencies.[^src-20261008-developmentguide-2]
 
 [Project overview](/overview.md).
 
-[^src-20261008-developmentguide]: Current versioned Developmentguide.
+[^src-20261008-developmentguide-2]: Current versioned Developmentguide.
 
 ## Implementation evidence and acceptance limits
 
@@ -71,3 +76,10 @@ The root README is now the owner-requested comprehensive public introduction and
 CI is configured for Python 3.11 and 3.13 to cover the Bookworm/Trixie interpreter difference. Unknown OS releases remain rejected; no blanket unsupported-platform override was added. Current README/manual versions supersede the original Bookworm-only requirement.[^src-20261008-2026-10-08-trixie-support]
 
 [^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.
+
+
+## Installation recovery and diagnostics
+
+Test install inspection separately from installation: inspection must not create project files, and timeout/exec errors must become diagnostics. Test failed stage/exit reporting and cleanup without running apt, external downloads or robot tools. Update immutable manuals and current mappings after the reviewed changes.[^src-20261008-2026-10-08-installer-recovery]
+
+[^src-20261008-2026-10-08-installer-recovery]: Installer diagnostics and recovery validation.

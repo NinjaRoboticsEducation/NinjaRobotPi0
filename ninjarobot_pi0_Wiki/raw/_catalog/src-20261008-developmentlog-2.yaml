@@ -1,0 +1,16 @@
+id: src-20261008-developmentlog-2
+path: raw/notes/ninjarobotpi0/2026-10-08-recovery/DevelopmentLog.md
+media_type: text/markdown
+kind: text
+title: 'Pi0 log: installer recovery'
+added_at: '2026-10-08T01:10:39Z'
+content_hash: sha256:4528907218a3f7b4ee3828784017e0d8db391e5ebc54f2ed2b0226ff338e63d2
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-developmentlog-2
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T01:12:26Z'
+last_plan: pi0-recovery-review-261008-development-history-and-evolution

@@ -1,0 +1,16 @@
+id: src-20261008-developmentguide-2
+path: raw/articles/ninjarobotpi0/2026-10-08-recovery/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: 'Pi0 development: installer diagnostics'
+added_at: '2026-10-08T01:10:39Z'
+content_hash: sha256:d99c59d6cfd0b09ecc4ff0041935818769956cc74aac61670275fa2371f691c6
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-developmentguide-2
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T01:12:25Z'
+last_plan: pi0-recovery-review-261008-development-workflow

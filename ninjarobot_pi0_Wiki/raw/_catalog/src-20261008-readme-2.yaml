@@ -1,0 +1,16 @@
+id: src-20261008-readme-2
+path: raw/articles/ninjarobotpi0/2026-10-08-recovery/README.md
+media_type: text/markdown
+kind: text
+title: 'Pi0 README: explicit recovery walkthrough'
+added_at: '2026-10-08T01:10:40Z'
+content_hash: sha256:8cca92e768174233e833566a9821cdcd6657c78f92b4d752e70f26aaa248e4fa
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-readme-2
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T01:12:20Z'
+last_plan: pi0-recovery-review-261008-overview

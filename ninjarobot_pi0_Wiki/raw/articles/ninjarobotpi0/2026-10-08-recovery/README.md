@@ -27,7 +27,7 @@ NinjaRobotPi0 is a modular educational robot for **Raspberry Pi Zero 2 W**. It b
 
 Pi0 retains its own capabilities and control protocol. Pi5's local model providers, camera, game pad, MCP integrations and authenticated pairing are not included. The original Python package names and robot functions are preserved; some existing tools still display legacy V4/V5 labels.
 
-**Release qualification:** host tests and mocked browser checks are recorded in the [audit report](docs/validation/UpgradeAudit-2026-10-08.md). Final installation, calibration and account testing on a physical Pi remain pending. The Trixie fix described here must be published on the official default branch before retrying the curl command. The earlier published installer rejects Trixie by design; 64-bit alone does not identify the OS release.
+**Release qualification:** host tests and mocked browser checks are recorded in the [audit report](../../../../../docs/validation/UpgradeAudit-2026-10-08.md). Final installation, calibration and account testing on a physical Pi remain pending. The Trixie fix described here must be published on the official default branch before retrying the curl command. The earlier published installer rejects Trixie by design; 64-bit alone does not identify the OS release.
 
 ## 2. Quick Start Guide
 
@@ -58,7 +58,7 @@ Power off before wiring. Keep actuator power disconnected while installing softw
 | Distance sensor | SDA GPIO2 / pin 3; SCL GPIO3 / pin 5; compatible 3.3 V breakout and common ground |
 | Buzzer | Reference signal GPIO17 / pin 11, with ground |
 
-Use your module's wiring and voltage requirements. Do not allocate the same GPIO to two components. Display pins are configurable; register your actual assignments in the display tool. The [complete installation manual](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-recovery/InstallationGuide.md) retains the detailed wiring reference. Its older manual installation commands are explicitly historical.
+Use your module's wiring and voltage requirements. Do not allocate the same GPIO to two components. Display pins are configurable; register your actual assignments in the display tool. The [complete installation manual](InstallationGuide.md) retains the detailed wiring reference. Its older manual installation commands are explicitly historical.
 
 ### 2.3 Prepare Raspberry Pi OS
 
@@ -259,7 +259,7 @@ Perform these checks on the physical Pi in order. Host unit tests cannot substit
 7. **Remote access, if needed:** verify the printed ngrok URL using your own device. A saved token alone is not proof of a working tunnel.
 8. **Exit/recovery:** stop the server with Ctrl+C, let cleanup finish, then test onboarding resume. Test power-off separately only when ready for the Pi to shut down.
 
-Record your OS, installer commit, hardware configuration and results. The [host validation report](docs/validation/UpgradeValidation-2026-10-07.md) and [audit report](docs/validation/UpgradeAudit-2026-10-08.md) distinguish automated checks from pending physical acceptance.
+Record your OS, installer commit, hardware configuration and results. The [host validation report](../../../../../docs/validation/UpgradeValidation-2026-10-07.md) and [audit report](../../../../../docs/validation/UpgradeAudit-2026-10-08.md) distinguish automated checks from pending physical acceptance.
 
 ## 4. Troubleshooting
 
@@ -305,19 +305,19 @@ Keep credentials and calibration backups private. Root package identities remain
 
 ## Appendix B — Documentation and Development
 
-- [InstallationGuide.md](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-recovery/InstallationGuide.md)
-- [DevelopmentGuide.md](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-recovery/DevelopmentGuide.md)
-- [DevelopmentLog.md](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-08-recovery/DevelopmentLog.md)
-- [Wiki entry point](ninjarobot_pi0_Wiki/README.md)
-- [Development policy](AGENTS.md)
-- [Approved implementation plan](DevelopmentPlanDoc/NinjaRobot_Install_wiki_upgrade_261007.md)
-- [License](LICENSE)
+- [InstallationGuide.md](InstallationGuide.md)
+- [DevelopmentGuide.md](DevelopmentGuide.md)
+- [DevelopmentLog.md](../../../notes/ninjarobotpi0/2026-10-08-recovery/DevelopmentLog.md)
+- [Wiki entry point](../../../../README.md)
+- [Development policy](../../../../../AGENTS.md)
+- [Approved implementation plan](../../../../../DevelopmentPlanDoc/NinjaRobot_Install_wiki_upgrade_261007.md)
+- [License](../../../../../LICENSE)
 
 The three root manual files remain compatibility links. Full manuals are versioned inside the wiki; this README is the public introduction and practical quick-start manual. Current code and tests determine implemented behavior. Wiki pages remain draft/unverified until actual human verification is recorded.
 
 # 日本語
 
-NinjaRobotPi0 は Raspberry Pi Zero 2 W 向けの教育ロボットです。サーボ、液晶表情、ブザー、距離センサー、Gemini、BLE、Web 操作を備えています。対応 OS は **Raspberry Pi OS Bookworm/Trixie 64-bit のみ**です。詳しい配線・テスト手順は上の英語版と [導入マニュアル](InstallationGuide.md) を参照してください。この節は要約です。
+NinjaRobotPi0 は Raspberry Pi Zero 2 W 向けの教育ロボットです。サーボ、液晶表情、ブザー、距離センサー、Gemini、BLE、Web 操作を備えています。対応 OS は **Raspberry Pi OS Bookworm/Trixie 64-bit のみ**です。詳しい配線・テスト手順は上の英語版と [導入マニュアル](../../../../../InstallationGuide.md) を参照してください。この節は要約です。
 
 1. 電源を切って配線し、サーボ電源は別電源にします。GND を共有し、ソフト導入中はアクチュエータ電源を切ってください。
 2. Bookworm/Trixie 64-bit、Wi-Fi/SSH、I2C/SPI を設定します。通常ユーザーで、公開後に下記 curl コマンドを実行します。
@@ -337,7 +337,7 @@ cd "$HOME/NinjaRobotPi0"
 
 # 繁體中文
 
-NinjaRobotPi0 是 Raspberry Pi Zero 2 W 教育機器人，整合伺服動作、螢幕表情、蜂鳴器、距離感測、Gemini、BLE 與網頁操作。初期僅支援 **Raspberry Pi OS Bookworm/Trixie 64-bit**。完整接線及測試步驟請參閱上方英文版與[安裝手冊](InstallationGuide.md)；此節為摘要。
+NinjaRobotPi0 是 Raspberry Pi Zero 2 W 教育機器人，整合伺服動作、螢幕表情、蜂鳴器、距離感測、Gemini、BLE 與網頁操作。初期僅支援 **Raspberry Pi OS Bookworm/Trixie 64-bit**。完整接線及測試步驟請參閱上方英文版與[安裝手冊](../../../../../InstallationGuide.md)；此節為摘要。
 
 1. 關閉電源後接線；伺服使用獨立電源並共地，安裝軟體時切斷致動器電源。
 2. 設定 Bookworm/Trixie 64-bit、Wi-Fi/SSH、I2C/SPI。版本公開後，以一般使用者執行下方 curl 指令。
@@ -357,7 +357,7 @@ cd "$HOME/NinjaRobotPi0"
 
 # 简体中文
 
-NinjaRobotPi0 是 Raspberry Pi Zero 2 W 教育机器人，包含舵机动作、屏幕表情、蜂鸣器、距离传感、Gemini、BLE 和网页操作。初期仅支持 **Raspberry Pi OS Bookworm/Trixie 64-bit**。完整接线及测试步骤请阅读上方英文版与[安装手册](InstallationGuide.md)；本节为摘要。
+NinjaRobotPi0 是 Raspberry Pi Zero 2 W 教育机器人，包含舵机动作、屏幕表情、蜂鸣器、距离传感、Gemini、BLE 和网页操作。初期仅支持 **Raspberry Pi OS Bookworm/Trixie 64-bit**。完整接线及测试步骤请阅读上方英文版与[安装手册](../../../../../InstallationGuide.md)；本节为摘要。
 
 1. 断电接线，舵机使用独立电源并共地；安装软件时切断执行器电源。
 2. 配置 Bookworm/Trixie 64-bit、Wi-Fi/SSH、I2C/SPI。版本发布后，以普通用户执行下方 curl 命令。
