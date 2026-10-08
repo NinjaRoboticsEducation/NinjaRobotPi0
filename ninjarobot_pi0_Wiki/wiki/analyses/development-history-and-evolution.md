@@ -20,10 +20,10 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration
   content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
-- id: src-20261007-developmentlog-2
-  resource: urn:llmwiki:source:src-20261007-developmentlog-2
-  title: Pi0 development log — audit 2026-10-08
-  content_hash: sha256:d3cb9f70b8b62cfe3609fb4101897a359cb9a843156f3c2ab6de05df3e02e149
+- id: src-20261008-developmentlog
+  resource: urn:llmwiki:source:src-20261008-developmentlog
+  title: 'Pi0 log: Trixie rejection correction'
+  content_hash: sha256:bfe4d94e318710da8b1b5a134873cd3b92f28c0ca579d9601e662736ccf4a19b
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -32,11 +32,15 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
+- id: src-20261008-2026-10-08-trixie-support
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
+  title: Trixie installer correction and validation boundary
+  content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-07T17:40:02.420226+00:00'
-  target_hash: sha256:1986a7084576416f982774cba2b24aa78e641fae80f33da8df9f30a6ac35b655
+  performed_at: '2026-10-08T00:53:54.380161+00:00'
+  target_hash: sha256:b07609a4754b0d2f4350c557a1fb8232decd0fe8aecf15c719fa7246a628a1ce
   result: passed
   checks:
     source_support: passed
@@ -45,9 +49,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Chronology distinguishes prior implementation from this audit. New complete DevelopmentLog
-    records source/code scope and pending physical/account/remote acceptance. No publication
-    or human verification invented.
+  - Checked the current full manual and Trixie correction evidence against the narrow
+    release-gate diff and interpreter tests. Prior unrelated claims retain their cited
+    sources. Both Bookworm and Trixie are allowed on Zero 2 W/aarch64; physical Trixie
+    acceptance and publication of this fix are pending.
   - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
     Physical tests, live accounts and publication remain pending.
 ---
@@ -56,7 +61,7 @@ semantic_review:
 
 ## 2026-10-07 implementation checkpoint
 
-Approved installation/onboarding tooling, wiki relocation and immutable manual workflow, and Pi5-derived Pi0 web presentation were implemented with host validation. Historical V5 milestones remain history. Real Raspberry Pi and live account validation remain owner-manual; no release publication occurred during this task.[^src-20261007-developmentlog-2]
+Approved installation/onboarding tooling, wiki relocation and immutable manual workflow, and Pi5-derived Pi0 web presentation were implemented with host validation. Historical V5 milestones remain history. Real Raspberry Pi and live account validation remain owner-manual; no release publication occurred during this task.[^src-20261008-developmentlog]
 
 
 The NinjaRobot project evolved from a monolithic educational robot into the modular, AI-powered NinjaRobot V5 platform.[^src-20260822-developmentguide] This document records the chronological milestones, architectural phases, and reliability audits throughout development.[^src-20260822-developmentlog] [^src-20260822-developmentguide]
@@ -96,7 +101,7 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
 
-[^src-20261007-developmentlog-2]: Current versioned Developmentlog.
+[^src-20261008-developmentlog]: Current versioned Developmentlog.
 
 ## Implementation evidence and acceptance limits
 
@@ -110,3 +115,10 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 The 2026-10-08 follow-up audit corrected onboarding validation/privacy/progress/retry, installer preflight/provenance handling and wiki environment isolation. It rewrote the public README and created new immutable manuals/evidence. Host checks do not substitute for physical Pi, live accounts, remote CI or publication; no core robot code was changed.[^src-20261007-2026-10-08-upgrade-audit]
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
+
+
+## Trixie support correction
+
+The owner reported the published bootstrap rejecting Debian 13/trixie. A follow-up corrected both release gates and expanded interpreter CI while preserving robot source and locks. This correction is local until publication; physical Trixie acceptance is still pending.[^src-20261008-2026-10-08-trixie-support]
+
+[^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.

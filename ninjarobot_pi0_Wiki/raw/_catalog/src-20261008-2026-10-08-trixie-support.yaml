@@ -1,0 +1,16 @@
+id: src-20261008-2026-10-08-trixie-support
+path: raw/notes/changes/2026-10-08-trixie-support.md
+media_type: text/markdown
+kind: text
+title: Trixie installer correction and validation boundary
+added_at: '2026-10-08T00:52:47Z'
+content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T00:54:35Z'
+last_plan: pi0-trixie-review-261008-development-history-and-evolution

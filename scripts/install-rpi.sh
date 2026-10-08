@@ -12,7 +12,7 @@ main() {
       --check) check=1 ;; --dry-run) preview=1 ;; --yes) yes=1 ;; --with-wiki) wiki=1 ;;
       --help|-h)
         echo 'Usage: ./install.sh [--yes] [--with-wiki] [--dry-run | --check]'
-        echo 'Bookworm 64-bit Zero 2 W software only. Run ./onboard.sh afterward.'; return ;;
+        echo 'Bookworm/Trixie 64-bit Zero 2 W software only. Run ./onboard.sh afterward.'; return ;;
       *) echo "Unknown/local-checkout-inapplicable option: $1" >&2; return 2 ;;
     esac
     shift

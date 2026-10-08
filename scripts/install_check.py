@@ -26,11 +26,17 @@ def platform_errors(
             if "=" in line
         )
         fields = {key: value.strip('"') for key, value in fields.items()}
-    if fields.get("VERSION_CODENAME") != "bookworm" or fields.get("ID") not in (
+    if fields.get("VERSION_CODENAME") not in ("bookworm", "trixie") or fields.get(
+        "ID"
+    ) not in (
         "debian",
         "raspbian",
     ):
-        errors.append("Raspberry Pi OS Bookworm required.")
+        errors.append(
+            "Raspberry Pi OS Bookworm (12) or Trixie (13) required; "
+            f"detected ID={fields.get('ID', 'missing')}, "
+            f"VERSION_CODENAME={fields.get('VERSION_CODENAME', 'missing')}."
+        )
     return errors
 
 

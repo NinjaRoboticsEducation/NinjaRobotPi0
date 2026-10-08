@@ -634,7 +634,7 @@ def main():
     from install_check import platform_errors
 
     if platform_errors():
-        raise ValueError("Onboarding requires Bookworm 64-bit on Zero 2 W.")
+        raise ValueError("Onboarding requires Bookworm/Trixie 64-bit on Zero 2 W.")
     if args.worker:
         return worker(args.worker)
     return wizard(ROOT, state, args)

@@ -24,7 +24,7 @@ bootstrap() {
       --with-wiki) forwarded+=("$1"); shift ;;
       --help|-h)
         cat <<'EOF'
-NinjaRobotPi0: Raspberry Pi Zero 2 W / Bookworm 64-bit.
+NinjaRobotPi0: Raspberry Pi Zero 2 W / Bookworm/Trixie 64-bit.
 Usage: install.sh [--ref REF] [--install-dir ABSOLUTE_PATH] [--yes]
                   [--with-wiki] [--dry-run | --check]
 Default: remote default branch (HEAD), new $HOME/NinjaRobotPi0 checkout.
@@ -50,9 +50,9 @@ EOF
   [[ ! -e "$destination" && ! -L "$destination" ]] || { echo 'Refusing existing destination; run its ./install.sh to retry.' >&2; return 1; }
   parent="$(dirname -- "$destination")"
   [[ -d "$parent" && ! -L "$parent" ]] || { echo 'Destination parent must exist and be a real directory.' >&2; return 1; }
-  [[ $EUID -ne 0 && "$(uname -s)" == Linux && "$(uname -m)" == aarch64 ]] || { echo 'Run as a normal user on Bookworm 64-bit Zero 2 W.' >&2; return 3; }
+  [[ $EUID -ne 0 && "$(uname -s)" == Linux && "$(uname -m)" == aarch64 ]] || { echo 'Run as a normal user on Bookworm/Trixie 64-bit Zero 2 W.' >&2; return 3; }
   grep -aq 'Raspberry Pi Zero 2' /proc/device-tree/model || { echo 'Zero 2 W required.' >&2; return 3; }
-  grep -Eq '^VERSION_CODENAME="?bookworm"?$' /etc/os-release || { echo 'Bookworm required.' >&2; return 3; }
+  grep -Eq '^VERSION_CODENAME="?(bookworm|trixie)"?$' /etc/os-release || { echo 'Raspberry Pi OS Bookworm (12) or Trixie (13) required; check VERSION_CODENAME in /etc/os-release.' >&2; return 3; }
   grep -Eq '^ID="?(debian|raspbian)"?$' /etc/os-release || { echo 'Raspberry Pi OS required.' >&2; return 3; }
   if ((!yes)); then
     local answer

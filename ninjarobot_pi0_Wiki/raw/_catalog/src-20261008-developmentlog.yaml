@@ -1,0 +1,16 @@
+id: src-20261008-developmentlog
+path: raw/notes/ninjarobotpi0/2026-10-08-trixie/DevelopmentLog.md
+media_type: text/markdown
+kind: text
+title: 'Pi0 log: Trixie rejection correction'
+added_at: '2026-10-08T00:52:46Z'
+content_hash: sha256:bfe4d94e318710da8b1b5a134873cd3b92f28c0ca579d9601e662736ccf4a19b
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-developmentlog
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T00:54:35Z'
+last_plan: pi0-trixie-review-261008-development-history-and-evolution

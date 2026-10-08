@@ -1,0 +1,16 @@
+id: src-20261008-readme
+path: raw/articles/ninjarobotpi0/2026-10-08-trixie/README.md
+media_type: text/markdown
+kind: text
+title: 'Pi0 README: Trixie support'
+added_at: '2026-10-08T00:52:47Z'
+content_hash: sha256:989064683b04a50073a77789f173500196556567668b129ef05b91e305c0bd2f
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-readme
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T00:54:28Z'
+last_plan: pi0-trixie-review-261008-overview

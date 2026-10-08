@@ -234,7 +234,7 @@ def test_ngrok_failure_restores_selected_file(
     assert not list(tmp_path.glob(".config-restore-*"))
 
 
-def test_bootstrap_bookworm_preflight_accepts_quoted_and_unquoted_release(tmp_path):
+def test_bootstrap_release_allowlist_accepts_bookworm_and_trixie(tmp_path):
     # Exercise the actual shell expression; hardware identity is independently gated.
     script = (ROOT / "install.sh").read_text()
     line = next(
@@ -246,7 +246,12 @@ def test_bootstrap_bookworm_preflight_accepts_quoted_and_unquoted_release(tmp_pa
     for release, expected in [
         ("VERSION_CODENAME=bookworm", 0),
         ('VERSION_CODENAME="bookworm"', 0),
-        ("VERSION_CODENAME=trixie", 1),
+        ("VERSION_CODENAME=trixie", 0),
+        ('VERSION_CODENAME="trixie"', 0),
+        ("VERSION_CODENAME=bullseye", 1),
+        ("VERSION_CODENAME=forky", 1),
+        ("VERSION_CODENAME=trixie-testing", 1),
+        ("", 1),
     ]:
         (tmp_path / "release").write_text(release + "\n")
         assert subprocess.run(["bash", "-c", command]).returncode == expected
@@ -483,3 +488,48 @@ def test_cancel_after_tool_invalidates_old_physical_observation(tmp_path, monkey
     record = json.loads(state.read_text())["steps"]["servo"]
     assert record["observation"] == "not_checked"
     assert record["result"] == "needs_attention"
+
+
+@pytest.mark.parametrize(
+    "codename", ["bookworm", "trixie", "bullseye", "forky", "trixie-testing", ""]
+)
+@pytest.mark.parametrize("quoted", [False, True])
+def test_platform_release_matrix(tmp_path, monkeypatch, codename, quoted):
+    check = load("install_check")
+    monkeypatch.setattr(check.platform, "system", lambda: "Linux")
+    monkeypatch.setattr(check.platform, "machine", lambda: "aarch64")
+    monkeypatch.setattr(check.os, "geteuid", lambda: 1000)
+    model = tmp_path / "model"
+    model.write_text("Raspberry Pi Zero 2 W Rev 1.0\0")
+    release = tmp_path / "os-release"
+    value = f'"{codename}"' if quoted else codename
+    release.write_text(
+        f'PRETTY_NAME="Debian GNU/Linux 13 (trixie)"\nID=debian\nVERSION_CODENAME={value}\n'
+    )
+    errors = check.platform_errors(model, release)
+    assert (not errors) == (codename in ("bookworm", "trixie"))
+    if errors:
+        assert "detected ID=debian" in errors[0]
+
+
+@pytest.mark.parametrize(
+    "machine,model_name,uid,identity",
+    [
+        ("armv7l", "Raspberry Pi Zero 2 W", 1000, "debian"),
+        ("aarch64", "Raspberry Pi 5", 1000, "debian"),
+        ("aarch64", "Raspberry Pi Zero 2 W", 0, "debian"),
+        ("aarch64", "Raspberry Pi Zero 2 W", 1000, "ubuntu"),
+    ],
+)
+def test_trixie_keeps_hardware_arch_user_distribution_gates(
+    tmp_path, monkeypatch, machine, model_name, uid, identity
+):
+    check = load("install_check")
+    monkeypatch.setattr(check.platform, "system", lambda: "Linux")
+    monkeypatch.setattr(check.platform, "machine", lambda: machine)
+    monkeypatch.setattr(check.os, "geteuid", lambda: uid)
+    model = tmp_path / "model"
+    model.write_text(model_name)
+    release = tmp_path / "release"
+    release.write_text(f"ID={identity}\nVERSION_CODENAME=trixie\n")
+    assert check.platform_errors(model, release)

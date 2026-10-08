@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-07T17:40:22Z'
+generated_at: '2026-10-08T00:54:35Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -129,5 +129,30 @@ sources:
 - id: src-20261007-readme
   title: Pi0 public README — audit 2026-10-08
   path: raw/articles/ninjarobotpi0/2026-10-08/README.md
+  kind: text
+  state: ingested
+- id: src-20261008-2026-10-08-trixie-support
+  title: Trixie installer correction and validation boundary
+  path: raw/notes/changes/2026-10-08-trixie-support.md
+  kind: text
+  state: ingested
+- id: src-20261008-developmentguide
+  title: 'Pi0 development: dual Python target'
+  path: raw/articles/ninjarobotpi0/2026-10-08-trixie/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261008-developmentlog
+  title: 'Pi0 log: Trixie rejection correction'
+  path: raw/notes/ninjarobotpi0/2026-10-08-trixie/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261008-installationguide
+  title: 'Pi0 installation: Bookworm and Trixie'
+  path: raw/articles/ninjarobotpi0/2026-10-08-trixie/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261008-readme
+  title: 'Pi0 README: Trixie support'
+  path: raw/articles/ninjarobotpi0/2026-10-08-trixie/README.md
   kind: text
   state: ingested

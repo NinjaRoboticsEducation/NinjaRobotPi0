@@ -5,9 +5,9 @@
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-08/InstallationGuide.md",
-      "source_id": "src-20261007-installationguide-3",
-      "content_hash": "sha256:45ef29b63b279aa880cd4858de3e1150be12291f5c2b758219d63847268d1b5b",
+      "path": "raw/articles/ninjarobotpi0/2026-10-08-trixie/InstallationGuide.md",
+      "source_id": "src-20261008-installationguide",
+      "content_hash": "sha256:2b1dad2fba1ea44f8f380b636658e4aae8aa87961076d23610cbafa1eb00c45e",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-08/DevelopmentGuide.md",
-      "source_id": "src-20261007-developmentguide-3",
-      "content_hash": "sha256:af9d4c121796a7373ef9bb02ca590931d7d88e4a86184f870c780c0e067d77d1",
+      "path": "raw/articles/ninjarobotpi0/2026-10-08-trixie/DevelopmentGuide.md",
+      "source_id": "src-20261008-developmentguide",
+      "content_hash": "sha256:2cbe76f7887674f3c4974297f9f1ef85e9ecd3b4d88eeea802abc04c669d41d1",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-08/DevelopmentLog.md",
-      "source_id": "src-20261007-developmentlog-2",
-      "content_hash": "sha256:d3cb9f70b8b62cfe3609fb4101897a359cb9a843156f3c2ab6de05df3e02e149",
+      "path": "raw/notes/ninjarobotpi0/2026-10-08-trixie/DevelopmentLog.md",
+      "source_id": "src-20261008-developmentlog",
+      "content_hash": "sha256:bfe4d94e318710da8b1b5a134873cd3b92f28c0ca579d9601e662736ccf4a19b",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -211,11 +211,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     ".github/workflows/upgrade-validation.yml": {
-      "content_hash": "sha256:c9bc0123c90b69b74f06569f933eea3a7833f563cae9d81bf2063590029cc2fb",
+      "content_hash": "sha256:8a1fe42f297ab42a37c1653601e6cdb82b4b59d4d6b3a0e3790b5348875b4d53",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
     },
     "AGENT.md": {
       "content_hash": "sha256:4df3e1eb23432c66269450225f76e378db6c283db6c2b8a316574a7f96b14794",
@@ -253,13 +253,13 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "install.sh": {
-      "content_hash": "sha256:3dffd8ee118d6f289f8f2dbdcdcf7e247fa2aadb538d8eaca8e9864a783e64a4",
+      "content_hash": "sha256:9af5b59777ea95e2a681de761b77a73a5a1baefdcd85a7cdaaee1968f5978664",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
     },
     "ninja_ble/pyproject.toml": {
       "content_hash": "sha256:8cd1b579adc08cf90769a951469681732c03d8d321895583f063002c60d830db",
@@ -1587,13 +1587,13 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "scripts/install-rpi.sh": {
-      "content_hash": "sha256:b99c938859df5cdbd9ee48fb32c73bc43e1c060f77a35bba98f6bbdf5462d843",
+      "content_hash": "sha256:a2e4bc444db21cb42c46fb099d50e45d79f41259d31e2fb2b27b9a4646380cb9",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
     },
     "scripts/install-versions.env": {
       "content_hash": "sha256:10946ffa3101a942d2472c85965d53eb1fde57f6762fab42e838af4ec2690273",
@@ -1605,13 +1605,13 @@
       "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
     },
     "scripts/install_check.py": {
-      "content_hash": "sha256:8c498877a06702a20e79c9c061d63e7fba5322a3b3b5decdf7269d5bbb0d8d3e",
+      "content_hash": "sha256:d2f37cc7697cae7a8af55ccd1758e56c9ad0bc231c17e9759a05349c7cf0e375",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed exact version comparisons and early symlink ancestor checks for installer-owned paths; platform/device check behavior otherwise retained."
+      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
     },
     "scripts/install_record.py": {
       "content_hash": "sha256:6f63bf879885e2eaa5220f8159c84c61e8d15fad77e6d964729f1c345be16db2",
@@ -1632,13 +1632,13 @@
       "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
     },
     "scripts/onboard.py": {
-      "content_hash": "sha256:5a6c363224c9ab6b35e4bd8a4b4c91816d23e122fdaf5fc0279230fc36589968",
+      "content_hash": "sha256:79c6241f6b9fcc9b2d2d5885b9c20d972fa8b898ddf00ff1f78e5a1a2ae62d55",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed Pi5-style guidance/reuse/retry/resume/summary, stale observation invalidation, strict progress schema, pulse alias/numeric GPIO gate, private first credential writes and worker preflight. Existing robot helpers unchanged. Cancellation after a tool changes calibration also reconciles saved observations before the final progress write; regression test covers this boundary."
+      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
     },
     "scripts/verify_core.py": {
       "content_hash": "sha256:bb1943c6120fb7c4daa1cfce815ab92dd895a9a513fddd59aa585c460f97846c",
@@ -1794,11 +1794,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_upgrade_workflows.py": {
-      "content_hash": "sha256:64d282bf2d030e5dbeed67221f9867b831abe2de5efa9308452b8b506b066678",
+      "content_hash": "sha256:991ea17a1250cbb2561cdb0bbcb503c288ec6cd1eba5c7e7b89ed60ed5cf5b05",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed regression coverage for audit defects using isolated files/mocked subprocesses; no robot activation. Cancellation after a tool changes calibration also reconciles saved observations before the final progress write; regression test covers this boundary."
+      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
     },
     "uv.lock": {
       "content_hash": "sha256:ebd98dea646e54a0329532844d4784ffd51cec2598b1657c23db54735dda0b45",
@@ -1811,8 +1811,8 @@
       "pages": [
         "wiki/overview.md"
       ],
-      "content_hash": "sha256:f16fccc44c355b2268bcf12acb27893e02af292c1235b019dd5248b5477c1c84",
-      "review_note": "Owner-requested comprehensive Pi5-structured Pi0 manual checked against tools, private uv installation, server/ngrok startup and existing GPIO reference; translations explicitly summaries. Versioned snapshot is cited by overview."
+      "content_hash": "sha256:e34691028ac7ef132b30266ea1ec654c325c64f5984e2e1f96be767f6a518741",
+      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
     }
   },
   "adapters": [

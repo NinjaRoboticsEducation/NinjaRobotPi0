@@ -12,7 +12,7 @@ retrieved_at: null
 normalized_at: '2026-10-07T07:13:39Z'
 normalizer: llmwiki-text/0.2
 error: null
-ingested_at: '2026-10-07T17:40:21Z'
-last_plan: pi0-audit-review-261008-overview
+ingested_at: '2026-10-08T00:54:28Z'
+last_plan: pi0-trixie-review-261008-overview
 previous_content_hash: sha256:f8becc32b9999e418981bf11025a09959dd03b9175fdcb7f86dfbd7f190db909
 changed_at: '2026-10-07T07:13:38Z'

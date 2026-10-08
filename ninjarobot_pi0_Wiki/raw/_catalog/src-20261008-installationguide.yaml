@@ -1,0 +1,16 @@
+id: src-20261008-installationguide
+path: raw/articles/ninjarobotpi0/2026-10-08-trixie/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: 'Pi0 installation: Bookworm and Trixie'
+added_at: '2026-10-08T00:52:45Z'
+content_hash: sha256:2b1dad2fba1ea44f8f380b636658e4aae8aa87961076d23610cbafa1eb00c45e
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-installationguide
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T00:54:31Z'
+last_plan: pi0-trixie-review-261008-guided-onboarding

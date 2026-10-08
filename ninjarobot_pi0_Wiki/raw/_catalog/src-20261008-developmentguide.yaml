@@ -1,0 +1,16 @@
+id: src-20261008-developmentguide
+path: raw/articles/ninjarobotpi0/2026-10-08-trixie/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: 'Pi0 development: dual Python target'
+added_at: '2026-10-08T00:52:46Z'
+content_hash: sha256:2cbe76f7887674f3c4974297f9f1ef85e9ecd3b4d88eeea802abc04c669d41d1
+state: ingested
+original_uri: urn:llmwiki:source:src-20261008-developmentguide
+source_version: null
+retrieved_at: null
+normalized_at: null
+normalizer: null
+error: null
+ingested_at: '2026-10-08T00:54:34Z'
+last_plan: pi0-trixie-review-261008-development-workflow
