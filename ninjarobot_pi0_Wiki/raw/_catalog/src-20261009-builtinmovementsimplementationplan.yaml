@@ -1,0 +1,16 @@
+id: src-20261009-builtinmovementsimplementationplan
+path: raw/notes/ninjarobotpi0/2026-10-09-builtins/BuiltinMovementsImplementationPlan.md
+media_type: text/markdown
+kind: text
+title: Builtinmovementsimplementationplan
+added_at: '2026-10-09T16:34:10Z'
+content_hash: sha256:3472c9ab43ab152d13ffe12099cf8f6e539339a5197e5f513a5f15779575d3c2
+state: ingested
+original_uri: urn:llmwiki:source:src-20261009-builtinmovementsimplementationplan
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-09T16:34:21Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-09T17:12:05Z'
+last_plan: pi0-semantic-reviews-261010

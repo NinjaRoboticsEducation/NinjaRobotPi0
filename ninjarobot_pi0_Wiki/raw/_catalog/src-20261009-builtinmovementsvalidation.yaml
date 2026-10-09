@@ -1,0 +1,16 @@
+id: src-20261009-builtinmovementsvalidation
+path: raw/notes/ninjarobotpi0/2026-10-09-builtins/BuiltinMovementsValidation.md
+media_type: text/markdown
+kind: text
+title: Builtinmovementsvalidation
+added_at: '2026-10-09T16:34:10Z'
+content_hash: sha256:5d551d9332478d7b524e48d7f8f06715498df9a85e13a9099198266f948a6beb
+state: ingested
+original_uri: urn:llmwiki:source:src-20261009-builtinmovementsvalidation
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-09T16:34:22Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-09T17:12:05Z'
+last_plan: pi0-semantic-reviews-261010

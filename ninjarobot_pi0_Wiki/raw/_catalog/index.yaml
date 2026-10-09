@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-09T07:08:54Z'
+generated_at: '2026-10-09T17:12:07Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -226,9 +226,29 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-08-trixie/README.md
   kind: text
   state: ingested
+- id: src-20261009-2026-10-09-builtin-movements
+  title: 2026 10 09 Builtin Movements
+  path: raw/notes/changes/2026-10-09-builtin-movements.md
+  kind: text
+  state: ingested
 - id: src-20261009-2026-10-09-spider-otto
   title: 2026 10 09 Spider Otto
   path: raw/notes/changes/2026-10-09-spider-otto.md
+  kind: text
+  state: ingested
+- id: src-20261009-builtinmovementsimplementationplan
+  title: Builtinmovementsimplementationplan
+  path: raw/notes/ninjarobotpi0/2026-10-09-builtins/BuiltinMovementsImplementationPlan.md
+  kind: text
+  state: ingested
+- id: src-20261009-builtinmovementsvalidation
+  title: Builtinmovementsvalidation
+  path: raw/notes/ninjarobotpi0/2026-10-09-builtins/BuiltinMovementsValidation.md
+  kind: text
+  state: ingested
+- id: src-20261009-developmentguide-2
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-09-builtins/DevelopmentGuide.md
   kind: text
   state: ingested
 - id: src-20261009-developmentguide
@@ -236,8 +256,28 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md
   kind: text
   state: ingested
+- id: src-20261009-developmentlog-2
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-09-builtins/DevelopmentLog.md
+  kind: text
+  state: ingested
 - id: src-20261009-developmentlog
   title: Developmentlog
   path: raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261009-installationguide
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-09-builtins/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261009-readme-2
+  title: Readme
+  path: raw/articles/ninjarobotpi0/2026-10-09-builtins/README.md
+  kind: text
+  state: ingested
+- id: src-20261009-readme
+  title: Readme
+  path: raw/articles/ninja_core/2026-10-09-builtins/README.md
   kind: text
   state: ingested

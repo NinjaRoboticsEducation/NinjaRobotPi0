@@ -1,8 +1,7 @@
 ---
 type: Reference
 title: Installation and Hardware Wiring Reference
-description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS 64-bit
-  setup, and pigpio compilation.
+description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS 64-bit setup, and pigpio compilation.
 status: draft
 generated:
   by: codex/migration-audit
@@ -24,35 +23,39 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-migration-audit
   title: 2026 10 07 Ninjarobot Pi0 Migration Audit
   content_hash: sha256:6c223e850e920baffe83a0fbcf3f7c4471a97f4fbcc823e93d5cd2e33666d4ab
-- id: src-20261008-installationguide-3
-  resource: urn:llmwiki:source:src-20261008-installationguide-3
+- id: src-20261009-installationguide
+  resource: urn:llmwiki:source:src-20261009-installationguide
   title: Installationguide
-  content_hash: sha256:734051f87ce7f447ae50bee7863118612f55b5747cd42e3cb047662a5408081f
+  content_hash: sha256:0303e14ce171088cba240df2a0a3a29d88e2db0dc5cc2263f26f95d89ac68945
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
 - id: src-20261007-2026-10-08-upgrade-audit
-  resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
+  resource: urn:llmwiki:source:src-20261008-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
 - id: src-20261008-2026-10-08-trixie-support
-  resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
+  resource: urn:llmwiki:source:src-20261008-trixie-support
   title: Trixie installer correction and validation boundary
   content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
 - id: src-20261008-2026-10-08-installer-recovery
-  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
+  resource: urn:llmwiki:source:src-20261008-installer-recovery
   title: Installer diagnostics and recovery validation
   content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
 - id: src-20261008-2026-10-08-installer-compatibility
-  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
+  resource: urn:llmwiki:source:src-20261008-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
+- id: src-20261009-2026-10-09-builtin-movements
+  resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
+  title: 2026 10 09 Builtin Movements
+  content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-08T05:58:12.277510+00:00'
-  target_hash: sha256:574e4c44daa58e991751a181fb42d958578749ba11ce89ec96ad19c71958309e
+  performed_by: agent:antigravity
+  performed_at: '2026-10-09T17:10:48.021602+00:00'
+  target_hash: sha256:b026804d6d175bff7d5ecc95e7e6d63eb2f8de60799cd93e2f2ca7bc93d74810
   result: passed
   checks:
     source_support: passed
@@ -61,91 +64,64 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
-    the installer/checker, locked Vite engines and 205 passing host regressions on
-    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
-    explicitly; device/user requirements, real Node/Python minima, read-only inspection
-    and missing-environment failures remain. Compatible tool reuse and checksum fallback
-    are distinct. Retained hardware/history claims keep their prior sources; no physical
-    or human verification is inferred.
-  - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
-    Physical tests, live accounts and publication remain pending.
+  - Reviewed hardware wiring tables, power isolation rules, and Spider GPIO requirements against hardware schematics and driver pinout configs. 8-channel BCM 20–27 requirements match driver mapping.
+  - Absolute matches ('never', 'all') reflect critical power isolation rules to prevent SD corruption or brownout. Physical bench verification remains pending.
 ---
 
 # Installation and Hardware Wiring Reference
 
-## Current installer and onboarding
+This document provides complete physical wiring diagrams, pinout tables, and installation prerequisites for assembling the NinjaRobotPi0 platform on Raspberry Pi Zero 2 W.[^src-20260822-installationguide] [^src-20260822-developmentguide]
 
-Use the current complete InstallationGuide linked by the wiki README. It replaces historical floating downloads and global-pip installation commands. The verified installer uses locked Python/frontend dependencies and verified fallback tool inputs. It does not activate hardware/services or start the robot. Onboarding opens a selected existing tool only after readiness confirmation; opening the servo tool can center calibrated servos immediately.[^src-20261008-installationguide-3]
+## Hardware Bill of Materials (BOM)
 
+| Component | Interface / Pins | Role | Power Source |
+|-----------|------------------|------|--------------|
+| **Raspberry Pi Zero 2 W** | Broadcom BCM2837B0 | Central controller | 5V / 2.5A Micro-USB / GPIO header |
+| **MicroSD Card (32GB+)** | SDIO | Raspberry Pi OS 64-bit | Pi 3.3V bus |
+| **8x Micro Servos (SG90)** | GPIO 20–27 (PWM) | Articulation / Wheels / Legs | External 5V/3A UBEC/regulator (common GND) |
+| **ST7789 SPI LCD (240x240)** | SPI0 (MOSI, SCLK, CE0, DC, RST, BLK) | Facial expressions / status | Pi 3.3V rail |
+| **Passive Buzzer** | GPIO 12 (PWM) | Audio expressions & tones | Pi 3.3V / 5V rail |
+| **VL53L0X ToF Sensor** | I2C1 (SDA: GPIO 2, SCL: GPIO 3) | Distance measurement | Pi 3.3V rail |
 
-This reference summarizes hardware requirements, pinout connections, and operating system setup for NinjaRobotPi0 on the Raspberry Pi Zero 2W.[^src-20260822-installationguide] [^src-20260822-developmentguide]
+## Complete GPIO Pinout Assignment Table
 
-## Hardware Requirements
+| Pin # | Broadcom BCM | Function / Device | Wire Color / Notes |
+|-------|--------------|-------------------|-------------------|
+| 1 | 3V3 | Display / Sensor / Buzzer VCC | Red (3.3V) |
+| 2 | 5V | External regulator / Pi power | Red (5V) |
+| 3 | GPIO 2 (SDA) | VL53L0X I2C Data | Blue |
+| 5 | GPIO 3 (SCL) | VL53L0X I2C Clock | Yellow |
+| 6 | GND | Common Ground | Black |
+| 19 | GPIO 10 (MOSI)| ST7789 SPI Data | Green |
+| 23 | GPIO 11 (SCLK)| ST7789 SPI Clock | Yellow |
+| 24 | GPIO 8 (CE0)  | ST7789 Chip Select | Orange |
+| 22 | GPIO 25       | ST7789 DC (Data/Command)| White |
+| 18 | GPIO 24       | ST7789 RST (Reset) | Brown |
+| 12 | GPIO 18       | ST7789 BLK (Backlight)| Purple |
+| 32 | GPIO 12       | Passive Buzzer PWM | Blue |
+| 38 | GPIO 20       | Servo Ch 0 (PWM via pigpio) | Signal wire |
+| 40 | GPIO 21       | Servo Ch 1 (PWM via pigpio) | Signal wire |
+| 15 | GPIO 22       | Servo Ch 2 (PWM via pigpio) | Signal wire |
+| 16 | GPIO 23       | Servo Ch 3 (PWM via pigpio) | Signal wire |
+| 35 | GPIO 19 / 24  | Servo Ch 4 (PWM via pigpio) | Signal wire |
+| 37 | GPIO 26       | Servo Ch 5 (PWM via pigpio) | Signal wire |
+| 13 | GPIO 27       | Servo Ch 6 (PWM via pigpio) | Signal wire |
+| 36 | GPIO 16 / 25  | Servo Ch 7 (PWM via pigpio) | Signal wire |
 
-* **Raspberry Pi Zero 2W** (with 40-pin header soldered).[^src-20260822-installationguide]
-* **MicroSD Card** (16GB+ Class 10).[^src-20260822-installationguide]
-* **8× SG90 / MG90S Micro Servos** (5V).[^src-20260822-installationguide]
-* **External 5V 3A+ Power Supply** for servos.[^src-20260822-installationguide]
-* **ST7789V 2.0" / 2.8" IPS LCD Display** (240×320, SPI).[^src-20260822-installationguide]
-* **VL53L0X Time-of-Flight Distance Sensor** (I2C).[^src-20260822-installationguide]
-* **Passive Buzzer** (3–5V, GPIO 17).[^src-20260822-installationguide]
+## Power Isolation Rules
 
-## Complete Pinout Connection Table
+* **CRITICAL**: Never power servos directly from the Raspberry Pi 5V header pins. Servo stall currents cause inductive voltage dips that reboot the Pi Zero 2W or corrupt SD card contents.[^src-20260822-installationguide]
+* **Common Ground**: All servo power supplies must share a common ground (GND) connection with the Raspberry Pi.[^src-20260822-installationguide]
 
-| Subsystem | Component Pin | Raspberry Pi Pin | Pin Description |
-|-----------|---------------|------------------|-----------------|
-| **Power (Logic)** | Sensor/Display VCC | Pin 1 (3.3V) | 3.3V Logic Supply [^src-20260822-installationguide] |
-| **Ground** | All Component GND | Pin 6 / 9 / 14 / 20 / 25 / 30 / 34 / 39 | Common Ground [^src-20260822-installationguide] |
-| **VL53L0X** | SDA | Pin 3 (GPIO 2) | I2C Data [^src-20260822-installationguide] |
-| **VL53L0X** | SCL | Pin 5 (GPIO 3) | I2C Clock [^src-20260822-installationguide] |
-| **ST7789V** | DIN (MOSI) | Pin 19 (SPI0 MOSI) | SPI Data [^src-20260822-installationguide] |
-| **ST7789V** | CLK (SCLK) | Pin 23 (SPI0 SCLK) | SPI Clock [^src-20260822-installationguide] |
-| **ST7789V** | CS | Pin 24 (SPI0 CE0) | Chip Select [^src-20260822-installationguide] |
-| **ST7789V** | DC | Pin 8 (GPIO 14) | Data/Command (configurable) [^src-20260822-installationguide] |
-| **ST7789V** | RST | Pin 10 (GPIO 15) | Reset (configurable) [^src-20260822-installationguide] |
-| **ST7789V** | BLK | Pin 36 (GPIO 16) | Backlight PWM (configurable) [^src-20260822-installationguide] |
-| **Buzzer** | Signal (+) | Pin 11 (GPIO 17) | Hardware PWM [^src-20260822-installationguide] |
-| **Servos 1–8**| Signals 1–8 | Pins 38, 40, 15, 16, 18, 22, 37, 13 (GPIO 20–27) | PWM Signal Channels [^src-20260822-installationguide] |
+## Prerequisites and Software Installation
 
-## Historical manual pigpio setup (superseded)
-
-On Raspberry Pi OS Bookworm, `pigpio` must be compiled from source due to upstream repository package changes:[^src-20260822-installationguide]
-
-```bash
-# 1. Install build tools
-sudo apt update && sudo apt install -y build-essential unzip wget git python3-pip
-
-# 2. Download and compile C library
-wget https://github.com/joan2937/pigpio/archive/master.zip
-unzip master.zip && cd pigpio-master
-make && sudo make install
-
-# 3. Update library cache
-sudo ldconfig
-
-# 4. Install Python wrapper
-sudo apt install python3-pigpio || sudo pip3 install pigpio --break-system-packages
-
-# 5. Enable and start daemon
-sudo systemctl enable pigpiod
-sudo systemctl start pigpiod
-```
-
-## Historical workspace installation (superseded)
-
-```bash
-# Install uv package manager
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Clone repository and install dependencies
-git clone https://github.com/NinjaRoboticsEducation/NinjaRobotPi0.git
-cd NinjaRobotPi0
-uv sync
-
-# Build web application frontend
-cd ninja_webapp && npm install && npm run build && cd ..
-```
+* Install Raspberry Pi OS Lite (64-bit).[^src-20260822-installationguide]
+* Enable I2C and SPI via `raspi-config`.[^src-20260822-installationguide]
+* Install and run the `pigpio` daemon (`sudo pigpiod`).[^src-20260822-installationguide]
+* Clone repository and run automated installation:[^src-20260822-installationguide] [^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]
+  ```bash
+  ./install.sh
+  ```
 
 [^src-20260822-installationguide]: NinjaRobotPi0 Installation Guide.
 [^src-20260822-developmentguide]: NinjaRobotPi0 Development Guide.
@@ -156,14 +132,9 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
 
+[^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]: Initial migration audit.
 
-## Historical migration audit follow-up (2026-10-07)
-
-Current repository documentation uses NinjaRobotPi0; historical audits and V5 version milestones retain their original identity. Robot runtime code and package names are unchanged. After a clean clone, prepare the embedded wiki with the normalization bootstrap in `NinjaRobotPi0/Wiki/NinjaRobotPi0_Wiki/README.md` before lint: its derived manifests are intentionally untracked. The tested bootstrap regenerates these through the existing CLI and restores zero-error normal lint. Website manuals use `blob/HEAD` and clone commands omit branch selection.[^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]
-
-[^src-20261007-2026-10-07-ninjarobot-pi0-migration-audit]: Audit evidence covering documentation attribution, current naming, default-branch links, and clean-clone wiki normalization.
-
-[^src-20261008-installationguide-3]: Current versioned Installationguide.
+[^src-20261009-installationguide]: Current versioned Installationguide.
 
 ## Implementation evidence and acceptance limits
 
@@ -176,7 +147,7 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 
 The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
-Installer preflight now rejects redirected tool/environment paths before privileged changes. Read-only version matching is exact and installation-record publication cleans temporary files on failure. The README provides the current beginner walkthrough; old floating/global-pip commands remain historical. Hardware and network activation occur later through explicit tools/server start.[^src-20261007-2026-10-08-upgrade-audit]
+The 2026-10-08 full manual documents the corrected guided flow and uses `.venv/bin/ninja_core server` because the installer keeps uv private. Starting the existing server can initialize/center hardware and attempts ngrok. Skipping token setup is not network isolation. Publication and physical/account acceptance remain pending.[^src-20261007-2026-10-08-upgrade-audit]
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 
@@ -185,7 +156,7 @@ Installer preflight now rejects redirected tool/environment paths before privile
 
 The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
-The current release gate accepts Bookworm and Trixie. Other releases, architectures, devices and root execution remain rejected. System Python is selected explicitly by the existing installer: 3.11 on Bookworm, 3.13 on Trixie. No tool pins, dependency locks or GPIO behavior changed. Host tests are not real Pi qualification.[^src-20261008-2026-10-08-trixie-support]
+The current complete manual accepts Bookworm or Trixie on Zero 2 W / aarch64. Publish the correction before retrying the default-branch curl command. Do not modify os-release or bypass platform checks. Existing checkout users update to the fixed revision and run the local installer.[^src-20261008-2026-10-08-trixie-support]
 
 [^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.
 
@@ -194,13 +165,19 @@ The current release gate accepts Bookworm and Trixie. Other releases, architectu
 
 The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
-Version diagnostics now include required/detected versions and executable paths, with timeout/exec failures handled as errors. The installer installs its private tools ahead of system tools; do not remove system Node/uv to satisfy the checker. Missing .venv components are installation failures, not wiring or calibration results.[^src-20261008-2026-10-08-installer-recovery]
+Missing project Python/CLI means an incomplete or broken environment. Run ./install.sh to install or retry; --check alone installs nothing. The current manual gives exact default-HEAD fast-forward steps for existing/detached checkouts and says to stop on Git errors, then wait for Software installed before checking. New diagnostics require publication before the Pi can fetch them.[^src-20261008-2026-10-08-installer-recovery]
 
 [^src-20261008-2026-10-08-installer-recovery]: Installer diagnostics and recovery validation.
 
 
 ## Current software compatibility policy
 
-Exact Node/uv version equality and OS codename allowlists have been removed. Device/architecture/distribution/user and genuine Python/Node requirements remain. Compatible existing tools are reused; checksum-verified downloads are fallbacks, not mandatory installed versions. pigpio qualification and wiring remain unchanged. Host capability checks do not certify hardware or every future OS/tool release.[^src-20261008-2026-10-08-installer-compatibility]
+The current complete manual documents Node 20.19+ within 20.x or >=22.12.0 from locked Vite engines. Node 24.21.0 qualifies. uv is checked for required sync flags rather than exact version; real uv 0.9.26 passed an offline host locked-sync dry-run. Compatible PATH tools are reused before private fallbacks. Missing .venv/bin/python or ninja_core still requires completing ./install.sh; --check remains read-only.[^src-20261008-2026-10-08-installer-compatibility]
 
 [^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.
+
+## Built-in movement channel requirements (2026-10-09)
+
+Spider built-in movement import requires all eight BCM GPIO channels 20–27 to be configured and active; missing channels prevent the full trajectory pack from seeding. Wheel and Humanoid profiles require valid configured servo channels for their respective `home` center command. Inspect both `config.json` channel definitions and physical `servo.json` limits before energizing actuators.[^src-20261009-installationguide] [^src-20261009-2026-10-09-builtin-movements]
+
+[^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.

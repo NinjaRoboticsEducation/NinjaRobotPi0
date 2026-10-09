@@ -1,0 +1,16 @@
+id: src-20261009-2026-10-09-builtin-movements
+path: raw/notes/changes/2026-10-09-builtin-movements.md
+media_type: text/markdown
+kind: text
+title: 2026 10 09 Builtin Movements
+added_at: '2026-10-09T16:34:09Z'
+content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+state: ingested
+original_uri: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-09T16:34:21Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-09T17:12:05Z'
+last_plan: pi0-semantic-reviews-261010

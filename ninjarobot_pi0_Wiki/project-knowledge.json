@@ -5,9 +5,9 @@
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md",
-      "source_id": "src-20261008-installationguide-3",
-      "content_hash": "sha256:734051f87ce7f447ae50bee7863118612f55b5747cd42e3cb047662a5408081f",
+      "path": "raw/articles/ninjarobotpi0/2026-10-09-builtins/InstallationGuide.md",
+      "source_id": "src-20261009-installationguide",
+      "content_hash": "sha256:0303e14ce171088cba240df2a0a3a29d88e2db0dc5cc2263f26f95d89ac68945",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md",
-      "source_id": "src-20261009-developmentguide",
-      "content_hash": "sha256:b8d75dba21189f9521728ca3726b00660c19cb77fb58bc6c619c7bb54a2c2708",
+      "path": "raw/articles/ninjarobotpi0/2026-10-09-builtins/DevelopmentGuide.md",
+      "source_id": "src-20261009-developmentguide-2",
+      "content_hash": "sha256:80ef9c89176a6b0a3749f9127697464f197c2972bf2a41ae533fa2cb7afdc0ab",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md",
-      "source_id": "src-20261009-developmentlog",
-      "content_hash": "sha256:26c761085d9ad415c759477dc2e33f92bb3feab89dabf58c917bbae373fb8dcc",
+      "path": "raw/notes/ninjarobotpi0/2026-10-09-builtins/DevelopmentLog.md",
+      "source_id": "src-20261009-developmentlog-2",
+      "content_hash": "sha256:d176728a0871bab1ad8a7138df05ca04d87c6782011c7459f49278c07a9c3a88",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -294,12 +294,12 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/pyproject.toml": {
-      "content_hash": "sha256:cf90c88786d3a9377499f76c1d8670995851ce2ee6309ce753be5abb9ac03d17",
+      "content_hash": "sha256:e13a953f6b67892a51b92729e850ab1140b46a5d0177e39c99e0104cf23f433a",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+      "review_note": "Package configuration and installed package data files reviewed against 2026-10-09 builtins implementation."
     },
     "ninja_core/src/ninja_core/__init__.py": {
       "content_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -334,12 +334,12 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/config.py": {
-      "content_hash": "sha256:3ee530f1d07accff8937cfd221d964d3ad189b3591953a4a16c8940064dd92c7",
+      "content_hash": "sha256:74dba29723831a9e75d92f5c1257c5309ba7e409e62b29dcaa82eb07e89084ee",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+      "review_note": "Built-in movement profile seeding and reconciliation reviewed against 2026-10-09 builtins implementation."
     },
     "ninja_core/src/ninja_core/contracts.py": {
       "content_hash": "sha256:140ebec86ab448cf07bd624d1541fbfd2b3106737e6a976a02c8ab8cf8dc2811",
@@ -398,20 +398,20 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/movement_cli.py": {
-      "content_hash": "sha256:eea992cf3fd076a08e0d5e51e23f901ac058b5280911d386b40b1eba763fa5f9",
+      "content_hash": "sha256:82eba44390b7ec91e3f828b71a3bbfc4638aa5511d2a84483ad6f275bc84219c",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+      "review_note": "Movement tool CLI option 4 and profile movement listing reviewed against 2026-10-09 builtins implementation."
     },
     "ninja_core/src/ninja_core/movement_controller.py": {
-      "content_hash": "sha256:513b92c8f7e25a687ef66a7713bd9dc315ab8815b0e3d366b2b00c42fe96d027",
+      "content_hash": "sha256:8eacada718dda6ebfb19a0c47223216da0d0e93a35ba4a6a5f7cd879ba2c66d6",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+      "review_note": "MovementController preflight step validation, execution locking, and boundary callback checks reviewed against 2026-10-09 builtins implementation."
     },
     "ninja_core/src/ninja_core/ngrok_config.py": {
       "content_hash": "sha256:c6b4bff4d18c4eca5b19a184f34554387f301e3540c6f34345986fd93d531422",
@@ -422,12 +422,12 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/ninja_agent.py": {
-      "content_hash": "sha256:52ed6c3f238510e4e61756edbff84d62fe5ed0cbdf38d90386c96c5165b39032",
+      "content_hash": "sha256:064068edfc9785e225f6964077e6b4dd5f910821abfc805e7907e5ba648ea8b6",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+      "review_note": "Gemini AI agent native movement plan validation, type filtering, and execution bounds reviewed against 2026-10-09 builtins implementation."
     },
     "ninja_core/src/ninja_core/perception.py": {
       "content_hash": "sha256:6bf64ae493f48110d3196904ec76b8d62cf65aedfaed5617b37b752ddfbd9ace",
@@ -462,12 +462,12 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/web_server.py": {
-      "content_hash": "sha256:2e7c9b7f90d19907839ca19ff337f97973f606dddc995c4056a5a37074ccdc33",
+      "content_hash": "sha256:011ccd2911271370ddc542c29c7439cbabfacb2826617ee1973d57bde160cc66",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+      "review_note": "FastAPI web server /api/servos/movements endpoints and validation errors reviewed against 2026-10-09 builtins implementation."
     },
     "ninja_utils/pyproject.toml": {
       "content_hash": "sha256:802a26e85a412dbe9b77595f758dd2e58bb014d2fd27f6e1f2dae555839dcb75",
@@ -734,12 +734,12 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/pages/Agent/index.jsx": {
-      "content_hash": "sha256:b1f282961761a7864b71b7c650d9a0ea0cfd83c1b19164f2b2819a0e7b98672d",
+      "content_hash": "sha256:b68b6a530591c1321b1c9257f35973c04fbf4091f106d33e7779d2be1ad35ba3",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Agent UI movement execution handling and error notification reviewed against 2026-10-09 builtins implementation."
     },
     "ninja_webapp/src/pages/Help/Help.module.css": {
       "content_hash": "sha256:ee2060d1ceedd83e8309612efe41d0e98c4b835ef659b30a535a25d8ab3af9b8",
@@ -1811,8 +1811,8 @@
       "pages": [
         "wiki/overview.md"
       ],
-      "content_hash": "sha256:fd871e736aaedb9cc66a7b35e036a34aca17ed235341dbaa85ccd73e096859ae",
-      "review_note": "Reviewed diff: navigation-only replacement of current complete DevelopmentGuide/DevelopmentLog version paths for the additive Spider task; all other contents unchanged. No setup/runtime behavior impact."
+      "content_hash": "sha256:c78fd0b77bee90477913b3d8810078afe8d37f0b3343ab49c8791b036aac4774",
+      "review_note": "Repository README manual links and built-in movement documentation reviewed against 2026-10-09 builtins implementation."
     },
     "scripts/build_spider_movements.py": {
       "content_hash": "sha256:77491a278f891742924d7d4bfc247c6f9b1a18ab4e1effbf87c5f594c4be0d4a",
@@ -1853,6 +1853,22 @@
         "wiki/concepts/motion-system-and-easing.md"
       ],
       "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
+    },
+    "ninja_core/src/ninja_core/builtin_movements.py": {
+      "content_hash": "sha256:bf02235bfc444ded71b6c4f3efea41a9d1e714bc1b2b14268c1b5d23609b30ab",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/spider-otto-waypoint-library.md"
+      ],
+      "review_note": "Native built-in movement catalog, installed package resource loader (data/spider_otto.json), robot profile seeding, and preflight step validation reviewed against 2026-10-09 builtins implementation."
+    },
+    "tests/test_builtin_movements.py": {
+      "content_hash": "sha256:375f961035601425f2f862bd0f6a734d6b164ce0c059053e1cd2f8e09fed9d84",
+      "pages": [
+        "wiki/references/development-guide.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Unit test suite validating built-in movement discovery, profile seeding, preflight error guards, and robot type scoping."
     }
   },
   "adapters": [

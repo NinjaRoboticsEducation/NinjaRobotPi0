@@ -1,6 +1,6 @@
 # InstallationGuide
 
-[Open the current complete version](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md).
+[Open the current complete version](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-builtins/InstallationGuide.md).
 
 This file preserves existing public links. Full manuals live as immutable versions in the wiki.
 

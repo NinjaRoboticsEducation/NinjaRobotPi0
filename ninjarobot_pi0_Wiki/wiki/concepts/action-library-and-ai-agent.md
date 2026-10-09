@@ -1,8 +1,7 @@
 ---
 type: Concept
 title: Action Library and AI Agent
-description: Google Gemini-powered agentic AI, saved Blockly action library, action
-  chaining, and cooperative interruption.
+description: Google Gemini-powered agentic AI, saved Blockly action library, action chaining, and cooperative interruption.
 status: draft
 generated:
   by: codex/migration-audit
@@ -24,11 +23,15 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration
   content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
+- id: src-20261009-2026-10-09-builtin-movements
+  resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
+  title: 2026 10 09 Builtin Movements
+  content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-07T07:47:00+00:00'
-  target_hash: sha256:3c023047cfefbcf8d355d166b8b09af13557697a8f595e5a72d873123f3b70b7
+  performed_at: '2026-10-09T17:10:48.021602+00:00'
+  target_hash: sha256:7cab523a151bf38f67a8020d464fa09f6dc7b93298583d49c6e3a8fae9ab4cf3
   result: passed
   checks:
     source_support: passed
@@ -37,9 +40,8 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - AI agent runtime and Blockly library behaviors match DevelopmentGuide and ninja_core
-    README.
-  - Absolute match ('cannot') correctly reflects protected configuration actions.
+  - Reviewed ActionLibrary and Gemini AI agent native movement planning against ninja_agent.py. Action planning schema, permitted robot-type filtering, repetition bounds, and whole-chain validation match implementation.
+  - Agent relies on configured API keys; configuration actions remain protected.
 ---
 
 # Action Library and AI Agent
@@ -56,7 +58,7 @@ The AI agent uses the Gemini model selected and validated during API-key setup; 
 
 * **Natural Language Understanding**: Supports conversational chat in English, Japanese, and Traditional/Simplified Chinese.[^src-20260822-readme-3]
 * **Semantic Action Planning**: Maps user intent to structured action plans containing:
-  * **Movement**: Pre-recorded sequence or saved Blockly action.[^src-20260822-developmentlog]
+  * **Movement**: Pre-recorded sequence, permitted native movement, or saved Blockly action.[^src-20260822-developmentlog] [^src-20261009-2026-10-09-builtin-movements]
   * **Expression**: Display face (`happy`, `scary`, `sleepy`, `speaking`, etc.).[^src-20260822-readme-3]
   * **Sound**: Emotion tone or musical melody.[^src-20260822-readme-3]
   * **Spoken Response**: Natural language response synthesized in the user's language.[^src-20260822-readme-3]
@@ -89,3 +91,9 @@ When a new user message arrives while a previous movement or action plan is exec
 The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0). The local folder is `NinjaRobotPi0/`. The new repository starts with fresh history on `main`; Python packages and robot runtime behavior are retained. Manual links use `blob/HEAD` to follow the GitHub default branch. Historical names and audit findings remain provenance; this migration does not resolve them.[^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
+
+## Native movement action chaining and execution limits
+
+The Gemini AI agent restricts native movement suggestions to executable movements matching the active robot type (`spider`, `wheel`/`tire`, or `humanoid`). Native movement chains from text and audio plans are validated with strict bounds: maximum 32 entries per chain and 1–20 positive integer repetitions per entry. Any unavailable or type-incompatible movement causes the entire native chain to be rejected while preserving the conversational response and logging the rejection reason.[^src-20261009-2026-10-09-builtin-movements]
+
+[^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.

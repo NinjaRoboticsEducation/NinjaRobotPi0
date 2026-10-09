@@ -1,8 +1,7 @@
 ---
 type: Reference
 title: API and CLI Reference
-description: Unified reference of all Python driver classes, wrapper APIs, REST/WebSocket
-  endpoints, and CLI tools.
+description: Unified reference of all Python driver classes, wrapper APIs, REST/WebSocket endpoints, and CLI tools.
 status: draft
 generated:
   by: codex/migration-audit
@@ -44,11 +43,19 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
+- id: src-20261009-2026-10-09-builtin-movements
+  resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
+  title: 2026 10 09 Builtin Movements
+  content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261009-developmentguide-2
+  resource: urn:llmwiki:source:src-20261009-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:80ef9c89176a6b0a3749f9127697464f197c2972bf2a41ae533fa2cb7afdc0ab
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-07T13:14:33.491513+00:00'
-  target_hash: sha256:f82b2a479ecaa887a2cd757c71e47def5e79484fed5f3cdb4c9169d4ee3b55d7
+  performed_by: agent:antigravity
+  performed_at: '2026-10-09T17:10:48.021602+00:00'
+  target_hash: sha256:9b6164666d470d4646aff7ab9cd67d0b9b408ac8e694a6d8e50b74c89b6e9fdc
   result: passed
   checks:
     source_support: passed
@@ -57,12 +64,8 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Corrected chat/BLE/distance endpoint documentation against current route definitions
-    and inert browser fixtures. Robot control APIs were not changed.
-  - Source-grounded AI review; lifecycle stays draft/unverified. This is not human
-    or hardware verification.
-  - Removed an unused older BLE source citation after correcting the endpoint; immutable
-    original remains available and cited by other pages.
+  - Reviewed REST endpoints, CLI commands, and AI agent native movement chain limits against web_server.py, movement_cli.py, and ninja_agent.py. Status codes (404/422/409) and validation bounds (32 steps max, 1–20 repetitions) match implementation.
+  - Host CLI validation does not imply remote curl acceptance or physical robot acceptance.
 ---
 
 # API and CLI Reference
@@ -98,6 +101,8 @@ This document provides a consolidated reference for all Python APIs, scriptable 
 | `/api/code/stop` | `POST` | None | Requests cooperative cancellation of the active script; non-cooperative loops may require the Stop Robot path or server restart.[^src-20260822-developmentguide] |
 | `/api/system/shutdown` | `POST` | None | Triggers graceful shutdown animation and OS poweroff.[^src-20260822-developmentguide] [^src-20260822-readme-3] |
 | `/api/ble/status` | `GET` | None | Returns BLE advertising status and service name.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] |
+| `/api/servos/movements` | `GET` | None | Lists available compatible movement names for the configured robot type.[^src-20261009-2026-10-09-builtin-movements] |
+| `/api/servos/movements/{name}/execute` | `POST` | None | Executes named movement; returns 404 for unknown, 422 for invalid/incompatible before runtime reclamation, 409 on abort.[^src-20261009-2026-10-09-builtin-movements] |
 | `/ws/distance` | `WebSocket` | None | Distance telemetry with `distance_mm`.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] |
 | `/ws/events` | `WebSocket` | None | Real-time activity/log event stream.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] |
 
@@ -107,11 +112,13 @@ This document provides a consolidated reference for all Python APIs, scriptable 
 # ninja_core
 uv run ninja_core server [--autostart]    # Launch server and BLE
 uv run ninja_core chat                    # Terminal AI chat
-uv run ninja_core movement-tool           # Servo tool
+uv run ninja_core movement-tool           # Servo tool (option 4 runs configured movements)
 uv run ninja_core init-tool               # Guided setup wizard
 uv run ninja_core config set-name "<n>"   # Set Bluetooth name
 uv run ninja_core config set-key gemini <key>  # Discover, validate, and save model
 uv run ninja_core config set-key <k> <v>       # Generic non-Gemini key save
+uv run ninja_core config import           # Merge configs and seed profile built-in movements[^src-20261009-developmentguide-2]
+uv run ninja_core config set-type <type>  # Set robot type (spider, wheel/tire, humanoid)
 
 # pi0servo
 uv run pi0servo calib <pin>               # Calibrate servo pin
@@ -154,3 +161,11 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 Host validation and the exact code/tooling boundary are recorded in the approved implementation evidence. Real Pi hardware, live accounts and published curl acceptance remain pending; passing host checks do not imply physical acceptance.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2]
 
 [^src-20261007-2026-10-07-install-onboard-wiki-ui-2]: Pi0 upgrade implementation and current UI contracts.
+
+## AI Agent Native Movement Plan Execution
+
+Agent action plans validate complete native movement chains against permitted type-scoped names, with limits of 32 chain entries and 1–20 positive integer repetitions per entry. Invalid chains are rejected in full while retaining conversational output and logging the reason.[^src-20261009-2026-10-09-builtin-movements]
+
+[^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+
+[^src-20261009-developmentguide-2]: NinjaRobotPi0 Development Guide, 2026-10-09.

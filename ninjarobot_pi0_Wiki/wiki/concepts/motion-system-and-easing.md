@@ -1,8 +1,7 @@
 ---
 type: Concept
 title: Motion System and Easing Curves
-description: Velocity-based physics motion calculations, position-aware easing curves,
-  and the movement command syntax.
+description: Velocity-based physics motion calculations, position-aware easing curves, and the movement command syntax.
 status: draft
 generated:
   by: codex/migration-audit
@@ -28,11 +27,15 @@ sources:
   resource: urn:llmwiki:source:src-20261009-2026-10-09-spider-otto
   title: 2026 10 09 Spider Otto
   content_hash: sha256:1c35301cb86c71126d626d841c5f648680fb82c8fe857526e22b983e970939cd
+- id: src-20261009-2026-10-09-builtin-movements
+  resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
+  title: 2026 10 09 Builtin Movements
+  content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-09T07:08:20.155374+00:00'
-  target_hash: sha256:5d8d384eef0435287cb38e7c6935dcc9a621a50b23980e206986f2805e19e48f
+  performed_by: agent:antigravity
+  performed_at: '2026-10-09T17:10:48.021602+00:00'
+  target_hash: sha256:73928d56956986e87068d3c72f61d6ddd527c46e8255b358dc710829ce48ac57
   result: passed
   checks:
     source_support: passed
@@ -41,14 +44,8 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed registered pi0servo/core README sources, development guide motion sections,
-    migration note and new code-grounded Spider evidence. Corrected overstrong timing,
-    torque/protection, momentum and publication wording. JSON fields, independent
-    arrival, easing, nominal velocity and cancellation caveats agree with current
-    code; older source claims are explicitly limited by new evidence.
-  - Source-grounded AI review, with retained-context reader review where applicable.
-    Draft/unverified status remains; no human, visual, physical or remote-publication
-    verification is asserted.
+  - Reviewed motion system pipeline and MovementController against builtin_movements.py and movement_controller.py. Preflight step validation, execution locking, step-boundary callback checks, and driver abort handling are verified.
+  - Absolute matches ('all', 'never') reflect preflight guards; in-step callback interruption remains limited by the blocking driver loop. Real hardware testing is pending.
 ---
 
 # Motion System and Easing Curves
@@ -102,7 +99,6 @@ The migration evidence records the local rename to `NinjaRobotPi0/` and the inte
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
 
-
 ## Verified JSON movement contract and Spider adaptation
 
 `MovementController.execute_movement` reads required `moves` (GPIO-to-angle object) and `speed` (F/M/S), plus optional `per_servo_speeds`. It orders targets by driver pins; an omitted pin receives `None`, an unknown pin is silently omitted, and a per-pin mode overrides the global mode. Single-step easing is in/out cubic. Config validates only the outer movement dictionary/list shape.[^src-20261009-2026-10-09-spider-otto]
@@ -113,4 +109,11 @@ Cancellation also has a boundary: the controller does not poll or forward `abort
 
 The [Spider OTTO library](/concepts/spider-otto-waypoint-library.md) preserves nominal sampled poses using current fields. Exact timing requires the separately proposed controller; it is not implemented. All physical timing, mounting and loading checks remain pending.[^src-20261009-2026-10-09-spider-otto]
 
+## Built-in movement preflight and controller locking
+
+The `ninja_core` motion pipeline adds strict preflight validation and serialization to `MovementController`. Before the first servo write of a trajectory, every step is inspected: keys must be nonempty canonical GPIO strings within BCM 0–27, channels must be actively configured, angles must be finite nominal ±90° values, and speed modes must be valid F/M/S with valid per-servo overrides. Any invalid later step aborts execution before the sequence begins.[^src-20261009-2026-10-09-builtin-movements]
+
+The controller lock serializes its own operations to prevent concurrent sequence interleaving. Obstacle callbacks are checked at step boundaries before and after blocking driver calls; a driver abort stops sequence advancement without issuing an unprompted controller centering pose.[^src-20261009-2026-10-09-builtin-movements] In-step callback interruption and independent direct driver writers remain documented limitations.[^src-20261009-2026-10-09-builtin-movements]
+
 [^src-20261009-2026-10-09-spider-otto]: Code-verified movement contract and Spider adaptation evidence, 2026-10-09; supersedes stronger historical timing/protection wording.
+[^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.

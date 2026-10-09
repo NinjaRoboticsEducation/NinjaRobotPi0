@@ -1,8 +1,7 @@
 ---
 type: Analysis
 title: Development History and Evolution
-description: Chronological development history of NinjaRobot V5 across major phases,
-  version milestones, and reliability audits.
+description: Chronological milestones, architectural transitions, and classroom reliability audits.
 status: draft
 generated:
   by: codex/migration-audit
@@ -10,11 +9,11 @@ generated:
 sources:
 - id: src-20260822-developmentlog
   resource: urn:llmwiki:source:src-20260822-developmentlog
-  title: NinjaRobot V5 Development Log
+  title: NinjaRobotPi0 Development Log
   content_hash: sha256:54cdbd7e50fd0cbfbfaba5073d6ed89379181b78bc3d7267d64518f15e9bfe02
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
-  title: NinjaRobot V5 Development Guide
+  title: NinjaRobotPi0 Development Guide
   content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
@@ -29,34 +28,46 @@ sources:
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
 - id: src-20261007-2026-10-08-upgrade-audit
-  resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
+  resource: urn:llmwiki:source:src-20261008-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
 - id: src-20261008-2026-10-08-trixie-support
-  resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
+  resource: urn:llmwiki:source:src-20261008-trixie-support
   title: Trixie installer correction and validation boundary
   content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
 - id: src-20261008-2026-10-08-installer-recovery
-  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
+  resource: urn:llmwiki:source:src-20261008-installer-recovery
   title: Installer diagnostics and recovery validation
   content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
 - id: src-20261008-2026-10-08-installer-compatibility
-  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
+  resource: urn:llmwiki:source:src-20261008-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
 - id: src-20261008-2026-10-08-readme-audit
-  title: Pi0 README audit evidence and validation limits
+  resource: urn:llmwiki:source:src-20261008-readme-audit
+  title: 2026 10 08 Readme Audit
   content_hash: sha256:7a945023f45ad2e179e5cae529665df9ed050bfe5cf36f440f857a02e28cfea4
-  resource: urn:llmwiki:source:src-20261008-2026-10-08-readme-audit
 - id: src-20261009-2026-10-09-spider-otto
   resource: urn:llmwiki:source:src-20261009-2026-10-09-spider-otto
   title: 2026 10 09 Spider Otto
   content_hash: sha256:1c35301cb86c71126d626d841c5f648680fb82c8fe857526e22b983e970939cd
+- id: src-20261009-2026-10-09-builtin-movements
+  resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
+  title: 2026 10 09 Builtin Movements
+  content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261009-developmentlog-2
+  resource: urn:llmwiki:source:src-20261009-developmentlog-2
+  title: Developmentlog
+  content_hash: sha256:d176728a0871bab1ad8a7138df05ca04d87c6782011c7459f49278c07a9c3a88
+- id: src-20261009-builtinmovementsvalidation
+  resource: urn:llmwiki:source:src-20261009-builtinmovementsvalidation
+  title: Builtinmovementsvalidation
+  content_hash: sha256:5d551d9332478d7b524e48d7f8f06715498df9a85e13a9099198266f948a6beb
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-09T07:08:20.155374+00:00'
-  target_hash: sha256:2b4ca3f7cd45679c910c6ad07055c1626c082b115389f4f15e74b8a8d6157dda
+  performed_by: agent:antigravity
+  performed_at: '2026-10-09T17:10:48.021602+00:00'
+  target_hash: sha256:4c63758116b7b3319d5a9a6e32f35780933b8146c999ef884292d3750f97ed8f
   result: passed
   checks:
     source_support: passed
@@ -65,14 +76,8 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed historical phase/version sections and all cited change notes with the
-    new complete log addendum. Corrected Phase 3 CRC32 citation to the log that actually
-    describes it. Qualified migration publication/default-branch claims to match the
-    pending gates in its evidence. Retained milestones remain historical, and 71 new
-    host passes do not imply physical acceptance.
-  - Source-grounded AI review, with retained-context reader review where applicable.
-    Draft/unverified status remains; no human, visual, physical or remote-publication
-    verification is asserted.
+  - Reviewed chronological milestones against Git log, development logs, and validation evidence. 2026-10-09 native built-in movements milestone, packaging, and inert Pi Zero 2 W host tests are supported.
+  - Historical milestones remain provenance; host test passes do not imply physical robot acceptance.
 ---
 
 # Development History and Evolution
@@ -98,25 +103,13 @@ The NinjaRobot project evolved from a monolithic educational robot into the modu
 * **V5.2.1 (pi0servo Integration)**: Rebuilt servo control with velocity-based motion, abort mechanism, and calibration managers.[^src-20260822-developmentguide]
 * **V5.2.2 (Movement Fluidity)**: Introduced position-aware multi-step cubic easing (`ease_in_cubic` → `linear` → `ease_out_cubic`).[^src-20260822-developmentguide]
 * **V5.2.3 (pi0vl53l0x V2)**: Hardened sensor init, thread-safe I2C, transaction-level locking, and interactive CLI.[^src-20260822-developmentguide]
-* **V5.2.4 (pi0disp V2)**: Thread-safe SPI locking, delta rendering with numpy LUT, and `TextTicker`.[^src-20260822-developmentguide]
-* **V5.2.5 (Blockly Runtime Reliability)**: AST preflight syntax checking, correlation of events by `request_id`, and distance fallback to `9999`.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **V5.2.6 (Dual Pipeline)**: Created `RuntimePipeline` to eliminate expression/display ownership conflicts between native idle and Blockly code.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **V5.2.7 (GPIO Motion Contract)**: Added `robot.servos.move_pin()` and `move_pins()` for Blockly code generation.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **V5.2.8 (Blockly Text & Music)**: Added multilingual `robot.display.text()` and built-in melody playback in `pi0buzzer`.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **V5.2.9 (BLE Robot Naming)**: Added persistent `bluetooth.name` configuration and custom BlueZ advertisement naming.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **V5.2.10 (Saved Action Library)**: Implemented `ActionLibrary` for on-robot storage of Code IDE Blockly programs with AI agent replay.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **V5.2.11 (Guided Setup & Profile Sync)**: Added `init-tool` CLI and synchronized `robot_info` (robot type, servo pin mappings) over BLE with Code IDE.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **V5.2.12 (Gemini Model Selection)**: Replaced the fixed agent model setup with API-key-specific catalog discovery, interactive selection, and backward-compatible `gemini.model` configuration.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **V5.2.13 (Gemini 3 Runtime Compatibility)**: Added selection-time generation validation, low-thinking REST generation for Gemini 3, bounded runtime requests, and model-specific diagnostics.[^src-20260822-developmentguide] [^src-20260822-developmentlog]
-* **2026-05-17 (Code IDE Assistant Compatibility)**: Audited and synchronized documentation ensuring AI assistant provider keys and comments maintain client-server boundary security.[^src-20260822-developmentlog]
-
-[^src-20260822-developmentlog]: NinjaRobot V5 Development Log.
-[^src-20260822-developmentguide]: NinjaRobot V5 Development Guide.
 
 ## Repository migration (2026-10-07)
 
-The migration evidence records the local rename to `NinjaRobotPi0/` and the intended destination [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0), with fresh history on `main` and retained Python packages/runtime. That evidence leaves publication and remote default-branch verification pending. Manual links use `blob/HEAD` to follow the GitHub default branch. Historical names and audit findings remain provenance; this migration does not resolve them.[^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]
+The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0). The local folder is `NinjaRobotPi0/`. The new repository starts with fresh history on `main`; Python packages and robot runtime behavior are retained. Manual links use `blob/HEAD` to follow the GitHub default branch. Historical names and audit findings remain provenance; this migration does not resolve them.[^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]
 
+[^src-20260822-developmentguide]: NinjaRobotPi0 Development Guide.
+[^src-20260822-developmentlog]: NinjaRobotPi0 Development Log.
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
 
 [^src-20261009-developmentlog]: Current versioned Developmentlog.
@@ -132,7 +125,7 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 
 The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
-The 2026-10-08 follow-up audit corrected onboarding validation/privacy/progress/retry, installer preflight/provenance handling and wiki environment isolation. It rewrote the public README and created new immutable manuals/evidence. Host checks do not substitute for physical Pi, live accounts, remote CI or publication; no core robot code was changed.[^src-20261007-2026-10-08-upgrade-audit]
+The audit strengthens only the external onboarding wrapper: conflicting imported pulse aliases are rejected, credentials are private from first write, and worker execution respects platform preflight. Existing core helpers and runtime are unchanged. Manual server start still initializes hardware and attempts ngrok; onboarding does not add Pi5 authentication or offline isolation.[^src-20261007-2026-10-08-upgrade-audit]
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 
@@ -141,7 +134,7 @@ The 2026-10-08 follow-up audit corrected onboarding validation/privacy/progress/
 
 The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
-The owner reported the published bootstrap rejecting Debian 13/trixie. A follow-up corrected both release gates and expanded interpreter CI while preserving robot source and locks. This correction is local until publication; physical Trixie acceptance is still pending.[^src-20261008-2026-10-08-trixie-support]
+The owner reported Debian 13/trixie on Zero 2 W. Both bootstrap and shared Python preflight still enforced Bookworm-only. Extended the allowlist to Bookworm/Trixie, retained guards, added regression cases and Python 3.11/3.13 CI. Host validation passed; real Pi validation and publication of this correction remain pending.[^src-20261008-2026-10-08-trixie-support]
 
 [^src-20261008-2026-10-08-trixie-support]: Trixie installer correction and validation boundary.
 
@@ -174,3 +167,13 @@ The owner supplied an expanded four-language README and requested a narrow corre
 An opt-in repository JSON pack adds 19 entries covering 16 source methods and selected variants, with 565 waypoint steps and no existing controller/driver changes. The offline generator, actual config/executor tests and two design documents explain corrected GPIO mapping, native speed modes and lost period/dwell fidelity. Seventy-one targeted host tests, generator verification, Ruff and core protection passed; physical validation remains pending. See [Spider OTTO waypoint library](/concepts/spider-otto-waypoint-library.md) for current behavior and the separate, unimplemented timed-controller proposal.[^src-20261009-2026-10-09-spider-otto]
 
 [^src-20261009-2026-10-09-spider-otto]: Registered Spider implementation, code inspection, host validation and proposal boundaries.
+
+## Automatic native built-in movements and profile reconciliation (2026-10-09)
+
+The owner requested automatic native movement import, CLI/web/agent integration, and wrong-type execution guards. The implementation introduces `ninja_core.builtin_movements` with installed package resource `data/spider_otto.json` providing 19 `spider_*` trajectories and `Poweroff` (20 entries, 566 steps) for Spider when GPIO 20–27 are configured. By owner confirmation, Wheel and Humanoid receive only an all-configured-servo center movement named `home`.[^src-20261009-2026-10-09-builtin-movements] [^src-20261009-developmentlog-2]
+
+Additive metadata `movement_robot_types` and `builtin_movement_hashes` ensure idempotent reimport and preserve user customizations or name collisions. Controller preflight validates every step before servo writes, the controller lock serializes operations, and boundary callback checks halt advancing on driver abort. Automated testing on Raspberry Pi Zero 2 W with inert drivers confirmed 42 feature test passes, frontend build parity, and standalone wheel packaging; physical robot validation remains pending.[^src-20261009-2026-10-09-builtin-movements] [^src-20261009-builtinmovementsvalidation]
+
+[^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+[^src-20261009-developmentlog-2]: NinjaRobotPi0 development log with built-in movements implementation records.
+[^src-20261009-builtinmovementsvalidation]: Built-in movement validation on Raspberry Pi Zero 2 W with inert hardware.
