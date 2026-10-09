@@ -7,10 +7,10 @@ generated:
   by: agent:codex
   at: '2026-10-07T13:03:34.637721+00:00'
 sources:
-- id: src-20261008-developmentguide-3
-  resource: urn:llmwiki:source:src-20261008-developmentguide-3
+- id: src-20261009-developmentguide
+  resource: urn:llmwiki:source:src-20261009-developmentguide
   title: Developmentguide
-  content_hash: sha256:0fc10ebdf50056c8d26521e3251d265cf5b2a764c98b9b1c13f2204310385178
+  content_hash: sha256:b8d75dba21189f9521728ca3726b00660c19cb77fb58bc6c619c7bb54a2c2708
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -31,11 +31,15 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
+- id: src-20261009-2026-10-09-spider-otto
+  resource: urn:llmwiki:source:src-20261009-2026-10-09-spider-otto
+  title: 2026 10 09 Spider Otto
+  content_hash: sha256:1c35301cb86c71126d626d841c5f648680fb82c8fe857526e22b983e970939cd
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T05:58:13.337368+00:00'
-  target_hash: sha256:4d2d190f7570b360468c8f32886f769774d69fc4835d3e0884707a96571deb85
+  performed_at: '2026-10-09T07:08:20.155374+00:00'
+  target_hash: sha256:26d1c50678ecf260570f44dea887743eda05491e52ed78879978656d42420b3c
   result: passed
   checks:
     source_support: passed
@@ -44,24 +48,23 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
-    the installer/checker, locked Vite engines and 205 passing host regressions on
-    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
-    explicitly; device/user requirements, real Node/Python minima, read-only inspection
-    and missing-environment failures remain. Compatible tool reuse and checksum fallback
-    are distinct. Retained hardware/history claims keep their prior sources; no physical
-    or human verification is inferred.
-  - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
-    Physical tests, live accounts and publication remain pending.
+  - Reviewed current manual workflow and Spider addendum plus all cited implementation
+    notes. Retained historical policies are labelled superseded. Narrowed compatibility
+    test wording to what its record supports; do not carry forward unsupported 205-test
+    review notes. The new pack and 71-test result are supported by the registered
+    Spider evidence and current host checks.
+  - Source-grounded AI review, with retained-context reader review where applicable.
+    Draft/unverified status remains; no human, visual, physical or remote-publication
+    verification is asserted.
 ---
 
 # Current development manual
 
-Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261008-developmentguide-3]
+Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261009-developmentguide]
 
 [Project overview](/overview.md).
 
-[^src-20261008-developmentguide-3]: Current versioned Developmentguide.
+[^src-20261009-developmentguide]: Current versioned Developmentguide.
 
 ## Implementation evidence and acceptance limits
 
@@ -99,6 +102,13 @@ The new complete manual records read-only diagnostic tests and failure-stage rec
 
 ## Current software compatibility policy
 
-Regression tests cover the Node engine boundaries and the reported Node 24.21.0 / uv 0.9.26, missing uv sync flags, PATH preference over incompatible private tools, OS codenames without an allowlist, and Python 3.10 minimum. Inert installation fixtures still cover hash rejection, sync failure exit/cleanup, reruns and calibration retention. No core or dependency lock change is required.[^src-20261008-2026-10-08-installer-compatibility]
+The current compatibility policy uses actual Node engine requirements, the Python minimum and required uv sync capabilities rather than exact version or OS-codename gates. The registered compatibility record includes an offline uv 0.9.26 dry-run and initial host regressions; it does not establish physical Pi acceptance. Core and dependency locks remain protected.[^src-20261008-2026-10-08-installer-compatibility]
 
 [^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.
+
+
+## Spider OTTO movement data and future timing design (2026-10-09)
+
+An opt-in repository JSON pack adds 19 entries covering 16 source methods and selected variants, with 565 waypoint steps and no existing controller/driver changes. The offline generator, actual config/executor tests and two design documents explain corrected GPIO mapping, native speed modes and lost period/dwell fidelity. Seventy-one targeted host tests, generator verification, Ruff and core protection passed; physical validation remains pending. See [Spider OTTO waypoint library](/concepts/spider-otto-waypoint-library.md) for current behavior and the separate, unimplemented timed-controller proposal.[^src-20261009-2026-10-09-spider-otto]
+
+[^src-20261009-2026-10-09-spider-otto]: Registered Spider implementation, code inspection, host validation and proposal boundaries.

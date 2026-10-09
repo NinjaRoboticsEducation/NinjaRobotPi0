@@ -20,10 +20,10 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration
   content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
-- id: src-20261008-developmentlog-4
-  title: 'Pi0 development log: multilingual manual audit'
-  content_hash: sha256:5f036bf4ec4a29be102c9bcbf0a1749ab31975702de8a83979fe8155d4cf45c4
-  resource: urn:llmwiki:source:src-20261008-developmentlog-4
+- id: src-20261009-developmentlog
+  resource: urn:llmwiki:source:src-20261009-developmentlog
+  title: Developmentlog
+  content_hash: sha256:26c761085d9ad415c759477dc2e33f92bb3feab89dabf58c917bbae373fb8dcc
 - id: src-20261007-2026-10-07-install-onboard-wiki-ui-2
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
@@ -48,11 +48,15 @@ sources:
   title: Pi0 README audit evidence and validation limits
   content_hash: sha256:7a945023f45ad2e179e5cae529665df9ed050bfe5cf36f440f857a02e28cfea4
   resource: urn:llmwiki:source:src-20261008-2026-10-08-readme-audit
+- id: src-20261009-2026-10-09-spider-otto
+  resource: urn:llmwiki:source:src-20261009-2026-10-09-spider-otto
+  title: 2026 10 09 Spider Otto
+  content_hash: sha256:1c35301cb86c71126d626d841c5f648680fb82c8fe857526e22b983e970939cd
 semantic_review:
   version: 1
   performed_by: agent:codex
-  performed_at: '2026-10-08T14:34:39.927213+00:00'
-  target_hash: sha256:13ad720c9d6cdd702a1c037cba171badcfb74eda9459fca7ee56891e08586959
+  performed_at: '2026-10-09T07:08:20.155374+00:00'
+  target_hash: sha256:2b4ca3f7cd45679c910c6ad07055c1626c082b115389f4f15e74b8a8d6157dda
   result: passed
   checks:
     source_support: passed
@@ -61,23 +65,21 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed the owner-authored four-language README and registered audit evidence
-    against installer preflight, service-manager uv/PATH and enable behavior, ngrok
-    presence/connection checks, core movement parser, GPIO terminology and shutdown
-    permission/animation limits. Corrections retain the manual structure; optional
-    recovery/status details remain in Troubleshooting/Appendix C. All 54 shell examples
-    parse and four isolated core parser examples pass. No runtime code or physical
-    hardware operation is claimed. Earlier historical sources remain cited; draft/unverified
-    status is preserved.
-  - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
-    Physical tests, live accounts and publication remain pending.
+  - Reviewed historical phase/version sections and all cited change notes with the
+    new complete log addendum. Corrected Phase 3 CRC32 citation to the log that actually
+    describes it. Qualified migration publication/default-branch claims to match the
+    pending gates in its evidence. Retained milestones remain historical, and 71 new
+    host passes do not imply physical acceptance.
+  - Source-grounded AI review, with retained-context reader review where applicable.
+    Draft/unverified status remains; no human, visual, physical or remote-publication
+    verification is asserted.
 ---
 
 # Development History and Evolution
 
 ## 2026-10-07 implementation checkpoint
 
-Approved installation/onboarding tooling, wiki relocation and immutable manual workflow, and Pi5-derived Pi0 web presentation were implemented with host validation. Historical V5 milestones remain history. Real Raspberry Pi and live account validation remain owner-manual; no release publication occurred during this task.[^src-20261008-developmentlog-4]
+Approved installation/onboarding tooling, wiki relocation and immutable manual workflow, and Pi5-derived Pi0 web presentation were implemented with host validation. Historical V5 milestones remain history. Real Raspberry Pi and live account validation remain owner-manual; no release publication occurred during this task.[^src-20261009-developmentlog]
 
 
 The NinjaRobot project evolved from a monolithic educational robot into the modular, AI-powered NinjaRobot V5 platform.[^src-20260822-developmentguide] This document records the chronological milestones, architectural phases, and reliability audits throughout development.[^src-20260822-developmentlog] [^src-20260822-developmentguide]
@@ -86,7 +88,7 @@ The NinjaRobot project evolved from a monolithic educational robot into the modu
 
 * **Phase 1 (Modularity & ABCs)**: Decoupled hardware into independent packages (`pi0servo`, `pi0buzzer`, `pi0disp`, `pi0vl53l0x`, `ninja_utils`) and introduced `Sensor` and `Actuator` ABCs with dynamic HAL loading.[^src-20260822-developmentguide]
 * **Phase 2 (Dual Connectivity)**: Implemented `ninja_ble` BLE GATT server and central `CommandDispatcher` in `ninja_core`.[^src-20260822-developmentguide]
-* **Phase 3 (Binary Chunking)**: Designed binary packet fragmentation and CRC32 verification for transferring large payloads over BLE.[^src-20260822-developmentguide]
+* **Phase 3 (Binary Chunking)**: Designed binary packet fragmentation and CRC32 verification for transferring large payloads over BLE.[^src-20260822-developmentlog]
 * **Phase 4 (Agent Intelligence & Sandboxing)**: Integrated Google Gemini AI agent and built `SafeExecutor` sandboxed Python runtime.[^src-20260822-developmentguide]
 * **Phase 5 (Modern Web Application)**: Developed the React 18 + Vite SPA frontend (`ninja_webapp`) with WebSockets telemetry and multilingual support.[^src-20260822-developmentguide]
 
@@ -113,11 +115,11 @@ The NinjaRobot project evolved from a monolithic educational robot into the modu
 
 ## Repository migration (2026-10-07)
 
-The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0). The local folder is `NinjaRobotPi0/`. The new repository starts with fresh history on `main`; Python packages and robot runtime behavior are retained. Manual links use `blob/HEAD` to follow the GitHub default branch. Historical names and audit findings remain provenance; this migration does not resolve them.[^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]
+The migration evidence records the local rename to `NinjaRobotPi0/` and the intended destination [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0), with fresh history on `main` and retained Python packages/runtime. That evidence leaves publication and remote default-branch verification pending. Manual links use `blob/HEAD` to follow the GitHub default branch. Historical names and audit findings remain provenance; this migration does not resolve them.[^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
 
-[^src-20261008-developmentlog-4]: Current versioned Developmentlog.
+[^src-20261009-developmentlog]: Current versioned Developmentlog.
 
 ## Implementation evidence and acceptance limits
 
@@ -165,3 +167,10 @@ After the earlier Bookworm/Trixie and diagnostic fixes, the owner requested genu
 The owner supplied an expanded four-language README and requested a narrow correctness audit. Corrections preserved its sections and intentional omissions, moved recovery/optional checks to troubleshooting/appendices, and translated the copied Traditional Chinese autostart prose into Simplified Chinese. All 54 shell blocks parsed and four movement examples passed the isolated core parser; command parity, links and core protection checks passed. No installation, service, hardware or live account operation occurred.[^src-20261008-2026-10-08-readme-audit]
 
 [^src-20261008-2026-10-08-readme-audit]: Four-language README correctness audit and code evidence.
+
+
+## Spider OTTO movement data and future timing design (2026-10-09)
+
+An opt-in repository JSON pack adds 19 entries covering 16 source methods and selected variants, with 565 waypoint steps and no existing controller/driver changes. The offline generator, actual config/executor tests and two design documents explain corrected GPIO mapping, native speed modes and lost period/dwell fidelity. Seventy-one targeted host tests, generator verification, Ruff and core protection passed; physical validation remains pending. See [Spider OTTO waypoint library](/concepts/spider-otto-waypoint-library.md) for current behavior and the separate, unimplemented timed-controller proposal.[^src-20261009-2026-10-09-spider-otto]
+
+[^src-20261009-2026-10-09-spider-otto]: Registered Spider implementation, code inspection, host validation and proposal boundaries.

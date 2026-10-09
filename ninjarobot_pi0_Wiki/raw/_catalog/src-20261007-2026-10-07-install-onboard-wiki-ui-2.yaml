@@ -12,5 +12,5 @@ retrieved_at: null
 normalized_at: '2026-10-07T13:10:34Z'
 normalizer: llmwiki-text/0.2
 error: null
-ingested_at: '2026-10-08T14:35:17Z'
-last_plan: pi0-readme-audit-review-261008-development-history-and-evolution
+ingested_at: '2026-10-09T07:08:50Z'
+last_plan: pi0-spider-review-261009-development-history-and-evolution

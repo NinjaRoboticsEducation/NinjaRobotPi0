@@ -1,0 +1,16 @@
+id: src-20261009-developmentguide
+path: raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Developmentguide
+added_at: '2026-10-09T06:55:44Z'
+content_hash: sha256:b8d75dba21189f9521728ca3726b00660c19cb77fb58bc6c619c7bb54a2c2708
+state: ingested
+original_uri: urn:llmwiki:source:src-20261009-developmentguide
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-09T06:56:04Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-09T07:08:48Z'
+last_plan: pi0-spider-review-261009-development-workflow

@@ -484,7 +484,7 @@ From the installation folder, `./onboard.sh --status` checks saved configuration
 
 Protect `config.json` (which may contain your Gemini key), ngrok credentials and calibration files; do not publish them. Gemini pricing/quota and ngrok availability depend on your account. The Pi0 control interface has no user-login protection; an encrypted ngrok tunnel does not add application authentication. Use trusted networks and keep control URLs private.
 
-Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-compatibility/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-08-readme-audit/DevelopmentLog.md).
+Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md).
 
 ## License
 

@@ -8,4 +8,5 @@
 * [Motion System and Easing Curves](motion-system-and-easing.md) - Velocity-based physics motion calculations, position-aware easing curves, and the movement command syntax.
 * [Perception and Expression Systems](perception-and-expression.md) - Time-of-Flight distance sensing, thread-safe measurement locks, animated LCD expressions, and emotion audio synthesis.
 * [Safe Code Execution and Blockly Runtime](safe-execution-and-blockly-runtime.md) - Sandboxed Python execution, AST compilation preflight, runtime ownership switching, and GPIO-first wrapper contracts.
+* [Spider OTTO waypoint library and timing proposal](spider-otto-waypoint-library.md) - Opt-in current-schema Spider movements, verified speed semantics and a separate future timed controller.
 * [Pi0 web interface design and compatibility](web-interface-design.md) - Pi0 web interface design and compatibility.

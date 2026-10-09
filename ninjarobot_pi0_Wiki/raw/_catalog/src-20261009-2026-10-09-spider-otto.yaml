@@ -1,0 +1,16 @@
+id: src-20261009-2026-10-09-spider-otto
+path: raw/notes/changes/2026-10-09-spider-otto.md
+media_type: text/markdown
+kind: text
+title: 2026 10 09 Spider Otto
+added_at: '2026-10-09T06:55:45Z'
+content_hash: sha256:1c35301cb86c71126d626d841c5f648680fb82c8fe857526e22b983e970939cd
+state: ingested
+original_uri: urn:llmwiki:source:src-20261009-2026-10-09-spider-otto
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-09T06:56:05Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-09T07:08:54Z'
+last_plan: pi0-spider-review-261009-spider-otto-waypoint-library

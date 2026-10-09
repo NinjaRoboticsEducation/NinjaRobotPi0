@@ -1,7 +1,7 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-08",
+  "reviewed_at": "2026-10-09T07:08:54.284662+00:00",
   "documents": [
     {
       "name": "InstallationGuide.md",
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-08-compatibility/DevelopmentGuide.md",
-      "source_id": "src-20261008-developmentguide-3",
-      "content_hash": "sha256:0fc10ebdf50056c8d26521e3251d265cf5b2a764c98b9b1c13f2204310385178",
+      "path": "raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md",
+      "source_id": "src-20261009-developmentguide",
+      "content_hash": "sha256:b8d75dba21189f9521728ca3726b00660c19cb77fb58bc6c619c7bb54a2c2708",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-08-readme-audit/DevelopmentLog.md",
-      "source_id": "src-20261008-developmentlog-4",
-      "content_hash": "sha256:5f036bf4ec4a29be102c9bcbf0a1749ab31975702de8a83979fe8155d4cf45c4",
+      "path": "raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md",
+      "source_id": "src-20261009-developmentlog",
+      "content_hash": "sha256:26c761085d9ad415c759477dc2e33f92bb3feab89dabf58c917bbae373fb8dcc",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -1811,8 +1811,48 @@
       "pages": [
         "wiki/overview.md"
       ],
-      "content_hash": "sha256:e216199572abae4fd9d6a5b388a18b5b5fbd6da591444633498ea276ccac9dda",
-      "review_note": "Reviewed owner-expanded English/Japanese/Traditional/Simplified Chinese README against actual installer, service manager, server, onboarding and core movement parser. Narrow correctness changes preserve omitted scope; recovery/checks in Troubleshooting/Appendix C. No runtime edit; 54 Bash blocks and four isolated parser examples passed."
+      "content_hash": "sha256:fd871e736aaedb9cc66a7b35e036a34aca17ed235341dbaa85ccd73e096859ae",
+      "review_note": "Reviewed diff: navigation-only replacement of current complete DevelopmentGuide/DevelopmentLog version paths for the additive Spider task; all other contents unchanged. No setup/runtime behavior impact."
+    },
+    "scripts/build_spider_movements.py": {
+      "content_hash": "sha256:77491a278f891742924d7d4bfc247c6f9b1a18ab4e1effbf87c5f594c4be0d4a",
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md",
+        "wiki/concepts/motion-system-and-easing.md"
+      ],
+      "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
+    },
+    "tests/test_spider_movements.py": {
+      "content_hash": "sha256:80854b7bf60abe60e24ab39bdc625364bed2622754ec88a312e930322b6a1fb3",
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md",
+        "wiki/concepts/motion-system-and-easing.md"
+      ],
+      "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
+    },
+    "ninja_core/movements/spider_otto.json": {
+      "content_hash": "sha256:6dee31d21fe57df2bf54deb568c10da000bc5e48b9c1f46a4921cf2ecf6bc547",
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md",
+        "wiki/concepts/motion-system-and-easing.md"
+      ],
+      "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
+    },
+    "DevelopmentPlanDoc/SpiderBuildinMovements.md": {
+      "content_hash": "sha256:cf51317842106e3604a450474415c27385d6b206b4b94009db63ec8b15b3cbe9",
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md",
+        "wiki/concepts/motion-system-and-easing.md"
+      ],
+      "review_note": "2026-10-09 follow-up: added all 19 complete copyable JSON configuration fragments (565 steps) directly to the movement document. Parsed each block and verified exact structural equality with the already documented pack. Presentation-only duplication; no new movement values, runtime behavior, installation workflow or API semantics. Existing registered implementation evidence and manuals remain applicable; no canonical semantic change required."
+    },
+    "DevelopmentPlanDoc/Pi0BuildinMovementsRefinement.md": {
+      "content_hash": "sha256:d7c4dbd924d58e32bbc189b7e7a15ca1ae756cc63d2203d32bd068360e5a0fe8",
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md",
+        "wiki/concepts/motion-system-and-easing.md"
+      ],
+      "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
     }
   },
   "adapters": [
@@ -1957,7 +1997,11 @@
     "docs/validation/UpgradeValidation-2026-10-07.md",
     "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-07-02/InstallationGuide.md",
     "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-07-02/DevelopmentGuide.md",
-    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-07/DevelopmentLog.md"
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-07/DevelopmentLog.md",
+    "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md",
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md",
+    "DevelopmentPlanDoc/SpiderBuildinMovements.md",
+    "DevelopmentPlanDoc/Pi0BuildinMovementsRefinement.md"
   ],
   "limits": [
     "AI source-grounded review is not human verification or physical qualification.",

@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-08T14:35:17Z'
+generated_at: '2026-10-09T07:08:54Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -224,5 +224,20 @@ sources:
 - id: src-20261008-readme
   title: 'Pi0 README: Trixie support'
   path: raw/articles/ninjarobotpi0/2026-10-08-trixie/README.md
+  kind: text
+  state: ingested
+- id: src-20261009-2026-10-09-spider-otto
+  title: 2026 10 09 Spider Otto
+  path: raw/notes/changes/2026-10-09-spider-otto.md
+  kind: text
+  state: ingested
+- id: src-20261009-developmentguide
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261009-developmentlog
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md
   kind: text
   state: ingested
