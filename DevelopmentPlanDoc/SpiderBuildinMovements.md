@@ -22,7 +22,7 @@ flowchart TD
   G --> I["Wait for slowest servo, then next step"]
 ```
 
-The pack is [ninja_core/movements/ninja_spider.json](../ninja_core/movements/ninja_spider.json). Its only root keys are existing fields `robot_type: "spider"` and `movements`. It has no pretend calibration profile. It loads through `load_config(path)` as a config fragment, but cannot operate an actual robot on its own because it deliberately supplies no servo calibration/pins. It is not installed or merged into the live configuration by this task.
+The pack is [ninja_core/movements/spider_otto.json](../ninja_core/movements/spider_otto.json). Its only root keys are existing fields `robot_type: "spider"` and `movements`. It has no pretend calibration profile. It loads through `load_config(path)` as a config fragment, but cannot operate an actual robot on its own because it deliberately supplies no servo calibration/pins. It is not installed or merged into the live configuration by this task.
 
 ### Current behavior, verified from code
 
@@ -102,16 +102,27 @@ import json
 from pathlib import Path
 
 existing = json.loads(Path("config.json").read_text())
-pack = json.loads(Path("ninja_core/movements/ninja_spider.json").read_text())
+pack = json.loads(Path("ninja_core/movements/spider_otto.json").read_text())
 if existing.get("robot_type") != "spider":
     raise ValueError("Use a configured Spider profile; do not change another robot implicitly")
 missing = set(map(str, range(20, 28))) - set(existing.get("servos", {}).get("calibration", {}))
 if missing:
     raise ValueError("Missing servo configuration for one or more Spider GPIOs")
+# Convert the source pack names to the names used in this document.
+incoming = {
+    "spider_" + name.removeprefix("spider_otto_"): steps
+    for name, steps in pack["movements"].items()
+}
+incoming["Poweroff"] = [{
+    "speed": "S",
+    "moves": {"20": -90, "21": 90, "22": 90, "23": -90,
+              "24": 90, "25": -90, "26": -90, "27": 90},
+    "per_servo_speeds": {}
+}]
 current = existing.setdefault("movements", {})
-if set(current) & set(pack["movements"]):
+if set(current) & set(incoming):
     raise ValueError("Resolve movement-name collisions before merging")
-current.update(pack["movements"])
+current.update(incoming)
 with Path("config-spider-preview.json").open("x") as output:
     json.dump(existing, output, indent=2)
 ```
@@ -169,7 +180,7 @@ The driver clamps to its configured angular bounds and interpolates between cali
 
 ### Translation convention and fidelity
 
-There are **19 named JSON entries covering 16 original movement/pose functions**. Run, walk, and omniWalk each have two entries for their direction/side variants. The omni defaults produce identical waveform samples; those names preserve source call selection, not distinct physical trajectories. Internal helpers are not separate movements.
+There are **19 OTTO-derived entries covering 16 original movement/pose functions**, plus the owner-supplied **`Poweroff`** pose: **20 documented movements and 566 total steps**. Run, walk, and omniWalk each have two entries for their direction/side variants. The omni defaults produce identical waveform samples; those names preserve source call selection, not distinct physical trajectories. Internal helpers are not separate movements.
 
 Every periodic entry represents **one finite logical cycle**, with 36 equal phase intervals plus the initial endpoint: 37 waypoints. Each waypoint commands all eight mapped servos. This 10° phase sampling is an explicit approximation choice, not OTTO's refresh interval. Targets use `O + A sin(2πct/P + phase)` sampled by phase, rounded to 0.001°. For walk the foot frequency multiplier c is 2. That gives 18 samples per foot cycle. No source `steps` argument is treated as a reliable stop condition; most OTTO functions ignore it.
 
@@ -179,7 +190,7 @@ All sine entries finish at the mathematical phase-zero endpoint after one cycle,
 
 ### Complete coverage table
 
-All names below have prefix `spider_`; definitions are in the linked JSON pack. “Validated” means schema-shape, numerical, mapping, and mocked-executor validation; **all hardware tests remain pending**.
+The 19 OTTO-derived names below use prefix `spider_`. The linked source pack still uses `spider_otto_`; this document intentionally uses the renamed keys. The preview merge in section 2 converts that prefix. `Poweroff` is an additional document-defined movement and keeps its exact case-sensitive name. “Validated” means schema-shape, numerical, mapping, and mocked-executor validation; **all hardware tests remain pending**.
 
 | Name suffix | Original function / purpose | Phases and varying joints | Source period or waits | Adaptation / status |
 |---|---|---|---|---|
@@ -202,6 +213,7 @@ All names below have prefix `spider_`; definitions are in the linked JSON pack. 
 | jump | jump: folded/stretch/home | 3 all-servo poses | Source waits 1000,100 ms | Waits unsupported/omitted; target interpolates instead of immediate writes; validated |
 | scared | scared: stretch/folded/home | 3 all-servo poses | Source waits 2000,100 ms | Same timing loss; reversed pose order; validated |
 | hello | hello: small helper writes and front-left wave | 2 helper-derived waypoints + 37 wave samples | Wave 350 ms; helper total duration uptime-dependent | Partial, state-dependent source cannot be reproduced exactly; numerical/loader validated |
+| Poweroff | Owner-supplied shutdown pose, not an OTTO function | 1 all-servo pose | Native S; distance-derived duration | Exact case-sensitive shutdown lookup name; no physical validation |
 
 `walk`, `moonwalkL`, and `hello` are independently callable source methods even though not exposed by OTTO's gait menu. Four expression wrappers only add home poses/display changes and are not duplicated as movement trajectories. Autonomous obstacle/dance modes are policies composing movements and sensors, not additional independently defined joint patterns; their scheduling is outside this finite JSON pack.
 
@@ -209,11 +221,11 @@ Arbitrary continuous parameter values (steps/T/turn_factor) are not infinitely e
 
 ### Complete copyable JSON for every movement
 
-Each block below is a complete JSON **configuration fragment** containing one named movement. Copy the named `spider_*` entry into the `movements` object of your existing Spider `config.json`; preserve your other configuration fields, servo calibration and other movements. Do not replace your full robot configuration with a fragment. The preview-merge example in section 2 shows how to merge the complete library without activating hardware.
+Each block below is a complete JSON **configuration fragment** containing one named movement. Copy the named `spider_*` or `Poweroff` entry into the `movements` object of your existing Spider `config.json`; preserve your other configuration fields, servo calibration and other movements. Do not replace your full robot configuration with a fragment. The preview-merge example in section 2 shows how to merge the complete library without activating hardware.
 
-After deliberately loading the updated configuration in your normal Pi0 runtime, select the exact movement name in the existing movement tool or web movement list. Each invocation plays the listed sequence once. These blocks contain every waypoint and all eight GPIO targets; there are no omitted steps or placeholders. They are numerically identical to `ninja_core/movements/ninja_spider.json`.
+After deliberately loading the updated configuration in your normal Pi0 runtime, select the exact movement name in the existing movement tool or web movement list. Each invocation plays the listed sequence once. These blocks contain every waypoint and all eight GPIO targets; there are no omitted steps or placeholders. The 19 OTTO-derived sequences have identical step values to `ninja_core/movements/spider_otto.json`, with names changed from `spider_otto_*` to `spider_*`. The additional `Poweroff` definition is provided below and is not in that source pack.
 
-All steps use the supported native `M` speed. The JSON reproduces the translated target-pose sequence; the existing executor does not preserve OTTO's exact cycle periods or pauses. Use the calibrated Spider mapping described above; physical direction and clearance remain unverified. In particular, jump/scared omit source waits and hello remains a partial adaptation.
+The OTTO-derived steps use native `M` speed; `Poweroff` uses native `S`. The JSON reproduces the translated target-pose sequence; the existing executor does not preserve OTTO's exact cycle periods or pauses. Use the calibrated Spider mapping described above; physical direction and clearance remain unverified. In particular, jump/scared omit source waits and hello remains a partial adaptation.
 
 #### 1. spider_home
 
@@ -1046,6 +1058,38 @@ Complete sequence: 39 steps.
 }
 ```
 
+#### 20. Poweroff
+
+Complete sequence: 1 step. This is the owner-supplied Pi0 shutdown pose, not an OTTO-derived movement. Preserve the exact name `Poweroff`; the existing shutdown code looks up that case-sensitive key.
+
+```json
+{
+  "robot_type": "spider",
+  "movements": {
+    "Poweroff": [
+      {
+        "speed": "S",
+        "moves": {
+          "20": -90,
+          "21": 90,
+          "22": 90,
+          "23": -90,
+          "24": 90,
+          "25": -90,
+          "26": -90,
+          "27": 90
+        },
+        "per_servo_speeds": {}
+      }
+    ]
+  }
+}
+```
+
+The existing [web server shutdown helper](../ninja_core/src/ninja_core/web_server.py) calls `execute_movement("Poweroff")` during the web `/system/shutdown` flow and server SIGINT cleanup, when a movement controller is available. It uses the definition loaded from `config.movements`; adding this block to the document alone does not install it. A direct low-level servo `off()` call is not documented as invoking this movement. The pose itself does not power off the Pi or disable PWM; the surrounding shutdown flow performs cleanup separately.
+
+An empty `per_servo_speeds` object leaves every joint at the global `S` mode. If your config already contains `Poweroff`, explicitly replace its existing value with this definition rather than adding a duplicate JSON key; the preview merge deliberately rejects collisions. The extreme targets are user-supplied, not physically clearance-tested here.
+
 ### Pose sequences and hello's important exception
 
 In source order S0…S7, jump uses `[105,75,30,150,110,70,150,30]`, then `[110,70,170,10,30,150,10,170]`, then home `[110,70,90,90,70,110,90,90]`. Scared exchanges the first two vectors. The pack applies the GPIO permutation and nominal conversion to each. No invented zero-distance steps impersonate the unavailable pauses.
@@ -1062,15 +1106,21 @@ Old oscillator writes during the first helper, repeated helper overwrites during
 python3 scripts/build_spider_movements.py --check
 ```
 
-This verifies byte-for-byte reproducibility without writing. Running without `--check` regenerates only the library JSON, never the live `config.json`. The runtime does not import this generator.
+This verifies byte-for-byte reproducibility of the original 19-entry `spider_otto_*` source pack without writing. It does not generate the document-only `Poweroff` entry or rename the pack keys; the preview merge performs those adaptations. Running without `--check` regenerates only the library JSON, never the live `config.json`. The runtime does not import this generator.
 
 ## 6. Movement Coverage and Compatibility
 
-Validation includes the actual `load_config` and `MovementController.execute_movement` with an inert recording servo group. Shuffled driver pin order verifies GPIO identity, all 565 steps are checked, every first/middle/last easing choice is asserted, and optional per-servo speed/omission behavior is exercised separately. Independent landmark checks cover negative amplitude, double-frequency walking, non-cardinal moonwalk phases, reversed jump/scared pose order, omni default equivalence, hello helper writes and range clipping.
+Validation includes the actual `load_config` and `MovementController.execute_movement` with an inert recording servo group. Shuffled driver pin order verifies GPIO identity, all 565 OTTO-derived steps are checked, every first/middle/last easing choice is asserted, and optional per-servo speed/omission behavior is exercised separately. Independent landmark checks cover negative amplitude, double-frequency walking, non-cardinal moonwalk phases, reversed jump/scared pose order, omni default equivalence, hello helper writes and range clipping.
 
 The config model alone is insufficient because `movements` contains untyped lists. The new tests also require only supported step keys, all eight exact GPIOs, finite numeric ±90 values, and native speed modes. No new runtime validator or control function was introduced.
 
 Host results on 2026-10-09: `tests/test_spider_movements.py`, `tests/test_config.py`, and `tests/test_api_wrappers.py`: **71 passed**. Generator check passed. `scripts/verify_core.py` passed: protected existing robot source and package metadata unchanged. These checks do not validate motor load, actual timing, Pi scheduler jitter, mounting direction, or foot contact. The host's default Python lacked pytest; the existing `/private/tmp/ninjapi0-robot-env/bin/python` environment was used without installing dependencies.
+
+### Document naming and Poweroff follow-up
+
+The document contains 20 unique movement keys: 19 `spider_*` keys and exactly one `Poweroff`. Each heading matches its JSON key. No `Wave_Left_Hand` movement is included. The source pack remains unchanged; only its names are converted in the preview merge. Old `spider_otto_*` entries already in a live config are separate names, not replacements—remove or retain those aliases deliberately after reviewing the config.
+
+The embedded JSON blocks were parsed with duplicate-key detection, and the 19 renamed trajectories were compared with the source pack. `Poweroff` was checked against the supplied eight targets, `S` speed and empty overrides. These document/data checks do not extend the earlier 71-test result to physical shutdown testing. No runtime function, live configuration or calibration changed.
 
 ### Wiki evidence and trust
 
@@ -1102,6 +1152,6 @@ A separate scheduler could preserve more of those semantics. See the refinement 
 | Expected outcomes | Correct physical joint responds; calibrated limits respected; no stall/collision/power reset; stop behavior verified independently |
 | Execution status | Static and mocked-host checks passed; no simulation of dynamics and no physical test |
 | Pass/fail checklist | Mapping/data checks pass; actual angle direction, timing, load, balance and cancellation remain pending |
-| Rollback | Remove only `spider_*` entries from a backed-up runtime config and restart deliberately; calibration/other movements remain unchanged. Repository pack/generator/docs can be reverted independently |
+| Rollback | Remove only the newly added named `spider_*` entries and restore the previous `Poweroff` value (or remove it if newly added) from a backed-up runtime config and restart deliberately; calibration/other movements remain unchanged. Repository pack/generator/docs can be reverted independently |
 
 The existing controller receives an abort callback but does not poll it in its step loop or forward it to `move_all_sync`; a false driver result may cause automatic centering when a callback is supplied. This is a pre-existing limitation documented for future design, not fixed by adding movement data. Do not describe the new pack as improving emergency-stop guarantees.

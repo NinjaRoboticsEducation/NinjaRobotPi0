@@ -1839,12 +1839,12 @@
       "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
     },
     "DevelopmentPlanDoc/SpiderBuildinMovements.md": {
-      "content_hash": "sha256:cf51317842106e3604a450474415c27385d6b206b4b94009db63ec8b15b3cbe9",
+      "content_hash": "sha256:84665ce845dceb3e77f6e92a942467cb4747f40b515d590056ebd3fa29e48f36",
       "pages": [
         "wiki/concepts/spider-otto-waypoint-library.md",
         "wiki/concepts/motion-system-and-easing.md"
       ],
-      "review_note": "2026-10-09 follow-up: added all 19 complete copyable JSON configuration fragments (565 steps) directly to the movement document. Parsed each block and verified exact structural equality with the already documented pack. Presentation-only duplication; no new movement values, runtime behavior, installation workflow or API semantics. Existing registered implementation evidence and manuals remain applicable; no canonical semantic change required."
+      "review_note": "Reviewed owner-requested document-only spider_* names and exact Poweroff definition: 20 unique JSON entries, 566 steps. Source pack remains unchanged; preview merge converts old prefix and adds Poweroff with collision rejection. Corrected nonexistent ninja_spider.json link. Shutdown helper verified; no Wave_Left_Hand, runtime, live config or calibration change."
     },
     "DevelopmentPlanDoc/Pi0BuildinMovementsRefinement.md": {
       "content_hash": "sha256:d7c4dbd924d58e32bbc189b7e7a15ca1ae756cc63d2203d32bd068360e5a0fe8",
