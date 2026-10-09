@@ -29,6 +29,7 @@ from .ninja_agent import NinjaAgent, MissingAPIKeyError
 from .facial_expressions import AnimatedFaces
 from .robot_sound import RobotSoundPlayer
 from .movement_controller import MovementController, EmergencyStop
+from .builtin_movements import MovementValidationError
 from .perception import DistanceMonitor
 from .runtime_pipeline import RuntimePipeline
 
@@ -738,18 +739,23 @@ def get_movements(request: Request):
     # It loads from config. Let's check MovementController.
     # It has `self.movements`.
     if request.app.state.ninja.movement:
-        return {"movements": list(request.app.state.ninja.movement.movements.keys())}
+        return {"movements": request.app.state.ninja.movement.available_movement_names()}
     return {"movements": []}
 
 @api_router.post("/servos/movements/{name}/execute")
 async def execute_movement(name: str, request: Request):
     state = request.app.state.ninja
-    await reclaim_native_runtime(state)
     if not state.movement:
         raise HTTPException(status_code=500, detail="Movement controller not ready")
     
     if name not in state.movement.movements:
         raise HTTPException(status_code=404, detail="Movement not found")
+
+    try:
+        state.movement.validate_movement(name)
+    except MovementValidationError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    await reclaim_native_runtime(state)
 
     def run():
         try:
@@ -762,6 +768,8 @@ async def execute_movement(name: str, request: Request):
             if state.sound:
                 state.sound.play("scary")
             raise HTTPException(status_code=409, detail="Emergency Stop: Obstacle Detected")
+        except MovementValidationError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     await asyncio.to_thread(run)
     # Broadcast after successful execution (outside the thread)

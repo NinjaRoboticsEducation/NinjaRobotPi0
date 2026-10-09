@@ -15,6 +15,8 @@ from ninja_core.config import (
 )
 from ninja_core.hal import HardwareAbstractionLayer
 from ninja_core.movement_controller import MovementController
+from ninja_core.builtin_movements import MovementValidationError
+from ninja_core.movement_controller import EmergencyStop
 
 
 def extract_movement_data(
@@ -228,13 +230,13 @@ class NonBlockingKeyboard:
 def execute_movement_cli(controller: MovementController):
     """Handles the UI for executing a saved movement with looping."""
     print("\n--- Execute a Movement ---")
-    all_movements = controller.movements
+    all_movements = controller.available_movement_names()
     if not all_movements:
         print("No movements have been recorded yet.")
         return
 
     print("Select a movement to execute:")
-    names = list(all_movements.keys())
+    names = list(all_movements)
     for i, name in enumerate(names):
         print(f"{i + 1}. {name}")
 
@@ -275,7 +277,11 @@ def execute_movement_cli(controller: MovementController):
                 if key == "\r" or key == "\x1b":  # Enter or Esc
                     interrupted = True
                     break
-            controller.execute_movement(selected_name)
+            try:
+                controller.execute_movement(selected_name)
+            except (MovementValidationError, EmergencyStop) as exc:
+                print(f"Movement stopped: {exc}")
+                return
             if interrupted:
                 break
             loops_done += 1

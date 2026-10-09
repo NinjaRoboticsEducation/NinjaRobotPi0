@@ -44,6 +44,8 @@ def normalize_ble_name(name: str) -> str:
 def normalize_robot_type(robot_type: str | None) -> str:
     """Normalize and validate the robot type stored in config.json."""
     normalized = (robot_type or DEFAULT_ROBOT_TYPE).strip().lower()
+    if normalized == "wheel":
+        normalized = "tire"
     if normalized not in ROBOT_TYPE_OPTIONS:
         options = ", ".join(ROBOT_TYPE_OPTIONS)
         raise ValueError(f"Robot type must be one of: {options}.")
@@ -159,6 +161,12 @@ class NinjaConfig(BaseModel):
     movements: Dict[str, list] = Field(
         default_factory=dict, description="Named servo movement sequences."
     )
+    movement_robot_types: Dict[str, str] = Field(
+        default_factory=dict, description="Optional robot-type scope for named movements."
+    )
+    builtin_movement_hashes: Dict[str, str] = Field(
+        default_factory=dict, description="Last imported built-in values, for preserving edits."
+    )
     api_keys: Dict[str, str] = Field(
         default_factory=dict, description="API keys for services like Google Gemini."
     )
@@ -168,6 +176,11 @@ class NinjaConfig(BaseModel):
     @classmethod
     def validate_robot_type(cls, value: str) -> str:
         return normalize_robot_type(value)
+
+    @field_validator("movement_robot_types")
+    @classmethod
+    def validate_movement_robot_types(cls, value: Dict[str, str]) -> Dict[str, str]:
+        return {name: normalize_robot_type(scope) for name, scope in value.items()}
 
 
 # --- Configuration Management Functions ---
@@ -268,6 +281,9 @@ def set_robot_type(robot_type: str, path: Path = CONFIG_FILE_PATH) -> str:
     normalized = normalize_robot_type(robot_type)
     config = load_config(path)
     config.robot_type = normalized
+    from .builtin_movements import seed_builtin_movements
+
+    seed_builtin_movements(config)
     save_config(config, path)
     print(f"NinjaRobot type set to {ROBOT_TYPE_LABELS[normalized]} ({normalized}).")
     return normalized
@@ -399,6 +415,13 @@ def import_and_update_config():
             f"Info: Display config '{display_config_path}' not found. Skipping.\n"
             f"  Tip: Run 'uv run pi0disp init' first to create display.json."
         )
+
+    # Seed after subsystem import; this only modifies configuration data.
+    from .builtin_movements import seed_builtin_movements
+
+    if seed_builtin_movements(config):
+        made_changes = True
+        print(f"...built-in movements reconciled for {config.robot_type}.")
 
     # --- Save changes if any were made ---
     if made_changes:

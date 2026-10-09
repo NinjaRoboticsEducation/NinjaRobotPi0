@@ -1,6 +1,8 @@
 import time
+import threading
 from ninja_core.hal import HardwareAbstractionLayer
 from ninja_core.config import NinjaConfig
+from ninja_core.builtin_movements import available_movements, validate_movement
 
 from typing import Callable, Optional
 
@@ -23,6 +25,17 @@ class MovementController:
         self.servos = hal.servos
         self.servo_definitions = config.servos.calibration
         self.movements = config.movements
+        self.config = config
+        self._motion_lock = threading.RLock()
+
+    def available_movement_names(self) -> list[str]:
+        """List only sequences executable on this profile and active channels."""
+        pins = self.servos.pins if self.servos else ()
+        return available_movements(self.config, pins)
+
+    def validate_movement(self, name: str) -> None:
+        pins = self.servos.pins if self.servos else ()
+        validate_movement(self.config, name, pins)
 
     def move_servos(
         self,
@@ -69,17 +82,18 @@ class MovementController:
 
         # Use pi0servo's move_all_sync with per-servo speed modes
         # This handles velocity calculation, easing, and abort internally
-        completed = self.servos.move_all_sync(
-            target_angles,
-            speed_mode=speed_modes,
-            easing=easing,
-            force=True,  # Prevent skipped PWM updates causing limpness
-        )
-
-        if not completed and abort_check:
-            print("! EMERGENCY STOP TRIGGERED !")
-            self.center_all_servos()
-            raise EmergencyStop("Movement aborted by safety check.")
+        with self._motion_lock:
+            if abort_check and abort_check():
+                raise EmergencyStop("Movement aborted by safety check.")
+            completed = self.servos.move_all_sync(
+                target_angles,
+                speed_mode=speed_modes,
+                easing=easing,
+                force=True,  # Prevent skipped PWM updates causing limpness
+            )
+            if not completed or (abort_check and abort_check()):
+                # Stop without commanding an unsolicited recovery pose.
+                raise EmergencyStop("Movement aborted by driver or safety check.")
 
     def get_current_angles(self) -> dict[int, float]:
         """
@@ -112,10 +126,11 @@ class MovementController:
             movement_name: The name of the movement to execute.
             abort_check: An optional function that returns True if the movement should stop.
         """
-        if movement_name not in self.movements:
-            print(f"Error: Movement '{movement_name}' not found.")
-            return
+        with self._motion_lock:
+            self.validate_movement(movement_name)
+            self._execute_validated_movement(movement_name, abort_check)
 
+    def _execute_validated_movement(self, movement_name, abort_check):
         print(f"Executing movement: '{movement_name}'...")
         sequence = self.movements[movement_name]
         total_steps = len(sequence)

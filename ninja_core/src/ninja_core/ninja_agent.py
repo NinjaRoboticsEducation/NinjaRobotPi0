@@ -8,6 +8,7 @@ import google.generativeai as genai
 from google.generativeai.types import GenerationConfig, Tool
 
 from .config import NinjaConfig
+from .builtin_movements import available_movements
 from .action_library import ActionLibrary
 from .facial_expressions import AnimatedFaces
 from .robot_sound import RobotSoundPlayer
@@ -145,7 +146,7 @@ class NinjaAgent:
 
     def _load_robot_capabilities(self, config: NinjaConfig) -> Dict[str, List[str]]:
         """Loads available movements, faces, and sounds from config and classes."""
-        movements = list(config.movements.keys())
+        movements = available_movements(config)
         actions = self.action_library.list_names()
         faces = list(AnimatedFaces(None).animations.keys())  # type: ignore # Hack to get keys without full init
         sounds = list(RobotSoundPlayer.SOUNDS.keys())
@@ -164,6 +165,8 @@ You interact with users in English, Japanese, Traditional Chinese, or Simplified
 **CRITICAL: Always detect the language of the user's input and respond in the SAME language (including distinguishing between Traditional and Simplified Chinese).**
 
 Your Capabilities:
+Configured robot type: {self.config.robot_type}. Use only the exact listed movement names for this type.
+Never invent a gait or substitute another robot type's movement. If unavailable, explain the limitation.
 1.  **Physical Actions**: You can control your body, face, and voice.
     -   **Native Servo Movements**: {self.robot_capabilities["movements"]}
     -   **Saved Blockly Actions**: {self.robot_capabilities["actions"]}
@@ -174,7 +177,7 @@ Your Capabilities:
 Instructions for Responses:
 -   **Semantic Nuance**: Map intent to actions.
     -   Example: "I'm joyful" -> Use "happy" face/sound.
-    -   Example: "Walk forward five steps" -> Chain "walk_forward" 5 times.
+    -   Example: "Walk forward five cycles" -> Repeat an exactly listed forward movement only if available; otherwise explain that this robot has no configured forward gait. A waypoint cycle is not a measured walking step.
     -   Example: "Do my saved dance" -> Use "action_chain" with the matching saved Blockly action name.
     -   Example: "Weather?" -> Search, show "confused" face while thinking, then "speaking".
 -   **JSON Output**: To perform actions, your response MUST contain a valid JSON object.
@@ -257,6 +260,7 @@ Example Interactions:
                 action_plan["face"] = "speaking"
                 action_plan["sound"] = "speaking"
 
+            self._validate_native_plan(action_plan, log_messages)
             log_messages.append(f"Action Plan: {action_plan}")
             final_log = "\n".join(log_messages)
             print(final_log)
@@ -335,6 +339,7 @@ Example Interactions:
                 action_plan["face"] = "speaking"
                 action_plan["sound"] = "speaking"
 
+            self._validate_native_plan(action_plan, log_messages)
             log_messages.append(f"Action Plan from Audio: {action_plan}")
             return {
                 "action_plan": action_plan,
@@ -350,6 +355,33 @@ Example Interactions:
                 "response": "I had trouble hearing that.",
                 "log": error_message,
             }
+
+    def _validate_native_plan(self, plan: dict, logs: list[str]) -> None:
+        """Reject an entire unsafe native chain, including hallucinated names."""
+        allowed = set(available_movements(self.config))
+        chain = plan.get("chain", [])
+        legacy_name = plan.get("movement")
+        reason = None
+        if not isinstance(chain, list) or len(chain) > 32:
+            reason = "Native movement chain must be a list of at most 32 entries."
+        else:
+            for item in chain:
+                if not isinstance(item, dict) or not isinstance(item.get("name"), str):
+                    reason = "Native movement chain has an invalid entry."
+                    break
+                repetitions = item.get("repetitions", 1)
+                if item["name"] not in allowed:
+                    reason = f"Movement '{item['name']}' is unavailable for {self.config.robot_type}."
+                    break
+                if type(repetitions) is not int or not 1 <= repetitions <= 20:
+                    reason = "Native movement repetitions must be an integer from 1 to 20."
+                    break
+        if legacy_name and (not isinstance(legacy_name, str) or legacy_name not in allowed):
+            reason = f"Legacy movement is unavailable for {self.config.robot_type}."
+        if reason:
+            plan.pop("chain", None)
+            plan.pop("movement", None)
+            logs.append(f"Rejected native movement plan: {reason}")
 
     async def explain_code(self, code: str) -> str:
         """Generates a natural language explanation of the code (Low temp)."""

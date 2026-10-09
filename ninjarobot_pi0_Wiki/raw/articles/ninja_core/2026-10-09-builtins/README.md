@@ -48,7 +48,7 @@ The installed `ninja_core/data/spider_otto.json` resource retains the original t
 
 The CLI's execute menu, `GET /api/servos/movements` (`{"movements": [...]}`), and Ninja agent use filtered discovery. `POST /api/servos/movements/{name}/execute` returns 404 for unknown names, 422 for invalid/incompatible data before reclaiming runtime, and 409 on abort. Existing frontend routes/payloads remain compatible, and failed requests appear in the log. Text/audio agent plans use exact permitted names; an invalid native chain is rejected as a whole, retaining the response and logging the reason. Bounds are 32 native chain entries and 1–20 repetitions per entry. Saved Blockly actions remain a separate existing execution path.
 
-Physical direction, clearance, load, timing and power still require manual Pi validation. `Poweroff` holds eight extreme targets and can execute during web/server shutdown. Opening a device tool can energize servos. See [validation](../docs/validation/BuiltinMovements-2026-10-09.md) before operation.
+Physical direction, clearance, load, timing and power still require manual Pi validation. `Poweroff` holds eight extreme targets and can execute during web/server shutdown. Opening a device tool can energize servos. See [validation](../../../../../docs/validation/BuiltinMovements-2026-10-09.md) before operation.
 
 日本語: インポートで種類に合う動作を追加します。Wheel/Humanoid は `home` のみです。実行時にも種類と全ステップを検証します。物理的な校正・可動範囲・電源の確認は別途必要です。
 

@@ -61,7 +61,7 @@ Follow these steps to build and run your own NinjaRobotPi0 from scratch.
 | **Buzzer** | Passive buzzer (3–5 V) | For sounds and melodies |
 | **Setup Access** | Terminal or SSH, internet, normal user with sudo | For installation and configuration |
 
-> **📎 Full hardware details:** See the [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md)
+> **📎 Full hardware details:** See the [Installation Guide](../../../../../ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md)
 
 ### 2.2 Hardware Wiring
 
@@ -388,7 +388,7 @@ Reimport preserves custom sequences and edited built-ins. Type changes remove on
 
 繁體中文：完成校正後設定機器人類型，再執行 `config import`，即可加入適用動作。Wheel 與 Humanoid 目前只有將所有已設定伺服機回中的 `home`。匯入不會驅動硬體。執行前請支撐機體並確認接線、方向、活動範圍與電源；Spider 的 `Poweroff` 也可能在結束伺服器時執行。
 
-The [implementation plan](docs/BuiltinMovementsImplementationPlan.md) and [validation report](docs/validation/BuiltinMovements-2026-10-09.md) describe host checks and pending Pi acceptance. New raw manual versions are staged for owner ingestion; current wiki pointers remain unchanged until that review.
+The [implementation plan](../../../../../docs/BuiltinMovementsImplementationPlan.md) and [validation report](../../../../../docs/validation/BuiltinMovements-2026-10-09.md) describe host checks and pending Pi acceptance. New raw manual versions are staged for owner ingestion; current wiki pointers remain unchanged until that review.
 
 ## 4. Troubleshooting
 
@@ -505,11 +505,11 @@ From the installation folder, `./onboard.sh --status` checks saved configuration
 
 Protect `config.json` (which may contain your Gemini key), ngrok credentials and calibration files; do not publish them. Gemini pricing/quota and ngrok availability depend on your account. The Pi0 control interface has no user-login protection; an encrypted ngrok tunnel does not add application authentication. Use trusted networks and keep control URLs private.
 
-Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md).
+Full references: [Installation Guide](../../../../../ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-08-compatibility/InstallationGuide.md), [Development Guide](../../../../../ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md), [Development Log](../../../../../ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md).
 
 ## License
 
-NinjaRobotPi0 source code is licensed under the [MIT License](LICENSE).
+NinjaRobotPi0 source code is licensed under the [MIT License](../../../../../LICENSE).
 
 <div align="center">
 
@@ -810,7 +810,7 @@ Bookworm/Trixie 64-bit は参照環境であり、OS コードネームの許可
 
 `config.json`（Gemini キーを含む場合があります）、ngrok 認証情報、校正ファイルを公開しないでください。料金・割り当て・利用可否はアカウントやモデルに依存します。Pi0 の操作画面にはログイン保護がなく、暗号化トンネルもアプリの認証を追加しません。信頼できるネットワークだけで使ってください。
 
-詳細：[導入ガイド](InstallationGuide.md)、[開発ガイド](DevelopmentGuide.md)、[開発履歴](DevelopmentLog.md)。
+詳細：[導入ガイド](../../../../../InstallationGuide.md)、[開発ガイド](../../../../../DevelopmentGuide.md)、[開発履歴](../../../../../DevelopmentLog.md)。
 
 <div align="center">
 
@@ -1111,7 +1111,7 @@ Bookworm/Trixie 64-bit 是參考環境，不是 OS 代號白名單。需使用 Z
 
 保護 `config.json`（可能含 Gemini 金鑰）、ngrok 憑證與校準檔案，切勿公開。費率、配額與可用性依帳號及模型而異。Pi0 控制介面沒有使用者登入保護；加密通道不會增加應用程式驗證，請只在可信任網路使用。
 
-詳細資料：[安裝指南](InstallationGuide.md)、[開發指南](DevelopmentGuide.md)、[開發紀錄](DevelopmentLog.md)。
+詳細資料：[安裝指南](../../../../../InstallationGuide.md)、[開發指南](../../../../../DevelopmentGuide.md)、[開發紀錄](../../../../../DevelopmentLog.md)。
 
 <div align="center">
 
@@ -1401,7 +1401,7 @@ Bookworm/Trixie 64-bit 是参考环境，不是 OS 代号白名单。需要 Zero
 
 保护 `config.json`（可能包含 Gemini 密钥）、ngrok 凭据和校准文件，不要公开。费用、配额与可用性依账号及模型而异。Pi0 控制界面没有用户登录保护；加密隧道不会添加应用身份验证，请仅在可信网络使用。
 
-详细资料：[安装指南](InstallationGuide.md)、[开发指南](DevelopmentGuide.md)、[开发记录](DevelopmentLog.md)。
+详细资料：[安装指南](../../../../../InstallationGuide.md)、[开发指南](../../../../../DevelopmentGuide.md)、[开发记录](../../../../../DevelopmentLog.md)。
 
 <div align="center">
 

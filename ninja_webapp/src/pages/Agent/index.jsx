@@ -204,15 +204,20 @@ function Agent() {
         switch (type) {
             case 'expressions': apiPath = `/api/display/expressions/${name}`; break;
             case 'sounds': apiPath = `/api/sound/emotions/${name}`; break;
-            case 'movements': apiPath = `/api/servos/movements/${name}/execute`; break;
+            case 'movements': apiPath = `/api/servos/movements/${encodeURIComponent(name)}/execute`; break;
             default: return;
         }
         try {
-            await fetch(apiPath, { method: 'POST' });
+            const result = await fetch(apiPath, { method: 'POST' });
+            if (!result.ok) {
+                const error = await result.json().catch(() => ({}));
+                throw new Error(error.detail || `HTTP ${result.status}`);
+            }
             const timestamp = new Date().toLocaleTimeString();
             setLogs(prev => [...prev, `[${timestamp}] ${type}: ${name}`].slice(-50));
         } catch (error) {
             console.error(`Failed ${type}/${name}:`, error);
+            setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] ${type}: ${name}: ${error.message}`].slice(-50));
         }
     };
 

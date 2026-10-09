@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "ninja_core"
 version = "0.1.0"
@@ -28,3 +32,6 @@ dev = ["ruff"]
 
 [project.scripts]
 ninja_core = "ninja_core.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ninja_core"]
