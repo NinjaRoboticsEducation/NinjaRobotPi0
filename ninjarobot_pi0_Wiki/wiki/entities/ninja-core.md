@@ -68,11 +68,23 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261010-ninja-core-readme-2
+  resource: urn:llmwiki:source:src-20261010-ninja-core-readme-2
+  title: Ninja Core Readme
+  content_hash: sha256:3ac4e1f142c10f6f03e8ca0cd4172fcaf1d0cfab9e562270165b94eaaba18647
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:28:47.571035+00:00'
-  target_hash: sha256:c009efee82a885b8aeda1de8dd770080de57d367c8e257cb969054e7d0c73591
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:082e24fc5af757be29dfd237a9eb39a56ed4da56864a380fddb935f21fe7bc6a
   result: passed
   checks:
     source_support: passed
@@ -81,11 +93,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ninja_core package against providers/, provider_setup.py, provider_credentials.py,
-    and agent_response.py. Multi-provider CLI selection (select-model), config locking,
-    and action validation match implementation.
-  - Offline host test suite passed; live provider token verification on physical Pi
-    remains pending.
+  - Reviewed coordinated async shutdown, Uvicorn signal replay fix, Poweroff sequencing,
+    and cancellation shielding against web_server.py and ShutdownVoiceFixes.md.
+  - Host regression tests passed; physical Pi servo rest pose and timing verification
+    remain pending.
 ---
 
 # ninja_core Package
@@ -182,3 +193,14 @@ Option 6 of `movement_cli.py` is updated to execute configured `Poweroff` (or `h
 [^src-20261010-ninja-core-readme]: ninja_core package README (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+## Coordinated Server Exit and Hardware Cleanup (2026-10-11)
+
+`ninja_core` unifies server shutdown under a single coordinated asynchronous task shared by Uvicorn lifespan and the web power-off endpoint.[^src-20261010-shutdownvoicefixes]
+* **Root Cause & Signal Replay**: In Uvicorn, `Server.capture_signals` replays captured signals (SIGINT/SIGTERM) after lifespan shutdown. The previous standalone signal handler attempted Poweroff against a pigpio connection already released by lifespan, causing `NoneType.send` failures. The coordinated task ensures the robot cleanup sequence runs exactly once before hardware disconnection.[^src-20261010-shutdownvoicefixes]
+* **Teardown Sequence**: The shared shutdown worker invalidates pending agent responses, interrupts active runtime actions, stops background services and distance monitoring, waits for the action-plan lock, attempts the configured `Poweroff` rest posture (or `home`), stops face and sound outputs, clears the display, and releases HAL and pigpio handles.[^src-20261010-ninja-core-readme-2] [^src-20261010-shutdownvoicefixes] [^src-20261010-developmentguide-4]
+* **Cancellation & Conflict Safety**: The task is shielded so cancellation of a waiting caller does not interrupt the hardware sequence. Non-cooperative running executors prevent conflicting rest movements. Terminal Ctrl+C exits the server without requesting Linux shutdown; only the confirmed web power-off endpoint triggers OS poweroff.[^src-20261010-shutdownvoicefixes]
+
+[^src-20261010-ninja-core-readme-2]: ninja_core package README (2026-10-11 shutdown & voice regression fixes).
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).

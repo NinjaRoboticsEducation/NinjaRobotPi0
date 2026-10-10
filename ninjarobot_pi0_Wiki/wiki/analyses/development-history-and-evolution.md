@@ -100,11 +100,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261010-developmentlog-4
+  resource: urn:llmwiki:source:src-20261010-developmentlog-4
+  title: Developmentlog
+  content_hash: sha256:1c8476bbc6cee113cf7a6c4c2a966d42b92e96f027abf418aab73aa7b26c5ff3
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:28:47.571035+00:00'
-  target_hash: sha256:08a25f64a8c788969884e14b2533dd9d0c380bbef85d2512c7d445a6c0297d6d
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:95f5bef3fcd34403e11327199092122f0be2c4fd63ea82ae463a0932515339e3
   result: passed
   checks:
     source_support: passed
@@ -113,11 +121,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed development history against 2026-10-10 DevelopmentLog.md, ModelAdapterImplementation.md,
-    and ModelAdapterValidation.md. Multi-provider transition, private credentials,
-    and pinned Ollama installer match chronological records.
-  - Milestones reflect code-verified host progress; live account and hardware testing
-    remain pending.
+  - Reviewed 2026-10-11 shutdown and browser voice regression milestone against DevelopmentLog.md
+    and ShutdownVoiceFixes.md.
+  - Chronological milestones reflect host-verified test suite results; physical hardware
+    verification remains pending.
 ---
 
 # Development History and Evolution
@@ -244,3 +251,13 @@ The robot agent architecture transitions from a single Google Gemini implementat
 [^src-20261010-developmentlog-3]: Current versioned DevelopmentLog (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+## Server shutdown and browser voice regression fixes (2026-10-11)
+
+The owner authorized regression fixes following the cloud model adapter release to resolve a server shutdown error and browser microphone gating:[^src-20261010-developmentlog-4] [^src-20261010-shutdownvoicefixes]
+* **Coordinated Shutdown Task**: Traced a `NoneType.send` error on Ctrl+C to Uvicorn's `Server.capture_signals` replaying SIGINT into application handlers after lifespan had already disconnected pigpio. Replaced conflicting handlers with a single asynchronous shutdown task shared by lifespan and the web power-off endpoint, executing configured `Poweroff` prior to hardware release with cancellation shielding.[^src-20261010-shutdownvoicefixes]
+* **Browser Speech Input Restoration**: Corrected UI microphone gating in `ninja_webapp` (`Agent/index.jsx`). The button was erroneously disabled for models without direct audio capability (`supports_audio`); because Web Speech transcribes speech to text client-side before sending to `/api/agent/chat`, voice typing is restored for all cloud providers (Google, OpenAI, Anthropic, Ollama Cloud). Recognition is also cleanly aborted on navigation.[^src-20261010-shutdownvoicefixes]
+* **Validation Evidence**: 8 inert shutdown regressions added (`test_server_shutdown.py`), 385 tests passed on Python 3.11 and 3.13, 96 mocked browser assertions passed, and core baseline updated for `web_server.py` lifecycle coordination.[^src-20261010-developmentlog-4] [^src-20261010-shutdownvoicefixes]
+
+[^src-20261010-developmentlog-4]: Current versioned DevelopmentLog (2026-10-11 shutdown & voice fixes).
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.

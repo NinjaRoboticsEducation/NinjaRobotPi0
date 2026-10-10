@@ -44,11 +44,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:28:47.571035+00:00'
-  target_hash: sha256:77c91a449b90cec11e84beb48b06be1d38a271ecce79a66c850c8e7a03de3de7
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:d9cf8f06faeb5ef4932a751a5e954af36ba560cca8ce6b06cb874d6c7073f9f1
   result: passed
   checks:
     source_support: passed
@@ -57,10 +65,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ninja_webapp package against Agent page, Agent.module.css, and /api/agent/status
-    contracts. Gated voice input states, localized tooltips, and stacking order corrections
-    match code.
-  - Mocked browser UI tests pass; real hardware microphone testing remains pending.
+  - Reviewed browser speech recognition decoupling from supports_audio flag against
+    Agent/index.jsx and ShutdownVoiceFixes.md.
+  - Mock browser test assertions passed; real microphone and physical device validation
+    remain pending.
 ---
 
 # ninja_webapp Package
@@ -118,3 +126,12 @@ The Agent page consumes provider, model, and audio capability metadata from `/ap
 
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+## Web Microphone Input and Voice Gating Correction (2026-10-11)
+
+The Agent page microphone control uses client-side browser speech recognition (`SpeechRecognition` / `webkitSpeechRecognition`) to transcribe user voice input into the prompt text area, sending the transcribed text via `/api/agent/chat` when submitted.[^src-20261010-shutdownvoicefixes]
+* **Capability Gating Correction**: The previous `supports_audio` gating incorrectly disabled the microphone button for text-only cloud models (OpenAI, Anthropic, Ollama Cloud, and non-audio Google models). The `supports_audio` flag describes direct raw-audio processing at `/api/agent/voice`. Removing that gate from the UI microphone button restores voice typing for all providers regardless of model audio support.[^src-20261010-shutdownvoicefixes] [^src-20261010-developmentguide-4]
+* **Lifecycle & Navigation Cleanup**: The Agent page manages its own recognition instance, resets recording state on startup errors, and cleanly aborts active speech recognition when unmounting during navigation.[^src-20261010-shutdownvoicefixes]
+
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).

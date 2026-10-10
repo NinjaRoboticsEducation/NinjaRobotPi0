@@ -59,11 +59,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:28:47.571035+00:00'
-  target_hash: sha256:7c58c916e68f2a1a2dbc6e7bd5ed3ee007b0f991827d8793baed5db5377c8f56
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:5ac953bf123f4300fb38192e7bd6e7e71e25e513b090f1e2b1f451188be73b28
   result: passed
   checks:
     source_support: passed
@@ -72,9 +80,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed development workflow against tests/test_provider_adapter.py and tests/test_ollama_install.py.
-    Inert test fixtures, mock HTTP transport, and Python 3.10+ boundary match workflow.
-  - Host test results do not imply target-device execution.
+  - Reviewed regression testing workflow, test_server_shutdown.py inert test suite,
+    and browser_ui.cjs mock assertions.
+  - Host test results documented; physical Raspberry Pi validation remains pending.
 ---
 
 # Development and immutable documentation workflow
@@ -153,3 +161,13 @@ Software testing of cloud model adapters utilizes inert fixtures in `tests/test_
 
 [^src-20261010-developmentguide-3]: Current versioned Developmentguide (2026-10-10 model adapter release).
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+## Server shutdown and browser voice regression testing (2026-10-11)
+
+The regression testing workflow validates coordinated server exit and browser microphone contracts using isolated fixtures:[^src-20261010-developmentguide-4] [^src-20261010-shutdownvoicefixes]
+* **Inert Shutdown Regressions**: `tests/test_server_shutdown.py` exercises 8 regression cases covering concurrent exit callers, pose failure, action-lock timeouts, cancellation during rest movement, uncooperative executors, and Uvicorn signal capture/replay without starting a live network server.[^src-20261010-shutdownvoicefixes]
+* **Mock Browser Test Suite**: `tests/browser_ui.cjs` tests 96 assertions in mocked Chromium, verifying speech recognition lifecycle, transcript submission to text chat, unmount abort, and responsive layouts across all four provider fixtures.[^src-20261010-shutdownvoicefixes]
+* **Verification Boundaries**: Host software test passes (Python 3.11/3.13) and core baseline verification do not constitute physical Pi validation; live actuator travel, stop timing, and physical microphone testing remain pending.[^src-20261010-shutdownvoicefixes]
+
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.

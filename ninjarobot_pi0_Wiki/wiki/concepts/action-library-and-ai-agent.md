@@ -44,11 +44,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:31:43.935978+00:00'
-  target_hash: sha256:1fa4913594ad738f31e7d3fd0942765bf21963dc0c093095c5ffb18bd6ed40c6
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:3dd62023c357a3c9972f50c7857d849a99d71df951c0b97fddf03506dd02d7bb
   result: passed
   checks:
     source_support: passed
@@ -57,10 +65,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Action Library and AI Agent concept against ninja_agent.py, agent_response.py,
-    and providers/ subsystem. 4-provider adapter matrix, action object bounds (32
-    steps, 1-20 repetitions), and voice capability gating match code.
-  - Cloud model inference was verified using inert test fixtures; physical robot actuation
+  - Reviewed voice capability distinction between /api/agent/voice audio upload and
+    /api/agent/chat browser Web Speech input.
+  - Software boundaries verified against Agent/index.jsx; live provider model testing
     remains pending.
 ---
 
@@ -129,6 +136,9 @@ The AI integration supports four cloud model providers through native adapters i
 | **Anthropic** | `/v1/models` (paginated `has_more`/`last_id`) | `/v1/messages` (text blocks, final stop reasons) | Bearer API key, `anthropic-version:2023-06-01` | Disabled in this adapter |
 | **Ollama Cloud** | `https://ollama.com/api/tags` | Hosted `/api/chat` (non-streamed `message.content`) | Bearer API key | Disabled in this adapter |
 
+> [!NOTE]
+> The "Voice Capability" column describes direct raw audio file upload support at `/api/agent/voice`. Browser speech recognition in the web UI operates independently via client-side Web Speech transcription into text for `/api/agent/chat` and is available across all configured providers.[^src-20261010-shutdownvoicefixes] [^src-20261010-developmentguide-4]
+
 Selection occurs via `uv run ninja_core config select-model`, `init-tool` option 1, or `./onboard.sh --step ai_model`.[^src-20261010-modeladapterimplementation] The active model is persisted only after a bounded verification probe succeeds against the target provider origin.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
 
 ## Action Response Validation (`ninja_core.agent_response`)
@@ -144,3 +154,6 @@ Model-generated action objects are treated as untrusted input and validated stri
 [^src-20261010-ninja-core-readme]: ninja_core package README (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).

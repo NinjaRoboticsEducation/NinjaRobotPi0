@@ -4,8 +4,8 @@ Read [the parent policy](../AGENTS.md) and [project workflow](docs/PROJECT_WORKF
 Current full manuals:
 
 - [InstallationGuide.md](raw/articles/ninjarobotpi0/2026-10-10-model-adapter/InstallationGuide.md)
-- [DevelopmentGuide.md](raw/articles/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentGuide.md)
-- [DevelopmentLog.md](raw/notes/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentLog.md)
+- [DevelopmentGuide.md](raw/articles/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentGuide.md)
+- [DevelopmentLog.md](raw/notes/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentLog.md)
 
 The [knowledge map](project-knowledge.json) resolves active source versions and reviewed code.
 Curated pages begin at [overview](wiki/overview.md). Registered raw originals are immutable.

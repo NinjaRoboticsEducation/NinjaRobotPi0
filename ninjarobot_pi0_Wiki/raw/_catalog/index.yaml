@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-10T15:31:53Z'
+generated_at: '2026-10-10T17:27:40Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -306,6 +306,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentGuide.md
   kind: text
   state: ingested
+- id: src-20261010-developmentguide-4
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentGuide.md
+  kind: text
+  state: ingested
 - id: src-20261010-developmentguide
   title: Developmentguide
   path: raw/articles/ninjarobotpi0/2026-10-10-lifecycle/DevelopmentGuide.md
@@ -319,6 +324,11 @@ sources:
 - id: src-20261010-developmentlog-3
   title: Developmentlog
   path: raw/notes/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261010-developmentlog-4
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentLog.md
   kind: text
   state: ingested
 - id: src-20261010-developmentlog
@@ -366,6 +376,11 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterValidation.md
   kind: text
   state: ingested
+- id: src-20261010-ninja-core-readme-2
+  title: Ninja Core Readme
+  path: raw/articles/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/ninja-core-README.md
+  kind: text
+  state: ingested
 - id: src-20261010-ninja-core-readme
   title: Ninja Core Readme
   path: raw/articles/ninjarobotpi0/2026-10-10-model-adapter/ninja-core-README.md
@@ -386,8 +401,18 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-10-model-adapter/README.md
   kind: text
   state: ingested
+- id: src-20261010-readme-5
+  title: Readme
+  path: raw/articles/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/README.md
+  kind: text
+  state: ingested
 - id: src-20261010-readme
   title: Readme
   path: raw/articles/ninja_core/2026-10-10-lifecycle/README.md
+  kind: text
+  state: ingested
+- id: src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  path: raw/notes/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/ShutdownVoiceFixes.md
   kind: text
   state: ingested

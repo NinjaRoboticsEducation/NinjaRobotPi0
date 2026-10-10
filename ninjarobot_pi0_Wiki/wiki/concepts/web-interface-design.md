@@ -31,11 +31,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-readme-2
   title: Readme
   content_hash: sha256:61178b7920f399c303a8f0f19fd6a05b5f1ed43e510c47b261f3ae7bc5fba0c6
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:31e846b6fb51629261775141ec6b03d2ae7b8bd3f931397d71b6c860db5d2fe1
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:2aa28aa133526286fb85112486303e9d33e7e09cbba8505ec9221527d2463faa
   result: passed
   checks:
     source_support: passed
@@ -44,11 +52,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed web interface design against Layout.jsx, useRobotSession.js, web_sessions.py,
-    and test_lifecycle_refinements.py. Single-browser ownership via /ws/session, HttpOnly
-    cookie, 4409 busy modal, and disconnect QR restoration match code.
-  - Inert browser hook fixtures test session contracts; live ngrok and multi-device
-    testing require physical validation.
+  - Reviewed client-side Web Speech recognition lifecycle, unmount cleanup, and provider
+    independence against Layout.jsx and Agent/index.jsx.
+  - Automated Chromium browser tests passed; target-device browser confirmation remains
+    pending.
 ---
 
 # Pi0 web interface design and compatibility
@@ -76,3 +83,12 @@ The shared application layout (`Layout.jsx`) maintains a persistent `/ws/session
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
 [^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.
 [^src-20261010-readme-2]: NinjaRobotPi0 English README snapshot (2026-10-10 lifecycle).
+
+## Browser Speech Recognition and Lifecycle Management (2026-10-11)
+
+The Agent page provides browser-based voice input powered by the Web Speech API (`SpeechRecognition` / `webkitSpeechRecognition`). Speech is converted locally in the browser into text inside the chat input box and submitted as normal text messages to `/api/agent/chat`.[^src-20261010-shutdownvoicefixes]
+* **Provider Independence**: Because recognition happens client-side before text transmission, microphone voice input is supported across all cloud AI providers (Google, OpenAI, Anthropic, Ollama Cloud) and does not require provider-level raw audio ingestion capabilities.[^src-20261010-shutdownvoicefixes] [^src-20261010-developmentguide-4]
+* **Component Lifecycle**: The speech recognition instance is tied to the Agent page lifecycle, ensuring recording aborts immediately upon route navigation or component unmount.[^src-20261010-shutdownvoicefixes]
+
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).

@@ -12,7 +12,7 @@ retrieved_at: null
 normalized_at: '2026-10-07T07:13:41Z'
 normalizer: llmwiki-text/0.2
 error: null
-ingested_at: '2026-10-10T15:31:50Z'
-last_plan: pi0-model-adapter-lint-cleanup2-261011
+ingested_at: '2026-10-10T17:26:31Z'
+last_plan: pi0-shutdown-voice-fixes-ingest-261011
 previous_content_hash: sha256:65b40cbc41f1966bee59663ab0e61126fef8b9c38bf3f8ca15e785677ce16607
 changed_at: '2026-10-07T07:13:41Z'

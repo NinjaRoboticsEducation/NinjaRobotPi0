@@ -72,11 +72,23 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261010-readme-5
+  resource: urn:llmwiki:source:src-20261010-readme-5
+  title: Readme
+  content_hash: sha256:bcd029ec39e6c98a1ef4c4df341b216b471009b7cc38836937efab7ee464a7f2
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:28:47.571035+00:00'
-  target_hash: sha256:edd690ec6d198d0ca4568ee8c903108b9981975f0d1e086745ff57fe3bee10ee
+  performed_at: '2026-10-10T17:27:33.106210+00:00'
+  target_hash: sha256:72147d402f6324bebb8a2c32c1f3d373cbc53e1aba08771148183df19e621b94
   result: passed
   checks:
     source_support: passed
@@ -85,17 +97,17 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed overview against 2026-10-10 model adapter release evidence. Multi-provider
-    AI support (Google, OpenAI, Anthropic, Ollama Cloud), private credentials, and
-    pinned Ollama CLI match implementation.
-  - Live provider account verification and physical robot movement tests remain pending.
+  - Reviewed platform overview against 2026-10-11 README snapshot, DevelopmentGuide.md,
+    and ShutdownVoiceFixes.md.
+  - Coordinated shutdown and browser speech typing verified in code; live robot and
+    account validation remain pending.
 ---
 
 # NinjaRobotPi0 Platform Overview
 
 ## Current setup and documentation
 
-The installer targets Zero 2 W with Debian-based Raspberry Pi OS 64-bit; current requirements are below. `./install.sh` installs software; `./onboard.sh` guides existing hardware tools and Gemini/ngrok settings. Full current manuals are immutable versions inside `ninjarobot_pi0_Wiki`; root manuals preserve public links. Pi0 uses a Pi5-style navy/cyan web presentation with its existing control contracts. Real-device final validation remains pending. Current React metadata is 19.2.0; descriptions of React 18 in earlier reference material are historical. See [guided onboarding](concepts/guided-onboarding.md), [development workflow](concepts/development-workflow.md), [web design](concepts/web-interface-design.md), [installation manual](references/installation-guide.md), and [development manual](references/development-guide.md).[^src-20261008-installationguide-3] [^src-20261008-developmentguide-3]
+The installer targets Zero 2 W with Debian-based Raspberry Pi OS 64-bit; current requirements are below. `./install.sh` installs software; `./onboard.sh` guides existing hardware tools and Gemini/ngrok settings. Full current manuals are immutable versions inside `ninjarobot_pi0_Wiki`; root manuals preserve public links. Pi0 uses a Pi5-style navy/cyan web presentation with its existing control contracts. Real-device final validation remains pending. Current React metadata is 19.2.0; descriptions of React 18 in earlier reference material are historical. See [guided onboarding](concepts/guided-onboarding.md), [development workflow](concepts/development-workflow.md), [web design](concepts/web-interface-design.md), [installation manual](references/installation-guide.md), and [development manual](references/development-guide.md).[^src-20261008-installationguide-3] [^src-20261010-developmentguide-4]
 
 
 **NinjaRobotPi0** is an advanced, modular AI robot platform designed for research and STEAM education, powered by the Raspberry Pi Zero 2W.[^src-20260822-readme] It integrates a multi-provider AI agent (Google Gemini, OpenAI, Anthropic Claude, and Ollama Cloud) with a mobile-first web interface, dual connectivity (Wi-Fi and Bluetooth Low Energy), and rebuilt non-blocking hardware drivers.[^src-20260822-readme] [^src-20260822-developmentguide] [^src-20261010-readme-4] [^src-20261010-modeladapterimplementation]
@@ -173,7 +185,7 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 
 The following records the earlier implementation; current compatibility policy below supersedes exact-version, codename and private-tool-precedence claims.
 
-A comprehensive public README now follows Pi5 introduction, hardware/OS preparation, curl installation, guided initialization, browser access, first tests and troubleshooting. Japanese and Chinese sections are explicitly summaries. The wizard aligns its console flow with Pi5 while preserving Pi0 capabilities and manual runtime startup. See the current full manuals for the audit corrections and pending device acceptance.[^src-20261007-2026-10-08-upgrade-audit]
+A comprehensive public README now follows Pi5 introduction, hardware/OS preparation, curl installation, guided initialization, browser access, first tests and troubleshooting. Japanese and Chinese sections are explicitly summaries. The wizard aligns its console flow with Pi5 while preserving Pi0 capabilities and manual runtime startup. See the current full manuals for the audit corrections and pending device acceptance.[^src-20261007-2026-10-08-upgrade-audit] [^src-20261008-developmentguide-3]
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 
@@ -220,3 +232,13 @@ NinjaRobotPi0 expands AI chat beyond Google Gemini to include OpenAI, Anthropic 
 [^src-20261010-readme-4]: NinjaRobotPi0 Readme (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+## Server shutdown and voice input corrections (2026-10-11)
+
+Recent updates resolve server exit and browser microphone regressions:[^src-20261010-readme-5] [^src-20261010-shutdownvoicefixes]
+* **Safe Server Exit**: Server shutdown coordinates an asynchronous cleanup sequence that executes the configured `Poweroff` rest posture before releasing GPIO and hardware handles, eliminating signal replay errors on Ctrl+C.[^src-20261010-shutdownvoicefixes]
+* **Universal Browser Speech Typing**: Web Speech recognition transcribes voice into chat text across Google, OpenAI, Anthropic, and Ollama Cloud models independently of direct model audio processing capabilities.[^src-20261010-readme-5] [^src-20261010-shutdownvoicefixes]
+
+[^src-20261010-readme-5]: NinjaRobotPi0 English README snapshot (2026-10-11 shutdown & voice fixes).
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.

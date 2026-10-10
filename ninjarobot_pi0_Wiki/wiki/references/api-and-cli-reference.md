@@ -76,11 +76,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:31:11.753406+00:00'
-  target_hash: sha256:cb118cc5e84cab938e9a621b2b2dfe7e53cb1933c1b32ccb99911931e2ce1ea7
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:f8e71836a5c89cf2cead0dc5333617707d6c920b57c0c922b3c43bdc21e1f835
   result: passed
   checks:
     source_support: passed
@@ -89,11 +97,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed REST/CLI reference against web_server.py, movement_cli.py, and provider_setup.py.
-    /api/agent/status metadata, select-model CLI command, and action validation boundaries
-    match implementation.
-  - Host CLI checks do not imply remote cloud quota entitlement or physical robot
-    readiness.
+  - Reviewed REST endpoints (/api/agent/chat, /api/system/shutdown) and signal replay
+    fixes against web_server.py.
+  - Inert regression suite passed; physical device power-off acceptance remains pending.
 ---
 
 # API and CLI Reference
@@ -124,11 +130,11 @@ This document provides a consolidated reference for all Python APIs, scriptable 
 
 | Endpoint | Method | Payload / Params | Description |
 |----------|--------|------------------|-------------|
-| `/api/agent/chat` | `POST` | `{"message": "...", "language": "en"}` | AI conversational agent endpoint (voice audio restricted to allowlisted models).[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] [^src-20261010-modeladapterimplementation] |
+| `/api/agent/chat` | `POST` | `{"message": "...", "language": "en"}` | AI conversational agent endpoint; accepts user text input, including text transcribed client-side via Web Speech API across all providers.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] [^src-20261010-modeladapterimplementation] [^src-20261010-shutdownvoicefixes] |
 | `/api/agent/status` | `GET` | None | Returns agent active state, provider, model ID, and audio input capability flag.[^src-20261010-modeladapterimplementation] |
 | `/api/code/execute` | `POST` | `{"code": "..."}` | Submit Python script for sandboxed execution.[^src-20260822-developmentguide] [^src-20260822-readme-3] |
 | `/api/code/stop` | `POST` | None | Requests cooperative cancellation of the active script; non-cooperative loops may require the Stop Robot path or server restart.[^src-20260822-developmentguide] |
-| `/api/system/shutdown` | `POST` | None | Triggers graceful shutdown animation and OS poweroff.[^src-20260822-developmentguide] [^src-20260822-readme-3] |
+| `/api/system/shutdown` | `POST` | None | Triggers graceful shutdown animation, configured rest posture, and OS poweroff via unified async shutdown worker.[^src-20260822-developmentguide] [^src-20260822-readme-3] [^src-20261010-shutdownvoicefixes] |
 | `/api/ble/status` | `GET` | None | Returns BLE advertising status and service name.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] |
 | `/api/servos/movements` | `GET` | None | Lists available compatible movement names for the configured robot type.[^src-20261009-2026-10-09-builtin-movements] |
 | `/api/servos/movements/{name}/execute` | `POST` | None | Executes named movement; returns 404 for unknown, 422 for invalid/incompatible before runtime reclamation, 409 on abort.[^src-20261009-2026-10-09-builtin-movements] |
@@ -225,3 +231,11 @@ Web API access requires an active primary session identified by the HttpOnly `ni
 [^src-20261010-developmentguide-3]: Current versioned Developmentguide (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+## Coordinated Server Shutdown and Browser Speech API (2026-10-11)
+
+Server exit executes through a unified asynchronous task coordinating rest pose before HAL disconnection, with signal replay protection.[^src-20261010-shutdownvoicefixes] [^src-20261010-developmentguide-4]
+Browser speech input transcribes spoken text client-side via Web Speech API and posts to `/api/agent/chat`, operating independently of model audio capabilities.[^src-20261010-shutdownvoicefixes] [^src-20261010-developmentguide-4]
+
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).

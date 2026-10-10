@@ -32,11 +32,19 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-07T13:11:29.858041+00:00'
-  target_hash: sha256:2e3a952066bf8169848db03867daa5b82127d373ccb4cd7ab41a59ae437ffb8c
+  performed_by: agent:antigravity
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:753440c859c3b6d3a95e4cb13655599ede41a408c7027308c9818cb88c7c88a7
   result: passed
   checks:
     source_support: passed
@@ -45,10 +53,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Stable entity identity and historical repository milestones are retained; the
-    new installer/onboarding entry points are additive.
-  - Source-grounded AI review; lifecycle stays draft/unverified. This is not human
-    or hardware verification.
+  - Reviewed coordinated graceful shutdown sequence and Ctrl+C non-poweroff behavior
+    against web_server.py.
+  - Host tests pass; physical actuator travel and Linux halt acceptance remain pending.
 ---
 
 # NinjaRobotPi0 Entity
@@ -100,6 +107,16 @@ Raspberry Pi Zero 2W GPIO Pinout (40-Pin Header)
   1. Displays `sleepy` face and plays `sleepy` sound in parallel.[^src-20260822-readme] [^src-20260822-developmentguide]
   2. Moves servos to the pre-configured `Poweroff` rest position.[^src-20260822-developmentguide]
   3. Releases all HAL handles and triggers Linux OS shutdown (`sudo poweroff`).[^src-20260822-developmentguide]
+
+* **Coordinated Server Exit Sequence (2026-10-11)**:
+  1. Lifespan and web power-off join a shared asynchronous shutdown worker, preventing Uvicorn signal replay collisions.[^src-20261010-shutdownvoicefixes]
+  2. Active actions are halted, pending inferences invalidated, and motion lock acquired.[^src-20261010-shutdownvoicefixes]
+  3. Moves servos to the configured `Poweroff` rest posture (or `home`) before stopping outputs, clearing display, and releasing HAL handles.[^src-20261010-shutdownvoicefixes] [^src-20261010-developmentguide-4]
+  4. Ctrl+C exits terminal without requesting OS power-off; web power-off alone triggers Linux `sudo poweroff`.[^src-20261010-shutdownvoicefixes]
+
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
+
 
 [^src-20260822-readme]: NinjaRobotPi0 Readme.
 [^src-20260822-developmentguide]: NinjaRobotPi0 Development Guide.

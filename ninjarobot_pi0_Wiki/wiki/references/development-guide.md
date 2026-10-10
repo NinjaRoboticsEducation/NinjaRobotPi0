@@ -71,11 +71,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261010-developmentguide-4
+  resource: urn:llmwiki:source:src-20261010-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
+- id: src-20261010-shutdownvoicefixes
+  resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
+  title: Shutdownvoicefixes
+  content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:31:43.935978+00:00'
-  target_hash: sha256:085477e652f7f188c48c2e9449420e1b1fc4f25ea4ed342f1831b7d923ac578e
+  performed_at: '2026-10-10T17:23:23.105961+00:00'
+  target_hash: sha256:6e3753e732c3bfa06940ef04109bb924cf8f35c5074ac81ed05f0d7604fe0070
   result: passed
   checks:
     source_support: passed
@@ -84,15 +92,15 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed development guide against test_provider_adapter.py, config.pre-provider.json
-    rollback, and 2026-10-10 DevelopmentGuide.md. Inert test fixtures, Python 3.10+
-    requirement, and rollback procedures match manual.
-  - Software test suites pass on host; physical hardware testing remains pending.
+  - Reviewed current DevelopmentGuide (2026-10-11) manual pointers, shutdown sequence,
+    and regression test records.
+  - Offline test suites passed on Python 3.11 and 3.13; target-device hardware checks
+    remain pending.
 ---
 
 # Current development manual
 
-Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261010-developmentguide-3]
+Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261010-developmentguide-4]
 
 [Project overview](/overview.md).
 
@@ -182,3 +190,13 @@ Development guidelines for `ninja_core.providers` and cloud adapters:[^src-20261
 [^src-20261010-ninja-core-readme]: ninja_core package README (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+## Server exit and web microphone correction (2026-10-11)
+
+The current development manual documents the unified asynchronous server shutdown workflow and browser speech input decoupling:[^src-20261010-developmentguide-4] [^src-20261010-shutdownvoicefixes]
+* **Shutdown Task**: Shared worker coordinates service teardown, action lock acquisition, rest posture execution (`Poweroff` or `home`), display clear, and HAL release without signal replay collisions.[^src-20261010-developmentguide-4] [^src-20261010-shutdownvoicefixes]
+* **Web Speech Input**: Browser microphone operates via Web Speech into the text chat prompt independently of provider audio capability, with automatic abort on route changes.[^src-20261010-developmentguide-4] [^src-20261010-shutdownvoicefixes]
+* **Regression Suite**: 8 inert shutdown tests cover signal replay, concurrent exits, cancellation shielding, and failed rest postures.[^src-20261010-shutdownvoicefixes]
+
+[^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
+[^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.

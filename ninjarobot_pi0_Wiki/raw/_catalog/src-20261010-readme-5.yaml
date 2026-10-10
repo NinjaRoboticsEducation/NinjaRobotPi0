@@ -1,0 +1,16 @@
+id: src-20261010-readme-5
+path: raw/articles/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/README.md
+media_type: text/markdown
+kind: text
+title: Readme
+added_at: '2026-10-10T17:17:08Z'
+content_hash: sha256:bcd029ec39e6c98a1ef4c4df341b216b471009b7cc38836937efab7ee464a7f2
+state: ingested
+original_uri: urn:llmwiki:source:src-20261010-readme-5
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-10T17:17:30Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-10T17:27:38Z'
+last_plan: pi0-overview-cleanup-261011

@@ -1,0 +1,16 @@
+id: src-20261010-developmentguide-4
+path: raw/articles/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Developmentguide
+added_at: '2026-10-10T17:17:04Z'
+content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
+state: ingested
+original_uri: urn:llmwiki:source:src-20261010-developmentguide-4
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-10T17:17:29Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-10T17:27:38Z'
+last_plan: pi0-overview-cleanup-261011
