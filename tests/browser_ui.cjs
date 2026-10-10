@@ -1,4 +1,4 @@
-// Static built-UI contract tests: no robot backend, external sockets, speech, or shutdown.
+// Static built-UI contract tests: no robot backend, external sockets, live speech, or shutdown.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const http = require('node:http');
@@ -42,7 +42,13 @@ const shots = process.env.UI_SCREENSHOTS;
           close() { this.readyState = 3; }
         };
         window.confirm = () => false;
-        window.SpeechRecognition = class { start() { throw new Error('Live speech is forbidden in fixtures'); } };
+        window.__recognizers = [];
+        window.SpeechRecognition = class {
+          constructor() { window.__recognizers.push(this); }
+          start() { this.started = true; this.onstart?.(); }
+          stop() { this.stopped = true; this.onend?.(); }
+          abort() { this.aborted = true; this.onend?.(); }
+        };
       });
       await context.route('**/*', async route => {
         const request = route.request(); const url = new URL(request.url());
@@ -54,7 +60,7 @@ const shots = process.env.UI_SCREENSHOTS;
         if (url.pathname === '/api/display/expressions') body = { expressions: ['happy'] };
         if (url.pathname === '/api/sound/emotions') body = { emotions: ['joy'] };
         if (url.pathname === '/api/servos/movements') body = { movements: ['greeting'] };
-        if (url.pathname === '/api/agent/status') body = {active:true, supports_audio:viewport.width===390};
+        if (url.pathname === '/api/agent/status') body = {active:true, provider:({360:'openai',390:'google',844:'anthropic',1280:'ollama'})[viewport.width], supports_audio:viewport.width===390};
         if (url.pathname === '/api/agent/chat') body = { response: 'Fixture reply' };
         await route.fulfill({status:200, contentType:'application/json', body:JSON.stringify(body)});
       });
@@ -63,14 +69,32 @@ const shots = process.env.UI_SCREENSHOTS;
       page.on('pageerror', error => errors.push(error.message));
       await page.goto(base + '/agent'); await page.waitForLoadState('networkidle');
       assert.ok(await page.getByText('BLE advertising').isVisible()); checks++;
-      assert.equal(await page.getByRole('button', {name:/Voice/}).isDisabled(), viewport.width!==390); checks++;
+      const voice = page.getByRole('button', {name:'Voice Input',exact:true});
+      assert.equal(await voice.isDisabled(), false); checks++;
+      await voice.click();
+      assert.equal(await voice.getAttribute('aria-pressed'), 'true'); checks++;
+      await page.evaluate(() => window.__recognizers.at(-1).onresult({results:[[{transcript:'Fixture speech'}]]}));
+      await page.waitForFunction(() => [...document.querySelectorAll('input,textarea')].some(el => el.value === 'Fixture speech'));
+      assert.equal(await page.getByRole('textbox').inputValue(), 'Fixture speech'); checks++;
+      await voice.click();
+      assert.equal(await voice.getAttribute('aria-pressed'), 'false'); checks++;
+      assert.equal(await page.evaluate(() => window.__recognizers.at(-1).stopped), true); checks++;
+      const [speechResponse] = await Promise.all([
+        page.waitForResponse(response => new URL(response.url()).pathname === '/api/agent/chat'),
+        page.getByRole('button', {name:'Send', exact:true}).click(),
+      ]);
+      assert.deepEqual(JSON.parse(speechResponse.request().postData()), {message:'Fixture speech',language:'en'}); checks++;
+      await page.getByText('Fixture reply', {exact:true}).waitFor();
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true); checks++;
       assert.deepEqual(await page.evaluate(() => window.__sockets.filter(s => s.readyState === 1).map(s => new URL(s.url).pathname).sort()), ['/ws/distance','/ws/events','/ws/session']); checks++;
       await page.evaluate(() => window.__sockets.find(s => s.url.endsWith('/ws/distance')).onmessage({data:'{"distance_mm":123}'}));
       await page.getByText('123 mm').waitFor(); checks++;
       await page.getByRole('textbox').fill('Fixture message');
-      await page.getByRole('button', {name:'Send', exact:true}).click();
-      await page.getByText('Fixture reply', {exact:true}).waitFor();
+      await Promise.all([
+        page.waitForResponse(response => new URL(response.url()).pathname === '/api/agent/chat'),
+        page.getByRole('button', {name:'Send', exact:true}).click(),
+      ]);
+      await page.getByText('Fixture reply', {exact:true}).last().waitFor();
       const chat = requests.filter(r => r.path === '/api/agent/chat').at(-1);
       assert.equal(chat.method, 'POST'); assert.deepEqual(JSON.parse(chat.body), {message:'Fixture message',language:'en'}); checks++;
       for (const name of ['Run expression','Play sound','Run movement']) await page.getByRole('button',{name,exact:true}).click();
@@ -90,8 +114,12 @@ const shots = process.env.UI_SCREENSHOTS;
         assert.ok(!/home\.(sliderText|systemTitle)|agent\.(welcome|systemLog)|header\.(openMenu|advertising)/.test(text)); checks++;
       }
       await page.evaluate(() => { window.__primarySession = window.__sockets.find(s => s.url.endsWith('/ws/session') && s.readyState === 1); });
+      await page.getByRole('button', {name:/System activity/}).click();
+      await voice.click();
       await page.getByRole('button', {name:'Open robot menu'}).click();
       await page.getByRole('dialog').getByRole('link', {name:'Home', exact:true}).click();
+      await page.waitForFunction(() => window.__recognizers.at(-1).aborted === true);
+      assert.equal(await page.evaluate(() => window.__recognizers.at(-1).aborted), true); checks++;
       await page.getByText('Slide to power off').waitFor();
       assert.equal(await page.evaluate(() => window.__primarySession === window.__sockets.find(s => s.url.endsWith('/ws/session') && s.readyState === 1)), true); checks++;
       assert.ok(await page.getByText('Slide to power off').isVisible()); checks++;

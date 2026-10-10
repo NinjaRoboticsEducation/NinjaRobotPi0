@@ -26,7 +26,7 @@
     "ninja_core/src/ninja_core/robot_sound.py": "8878259eecc7089150c18b320dda5918d748d9a34deef93d79b4f76370492608",
     "ninja_core/src/ninja_core/runtime_pipeline.py": "58fb28f01bf8675c878efe0907f27c187a5a29dc5d5e0f1ccd16f9d7a3bc6108",
     "ninja_core/src/ninja_core/safe_executor.py": "e9ffdf3faa169bbce9ec6054103b8913ebcd79d0b1da7de16666cbb657742384",
-    "ninja_core/src/ninja_core/web_server.py": "7c0f937322cc193ce9b49c41c50fc0162e6d0a8670a213a83afe5ac652f58a27",
+    "ninja_core/src/ninja_core/web_server.py": "52097d5cac03b3286e7ca8f6cdc36984c880afa2cca34750318f1c2f66688d28",
     "ninja_utils/pyproject.toml": "802a26e85a412dbe9b77595f758dd2e58bb014d2fd27f6e1f2dae555839dcb75",
     "ninja_utils/samples/sample.py": "043fc403232023549a85489cf27375806980be0990a72f6070157b6f42d5b36d",
     "ninja_utils/src/ninja_utils/__init__.py": "c3be62445fc9773d4056aac021c270816fa244d8b54d1836baa58444d0cc2d04",
@@ -136,5 +136,5 @@
     "ninja_core/src/ninja_core/agent_response.py": "db128990593d04999ee2d0a2225eeb0d343701f3b0499321b1afe992f40b15db",
     "scripts/install_ollama.py": "caa604e09a6c30906fa98dce2d5b6ab0d739548bab41046d35cdfce3bf060b88"
   },
-  "review_note": "2026-10-10 approved provider adapter: reviewed new code and reconciled nine pre-existing committed movement/lifecycle/packaging mismatches against history and inert regression tests. Canonical wiki ingestion is owner-deferred."
+  "review_note": "2026-10-10 approved provider adapter: reviewed new code and reconciled nine pre-existing committed movement/lifecycle/packaging mismatches against history and inert regression tests. Canonical wiki ingestion is owner-deferred. 2026-10-11: reviewed server-only lifecycle fix; Uvicorn signal replay and simultaneous power-off share one shielded shutdown task, with rest pose before HAL release. Inert shutdown regressions pass; physical Pi checks and owner wiki ingestion remain pending."
 }

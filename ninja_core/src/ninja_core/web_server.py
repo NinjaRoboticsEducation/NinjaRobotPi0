@@ -1,6 +1,5 @@
 import asyncio
 import os
-import signal
 import sys
 import socket
 import subprocess
@@ -43,9 +42,6 @@ from .web_sessions import (
 # --- Configuration ---
 base_dir = Path(__file__).parent
 
-# Module-level reference for signal handler cleanup
-_app_state: Optional["AppState"] = None
-
 # React SPA dist path (built from ninja_webapp)
 WEBAPP_DIST = base_dir.parents[2] / "ninja_webapp" / "dist"
 
@@ -79,6 +75,8 @@ class AppState:
         self.connection_manager = ConnectionManager()
         self.tasks = set() # Track background tasks
         self.shutdown_event = asyncio.Event()  # Signal for graceful shutdown
+        self.robot_shutdown_task: Optional[asyncio.Task] = None
+        self.system_shutdown_task: Optional[asyncio.Task] = None
         self.action_plan_lock: Optional[asyncio.Lock] = None
         self.public_url = None
         self.local_url = None
@@ -112,8 +110,6 @@ class ConnectionManager:
 # --- Lifecycle ---
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global _app_state
-    
     # --- Startup ---
     print("Initializing NinjaRobot V4 Web Server...")
 
@@ -215,66 +211,109 @@ async def lifespan(app: FastAPI):
     app.state.ninja.tasks.add(network_task)
     network_task.add_done_callback(app.state.ninja.tasks.discard)
 
-    _app_state = app.state.ninja  # Store for signal handler
+    try:
+        yield
+    finally:
+        try:
+            await _shutdown_robot(app.state.ninja)
+        finally:
+            ngrok.kill()
+            print("Shutdown complete.")
 
-    yield
 
+async def _shutdown_robot(state):
+    """Join the one shutdown task shared by lifespan and the power-off API."""
+    if state.robot_shutdown_task is None:
+        state.shutdown_event.set()
+        state.robot_shutdown_task = asyncio.create_task(_shutdown_robot_once(state))
+    await asyncio.shield(state.robot_shutdown_task)
+
+
+async def _shutdown_robot_once(state):
     # --- Shutdown ---
-    print("Shutting down Web Server...")
+    print("Shutting down robot runtime...")
     
+    can_move = False
     try:
         # Signal all WebSocket handlers to exit their loops
         print("Signaling WebSocket handlers to exit...")
-        app.state.ninja.shutdown_event.set()
-        await asyncio.sleep(0.5)  # Give handlers time to exit
+        state.shutdown_event.set()
+        if state.agent:
+            state.agent.cancel_pending()
+        interruption = await interrupt_active_robot_action(state)
+        can_move = not interruption["still_running"]
         
         # Stop BLE with timeout to prevent hang
-        if hasattr(app.state.ninja, 'ble') and app.state.ninja.ble:
+        if hasattr(state, 'ble') and state.ble:
             print("Stopping BLE Service...")
             try:
-                await asyncio.wait_for(app.state.ninja.ble.stop(), timeout=2.0)
+                await asyncio.wait_for(state.ble.stop(), timeout=2.0)
             except asyncio.TimeoutError:
                 print("⚠️ BLE shutdown timed out! Forcing task cancellation...")
             except Exception as e:
                 print(f"⚠️ BLE shutdown error: {e}")
         
         # Cancel all background tasks with timeout
-        if hasattr(app.state.ninja, 'tasks') and app.state.ninja.tasks:
-            print(f"Cancelling {len(app.state.ninja.tasks)} background tasks...")
-            for task in list(app.state.ninja.tasks):
+        if state.tasks:
+            tasks = tuple(state.tasks)
+            print(f"Cancelling {len(tasks)} background tasks...")
+            for task in tasks:
                 if not task.done():
                     task.cancel()
             
             # Wait with timeout to prevent hang
             _, pending = await asyncio.wait(
-                app.state.ninja.tasks,
+                tasks,
                 timeout=3.0
             )
             if pending:
                 print(f"⚠️ {len(pending)} tasks did not finish in time, forcing exit...")
 
-        # Stop Faces
-        if app.state.ninja.faces:
-            app.state.ninja.faces.stop()
-
         # Stop Distance Monitor
-        if app.state.ninja.distance_monitor:
-            app.state.ninja.distance_monitor.stop_continuous()
+        if state.distance_monitor:
+            state.distance_monitor.stop_continuous()
             
     except Exception as e:
         print(f"Error during shutdown sequence: {e}")
     finally:
-        # Stop HAL (Hardware Abstraction Layer) - CRITICAL: Must be last
-        if app.state.ninja.hal:
-            print("Shutting down HAL...")
-            try:
-                app.state.ninja.hal.shutdown()
-            except Exception as e:
-                print(f"HAL shutdown error: {e}")
+        # One worker owns the entire pose/release sequence. Cancellation of a
+        # caller cannot close pigpio while this worker is still moving servos.
+        if state.action_plan_lock:
+            async with state.action_plan_lock:
+                await asyncio.to_thread(_finish_hardware_shutdown, state, can_move)
+        else:
+            await asyncio.to_thread(_finish_hardware_shutdown, state, can_move)
 
-        # Stop ngrok
-        ngrok.kill()
-        print("Shutdown complete.")
+
+def _finish_hardware_shutdown(state, can_move):
+    try:
+        if can_move:
+            _perform_shutdown_animation(state)
+        else:
+            print("Poweroff pose skipped: previous action did not stop safely.")
+    finally:
+        for component, method in (
+            (state.faces, "stop"),
+            (state.sound, "stop"),
+            (state.distance_monitor, "stop_continuous"),
+        ):
+            if component:
+                try:
+                    getattr(component, method)()
+                except Exception as exc:
+                    print(f"Shutdown {method} error: {exc}")
+        if state.hal:
+            display = getattr(state.hal, "display", None)
+            if display:
+                try:
+                    display.display(Image.new("RGB", (display.width, display.height), "black"))
+                except Exception as exc:
+                    print(f"Failed to clear display: {exc}")
+            try:
+                state.hal.shutdown()
+            except Exception as exc:
+                print(f"HAL shutdown error: {exc}")
+
 
 async def setup_network_and_display(app: FastAPI):
     port = 8000
@@ -962,53 +1001,21 @@ def get_ble_status(request: Request):
 
 @api_router.post("/system/shutdown")
 async def system_shutdown(request: Request):
-    """Safely shuts down the Raspberry Pi with graceful animation."""
-    print("Received shutdown request via Web UI.")
+    """Power off the Pi only after the coordinated pose and hardware release."""
+    state = request.app.state.ninja
+    if state.system_shutdown_task is None:
+        state.shutdown_event.set()
+        state.system_shutdown_task = asyncio.create_task(_poweroff_system(state))
+    return {"status": "shutting_down", "message": "Shutdown animation started..."}
+
+
+async def _poweroff_system(state):
     try:
-        request.app.state.ninja.shutdown_event.set()
-        # Run shutdown sequence in a separate thread to avoid blocking the response
-        def shutdown_with_animation():
-            app_state = request.app.state.ninja
+        await _shutdown_robot(state)
+        await asyncio.to_thread(subprocess.run, ["sudo", "shutdown", "-h", "now"], check=True)
+    except Exception as exc:
+        print(f"System shutdown failed: {exc}")
 
-            # 1. Perform shutdown animation (blocks until complete)
-            _perform_shutdown_animation(app_state)
-
-            # 2. Stop high-level threads
-            if app_state.faces:
-                try:
-                    app_state.faces.stop()
-                except Exception:
-                    pass
-            if app_state.distance_monitor:
-                try:
-                    app_state.distance_monitor.stop_continuous()
-                except Exception:
-                    pass
-
-            # 3. Clear display to black
-            if app_state.hal and app_state.hal.display:
-                try:
-                    from PIL import Image
-                    width = app_state.hal.display.width
-                    height = app_state.hal.display.height
-                    black_screen = Image.new("RGB", (width, height), (0, 0, 0))
-                    app_state.hal.display.display(black_screen)
-                except Exception as e:
-                    print(f"Failed to clear display: {e}")
-
-            # 4. Shutdown HAL
-            if app_state.hal:
-                app_state.hal.shutdown()
-
-            time.sleep(1)
-            print("Executing shutdown command...")
-            subprocess.run(["sudo", "shutdown", "-h", "now"])
-
-        threading.Thread(target=shutdown_with_animation, daemon=True).start()
-        return {"status": "shutting_down", "message": "Shutdown animation started..."}
-    except Exception as e:
-        print(f"Shutdown failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
 
 # --- App ---
 app = FastAPI(lifespan=lifespan)
@@ -1208,60 +1215,12 @@ def run_server(autostart: bool = False):
             print("Setting ngrok authtoken...")
             set_ngrok_auth_token(token)
     
-    # --- Set up emergency cleanup signal handler ---
-    def emergency_cleanup():
-        """Emergency cleanup when SIGINT is received."""
-        global _app_state
-        print("🧹 Running emergency cleanup...")
-
-        # Perform shutdown animation first (blocks until complete)
-        _perform_shutdown_animation(_app_state)
-
-        if _app_state:
-            _app_state.shutdown_event.set()
-            # Stop faces animation
-            if _app_state.faces:
-                try:
-                    _app_state.faces.stop()
-                except Exception:
-                    pass
-            # Stop distance monitor
-            if _app_state.distance_monitor:
-                try:
-                    _app_state.distance_monitor.stop_continuous()
-                except Exception:
-                    pass
-            # Shutdown HAL (turns off display)
-            if _app_state.hal:
-                try:
-                    _app_state.hal.shutdown()
-                except Exception:
-                    pass
-        # Kill ngrok
-        try:
-            ngrok.kill()
-        except Exception:
-            pass
-    
-    # Capture and wrap original signal handler
-    original_sigint = signal.getsignal(signal.SIGINT)
-    
-    def sigint_handler(signum, frame):
-        print("\n🛑 Ctrl+C received. Shutting down...")
-        emergency_cleanup()
-        # Restore and call original handler to let uvicorn proceed
-        signal.signal(signal.SIGINT, original_sigint)
-        if callable(original_sigint) and original_sigint not in (signal.SIG_IGN, signal.SIG_DFL):
-            original_sigint(signum, frame)
-        else:
-            sys.exit(0)  # Clean exit without uvloop error traceback
-    
-    signal.signal(signal.SIGINT, sigint_handler)
-    
+    # Uvicorn owns SIGINT/SIGTERM. Its lifespan shutdown runs the rest pose
+    # before releasing hardware; a replayed signal must never move closed servos.
     print(f"Starting uvicorn on {host}:{port}...")
     try:
         uvicorn.run("ninja_core.web_server:app", host=host, port=port, reload=False)
-    except SystemExit:
+    except (SystemExit, KeyboardInterrupt):
         pass
     except Exception as e:
         print(f"Server crashed: {e}")

@@ -48,7 +48,7 @@ The installed `ninja_core/data/spider_otto.json` resource retains the original t
 
 The CLI's execute menu, `GET /api/servos/movements` (`{"movements": [...]}`), and Ninja agent use filtered discovery. `POST /api/servos/movements/{name}/execute` returns 404 for unknown names, 422 for invalid/incompatible data before reclaiming runtime, and 409 on abort. Existing frontend routes/payloads remain compatible, and failed requests appear in the log. Text/audio agent plans use exact permitted names; an invalid native chain is rejected as a whole, retaining the response and logging the reason. Bounds are 32 native chain entries and 1–20 repetitions per entry. Saved Blockly actions remain a separate existing execution path.
 
-Physical direction, clearance, load, timing and power still require manual Pi validation. `Poweroff` holds eight extreme targets and can execute during web/server shutdown. Opening a device tool can energize servos. See [validation](../docs/validation/BuiltinMovements-2026-10-09.md) before operation.
+Physical direction, clearance, load, timing and power still require manual Pi validation. `Poweroff` holds eight extreme targets and can execute during web/server shutdown. Opening a device tool can energize servos. See [validation](../../../../../ninja_core/../docs/validation/BuiltinMovements-2026-10-09.md) before operation.
 
 日本語: インポートで種類に合う動作を追加します。Wheel/Humanoid は `home` のみです。実行時にも種類と全ステップを検証します。物理的な校正・可動範囲・電源の確認は別途必要です。
 
@@ -92,7 +92,7 @@ Clients ping every 10 seconds; the server releases a dead connection after 35 se
 
 繁體中文：僅允許一個瀏覽器身分操作；同 Cookie 分頁共用連線，最後一個連線結束後重新顯示 QR。仍須在實機驗證停止時機與 QR 可讀性。
 
-See [lifecycle acceptance](../docs/validation/LifecycleRefinements-2026-10-10.md). The environment path stays `.venv`; its installer prompt is now `ninjarobotpi0`.
+See [lifecycle acceptance](../../../../../ninja_core/../docs/validation/LifecycleRefinements-2026-10-10.md). The environment path stays `.venv`; its installer prompt is now `ninjarobotpi0`.
 
 #### In-Depth Guide: Recording a New Movement
 
@@ -281,4 +281,4 @@ The Web Server provides a user-friendly interface for controlling the robot from
 
 ## Cloud model selection
 
-Use `uv run ninja_core config select-model`, init-tool option 1, or onboarding step 7 to select Google, OpenAI, Anthropic or Ollama Cloud using a hidden API key and a validated live model. Restart an already-running agent deliberately to apply a CLI selection. Pi0 uses cloud inference only. Web microphone input uses browser speech recognition to fill the text box and works with every provider; direct audio-file input requires a supported Google model. Read the [detailed implementation source](../ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterImplementation.md) for private credentials, migration and manual validation.
+Use `uv run ninja_core config select-model`, init-tool option 1, or onboarding step 7 to select Google, OpenAI, Anthropic or Ollama Cloud using a hidden API key and a validated live model. Restart an already-running agent deliberately to apply a CLI selection. Pi0 uses cloud inference only. Web microphone input uses browser speech recognition to fill the text box and works with every provider; direct audio-file input requires a supported Google model. Read the [detailed implementation source](../../../../../ninja_core/../ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterImplementation.md) for private credentials, migration and manual validation.

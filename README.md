@@ -233,7 +233,7 @@ Press **Q** or **Ctrl+C** to save progress and exit. The wizard does not start t
 
 Run `uv run ninja_core config select-model` (also available in `ninja_core init-tool`, option 1, or `./onboard.sh --step ai_model`). Choose **Google, OpenAI, Anthropic, or Ollama Cloud**, enter your API key privately, then select and validate an available model. Restart the running agent/server deliberately to apply a CLI change. Account login is a later feature; use provider API credentials rather than a ChatGPT/Claude subscription password.
 
-`./install.sh` installs the Ollama CLI automatically; Pi0 uses Ollama Cloud, with no local models or daemon. The official ARM64 archive needs 2 GB free temporary disk space. New keys are stored under `~/.config/ninjarobot_pi0/credentials/` (or `$XDG_CONFIG_HOME`); protect that directory and `config.pre-provider.json`. Voice is enabled only for supported Gemini models; other selections accept text. Cloud calls may incur charges. Detailed behavior and manual validation are in the [model adapter wiki source](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterImplementation.md).
+`./install.sh` installs the Ollama CLI automatically; Pi0 uses Ollama Cloud, with no local models or daemon. The official ARM64 archive needs 2 GB free temporary disk space. New keys are stored under `~/.config/ninjarobot_pi0/credentials/` (or `$XDG_CONFIG_HOME`); protect that directory and `config.pre-provider.json`. Web microphone input uses browser speech recognition and works with every model provider; uploaded audio files require a supported Gemini model. Cloud calls may incur charges. Detailed behavior and manual validation are in the [model adapter wiki source](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterImplementation.md).
 
 ### 2.6 Create Robot Movements
 
@@ -566,7 +566,7 @@ Made with ❤️ for AI Robotics Education
 
 # 日本語
 
-モデルの変更: `uv run ninja_core config select-model` または `./onboard.sh --step ai_model` で Google、OpenAI、Anthropic、Ollama Cloud を選び、API キーを非公開で入力してモデルを検証します。変更後はエージェントを手動で再起動してください。Pi0 はクラウド推論のみを使用します。インストーラーは Ollama CLI を導入します（ローカルモデルやデーモンなし、展開用の空き容量 2 GB が必要）。音声は対応する Gemini モデルで利用できます。クラウド利用は課金される場合があります。
+モデルの変更: `uv run ninja_core config select-model` または `./onboard.sh --step ai_model` で Google、OpenAI、Anthropic、Ollama Cloud を選び、API キーを非公開で入力してモデルを検証します。変更後はエージェントを手動で再起動してください。Pi0 はクラウド推論のみを使用します。インストーラーは Ollama CLI を導入します（ローカルモデルやデーモンなし、展開用の空き容量 2 GB が必要）。Web のマイク入力はブラウザーの音声認識を使い、すべてのモデルプロバイダーで利用できます。音声ファイルの送信には対応する Gemini モデルが必要です。クラウド利用は課金される場合があります。
 
 ## 1. NinjaRobotPi0 とは？
 
@@ -881,7 +881,7 @@ AI ロボティクス教育のために ❤️ を込めて作られました
 
 # 繁體中文
 
-更換模型：執行 `uv run ninja_core config select-model` 或 `./onboard.sh --step ai_model`，選擇 Google、OpenAI、Anthropic 或 Ollama Cloud，私下輸入 API 金鑰並驗證模型，然後手動重新啟動代理。Pi0 僅使用雲端推論；安裝程式會安裝 Ollama CLI，不下載本機模型或啟動守護程序，解壓暫存需 2 GB 可用空間。語音僅供支援的 Gemini 模型使用。雲端呼叫可能產生費用。
+更換模型：執行 `uv run ninja_core config select-model` 或 `./onboard.sh --step ai_model`，選擇 Google、OpenAI、Anthropic 或 Ollama Cloud，私下輸入 API 金鑰並驗證模型，然後手動重新啟動代理。Pi0 僅使用雲端推論；安裝程式會安裝 Ollama CLI，不下載本機模型或啟動守護程序，解壓暫存需 2 GB 可用空間。網頁麥克風輸入使用瀏覽器語音辨識，可搭配所有模型供應商；音訊檔上傳需要支援的 Gemini 模型。雲端呼叫可能產生費用。
 
 ## 1. 什麼是 NinjaRobotPi0？
 
@@ -1196,7 +1196,7 @@ Bookworm/Trixie 64-bit 是參考環境，不是 OS 代號白名單。需使用 Z
 
 # 简体中文
 
-更换模型：运行 `uv run ninja_core config select-model` 或 `./onboard.sh --step ai_model`，选择 Google、OpenAI、Anthropic 或 Ollama Cloud，私下输入 API 密钥并验证模型，然后手动重启代理。Pi0 仅使用云端推理；安装程序会安装 Ollama CLI，不下载本地模型或启动守护进程，解压临时文件需要 2 GB 可用空间。语音仅用于受支持的 Gemini 模型。云端调用可能产生费用。
+更换模型：运行 `uv run ninja_core config select-model` 或 `./onboard.sh --step ai_model`，选择 Google、OpenAI、Anthropic 或 Ollama Cloud，私下输入 API 密钥并验证模型，然后手动重启代理。Pi0 仅使用云端推理；安装程序会安装 Ollama CLI，不下载本地模型或启动守护进程，解压临时文件需要 2 GB 可用空间。网页麦克风输入使用浏览器语音识别，可搭配所有模型提供商；音频文件上传需要受支持的 Gemini 模型。云端调用可能产生费用。
 
 ## 1. 什么是 NinjaRobotPi0？
 

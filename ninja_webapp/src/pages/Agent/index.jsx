@@ -15,14 +15,15 @@ function Agent() {
     const [pendingMessages, setPendingMessages] = useState(0);
     const [distance, setDistance] = useState(null);
     const [isRecording, setIsRecording] = useState(false);
-    const [voiceAvailable, setVoiceAvailable] = useState(false);
+    const speechRecognitionRef = useRef(null);
 
-    useEffect(() => {
-        let active = true;
-        fetch('/api/agent/status').then((res) => res.ok ? res.json() : null)
-            .then((status) => { if (active) setVoiceAvailable(status?.supports_audio === true); })
-            .catch(() => { if (active) setVoiceAvailable(false); });
-        return () => { active = false; };
+    useEffect(() => () => {
+        const recognition = speechRecognitionRef.current;
+        if (recognition) {
+            recognition.onstart = recognition.onend = recognition.onresult = recognition.onerror = null;
+            recognition.abort();
+            speechRecognitionRef.current = null;
+        }
     }, []);
     const [logs, setLogs] = useState([]);
     const [isLogPanelOpen, setIsLogPanelOpen] = useState(false);
@@ -139,7 +140,7 @@ function Agent() {
     // Voice Input
     const toggleVoiceRecording = () => {
         if (isRecording) {
-            window.speechRecognitionInstance?.stop();
+            speechRecognitionRef.current?.stop();
             setIsRecording(false);
             return;
         }
@@ -151,22 +152,31 @@ function Agent() {
         }
 
         const recognition = new SpeechRecognition();
-        window.speechRecognitionInstance = recognition;
+        speechRecognitionRef.current = recognition;
 
-        const langMap = { 'en': 'en-US', 'ja': 'ja-JP', 'zh-TW': 'zh-TW', 'zh-CN': 'zh-CN' };
-        recognition.lang = langMap[i18n.language] || 'en-US';
+        const langMap = { 'en': 'en-US', 'ja': 'ja-JP', 'zh-tw': 'zh-TW', 'zh-cn': 'zh-CN' };
+        recognition.lang = langMap[i18n.language.toLowerCase()] || 'en-US';
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
 
         recognition.onstart = () => setIsRecording(true);
-        recognition.onend = () => setIsRecording(false);
+        recognition.onend = () => {
+            if (speechRecognitionRef.current === recognition) speechRecognitionRef.current = null;
+            setIsRecording(false);
+        };
         recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
             if (transcript) setInput(transcript);
         };
         recognition.onerror = () => setIsRecording(false);
 
-        recognition.start();
+        try {
+            setIsRecording(true);
+            recognition.start();
+        } catch {
+            speechRecognitionRef.current = null;
+            setIsRecording(false);
+        }
     };
 
     // Hardware Control States
@@ -268,8 +278,7 @@ function Agent() {
                     <button
                         className={`${styles.micButton} ${isRecording ? styles.recording : ''}`}
                         onClick={toggleVoiceRecording}
-                        disabled={!voiceAvailable}
-                        title={t(voiceAvailable ? 'agent.voice' : 'agent.voiceUnavailable')} aria-label={t(voiceAvailable ? 'agent.voice' : 'agent.voiceUnavailable')} aria-pressed={isRecording}
+                        title={t('agent.voice')} aria-label={t('agent.voice')} aria-pressed={isRecording}
                     >
                         {isRecording ? '⏹️' : '🎤'}
                     </button>
