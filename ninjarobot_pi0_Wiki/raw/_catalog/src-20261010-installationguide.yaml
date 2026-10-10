@@ -1,0 +1,16 @@
+id: src-20261010-installationguide
+path: raw/articles/ninjarobotpi0/2026-10-10-lifecycle/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: Installationguide
+added_at: '2026-10-10T11:59:06Z'
+content_hash: sha256:daf4f218e05c0f9deec2f93a28e679b86ccc0372f86f7a0962d9000d2bf6392f
+state: ingested
+original_uri: urn:llmwiki:source:src-20261010-installationguide
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-10T11:59:27Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-10T12:12:27Z'
+last_plan: pi0-lifecycle-cli-recovery-261010

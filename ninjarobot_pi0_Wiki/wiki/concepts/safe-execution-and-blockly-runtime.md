@@ -24,11 +24,19 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration
   content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  content_hash: sha256:5d4be31936118493340340291e66a59c7f76886f26e791ca0963721aab9f21a8
+- id: src-20261010-lifecyclerefinementsvalidation
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsvalidation
+  title: Lifecyclerefinementsvalidation
+  content_hash: sha256:01fa07f823e9dedfcc2d243ae107b496758960b0c5be790db9df2a8deef94066
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-07T07:47:00+00:00'
-  target_hash: sha256:de35824df01fa6fa2f32d3ccb2f74fa56679ab5928c7e12c6de4a9aa5c51015d
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:7b3920fa4e8b0cf06cbce8c129c9bd0c2cd9d90beeb3f8ca9a24aed1188354a9
   result: passed
   checks:
     source_support: passed
@@ -37,9 +45,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Sandboxed Python execution pipeline matches DevelopmentGuide and ninja_core README.
-  - Absolute matches ('safe', 'never') describe concept name and cooperative cancellation
-    loop boundaries.
+  - Reviewed safe execution against RuntimePipeline, web_sessions.py, and test_lifecycle_refinements.py.
+    Browser disconnect cancellation, 35s inactivity timeout, generation token checks,
+    and waiting QR hold match code.
+  - Cancellation is cooperative across step boundaries and motion locks; instant hardware
+    abort is not guaranteed.
 ---
 
 # Safe Code Execution and Blockly Runtime
@@ -85,3 +95,9 @@ For visual Blockly code generation (`web-blockly-v2`), `ninja_core.api_wrappers`
 The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0). The local folder is `NinjaRobotPi0/`. The new repository starts with fresh history on `main`; Python packages and robot runtime behavior are retained. Manual links use `blob/HEAD` to follow the GitHub default branch. Historical names and audit findings remain provenance; this migration does not resolve them.[^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
+## Browser disconnect cooperative cancellation (2026-10-10)
+
+Closing the controlling browser or timing out after 35 seconds of inactivity triggers cooperative cancellation across active Blockly and native robot tasks.[^src-20261010-lifecyclerefinementsimplementationplan] `RuntimePipeline` aborts running movements and greeting tasks, restores the waiting reconnect QR on the display, and suppresses idle face expressions until reconnection. Generation tokens ensure stale callbacks from disconnected sessions cannot resume control even if the same cookie reconnects.[^src-20261010-lifecyclerefinementsvalidation]
+
+[^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
+[^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.

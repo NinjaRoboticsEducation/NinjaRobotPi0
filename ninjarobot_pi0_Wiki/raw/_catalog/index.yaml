@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-09T17:12:07Z'
+generated_at: '2026-10-10T12:12:31Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -279,5 +279,80 @@ sources:
 - id: src-20261009-readme
   title: Readme
   path: raw/articles/ninja_core/2026-10-09-builtins/README.md
+  kind: text
+  state: ingested
+- id: src-20261010-clientrypointrepairevidence
+  title: Clientrypointrepairevidence
+  path: raw/notes/ninjarobotpi0/2026-10-10-cli-repair/CLIEntryPointRepairEvidence.md
+  kind: text
+  state: ingested
+- id: src-20261010-clientrypointrepairplan
+  title: Clientrypointrepairplan
+  path: raw/notes/ninjarobotpi0/2026-10-10-cli-repair/CLIEntryPointRepairPlan.md
+  kind: text
+  state: ingested
+- id: src-20261010-clientrypointsvalidation
+  title: Clientrypointsvalidation
+  path: raw/notes/ninjarobotpi0/2026-10-10-cli-repair/CLIEntryPointsValidation.md
+  kind: text
+  state: ingested
+- id: src-20261010-developmentguide-2
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261010-developmentguide
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-10-lifecycle/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261010-developmentlog-2
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261010-developmentlog
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-10-lifecycle/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261010-installationguide-2
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-10-cli-repair/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261010-installationguide
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-10-lifecycle/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261010-lifecyclerefinementsevidence
+  title: Lifecyclerefinementsevidence
+  path: raw/notes/ninjarobotpi0/2026-10-10-lifecycle/LifecycleRefinementsEvidence.md
+  kind: text
+  state: ingested
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  path: raw/notes/ninjarobotpi0/2026-10-10-lifecycle/LifecycleRefinementsImplementationPlan.md
+  kind: text
+  state: ingested
+- id: src-20261010-lifecyclerefinementsvalidation
+  title: Lifecyclerefinementsvalidation
+  path: raw/notes/ninjarobotpi0/2026-10-10-lifecycle/LifecycleRefinementsValidation.md
+  kind: text
+  state: ingested
+- id: src-20261010-readme-2
+  title: Readme
+  path: raw/articles/ninjarobotpi0/2026-10-10-lifecycle/README.md
+  kind: text
+  state: ingested
+- id: src-20261010-readme-3
+  title: Readme
+  path: raw/articles/ninjarobotpi0/2026-10-10-cli-repair/README.md
+  kind: text
+  state: ingested
+- id: src-20261010-readme
+  title: Readme
+  path: raw/articles/ninja_core/2026-10-10-lifecycle/README.md
   kind: text
   state: ingested

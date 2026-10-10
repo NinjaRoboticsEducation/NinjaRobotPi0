@@ -1,7 +1,8 @@
 ---
 type: Concept
 title: Motion System and Easing Curves
-description: Velocity-based physics motion calculations, position-aware easing curves, and the movement command syntax.
+description: Velocity-based physics motion calculations, position-aware easing curves,
+  and the movement command syntax.
 status: draft
 generated:
   by: codex/migration-audit
@@ -31,11 +32,19 @@ sources:
   resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
   title: 2026 10 09 Builtin Movements
   content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  content_hash: sha256:5d4be31936118493340340291e66a59c7f76886f26e791ca0963721aab9f21a8
+- id: src-20261010-lifecyclerefinementsevidence
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
+  title: Lifecyclerefinementsevidence
+  content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:73928d56956986e87068d3c72f61d6ddd527c46e8255b358dc710829ce48ac57
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:ac145507919f3d3575a2e981544ad79df24b4d71c2009d1a848aab3d50159274
   result: passed
   checks:
     source_support: passed
@@ -44,8 +53,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed motion system pipeline and MovementController against builtin_movements.py and movement_controller.py. Preflight step validation, execution locking, step-boundary callback checks, and driver abort handling are verified.
-  - Absolute matches ('all', 'never') reflect preflight guards; in-step callback interruption remains limited by the blocking driver loop. Real hardware testing is pending.
+  - Reviewed motion system against movement_cli.py, movement_controller.py, and test_lifecycle_refinements.py.
+    Option 6 Poweroff exit, PWM release without subsequent centering, and center_all_servos
+    abort callbacks match code.
+  - Physical clearance for extreme ±90° targets and mechanical holding torque require
+    real hardware verification.
 ---
 
 # Motion System and Easing Curves
@@ -117,3 +129,10 @@ The controller lock serializes its own operations to prevent concurrent sequence
 
 [^src-20261009-2026-10-09-spider-otto]: Code-verified movement contract and Spider adaptation evidence, 2026-10-09; supersedes stronger historical timing/protection wording.
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+## Deliberate exit motion and lifecycle abort integration (2026-10-10)
+
+Movement-tool deliberate exit (option 6) validates and commands configured `Poweroff` (for Spider) or configured `home` (for Wheel and Humanoid) before HAL shutdown and configuration save.[^src-20261010-lifecyclerefinementsimplementationplan] Unlike earlier versions that unconditionally centered servos upon exit, option 6 executes the target pose once and does not perform subsequent centering. Following pose arrival, HAL shutdown releases PWM rather than electrically holding the position. Errors or KeyboardInterrupt do not request extra recovery motion.[^src-20261010-lifecyclerefinementsevidence]
+Additionally, `center_all_servos` supports an optional lifecycle abort callback checked within the motion lock to cooperatively halt centering if ownership is lost.[^src-20261010-lifecyclerefinementsevidence]
+
+[^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
+[^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.

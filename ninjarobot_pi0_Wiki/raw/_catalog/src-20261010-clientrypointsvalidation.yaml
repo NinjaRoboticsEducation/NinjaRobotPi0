@@ -1,0 +1,16 @@
+id: src-20261010-clientrypointsvalidation
+path: raw/notes/ninjarobotpi0/2026-10-10-cli-repair/CLIEntryPointsValidation.md
+media_type: text/markdown
+kind: text
+title: Clientrypointsvalidation
+added_at: '2026-10-10T11:59:12Z'
+content_hash: sha256:7a38fdff3c9c1e9bcb8eb98d85bcd773d2504e6936381994778fb42a95699ce3
+state: ingested
+original_uri: urn:llmwiki:source:src-20261010-clientrypointsvalidation
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-10T11:59:24Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-10T12:12:27Z'
+last_plan: pi0-lifecycle-cli-recovery-261010

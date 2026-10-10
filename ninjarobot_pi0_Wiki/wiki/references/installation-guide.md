@@ -43,11 +43,39 @@ sources:
   resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
   title: 2026 10 09 Builtin Movements
   content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261010-installationguide-2
+  resource: urn:llmwiki:source:src-20261010-installationguide-2
+  title: Installationguide
+  content_hash: sha256:18d2002125e05e7026c4bc7568ba8fb1f588a466bc7815f850476e07fa922913
+- id: src-20261010-installationguide
+  resource: urn:llmwiki:source:src-20261010-installationguide
+  title: Installationguide
+  content_hash: sha256:daf4f218e05c0f9deec2f93a28e679b86ccc0372f86f7a0962d9000d2bf6392f
+- id: src-20261010-clientrypointrepairplan
+  resource: urn:llmwiki:source:src-20261010-clientrypointrepairplan
+  title: Clientrypointrepairplan
+  content_hash: sha256:05eb8fe221519b45022eb360c7441b1ff7a1b41e542502ab9759ca93ca2701fc
+- id: src-20261010-clientrypointsvalidation
+  resource: urn:llmwiki:source:src-20261010-clientrypointsvalidation
+  title: Clientrypointsvalidation
+  content_hash: sha256:7a38fdff3c9c1e9bcb8eb98d85bcd773d2504e6936381994778fb42a95699ce3
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  content_hash: sha256:5d4be31936118493340340291e66a59c7f76886f26e791ca0963721aab9f21a8
+- id: src-20261010-lifecyclerefinementsvalidation
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsvalidation
+  title: Lifecyclerefinementsvalidation
+  content_hash: sha256:01fa07f823e9dedfcc2d243ae107b496758960b0c5be790db9df2a8deef94066
+- id: src-20261010-readme-3
+  resource: urn:llmwiki:source:src-20261010-readme-3
+  title: Readme
+  content_hash: sha256:dd7aadd29af3a65ecd5a300f54a41534f0a212e9b4512ece03d3d21ec9b24922
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:065f07bffca803dd26f1ad6d802502ce3ed661b384a9113772187e089706449b
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:8035d6d72bf75c3843fe62f0e253f08738309f69fb18a82ea22956fd35ff8315
   result: passed
   checks:
     source_support: passed
@@ -56,17 +84,20 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed installation manual procedures against install.sh, onboard.sh, and InstallationGuide.md. Automated install, profile seeding on config import, and raised-chassis pre-motion safety rules match current manual.
-  - Installer execution does not auto-activate robot hardware. Network access and security setup remain explicit.
+  - Reviewed installation manual procedures against install.sh, onboard.sh, and 2026-10-10
+    InstallationGuide.md. ninjarobotpi0 venv prompt, single-ownership launcher verification
+    in .venv/bin, and targeted --reinstall-package repair match current manual.
+  - Installer checks do not auto-activate robot hardware. Real environment repair
+    requires explicit owner authorization.
 ---
 
 # Current installation manual
 
-Resolve the complete current InstallationGuide through project-knowledge.json or the wiki README. It covers the Raspberry Pi OS 64-bit compatibility requirements, software installation, explicit onboarding, prerequisites, calibration warnings and recovery. Root InstallationGuide.md is a compatibility pointer. Earlier detailed material is preserved as historical reference, with current installation instructions clearly identified.[^src-20261009-installationguide]
+Resolve the complete current InstallationGuide through project-knowledge.json or the wiki README. It covers the Raspberry Pi OS 64-bit compatibility requirements, software installation, explicit onboarding, prerequisites, calibration warnings and recovery. Root InstallationGuide.md is a compatibility pointer. Earlier detailed material is preserved as historical reference, with current installation instructions clearly identified.[^src-20261010-installationguide-2]
 
 [Project overview](/overview.md).
 
-[^src-20261009-installationguide]: Current versioned Installationguide.
+[^src-20261009-installationguide]: Historical 2026-10-09 versioned Installationguide.
 
 ## Implementation evidence and acceptance limits
 
@@ -124,3 +155,18 @@ The complete public walkthrough is preserved in the current README source.[^src-
 The current installation manual records built-in movement seeding during configuration import. Physical safety requirements specify supporting the robot chassis or raising wheels before testing center or movement commands, verifying external servo power and common ground, and inspecting both `config.json` calibration keys and physical `servo.json` before motion.[^src-20261009-installationguide] [^src-20261009-readme-2] [^src-20261009-2026-10-09-builtin-movements]
 
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+## Lifecycle refinements and virtual environment branding (2026-10-10)
+
+Root distribution, lock identity, and default virtual environment prompt become `ninjarobotpi0` (replacing `ninjarobotv4`). The directory remains `.venv`. The installer explicitly creates or reuses the environment with `uv venv --allow-existing --prompt ninjarobotpi0 --python /usr/bin/python3 .venv`, without `--clear`, before locked sync. uv preflight checks its venv capability flags.[^src-20261010-installationguide] [^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsvalidation]
+
+## CLI launcher recovery and single-ownership packaging (2026-10-10)
+
+Packaging delegates the five robot console commands (`ninja_core`, `pi0servo`, `pi0disp`, `pi0buzzer`, `pi0vl53l0x`) exclusively to their provider packages; the root project `ninjarobotpi0` no longer declares duplicate console scripts, preventing RECORD collision and uninstallation during root upgrades. The installer forces locked targeted reinstallation of the five local providers (`--reinstall-package ninja-core --reinstall-package pi0servo ...`) and verifies that all five executable launcher files exist in `.venv/bin`. Read-only `./install.sh --check` detects missing launchers and reports a minimal locked repair command using `--inexact` without modifying third-party packages or system services. Real environment repair requires explicit owner authorization.[^src-20261010-installationguide-2] [^src-20261010-clientrypointrepairplan] [^src-20261010-clientrypointsvalidation] [^src-20261010-readme-3]
+
+[^src-20261010-installationguide-2]: Current versioned Installationguide (2026-10-10 CLI recovery).
+[^src-20261010-installationguide]: Versioned Installationguide (2026-10-10 lifecycle refinements).
+[^src-20261010-clientrypointrepairplan]: CLI launcher repair plan and root packaging reconciliation.
+[^src-20261010-clientrypointsvalidation]: CLI launcher recovery validation on Raspberry Pi Zero 2 W.
+[^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
+[^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.
+[^src-20261010-readme-3]: NinjaRobotPi0 English README snapshot (2026-10-10 CLI recovery).

@@ -28,11 +28,19 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   title: 2026 10 07 Ninjarobot Pi0 Repository Migration
   content_hash: sha256:2651e2d6d359620e3f5f2b1080132a84c74321b4a018c92d672ffe9d420573aa
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  content_hash: sha256:5d4be31936118493340340291e66a59c7f76886f26e791ca0963721aab9f21a8
+- id: src-20261010-lifecyclerefinementsevidence
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
+  title: Lifecyclerefinementsevidence
+  content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-07T07:47:00+00:00'
-  target_hash: sha256:69121ad7d076af2b5d0a8d628bc9e3cdf9d13d4098e5228a23356856e1e010aa
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:45d874d13f415c12c4258ac4a2c9819f955869c3a82cb3db4789904d2790343d
   result: passed
   checks:
     source_support: passed
@@ -41,8 +49,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - BLE and WebSocket protocol architectures match ninja_ble README and DevelopmentGuide.
-  - Absolute match ('all') accurately states unified dispatching through CommandDispatcher.
+  - Reviewed connectivity protocols against web_server.py, web_sessions.py, and ninja_ble.
+    Session ownership via /ws/session and HttpOnly cookie, 423/503 status codes, and
+    BLE independence match code.
+  - Session ownership provides connection management, not user authentication. BLE
+    advertising is not an active controller.
 ---
 
 # Dual Connectivity and Communication Protocols
@@ -110,3 +121,10 @@ To prevent false timeout errors in web browsers when Bluetooth notification pack
 The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducation/NinjaRobotPi0](https://github.com/NinjaRoboticsEducation/NinjaRobotPi0). The local folder is `NinjaRobotPi0/`. The new repository starts with fresh history on `main`; Python packages and robot runtime behavior are retained. Manual links use `blob/HEAD` to follow the GitHub default branch. Historical names and audit findings remain provenance; this migration does not resolve them.[^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
+## Web session ownership protocol (2026-10-10)
+
+NinjaRobotPi0 web connectivity enforces a single-browser session ownership protocol via `/ws/session` and a server-issued HttpOnly `ninja_web_session` cookie.[^src-20261010-lifecyclerefinementsimplementationplan]
+This protocol governs connection ownership rather than login authentication. API requests require live primary ownership (returning 423 when inactive, 503 during server shutdown), and secondary connections receive close code 4409. BLE remains an independent protocol, and BLE advertising is never counted as an active browser session controller.[^src-20261010-lifecyclerefinementsevidence]
+
+[^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
+[^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.

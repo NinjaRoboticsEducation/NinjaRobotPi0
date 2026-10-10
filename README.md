@@ -61,7 +61,7 @@ Follow these steps to build and run your own NinjaRobotPi0 from scratch.
 | **Buzzer** | Passive buzzer (3–5 V) | For sounds and melodies |
 | **Setup Access** | Terminal or SSH, internet, normal user with sudo | For installation and configuration |
 
-> **📎 Full hardware details:** See the [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-builtins/InstallationGuide.md)
+> **📎 Full hardware details:** See the [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-cli-repair/InstallationGuide.md)
 
 ### 2.2 Hardware Wiring
 
@@ -541,7 +541,7 @@ From the installation folder, `./onboard.sh --status` checks saved configuration
 
 Protect `config.json` (which may contain your Gemini key), ngrok credentials and calibration files; do not publish them. Gemini pricing/quota and ngrok availability depend on your account. The Pi0 control interface has no user-login protection; an encrypted ngrok tunnel does not add application authentication. Use trusted networks and keep control URLs private.
 
-Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-builtins/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-builtins/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-09-builtins/DevelopmentLog.md).
+Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-cli-repair/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentLog.md).
 
 ## License
 

@@ -28,11 +28,19 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-07-install-onboard-wiki-ui-2
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  content_hash: sha256:5d4be31936118493340340291e66a59c7f76886f26e791ca0963721aab9f21a8
+- id: src-20261010-lifecyclerefinementsvalidation
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsvalidation
+  title: Lifecyclerefinementsvalidation
+  content_hash: sha256:01fa07f823e9dedfcc2d243ae107b496758960b0c5be790db9df2a8deef94066
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-07T13:11:31.717714+00:00'
-  target_hash: sha256:de69c1b89c7fb9773c9cfa9219d25909c28a7f9b3ddd6717ea905c1524a3320a
+  performed_by: agent:antigravity
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:1f446e93aa60794a5c89aa59e2e441fb8753b07f71edfb1168c7b3624a6432b9
   result: passed
   checks:
     source_support: passed
@@ -41,11 +49,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - React declaration, Pi5-derived tokens, menu/drawer and locale changes match code
-    and inspected browser renders. Dedicated distance/activity channels are clarified;
-    no live controls were tested.
-  - Source-grounded AI review; lifecycle stays draft/unverified. This is not human
-    or hardware verification.
+  - Reviewed ninja_webapp package against Layout.jsx, useRobotSession.js, and locale
+    files. Persistent /ws/session across routes, 10s ping, 3s retry, 4409 busy modal,
+    and localized strings match code.
+  - Frontend Vite build and inert hook tests pass; real browser multi-tab testing
+    remains pending.
 ---
 
 # ninja_webapp Package
@@ -90,3 +98,9 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 Host validation and the exact code/tooling boundary are recorded in the approved implementation evidence. Real Pi hardware, live accounts and published curl acceptance remain pending; passing host checks do not imply physical acceptance.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2]
 
 [^src-20261007-2026-10-07-install-onboard-wiki-ui-2]: Pi0 upgrade implementation and current UI contracts.
+## Shared session lifecycle and reconnect management (2026-10-10)
+
+`ninja_webapp` integrates session management in the shared application layout (`Layout.jsx`) using the `useRobotSession.js` hook.[^src-20261010-lifecyclerefinementsimplementationplan] A persistent `/ws/session` socket connects when the app mounts, carrying the server's HttpOnly session cookie across Home, Agent, and Help views. Heartbeat pings run every 10 seconds, with automatic retry every 3 seconds if disconnected. If a secondary browser attempts to connect while a session is active, the server closes the socket with code 4409, and the web app presents a busy modal preventing unauthorized control. The four locale bundles (`en`, `ja`, `zh-cn`, `zh-tw`) provide localized notifications for busy and reconnecting states.[^src-20261010-lifecyclerefinementsvalidation]
+
+[^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
+[^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.

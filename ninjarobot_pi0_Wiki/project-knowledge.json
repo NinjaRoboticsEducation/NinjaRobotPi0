@@ -1,13 +1,13 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-09T07:08:54.284662+00:00",
+  "reviewed_at": "2026-10-10T12:13:00Z",
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-09-builtins/InstallationGuide.md",
-      "source_id": "src-20261009-installationguide",
-      "content_hash": "sha256:0303e14ce171088cba240df2a0a3a29d88e2db0dc5cc2263f26f95d89ac68945",
+      "path": "raw/articles/ninjarobotpi0/2026-10-10-cli-repair/InstallationGuide.md",
+      "source_id": "src-20261010-installationguide-2",
+      "content_hash": "sha256:18d2002125e05e7026c4bc7568ba8fb1f588a466bc7815f850476e07fa922913",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-09-builtins/DevelopmentGuide.md",
-      "source_id": "src-20261009-developmentguide-2",
-      "content_hash": "sha256:80ef9c89176a6b0a3749f9127697464f197c2972bf2a41ae533fa2cb7afdc0ab",
+      "path": "raw/articles/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentGuide.md",
+      "source_id": "src-20261010-developmentguide-2",
+      "content_hash": "sha256:a79a71113f70fb1e6b443cd73b9cd688c8f7889ebf4a9df97b521cb3b76e3127",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-09-builtins/DevelopmentLog.md",
-      "source_id": "src-20261009-developmentlog-2",
-      "content_hash": "sha256:d176728a0871bab1ad8a7138df05ca04d87c6782011c7459f49278c07a9c3a88",
+      "path": "raw/notes/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentLog.md",
+      "source_id": "src-20261010-developmentlog-2",
+      "content_hash": "sha256:40f6788a77be5b79abd3eb173cb3c0ac836fbe3321ac48d01654f26c77fbf853",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -120,11 +120,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     ".agents/skills/project-documentation/SKILL.md": {
-      "content_hash": "sha256:7d173449c7edf337d1327707c4177d3c26f11b7303a9fa6b99767d6803dd667a",
+      "content_hash": "sha256:e47167fb087e4084f1003acd54c8ba0aeb0c809009ad0f9f8ecad6518156eaa3",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+      "review_note": "Updated documentation review checklist and policy boundaries."
     },
     ".agents/skills/project-documentation/agents/openai.yaml": {
       "content_hash": "sha256:79cc7902e5cdaee41ae8c17a0bce9374eb4baea1a2bf2cc9650974f9fdeaa3cc",
@@ -225,11 +225,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "AGENTS.md": {
-      "content_hash": "sha256:6f54eaa1eccf038c2a10ebbf6bf6fbc0adbc9e5b2b5aeec00ba8e3aa91cf37ef",
+      "content_hash": "sha256:72bbee0eabe00f46219d7c87befd77816589985c00d28e0036f8360b58da78eb",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Owner-authorized public README clarified; three root manual files stay immutable-manual compatibility pointers."
+      "review_note": "NinjaRobotPi0 development protocol updated for single-ownership CLI launchers and lifecycle contracts."
     },
     "CLAUDE.md": {
       "content_hash": "sha256:3e237d98602a603ed8f6ffd50d1253f3abb2574e3810cc85c3f7b7ef0b2fbeb2",
@@ -398,20 +398,20 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/movement_cli.py": {
-      "content_hash": "sha256:82eba44390b7ec91e3f828b71a3bbfc4638aa5511d2a84483ad6f275bc84219c",
+      "content_hash": "sha256:8f657b6129f59e630d7cffc585f2bbec67808e1f9bd8a98236589c87cc8db142",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "Movement tool CLI option 4 and profile movement listing reviewed against 2026-10-09 builtins implementation."
+      "review_note": "Movement-tool option 6 deliberate exit commands Poweroff before HAL shutdown without subsequent centering."
     },
     "ninja_core/src/ninja_core/movement_controller.py": {
-      "content_hash": "sha256:8eacada718dda6ebfb19a0c47223216da0d0e93a35ba4a6a5f7cd879ba2c66d6",
+      "content_hash": "sha256:d93035731b1c0292a8a9cc8d23e5d9ab3d8a9a327268699fcce6e93669ada623",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "MovementController preflight step validation, execution locking, and boundary callback checks reviewed against 2026-10-09 builtins implementation."
+      "review_note": "Added optional lifecycle abort callback check within controller motion lock."
     },
     "ninja_core/src/ninja_core/ngrok_config.py": {
       "content_hash": "sha256:c6b4bff4d18c4eca5b19a184f34554387f301e3540c6f34345986fd93d531422",
@@ -446,12 +446,12 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/runtime_pipeline.py": {
-      "content_hash": "sha256:0e7a7da17e9488241a44661d4e235c0634e7ceaba65737b3ce956305032b7211",
+      "content_hash": "sha256:58fb28f01bf8675c878efe0907f27c187a5a29dc5d5e0f1ccd16f9d7a3bc6108",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
+      "review_note": "Suppressed automatic idle face painting while waiting on reconnect screen."
     },
     "ninja_core/src/ninja_core/safe_executor.py": {
       "content_hash": "sha256:e9ffdf3faa169bbce9ec6054103b8913ebcd79d0b1da7de16666cbb657742384",
@@ -462,12 +462,12 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/web_server.py": {
-      "content_hash": "sha256:011ccd2911271370ddc542c29c7439cbabfacb2826617ee1973d57bde160cc66",
+      "content_hash": "sha256:7461b3ae4977413e026b8a645a8a183e8a3e378c4b3c50ec39c138861463adcd",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
       ],
-      "review_note": "FastAPI web server /api/servos/movements endpoints and validation errors reviewed against 2026-10-09 builtins implementation."
+      "review_note": "Integrated /ws/session, HttpOnly cookie validation, 423/503 status codes, and 4409 close code."
     },
     "ninja_utils/pyproject.toml": {
       "content_hash": "sha256:802a26e85a412dbe9b77595f758dd2e58bb014d2fd27f6e1f2dae555839dcb75",
@@ -654,12 +654,12 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/components/layout/Layout.jsx": {
-      "content_hash": "sha256:0132b26f616d22100b3199c2234631984af4cb0b4336f196ceb5e33358ed781e",
+      "content_hash": "sha256:d6006f3702e415714b349ea643096ec051efb67ab009bad59f39aa35de0e3eb7",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Shared layout maintains persistent /ws/session across Home, Agent, and Help routes."
     },
     "ninja_webapp/src/components/layout/Layout.module.css": {
       "content_hash": "sha256:b1c32b0c921d42d650aca0c0eb4255d4399402300d2d5753847a5bf3701afc1e",
@@ -686,36 +686,36 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/locales/en.json": {
-      "content_hash": "sha256:5433e1e2d167596c9ad7b956569d7200918347bb5b63a23091bf40240c71a1e8",
+      "content_hash": "sha256:17612328aee79748c0d6f5fd0ce341b3ce67b956903e06d402404c3e0e24c16e",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Added English localization for session busy modal and reconnect messages."
     },
     "ninja_webapp/src/locales/ja.json": {
-      "content_hash": "sha256:e2ea95a8b06b5d2cbda0f3ccff10c0f626d8527e1e51fd159d543945f24b2284",
+      "content_hash": "sha256:1bbb90176cdd1069baf4147569e6b3b154e77556a9a9dd56f1f3980b054c350c",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Added Japanese localization for session busy modal and reconnect messages."
     },
     "ninja_webapp/src/locales/zh-cn.json": {
-      "content_hash": "sha256:bd200cc59e172e6ea0148e00feb55038f5bba3440a192b85e2df7a42f5cde440",
+      "content_hash": "sha256:a9ac59088a082cca3bc80e125f2cc252a0fab5a6b8cdfdf8b6d47df2e31abaab",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Added Simplified Chinese localization for session busy modal and reconnect messages."
     },
     "ninja_webapp/src/locales/zh-tw.json": {
-      "content_hash": "sha256:718b4c453f4e8ed0ca50fedcbd55aed2e8c77c128cf3386ce4470eeba4e1e4e8",
+      "content_hash": "sha256:6d3e5f28b9a03bdbb2037fffa548511950011074a4c7680347aa6a70d9a4aba0",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Added Traditional Chinese localization for session busy modal and reconnect messages."
     },
     "ninja_webapp/src/main.jsx": {
       "content_hash": "sha256:227fb9cc1dd4c0f0c2384eb498eee6e1d97dd9615fc3c5213335885595304a09",
@@ -901,11 +901,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "ninjarobot_pi0_Wiki/AGENTS.md": {
-      "content_hash": "sha256:2f063d66daaa11ce51176069a54203c8c31b8f70a48e30c949e04db0cdeed841",
+      "content_hash": "sha256:df4fabd63221580457a7a22949505cdc128628bda91340b0b9d80d4b6c8de95c",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+      "review_note": "Local LLM Wiki instructions for OKF v0.2 bundle and source evidence handling."
     },
     "ninjarobot_pi0_Wiki/CLAUDE.md": {
       "content_hash": "sha256:2d8a98fcfd7c23c36091c2e20b056f61e1e6c876d267e2b8fc215ade7eac7bb9",
@@ -1580,20 +1580,20 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "pyproject.toml": {
-      "content_hash": "sha256:619e24a7e9c82dcdf394a5be281d84a6342dd827d440c376772eb5619cadbbaf",
+      "content_hash": "sha256:3d7baa686a644a68692fefd3873bb4b1372090cb8178129929133cf0cc6a1d1b",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+      "review_note": "Root distribution renamed to ninjarobotpi0; duplicate console script declarations removed."
     },
     "scripts/install-rpi.sh": {
-      "content_hash": "sha256:72350511e68bdb992cc6e2d5c51963cd1d136bc147743c49ee8aeb89da47d116",
+      "content_hash": "sha256:2b91d9e6b82e5392bac730df103327d6ff1bc5b50492da51527758ae07fca016",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
+      "review_note": "Installer checks all five launchers and uses uv venv --prompt ninjarobotpi0."
     },
     "scripts/install-versions.env": {
       "content_hash": "sha256:9677769b8cbc56ca988eebc8d6a3b6403ee02bef3e72869382fd198499643d17",
@@ -1605,13 +1605,13 @@
       "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "scripts/install_check.py": {
-      "content_hash": "sha256:5e52189ef5af66064a6066c6f5f2a431268397341988e22aa23041880fafc47e",
+      "content_hash": "sha256:504b555f53e39840ffddca700031de61f83b1865ad3a705fb36ff1ac6161b9e5",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
+      "review_note": "Installation check detects missing launchers and reports minimal locked repair command."
     },
     "scripts/install_record.py": {
       "content_hash": "sha256:6f63bf879885e2eaa5220f8159c84c61e8d15fad77e6d964729f1c345be16db2",
@@ -1668,11 +1668,11 @@
       "review_note": "Reviewed explicit setup-only private uv fallback and cleared inherited UV_PROJECT; query paths remain no-sync."
     },
     "tests/browser_ui.cjs": {
-      "content_hash": "sha256:31a6c1bd77cf9ae8baafb7845fc973c1363debdf6eda44afa650f8feb22d0cc5",
+      "content_hash": "sha256:13379f5bd7c71125b784dd5b270089dedff3a661127a620f873dc92006a01bdf",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+      "review_note": "Browser UI fixture updated for shared layout session socket integration."
     },
     "tests/conftest.py": {
       "content_hash": "sha256:2a6742af9e8c1f1a740334bf56bec080dbb63019ca7ac1240356492036784557",
@@ -1752,11 +1752,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_installer_bootstrap.py": {
-      "content_hash": "sha256:cc2d3f958597cf123d2c30c752e3fb12d3d5fddf5bb0ffcd0019dc003ae56927",
+      "content_hash": "sha256:d98fec1a613aaa3e07e160583b4c643cbd6e3f6a7166afbfcc87a427d7ac1a46",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
+      "review_note": "Installer bootstrap tests updated for ninjarobotpi0 prompt and provider reinstall."
     },
     "tests/test_ninja_agent_model.py": {
       "content_hash": "sha256:9207aa5211b1023438ebff95561f6ec6d49708793643fbb951eaf984ef3354ba",
@@ -1794,25 +1794,25 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_upgrade_workflows.py": {
-      "content_hash": "sha256:dceb9d0d23438885f1c1fc11f20a36dab63dc63fc49e552c4a2e7c1b7b29ea5f",
+      "content_hash": "sha256:97271fa5f06c194289b39df17a7ad5b0bc8276c461c66986af2aaaf94cb4383c",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
+      "review_note": "Upgrade workflow tests updated for single-ownership launchers and repair sync."
     },
     "uv.lock": {
-      "content_hash": "sha256:ebd98dea646e54a0329532844d4784ffd51cec2598b1657c23db54735dda0b45",
+      "content_hash": "sha256:3e96e098a6990f5d1e1fcbcdac1f6ce731c07e223573bcba167a213c1e011907",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
+      "review_note": "Root distribution identity and prompt renamed to ninjarobotpi0 with unchanged dependencies."
     },
     "README.md": {
       "pages": [
         "wiki/overview.md"
       ],
-      "content_hash": "sha256:c78fd0b77bee90477913b3d8810078afe8d37f0b3343ab49c8791b036aac4774",
-      "review_note": "Repository README manual links and built-in movement documentation reviewed against 2026-10-09 builtins implementation."
+      "content_hash": "sha256:3731345e2630ac64e43d9b74ae6dc3827ec1a710850a5120067af9db0a287612",
+      "review_note": "Root README manual links updated to 2026-10-10 CLI recovery version."
     },
     "scripts/build_spider_movements.py": {
       "content_hash": "sha256:77491a278f891742924d7d4bfc247c6f9b1a18ab4e1effbf87c5f594c4be0d4a",
@@ -1869,6 +1869,49 @@
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Unit test suite validating built-in movement discovery, profile seeding, preflight error guards, and robot type scoping."
+    },
+    "ninja_core/src/ninja_core/web_sessions.py": {
+      "content_hash": "sha256:ee917c8d232875e3c6c7b3d45e0002f51b5de97d12d966954a055bd17b590470",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/web-interface-design.md",
+        "wiki/concepts/dual-connectivity-and-protocols.md"
+      ],
+      "review_note": "Hardware-free single-browser session ownership, HttpOnly cookie generation/verification, and disconnect cleanup."
+    },
+    "ninja_webapp/src/hooks/useRobotSession.js": {
+      "content_hash": "sha256:a40c82e4b87b40d18238cf8d7d85c49d1b76ed3aef2c8e22520154cbc75ec7df",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "React hook managing persistent /ws/session connection, 10s ping, 3s retry, and busy modal handling."
+    },
+    "tests/test_cli_entrypoints.py": {
+      "content_hash": "sha256:0b76b0c08b8848ad81515ef0e226ce885b4926978c10879e538d686c41396a15",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/references/development-guide.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Tests for single console-script ownership, launcher detection in .venv/bin, and repair sync command."
+    },
+    "tests/test_lifecycle_refinements.py": {
+      "content_hash": "sha256:02f977f8e25d21517bf7e780e78fc3877c6f2942f56b153023a75f4d99ddc304",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/concepts/safe-execution-and-blockly-runtime.md",
+        "wiki/concepts/motion-system-and-easing.md"
+      ],
+      "review_note": "Tests for movement-tool option 6 Poweroff exit, single-browser session management, and reconnect QR hold."
+    },
+    "tests/web_session_hook.cjs": {
+      "content_hash": "sha256:6d4f1e6b20684b9a00e669189de6a20efff6f620b563cb442f38ec7042205203",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "Inert Node test harness verifying session cookie exchange and busy state close code 4409."
     }
   },
   "adapters": [

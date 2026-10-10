@@ -39,11 +39,27 @@ sources:
   resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
   title: 2026 10 09 Builtin Movements
   content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261010-developmentguide-2
+  resource: urn:llmwiki:source:src-20261010-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:a79a71113f70fb1e6b443cd73b9cd688c8f7889ebf4a9df97b521cb3b76e3127
+- id: src-20261010-developmentguide
+  resource: urn:llmwiki:source:src-20261010-developmentguide
+  title: Developmentguide
+  content_hash: sha256:caf3424992bc5934f04c3fd466e034a5ba2ae9e7bef283abfb5811404ce35cef
+- id: src-20261010-clientrypointrepairevidence
+  resource: urn:llmwiki:source:src-20261010-clientrypointrepairevidence
+  title: Clientrypointrepairevidence
+  content_hash: sha256:d0dfc89a29e9fc2b1c02f5a2809c90578e21a92b93c80cb881210d5bbd9c1c8d
+- id: src-20261010-lifecyclerefinementsevidence
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
+  title: Lifecyclerefinementsevidence
+  content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:349c33da148d2e7f352d4f50900d254e2db458a8d5d84cfa57df179fd09216b3
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:5a1a0708c71538bec6b07b0410938c2b60526a131d14ad29b3504399e13d74cd
   result: passed
   checks:
     source_support: passed
@@ -52,17 +68,19 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed development guide manual workflow against project-knowledge.json and test_builtin_movements.py. Packaged resources, immutable manual lifecycle, and test coverage match repository practice.
+  - Reviewed development guide manual workflow against project-knowledge.json, test_cli_entrypoints.py,
+    and test_lifecycle_refinements.py. ninjarobotpi0 prompt, single-browser session
+    ownership, option 6 Poweroff exit, and launcher recovery match repository practice.
   - Software tests do not substitute for physical robot acceptance.
 ---
 
 # Current development manual
 
-Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261009-developmentguide-2]
+Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261010-developmentguide-2]
 
 [Project overview](/overview.md).
 
-[^src-20261009-developmentguide-2]: Current versioned Developmentguide.
+[^src-20261009-developmentguide-2]: Historical 2026-10-09 versioned Developmentguide.
 
 ## Implementation evidence and acceptance limits
 
@@ -116,3 +134,23 @@ An opt-in repository JSON pack adds 19 entries covering 16 source methods and se
 The current development manual records native built-in movement import, type reconciliation, preflight guards, and controller serialization. Installed package resources provide 20 Spider movements when GPIO 20–27 are configured; Wheel and Humanoid profiles receive `home`. Host validation passed 42 feature tests; physical actuator testing remains pending.[^src-20261009-developmentguide-2] [^src-20261009-2026-10-09-builtin-movements]
 
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+## Lifecycle refinements and reconnect screen (2026-10-10)
+
+Movement-tool deliberate exit (option 6) validates and executes configured `Poweroff` before releasing hardware, without subsequent centering. When `Poweroff` is absent (Wheel/Humanoid), configured `home` is executed. HAL shutdown releases PWM rather than electrically holding the final pose.
+The web interface adds a single-browser session ownership contract: the shared layout maintains a persistent `/ws/session` socket and an opaque HttpOnly `ninja_web_session` cookie across Home, Agent, and Help views. Only one browser controls web APIs; another browser receives a busy 4409 modal and cannot trigger actions. Every `/api/` endpoint and auxiliary socket requires live primary ownership (returning 423 if inactive, 503 during shutdown). Browser disconnect or a 35s timeout cooperatively cancels pending browser tasks, aborts active native/Blockly work, and restores the waiting QR on the display while suppressing idle animations.[^src-20261010-developmentguide] [^src-20261010-lifecyclerefinementsevidence]
+
+## CLI launcher recovery and single-ownership packaging (2026-10-10)
+
+The root package `ninjarobotpi0` delegates console scripts exclusively to `ninja-core`, `pi0servo`, `pi0disp`, `pi0buzzer`, and `pi0vl53l0x`, eliminating overlapping RECORD entries. Missing launchers can be recreated via locked targeted sync:
+```bash
+env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev \
+  --reinstall-package ninja-core --reinstall-package pi0servo \
+  --reinstall-package pi0disp --reinstall-package pi0buzzer \
+  --reinstall-package pi0vl53l0x
+```
+followed by verification with `uv run --no-sync ninja_core --help` and `./install.sh --check`. Inert tests passed 105 focused and 331 root regression tests (1 excluded baseline). Real environment repair requires explicit owner approval.[^src-20261010-developmentguide-2] [^src-20261010-clientrypointrepairevidence]
+
+[^src-20261010-developmentguide-2]: Current versioned Developmentguide (2026-10-10 CLI recovery).
+[^src-20261010-developmentguide]: Versioned Developmentguide (2026-10-10 lifecycle refinements).
+[^src-20261010-clientrypointrepairevidence]: CLI launcher repair evidence and validation records.
+[^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.

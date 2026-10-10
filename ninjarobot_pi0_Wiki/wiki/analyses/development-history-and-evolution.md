@@ -1,7 +1,8 @@
 ---
 type: Analysis
 title: Development History and Evolution
-description: Chronological milestones, architectural transitions, and classroom reliability audits.
+description: Chronological milestones, architectural transitions, and classroom reliability
+  audits.
 status: draft
 generated:
   by: codex/migration-audit
@@ -63,11 +64,35 @@ sources:
   resource: urn:llmwiki:source:src-20261009-builtinmovementsvalidation
   title: Builtinmovementsvalidation
   content_hash: sha256:5d551d9332478d7b524e48d7f8f06715498df9a85e13a9099198266f948a6beb
+- id: src-20261010-developmentlog-2
+  resource: urn:llmwiki:source:src-20261010-developmentlog-2
+  title: Developmentlog
+  content_hash: sha256:40f6788a77be5b79abd3eb173cb3c0ac836fbe3321ac48d01654f26c77fbf853
+- id: src-20261010-developmentlog
+  resource: urn:llmwiki:source:src-20261010-developmentlog
+  title: Developmentlog
+  content_hash: sha256:752fc83cd9c7072816b6c2b3cae7a8b7b0d08ae7b08d17f6c3055bf84013e17f
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  content_hash: sha256:5d4be31936118493340340291e66a59c7f76886f26e791ca0963721aab9f21a8
+- id: src-20261010-lifecyclerefinementsvalidation
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsvalidation
+  title: Lifecyclerefinementsvalidation
+  content_hash: sha256:01fa07f823e9dedfcc2d243ae107b496758960b0c5be790db9df2a8deef94066
+- id: src-20261010-clientrypointrepairplan
+  resource: urn:llmwiki:source:src-20261010-clientrypointrepairplan
+  title: Clientrypointrepairplan
+  content_hash: sha256:05eb8fe221519b45022eb360c7441b1ff7a1b41e542502ab9759ca93ca2701fc
+- id: src-20261010-clientrypointsvalidation
+  resource: urn:llmwiki:source:src-20261010-clientrypointsvalidation
+  title: Clientrypointsvalidation
+  content_hash: sha256:7a38fdff3c9c1e9bcb8eb98d85bcd773d2504e6936381994778fb42a95699ce3
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:4c63758116b7b3319d5a9a6e32f35780933b8146c999ef884292d3750f97ed8f
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:ff4e3042563296eafe63aa1adde9778a636203164a568032fc363bc302df64a5
   result: passed
   checks:
     source_support: passed
@@ -76,8 +101,12 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed chronological milestones against Git log, development logs, and validation evidence. 2026-10-09 native built-in movements milestone, packaging, and inert Pi Zero 2 W host tests are supported.
-  - Historical milestones remain provenance; host test passes do not imply physical robot acceptance.
+  - Reviewed development history and evolution against 2026-10-10 DevelopmentLog.md,
+    CLI repair plan, and lifecycle refinements plan. Chronology, root rename launcher
+    collision recovery, session ownership protocol, and Poweroff exit match repository
+    records.
+  - Historical entries remain immutable provenance; physical actuator acceptance remains
+    separate.
 ---
 
 # Development History and Evolution
@@ -177,3 +206,19 @@ Additive metadata `movement_robot_types` and `builtin_movement_hashes` ensure id
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
 [^src-20261009-developmentlog-2]: NinjaRobotPi0 development log with built-in movements implementation records.
 [^src-20261009-builtinmovementsvalidation]: Built-in movement validation on Raspberry Pi Zero 2 W with inert hardware.
+## Lifecycle refinements and reconnect screen (2026-10-10)
+
+Movement-tool deliberate exit (option 6) executes configured `Poweroff` (or `home` fallback) before HAL shutdown and configuration save, without subsequent centering. HAL shutdown releases PWM rather than holding torque.
+The web interface adds a single-browser session ownership contract: the shared layout maintains a persistent `/ws/session` socket and an opaque HttpOnly `ninja_web_session` cookie. Only one browser controls web APIs; another browser receives a busy 4409 modal and cannot trigger actions. Every `/api/` endpoint and auxiliary socket requires live primary ownership (returning 423 if inactive, 503 during shutdown). Browser disconnect or a 35s timeout cooperatively cancels pending browser tasks, aborts active native/Blockly work, and restores the waiting QR on the display while suppressing idle animations.
+The root package and virtual environment prompt are updated to `ninjarobotpi0`.[^src-20261010-developmentlog] [^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsvalidation]
+
+## CLI launcher recovery and packaging reconciliation (2026-10-10)
+
+Following the root distribution rename, all five `.venv/bin` robot launchers were missing due to duplicate console script ownership between the root package and provider packages in installed RECORD files. The root project `ninjarobotpi0` removed duplicate script declarations, delegating console scripts exclusively to `ninja-core`, `pi0servo`, `pi0disp`, `pi0buzzer`, and `pi0vl53l0x`. The installer forces locked targeted reinstallation (`--reinstall-package`) to restore missing launchers and verifies all five paths in `.venv/bin`. Inert regression tests passed 331 tests (1 deselected baseline); real environment repair remains pending explicit authorization.[^src-20261010-developmentlog-2] [^src-20261010-clientrypointrepairplan] [^src-20261010-clientrypointsvalidation]
+
+[^src-20261010-developmentlog-2]: NinjaRobotPi0 development log with CLI launcher recovery records.
+[^src-20261010-developmentlog]: NinjaRobotPi0 development log with lifecycle refinements records.
+[^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
+[^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.
+[^src-20261010-clientrypointrepairplan]: CLI launcher repair plan and root packaging reconciliation.
+[^src-20261010-clientrypointsvalidation]: CLI launcher recovery validation on Raspberry Pi Zero 2 W.

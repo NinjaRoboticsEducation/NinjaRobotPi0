@@ -1,7 +1,8 @@
 ---
 type: Reference
 title: Installation and Hardware Wiring Reference
-description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS 64-bit setup, and pigpio compilation.
+description: Step-by-step assembly, complete GPIO wiring tables, Raspberry Pi OS 64-bit
+  setup, and pigpio compilation.
 status: draft
 generated:
   by: codex/migration-audit
@@ -51,11 +52,15 @@ sources:
   resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
   title: 2026 10 09 Builtin Movements
   content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261010-installationguide-2
+  resource: urn:llmwiki:source:src-20261010-installationguide-2
+  title: Installationguide
+  content_hash: sha256:18d2002125e05e7026c4bc7568ba8fb1f588a466bc7815f850476e07fa922913
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:b026804d6d175bff7d5ecc95e7e6d63eb2f8de60799cd93e2f2ca7bc93d74810
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:f12a776d5402071a53ea9c31055db4c70161a8a2410d850bac5d9b782d771947
   result: passed
   checks:
     source_support: passed
@@ -64,8 +69,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed hardware wiring tables, power isolation rules, and Spider GPIO requirements against hardware schematics and driver pinout configs. 8-channel BCM 20–27 requirements match driver mapping.
-  - Absolute matches ('never', 'all') reflect critical power isolation rules to prevent SD corruption or brownout. Physical bench verification remains pending.
+  - Reviewed installation and wiring reference against 2026-10-10 InstallationGuide.md.
+    Five-launcher verification in .venv/bin and ninjarobotpi0 prompt match installation
+    practice.
+  - Hardware wiring, power isolation, and physical calibration verification remain
+    mandatory before operation.
 ---
 
 # Installation and Hardware Wiring Reference
@@ -181,3 +189,8 @@ The current complete manual documents Node 20.19+ within 20.x or >=22.12.0 from 
 Spider built-in movement import requires all eight BCM GPIO channels 20–27 to be configured and active; missing channels prevent the full trajectory pack from seeding. Wheel and Humanoid profiles require valid configured servo channels for their respective `home` center command. Inspect both `config.json` channel definitions and physical `servo.json` limits before energizing actuators.[^src-20261009-installationguide] [^src-20261009-2026-10-09-builtin-movements]
 
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+## CLI launcher verification and environment branding (2026-10-10)
+
+The current installation manual records the updated virtual environment branding (`ninjarobotpi0` prompt) and launcher verification. The installer verifies all five launcher executables (`ninja_core`, `pi0servo`, `pi0disp`, `pi0buzzer`, `pi0vl53l0x`) in `.venv/bin` after locked provider reinstallation, ensuring wiring calibration tools can be launched independently.[^src-20261010-installationguide-2]
+
+[^src-20261010-installationguide-2]: Current versioned Installationguide (2026-10-10 CLI recovery).

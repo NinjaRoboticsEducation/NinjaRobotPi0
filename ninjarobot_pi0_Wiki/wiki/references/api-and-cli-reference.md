@@ -1,7 +1,8 @@
 ---
 type: Reference
 title: API and CLI Reference
-description: Unified reference of all Python driver classes, wrapper APIs, REST/WebSocket endpoints, and CLI tools.
+description: Unified reference of all Python driver classes, wrapper APIs, REST/WebSocket
+  endpoints, and CLI tools.
 status: draft
 generated:
   by: codex/migration-audit
@@ -51,11 +52,23 @@ sources:
   resource: urn:llmwiki:source:src-20261009-developmentguide-2
   title: Developmentguide
   content_hash: sha256:80ef9c89176a6b0a3749f9127697464f197c2972bf2a41ae533fa2cb7afdc0ab
+- id: src-20261010-developmentguide-2
+  resource: urn:llmwiki:source:src-20261010-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:a79a71113f70fb1e6b443cd73b9cd688c8f7889ebf4a9df97b521cb3b76e3127
+- id: src-20261010-clientrypointrepairplan
+  resource: urn:llmwiki:source:src-20261010-clientrypointrepairplan
+  title: Clientrypointrepairplan
+  content_hash: sha256:05eb8fe221519b45022eb360c7441b1ff7a1b41e542502ab9759ca93ca2701fc
+- id: src-20261010-lifecyclerefinementsevidence
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
+  title: Lifecyclerefinementsevidence
+  content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:9b6164666d470d4646aff7ab9cd67d0b9b408ac8e694a6d8e50b74c89b6e9fdc
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:4e0602b2d11d5c4728b1dd731f8185ba0add79a6d67094953f5694876f9064f5
   result: passed
   checks:
     source_support: passed
@@ -64,8 +77,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed REST endpoints, CLI commands, and AI agent native movement chain limits against web_server.py, movement_cli.py, and ninja_agent.py. Status codes (404/422/409) and validation bounds (32 steps max, 1–20 repetitions) match implementation.
-  - Host CLI validation does not imply remote curl acceptance or physical robot acceptance.
+  - Reviewed REST endpoints, CLI commands, and WebSocket contracts against web_server.py,
+    web_sessions.py, and movement_cli.py. /ws/session endpoint, 423/503/4409 codes,
+    option 6 Poweroff, and single-ownership launchers match code.
+  - Host CLI help checks do not imply remote network acceptance or physical robot
+    readiness.
 ---
 
 # API and CLI Reference
@@ -169,3 +185,18 @@ Agent action plans validate complete native movement chains against permitted ty
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
 
 [^src-20261009-developmentguide-2]: NinjaRobotPi0 Development Guide, 2026-10-09.
+## Single-ownership CLI launchers and session endpoint contracts (2026-10-10)
+
+The five robot CLI commands (`ninja_core`, `pi0servo`, `pi0disp`, `pi0buzzer`, `pi0vl53l0x`) are declared and owned exclusively by their provider packages, preventing root packaging collision and missing launchers in `.venv/bin`.[^src-20261010-clientrypointrepairplan]
+Targeted environment repair synchronizes locked providers without altering other packages:
+```bash
+env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev \
+  --reinstall-package ninja-core --reinstall-package pi0servo \
+  --reinstall-package pi0disp --reinstall-package pi0buzzer \
+  --reinstall-package pi0vl53l0x
+```
+Web API access requires an active primary session identified by the HttpOnly `ninja_web_session` cookie; requests from inactive sessions return HTTP 423, and requests during server shutdown return HTTP 503.[^src-20261010-developmentguide-2] [^src-20261010-lifecyclerefinementsevidence]
+
+[^src-20261010-developmentguide-2]: Current versioned Developmentguide (2026-10-10 CLI recovery).
+[^src-20261010-clientrypointrepairplan]: CLI launcher repair plan and root packaging reconciliation.
+[^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.

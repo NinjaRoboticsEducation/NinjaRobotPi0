@@ -48,11 +48,19 @@ sources:
   resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  content_hash: sha256:5d4be31936118493340340291e66a59c7f76886f26e791ca0963721aab9f21a8
+- id: src-20261010-lifecyclerefinementsevidence
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
+  title: Lifecyclerefinementsevidence
+  content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-07T17:39:55.325495+00:00'
-  target_hash: sha256:7437a46bffe0fc23522a51235abf6ac951ce6f128e679805d556f24ea85a678c
+  performed_by: agent:antigravity
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:a96c12fa780c5656bf15b2fe273fa55fbd5b8c4bb8e372b47f34302c82a58fd2
   result: passed
   checks:
     source_support: passed
@@ -61,11 +69,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Checked pulse alias precedence in the unchanged importer against new validation
-    tests. All numeric keys are checked, hashes use validated bytes, physical observations
-    are invalidated after drift. Existing physical caveats retained.
-  - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
-    Physical tests, live accounts and publication remain pending.
+  - Reviewed hardware calibration and tools against movement_cli.py and 2026-10-10
+    lifecycle evidence. Option 6 Poweroff exit, PWM release, and single-ownership
+    launcher execution match code.
+  - Physical support and joint clearance remain critical safety prerequisites before
+    launching calibration tools.
 ---
 
 # Hardware Calibration and Testing Tools Reference
@@ -104,6 +112,7 @@ Gemini model validation can take up to 60 seconds for a thinking model. Discover
 ## Motion Recording (`uv run ninja_core movement-tool`)
 
 * **Option 2 (Record new movement)**: Interactively create multi-servo postures (e.g. `20:45/21:-30`), preview transitions, and save named movements to `config.json`.[^src-20260822-developmentguide]
+* **Option 6 (Deliberate exit)**: Executes configured `Poweroff` (for Spider) or `home` (for Wheel and Humanoid) before HAL shutdown and saving configuration, releasing PWM without subsequent centering.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence]
 
 ## Display Setup & Testing (`uv run pi0disp init` & `display-tool`)
 
@@ -146,3 +155,9 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 Onboarding validates every numeric servo key and rejects conflicting pulse aliases that the unchanged core importer would otherwise prefer. Its fingerprint covers the exact validated bytes. Resume revalidates current files; changed settings invalidate previous physical observations. Failed tools offer retry or save/exit. This is software validation, not proof of correct physical limits or wiring.[^src-20261007-2026-10-08-upgrade-audit]
 
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
+## Deliberate exit motion and power release (2026-10-10)
+
+Movement-tool option 6 commands configured `Poweroff` once before HAL shutdown and configuration save, with no subsequent centering. HAL releases PWM rather than electrically holding the position. For Spider robots, verify physical clearance for ±90° targets before selecting option 6.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence]
+
+[^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
+[^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.

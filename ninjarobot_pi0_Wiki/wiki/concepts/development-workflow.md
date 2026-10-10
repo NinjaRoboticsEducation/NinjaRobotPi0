@@ -39,11 +39,23 @@ sources:
   resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
   title: 2026 10 09 Builtin Movements
   content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261010-developmentguide-2
+  resource: urn:llmwiki:source:src-20261010-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:a79a71113f70fb1e6b443cd73b9cd688c8f7889ebf4a9df97b521cb3b76e3127
+- id: src-20261010-clientrypointrepairevidence
+  resource: urn:llmwiki:source:src-20261010-clientrypointrepairevidence
+  title: Clientrypointrepairevidence
+  content_hash: sha256:d0dfc89a29e9fc2b1c02f5a2809c90578e21a92b93c80cb881210d5bbd9c1c8d
+- id: src-20261010-lifecyclerefinementsevidence
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
+  title: Lifecyclerefinementsevidence
+  content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:d4cf42c98a875ea70b7d2763e5194ffc6df6a6cbd83725bde736558d5412dc57
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:c70cb91f35d403142f73bda5a4c92548fc09a045f448d5e2ccec1157cf57859d
   result: passed
   checks:
     source_support: passed
@@ -52,8 +64,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed development workflow against scripts/wiki.py, project-knowledge.json, and CI workflows. Immutable manual lifecycle, schema-v2 plans, and isolated testing match documented practice.
-  - Host test execution does not imply remote deployment or physical acceptance.
+  - Reviewed development workflow against 2026-10-10 DevelopmentGuide.md and test
+    suites. ninjarobotpi0 prompt, single-ownership console scripts, and 331 passing
+    tests (1 excluded baseline) match repository practice.
+  - Automated software tests on inert fixtures do not establish physical device readiness.
 ---
 
 # Development and immutable documentation workflow
@@ -118,3 +132,10 @@ An opt-in repository JSON pack adds 19 entries covering 16 source methods and se
 The current development workflow records native built-in movement integration using packaged resources, inert Raspberry Pi Zero 2 W automated tests, and strict separation between software verification and physical hardware acceptance. The full development manual is versioned in `raw/` and resolved via project knowledge.[^src-20261009-developmentguide-2] [^src-20261009-2026-10-09-builtin-movements]
 
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+## Lifecycle refinements and launcher recovery development workflows (2026-10-10)
+
+The current development manual records the branding update (`ninjarobotpi0` venv prompt) and single-ownership console script architecture. Provider packages exclusively own their console commands, and locked targeted sync with `--reinstall-package` restores launchers while keeping `--inexact` extras. Root test suites ran 331 tests passed (1 deselected baseline), with inert hardware fixtures verifying exit sequences and session management. Software verification remains strictly distinct from physical robot acceptance.[^src-20261010-developmentguide-2] [^src-20261010-clientrypointrepairevidence] [^src-20261010-lifecyclerefinementsevidence]
+
+[^src-20261010-developmentguide-2]: Current versioned Developmentguide (2026-10-10 CLI recovery).
+[^src-20261010-clientrypointrepairevidence]: CLI launcher repair evidence and validation records.
+[^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.

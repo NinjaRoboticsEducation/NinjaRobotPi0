@@ -1,7 +1,8 @@
 ---
 type: Entity
 title: ninja_core Package
-description: Core application package containing HAL, dispatcher, web server, safe executor, and AI agent.
+description: Core application package containing HAL, dispatcher, web server, safe
+  executor, and AI agent.
 status: draft
 generated:
   by: codex/migration-audit
@@ -43,11 +44,23 @@ sources:
   resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
   title: 2026 10 09 Builtin Movements
   content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261010-lifecyclerefinementsimplementationplan
+  resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsimplementationplan
+  title: Lifecyclerefinementsimplementationplan
+  content_hash: sha256:5d4be31936118493340340291e66a59c7f76886f26e791ca0963721aab9f21a8
+- id: src-20261010-clientrypointrepairplan
+  resource: urn:llmwiki:source:src-20261010-clientrypointrepairplan
+  title: Clientrypointrepairplan
+  content_hash: sha256:05eb8fe221519b45022eb360c7441b1ff7a1b41e542502ab9759ca93ca2701fc
+- id: src-20261010-readme
+  resource: urn:llmwiki:source:src-20261010-readme
+  title: Readme
+  content_hash: sha256:b235cfd4ad67c3dd0da2cd633bdcb8312122de1ff28579fb69ccd716e2400974
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:bff25bbc3a6c6736560bfa4e4bb1fb92ab752700274674c26b2ce898d405ca99
+  performed_at: '2026-10-10T12:07:31.827347+00:00'
+  target_hash: sha256:84b54f247d0b8a3164603c38f1918f48e768975145db6e43cca0a4297458279d
   result: passed
   checks:
     source_support: passed
@@ -56,8 +69,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ninja_core package architecture against modules, entrypoints, and FastAPI routes. builtin_movements.py module, profile seeding, REST routes (/api/servos/movements), and CLI commands match implementation.
-  - Absolute matches ('safe') reflect thread-safe drivers and neutral home positions. Manual server initialization and ngrok boundaries remain as documented.
+  - Reviewed ninja_core package against web_sessions.py, movement_cli.py, runtime_pipeline.py,
+    and pyproject.toml. Exclusive launcher ownership, session management, and reconnect
+    QR display hold match code.
+  - Driver safety and neutral home positions are protected by software checks; real
+    hardware testing is pending.
 ---
 
 # ninja_core Package
@@ -127,3 +143,12 @@ The audit strengthens only the external onboarding wrapper: conflicting imported
 
 [^src-20261009-readme]: ninja_core package README with built-in movements metadata.
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+## Web session management and lifecycle coordination (2026-10-10)
+
+`ninja_core` adds `ninja_core.web_sessions` to manage single-browser session ownership without requiring login credentials.[^src-20261010-lifecyclerefinementsimplementationplan] The server issues an HttpOnly `ninja_web_session` cookie; requests to `/api/` endpoints and connections to `/ws/distance` or `/ws/events` require the active session (returning 423 when inactive, 503 during server shutdown). The primary session socket `/ws/session` receives heartbeat pings (10s) and detects disconnects (35s timeout). Upon disconnection, `RuntimePipeline` cooperatively cancels active work, aborts pending HTTP/greeting tasks, and renders the reconnect QR (saved ngrok or LAN URL) on the display while suppressing idle animations.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-readme]
+Option 6 of `movement_cli.py` is updated to execute configured `Poweroff` (or `home`) before HAL shutdown, with PWM released and no subsequent centering.[^src-20261010-lifecyclerefinementsimplementationplan]
+`ninja_core` also exclusively owns its console script entry point in `.venv/bin/ninja_core`, resolved without root packaging collisions.[^src-20261010-clientrypointrepairplan]
+
+[^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
+[^src-20261010-clientrypointrepairplan]: CLI launcher repair plan and root packaging reconciliation.
+[^src-20261010-readme]: ninja_core package README snapshot (2026-10-10 lifecycle).
