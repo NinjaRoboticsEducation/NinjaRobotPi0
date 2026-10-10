@@ -567,6 +567,8 @@ def run_cli():
     """Main entry point for the interactive movement CLI tool."""
     config = load_config()
     hal = HardwareAbstractionLayer(config)
+    controller = None
+    normal_exit = False
 
     try:
         # Only initialize servos to prevent display/buzzer activation
@@ -621,21 +623,26 @@ def run_cli():
             elif choice == "5":
                 clear_movement(controller, config)
             elif choice == "6":
+                normal_exit = True
                 break
             else:
                 print("Invalid choice.")
     finally:
-        # --- Auto-center all servos on exit ---
         try:
-            controller.center_all_servos()
-            print("✓ All servos centered (0°) on exit")
-        except Exception:
-            pass  # Ignore errors during cleanup centering
-        # --------------------------------------
-        hal.shutdown()
-        # After CLI runs, save any potential changes made
-        save_config(config)
-        print("Configuration saved.")
+            if normal_exit and controller:
+                final_pose = "Poweroff" if "Poweroff" in config.movements else "home"
+                controller.execute_movement(final_pose)
+                print(f"✓ Exit pose '{final_pose}' complete")
+        except (MovementValidationError, EmergencyStop) as exc:
+            print(f"Exit pose not completed: {exc}")
+        except Exception as exc:
+            print(f"Exit pose failed: {exc}")
+        finally:
+            try:
+                hal.shutdown()
+            finally:
+                save_config(config)
+                print("Configuration saved.")
 
 
 if __name__ == "__main__":

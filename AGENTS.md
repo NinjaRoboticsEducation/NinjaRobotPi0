@@ -65,6 +65,18 @@ The canonical skills live in `.agents/skills/`. Codex, Google Antigravity, and C
 8. Run the `robot-wiki-maintain` completion gate. A task that changes documented knowledge is not complete while current source/code mappings disagree or a required wiki plan remains unapplied.
 9. Separate local validation from Raspberry Pi hardware validation. Never imply hardware validation occurred when it did not.
 
+## Documentation language policy
+
+Generate future project-authored documentation in English only, including wiki raw manuals,
+development logs, plans, validation reports, evidence notes and package READMEs. Do not add
+Japanese, Traditional Chinese or Simplified Chinese translations to those documents.
+The sole multilingual document is the project-root `README.md`: keep its content in
+English → Japanese → Traditional Chinese → Simplified Chinese order.
+Raw wiki snapshots of that README must contain only its English content, not all translations.
+When creating a new manual version, do not carry forward translated sections; preserve the
+complete English guidance and leave registered originals and historical versions unchanged.
+This is a forward-looking policy; do not rewrite existing documents merely to enforce it.
+
 ## Wiki maintenance completion gate
 
 The full current manuals live only as versioned sources in `ninjarobot_pi0_Wiki/raw/`.

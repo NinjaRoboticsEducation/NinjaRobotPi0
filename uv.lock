@@ -953,7 +953,7 @@ dependencies = [
 requires-dist = [{ name = "click", specifier = ">=8.0.0" }]
 
 [[package]]
-name = "ninjarobotv4"
+name = "ninjarobotpi0"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

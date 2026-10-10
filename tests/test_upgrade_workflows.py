@@ -550,6 +550,8 @@ def test_incomplete_check_explains_versions_and_repair_without_writes(
             returncode=0,
             stdout=" ".join(check.UV_FLAGS)
             if command[1:] == ["sync", "--help"]
+            else " ".join(check.UV_VENV_FLAGS)
+            if command[1:] == ["venv", "--help"]
             else versions[Path(command[0]).name],
         ),
     )
@@ -630,6 +632,8 @@ def test_uv_capabilities_instead_of_exact_version(monkeypatch, missing):
             returncode=0,
             stdout="uv 0.9.26"
             if command[-1] == "--version"
+            else " ".join(check.UV_VENV_FLAGS)
+            if command[1] == "venv"
             else " ".join(check.UV_FLAGS[1:] if missing else check.UV_FLAGS),
         )
 

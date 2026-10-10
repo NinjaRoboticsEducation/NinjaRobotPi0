@@ -108,12 +108,11 @@ class MovementController:
         pin_list = self.servos.pins
         return {pin_list[i]: angle_list[i] for i in range(len(pin_list))}
 
-    def center_all_servos(self):
-        """Moves all servos to their center position."""
+    def center_all_servos(self, abort_check: Optional[Callable[[], bool]] = None):
+        """Center servos, optionally guarded by a browser/safety lifecycle."""
         print("Centering all servos...")
         center_angles = {int(pin): 0 for pin in self.servo_definitions.keys()}
-        # We don't pass abort_check here to ensure centering always happens
-        self.move_servos(center_angles, speed="F") 
+        self.move_servos(center_angles, speed="F", abort_check=abort_check)
         time.sleep(0.5)
 
     def execute_movement(

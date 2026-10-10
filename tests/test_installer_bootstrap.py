@@ -178,7 +178,10 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
     binaries.mkdir()
     log = tmp_path / "calls"
     scripts = {
-        "python3": f'case "$*" in *--find-tool*) exec {__import__("sys").executable} "$@";; *) exit 0;; esac',
+        # Selecting the host's /usr/bin/node would prepend /usr/bin and bypass
+        # the inert systemctl fixture on a real Pi. Tool selection itself is
+        # covered separately; constrain this integration fixture to its tools.
+        "python3": f'case "$*" in *--find-tool*node) printf "%s\\n" "$FIXTURE_NODE";; *--find-tool*) exec {__import__("sys").executable} "$@";; *) exit 0;; esac',
         "sudo": 'printf "sudo:%s\\n" "$*" >> "$CALL_LOG"',
         "systemctl": 'case "$1" in is-active) exit 3;; cat) exit 0;; esac',
         "pigpiod": "echo 79",
@@ -200,7 +203,7 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
         (tools / "uv").mkdir()
         p = tools / "uv/uv"
         p.write_text(
-            '#!/bin/sh\n[ -z "${UV_PROJECT_ENVIRONMENT:-}${UV_PROJECT:-}${VIRTUAL_ENV:-}" ] || exit 7\ncase "$1" in --version) echo "uv 0.9.26";; sync) if [ "${2:-}" = --help ]; then echo "--locked --no-dev --python --directory --all-extras"; exit 0; fi; [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; *) [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; esac\n'
+            '#!/bin/sh\n[ -z "${UV_PROJECT_ENVIRONMENT:-}${UV_PROJECT:-}${VIRTUAL_ENV:-}" ] || exit 7\ncase "$1" in --version) echo "uv 0.9.26";; venv) if [ "${2:-}" = --help ]; then echo "--allow-existing --prompt --python"; exit 0; fi; [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; sync) if [ "${2:-}" = --help ]; then echo "--locked --no-dev --python --directory --all-extras"; exit 0; fi; [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; *) [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; esac\n'
         )
         p.chmod(0o755)
     if user_tools:
@@ -213,6 +216,7 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
         **os.environ,
         "HOME": str(tmp_path / "home"),
         "CALL_LOG": str(log),
+        "FIXTURE_NODE": str(binaries / "node" if user_tools else tools / "node/bin/node"),
         "UV_FAIL": "1" if uv_failure else "0",
         "UV_PROJECT_ENVIRONMENT": str(tmp_path / "unrelated-venv"),
         "UV_PROJECT": str(tmp_path / "unrelated-project"),
@@ -245,4 +249,5 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
         assert "npm:ci" not in calls and "npm:run" not in calls
     else:
         assert calls.count("npm:ci --include=dev --no-audit --no-fund") == 2
+        assert calls.count("uv:venv --allow-existing --prompt ninjarobotpi0 --python /usr/bin/python3 .venv") == 2
     assert "systemctl start" not in calls and "ninja_core server" not in calls

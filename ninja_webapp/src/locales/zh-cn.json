@@ -1,4 +1,9 @@
 {
+    "session": {
+        "connecting": "正在连接机器人…",
+        "disconnected": "连接中断，正在重新连接…",
+        "busy": "其他浏览器正在使用此机器人，等待对方断线…"
+    },
     "nav": {
         "home": "首页",
         "agent": "助手",

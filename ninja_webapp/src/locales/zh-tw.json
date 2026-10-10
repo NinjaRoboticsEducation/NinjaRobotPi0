@@ -1,4 +1,9 @@
 {
+    "session": {
+        "connecting": "正在連接機器人…",
+        "disconnected": "連線中斷，正在重新連接…",
+        "busy": "其他瀏覽器正在使用此機器人，等待對方斷線…"
+    },
     "nav": {
         "home": "首頁",
         "agent": "助手",

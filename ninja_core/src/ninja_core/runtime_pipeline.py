@@ -27,6 +27,7 @@ class RuntimePipeline:
         self._lock = threading.RLock()
         self._mode = "native"
         self._display_hold = False
+        self._web_waiting = False
 
     @property
     def mode(self) -> str:
@@ -44,6 +45,19 @@ class RuntimePipeline:
     def attach_sound(self, sound: RobotSoundPlayer):
         with self._lock:
             self.sound = sound
+
+    def set_web_waiting(self, waiting: bool):
+        """Keep automatic idle restoration from painting over reconnect QR."""
+        with self._lock:
+            self._web_waiting = waiting
+            if waiting:
+                if self.faces:
+                    try:
+                        self.faces.stop()
+                    except Exception as exc:
+                        log.warning("Failed to stop faces for reconnect screen: %s", exc)
+            elif self._mode == "native":
+                self._resume_native_locked()
 
     def begin_blockly(self):
         """Give uploaded code exclusive control over transient robot output."""
@@ -105,7 +119,7 @@ class RuntimePipeline:
     def _resume_native_locked(self):
         self._mode = "native"
         self._display_hold = False
-        if self.faces:
+        if self.faces and not self._web_waiting:
             try:
                 self.faces.play("idle", duration_s=float("inf"))
             except Exception as exc:

@@ -17,6 +17,14 @@ Maintain the OKF v0.2 knowledge bundle in `wiki/` using evidence from `raw/`. Us
 9. Preserve unknown OKF frontmatter fields.
 10. Run the relevant checks before finishing and report remaining warnings honestly.
 
+## Documentation language policy
+
+Future project-authored raw documentation is English-only. Do not generate Japanese,
+Traditional Chinese or Simplified Chinese sections in manuals, logs, plans or evidence.
+Only the parent project's root `README.md` is multilingual, ordered English → Japanese →
+Traditional Chinese → Simplified Chinese; its raw snapshots must retain only English content.
+Do not copy old translations into new manual versions or rewrite registered/historical originals.
+
 ## Skills
 
 - `.agents/skills/wiki-ingest/SKILL.md` — add or reprocess source knowledge.

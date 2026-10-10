@@ -1,4 +1,9 @@
 {
+    "session": {
+        "connecting": "Connecting to the robot…",
+        "disconnected": "Connection lost. Reconnecting…",
+        "busy": "This robot is in use by another browser. Waiting for it to disconnect…"
+    },
     "nav": {
         "home": "Home",
         "agent": "Agent",

@@ -14,6 +14,7 @@ import qrcode
 import uvicorn
 import shutil
 import tempfile
+from PIL import Image
 from fastapi import FastAPI, APIRouter, Request, HTTPException, WebSocket, WebSocketDisconnect, UploadFile, File
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -32,6 +33,10 @@ from .movement_controller import MovementController, EmergencyStop
 from .builtin_movements import MovementValidationError
 from .perception import DistanceMonitor
 from .runtime_pipeline import RuntimePipeline
+from .web_sessions import (
+    HEARTBEAT_TIMEOUT, SESSION_CONTEXT, SESSION_COOKIE, SESSION_GENERATION,
+    WebSessionManager, WebSessionMiddleware, session_active,
+)
 
 
 # --- Configuration ---
@@ -74,26 +79,34 @@ class AppState:
         self.tasks = set() # Track background tasks
         self.shutdown_event = asyncio.Event()  # Signal for graceful shutdown
         self.action_plan_lock: Optional[asyncio.Lock] = None
+        self.public_url = None
+        self.local_url = None
+        self.welcome_tasks = set()
+        self.web_sessions = WebSessionManager(
+            on_connect=lambda: web_controller_connected(self),
+            on_disconnect=lambda: web_controller_disconnected(self),
+        )
 
 # --- Connection Manager ---
 class ConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []
 
-    async def connect(self, websocket: WebSocket):
-        await websocket.accept()
+    async def connect(self, websocket: WebSocket, *, accepted=False):
+        if not accepted:
+            await websocket.accept()
         self.active_connections.append(websocket)
 
     def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
+        if websocket in self.active_connections:
+            self.active_connections.remove(websocket)
 
     async def broadcast(self, message: dict):
-        for connection in self.active_connections:
+        for connection in tuple(self.active_connections):
             try:
                 await connection.send_json(message)
             except Exception:
-                # Handle disconnected clients gracefully if not caught elsewhere
-                pass
+                self.disconnect(connection)
 
 # --- Lifecycle ---
 @asynccontextmanager
@@ -143,6 +156,7 @@ async def lifespan(app: FastAPI):
     app.state.ninja.runtime_pipeline.attach_faces(app.state.ninja.faces)
     app.state.ninja.runtime_pipeline.attach_sound(app.state.ninja.sound)
     dispatcher.attach_faces(app.state.ninja.faces)
+    app.state.ninja.runtime_pipeline.set_web_waiting(True)
 
     # Initialize BLE Service (conditionally, could fail on non-Linux)
     try:
@@ -272,37 +286,94 @@ async def setup_network_and_display(app: FastAPI):
         ip_address = "127.0.0.1"
 
     print(f"Local Access: http://{ip_address}:{port}")
+    app.state.ninja.local_url = f"http://{ip_address}:{port}" if ip_address != "127.0.0.1" else None
 
     # ngrok
     public_url = None
     for attempt in range(3):
         try:
-            public_url = ngrok.connect(port, "http").public_url
+            tunnel = await asyncio.to_thread(ngrok.connect, port, "http")
+            public_url = tunnel.public_url
             print(f"Public Access: {public_url}")
             break
         except Exception as e:
             print(f"ngrok attempt {attempt+1} failed: {e}")
             await asyncio.sleep(2)
 
-    # Display QR
-    if public_url and app.state.ninja.hal.display:
-        try:
-            print(f"Displaying QR code on {app.state.ninja.hal.display.width}x{app.state.ninja.hal.display.height} display...")
-            qr = qrcode.make(public_url)
-            qr = qr.convert('RGB')
-            qr = qr.resize((app.state.ninja.hal.display.width, app.state.ninja.hal.display.height))
-            app.state.ninja.hal.display.display(qr)
-            print("QR code displayed successfully.")
-        except Exception as e:
-            print(f"Failed to display QR: {e}")
-            import traceback
-            traceback.print_exc()
-    else:
-        reason = "no public URL" if not public_url else "no display available"
-        print(f"Skipping QR display ({reason}). Starting idle face...")
-        # Idle face if no QR or no display
-        if app.state.ninja.faces:
-            app.state.ninja.faces.play("idle", duration_s=float('inf'))
+    state = app.state.ninja
+    state.public_url = public_url
+    # Serialize startup QR with connection/disconnection transitions.
+    await state.web_sessions.run_when_idle(lambda: asyncio.to_thread(show_reconnect_qr, state))
+
+
+def show_reconnect_qr(state):
+    """Restore a square, undistorted QR for the saved tunnel (or LAN URL)."""
+    if state.shutdown_event.is_set() or state.web_sessions.connected:
+        return False
+    url = state.public_url or state.local_url
+    display = getattr(state.hal, "display", None)
+    if not url or not display:
+        return False
+    try:
+        if state.faces:
+            state.faces.stop()
+        size = min(display.width, display.height)
+        qr = qrcode.make(url).convert("RGB").resize((size, size), Image.Resampling.NEAREST)
+        frame = Image.new("RGB", (display.width, display.height), "white")
+        frame.paste(qr, ((display.width - size) // 2, (display.height - size) // 2))
+        display.display(frame)
+        print("Reconnect QR code displayed.")
+        return True
+    except Exception as exc:
+        print(f"Failed to restore reconnect QR: {exc}")
+        return False
+
+
+async def web_controller_connected(state):
+    if state.shutdown_event.is_set():
+        return
+    state.first_interaction = True
+    state.has_greeted = False
+    if state.runtime_pipeline:
+        await asyncio.to_thread(state.runtime_pipeline.set_web_waiting, False)
+
+
+async def web_controller_disconnected(state):
+    if state.shutdown_event.is_set():
+        return
+    for task in tuple(state.welcome_tasks):
+        task.cancel()
+    if state.welcome_tasks:
+        await asyncio.gather(*tuple(state.welcome_tasks), return_exceptions=True)
+
+    def stop_outputs():
+        if state.runtime_pipeline:
+            state.runtime_pipeline.set_web_waiting(True)
+        dispatcher = getattr(state, "dispatcher", None)
+        executor = getattr(dispatcher, "safe_executor", None)
+        servos = getattr(state.hal, "servos", None)
+        operations = []
+        if executor and executor.is_running():
+            operations.append(executor.stop)
+        if state.runtime_pipeline:
+            operations.append(state.runtime_pipeline.abort_blockly)
+        if servos:
+            operations.append(servos.abort)
+        if state.sound:
+            operations.append(lambda: state.sound.stop(restart_buzzer=True))
+        if state.faces:
+            operations.append(state.faces.stop)
+        for stop in operations:
+            try:
+                stop()
+            except Exception as exc:
+                print(f"Web disconnect cleanup operation failed: {exc}")
+
+    try:
+        await asyncio.to_thread(stop_outputs)
+    except Exception as exc:
+        print(f"Web disconnect output cleanup failed: {exc}")
+    await asyncio.to_thread(show_reconnect_qr, state)
 
 # --- Helper Functions ---
 
@@ -428,13 +499,15 @@ async def handle_first_interaction(app_state: AppState):
 
 async def trigger_welcome(app_state: AppState):
     """Plays greeting (happy face + sound) if not already greeted."""
-    if not app_state.has_greeted:
+    if session_active(app_state) and not app_state.has_greeted:
         app_state.has_greeted = True
         print("Triggering Welcome Greeting...")
         
         # Wake up servos - center all to 0° position
         if app_state.movement:
-            await asyncio.to_thread(app_state.movement.center_all_servos)
+            await center_for_session(app_state)
+        if not session_active(app_state):
+            return
         
         # Play Happy Face
         if app_state.faces:
@@ -442,12 +515,33 @@ async def trigger_welcome(app_state: AppState):
         
         # Play Happy Sound (Non-blocking)
         if app_state.sound:
-            asyncio.create_task(asyncio.to_thread(app_state.sound.play, "happy"))
+            def play_welcome():
+                if session_active(app_state):
+                    app_state.sound.play("happy")
+            task = asyncio.create_task(asyncio.to_thread(play_welcome))
+            app_state.tasks.add(task)
+            task.add_done_callback(app_state.tasks.discard)
+            app_state.welcome_tasks.add(task)
+            task.add_done_callback(app_state.welcome_tasks.discard)
         
         # Wait 3s then return to idle
         await asyncio.sleep(3.0)
-        if app_state.faces:
+        if app_state.faces and session_active(app_state):
             app_state.faces.play("idle", duration_s=float('inf'))
+
+
+async def center_for_session(state):
+    """Recheck ownership inside the controller's motion lock before centering."""
+    if not session_active(state):
+        return
+    try:
+        await asyncio.to_thread(
+            state.movement.center_all_servos,
+            abort_check=lambda: not session_active(state),
+        )
+    except EmergencyStop:
+        if session_active(state):
+            raise
 
 def safety_check(app_state: AppState) -> bool:
     """
@@ -483,6 +577,8 @@ def safety_check(app_state: AppState) -> bool:
     return False
 
 async def execute_action_plan(app_state: AppState, action_plan: dict):
+    if not session_active(app_state):
+        return
     lock = app_state.action_plan_lock
     if lock is None:
         await _execute_action_plan_unlocked(app_state, action_plan)
@@ -493,6 +589,8 @@ async def execute_action_plan(app_state: AppState, action_plan: dict):
 
 
 async def _execute_action_plan_unlocked(app_state: AppState, action_plan: dict):
+    if not session_active(app_state):
+        return
     tasks = []
     action_chain = action_plan.get("action_chain", [])
     if not action_chain and action_plan.get("action"):
@@ -511,6 +609,8 @@ async def _execute_action_plan_unlocked(app_state: AppState, action_plan: dict):
                 chain = [{"name": action_plan.get("face"), "duration": 2.0}]
 
             for item in chain:
+                if not session_active(app_state):
+                    return
                 name = item.get("name")
                 duration = item.get("duration")
                 if duration is None:
@@ -539,6 +639,8 @@ async def _execute_action_plan_unlocked(app_state: AppState, action_plan: dict):
                 chain = [action_plan.get("sound")]
 
             for name in chain:
+                if not session_active(app_state):
+                    return
                 app_state.sound.play(name) # play is blocking, so this sequences them naturally
         
         tasks.append(asyncio.to_thread(run_sounds))
@@ -563,10 +665,12 @@ async def _execute_action_plan_unlocked(app_state: AppState, action_plan: dict):
                         for _ in range(repetitions):
                             app_state.movement.execute_movement(
                                 name, 
-                                abort_check=lambda: safety_check(app_state)
+                                abort_check=lambda: not session_active(app_state) or safety_check(app_state)
                             )
             except EmergencyStop:
                 print("Emergency Stop triggered via Web!")
+                if not session_active(app_state):
+                    return
                 if app_state.faces:
                     app_state.faces.play("scary")
                 if app_state.sound:
@@ -582,6 +686,9 @@ async def _execute_action_plan_unlocked(app_state: AppState, action_plan: dict):
     if tasks:
         await asyncio.gather(*tasks)
 
+    if not session_active(app_state):
+        return
+
     if action_chain:
         dispatcher = getattr(app_state, "dispatcher", None)
         if dispatcher:
@@ -590,10 +697,10 @@ async def _execute_action_plan_unlocked(app_state: AppState, action_plan: dict):
     # Post-Task Reset
     # 1. Center Servos
     if app_state.movement:
-        await asyncio.to_thread(app_state.movement.center_all_servos)
+        await center_for_session(app_state)
     
     # 2. Reset Face to Idle (Looping)
-    if app_state.faces:
+    if app_state.faces and session_active(app_state):
         # play("idle", float('inf')) is non-blocking (starts a background thread)
         app_state.faces.play("idle", float('inf'))
 
@@ -759,13 +866,17 @@ async def execute_movement(name: str, request: Request):
 
     def run():
         try:
-            state.movement.execute_movement(name, abort_check=lambda: safety_check(state))
+            state.movement.execute_movement(
+                name, abort_check=lambda: not session_active(state) or safety_check(state)
+            )
             return "executed"
         except EmergencyStop:
             print("Emergency Stop triggered via Web!")
-            if state.faces:
+            if not session_active(state):
+                raise HTTPException(status_code=409, detail="Browser session disconnected")
+            if state.faces and session_active(state):
                 state.faces.play("scary")
-            if state.sound:
+            if state.sound and session_active(state):
                 state.sound.play("scary")
             raise HTTPException(status_code=409, detail="Emergency Stop: Obstacle Detected")
         except MovementValidationError as exc:
@@ -830,6 +941,7 @@ async def system_shutdown(request: Request):
     """Safely shuts down the Raspberry Pi with graceful animation."""
     print("Received shutdown request via Web UI.")
     try:
+        request.app.state.ninja.shutdown_event.set()
         # Run shutdown sequence in a separate thread to avoid blocking the response
         def shutdown_with_animation():
             app_state = request.app.state.ninja
@@ -876,6 +988,7 @@ async def system_shutdown(request: Request):
 
 # --- App ---
 app = FastAPI(lifespan=lifespan)
+app.add_middleware(WebSessionMiddleware)
 
 # Locate built webapp
 # Assumed Structure:
@@ -941,33 +1054,73 @@ async def serve_spa(full_path: str, request: Request):
 
 @app.websocket("/ws/distance")
 async def websocket_distance(websocket: WebSocket):
-    await websocket.accept()
+    state = websocket.app.state.ninja
+    if not await state.web_sessions.accept_auxiliary(websocket):
+        return
     try:
         while not websocket.app.state.ninja.shutdown_event.is_set():
             if websocket.app.state.ninja.distance_monitor:
                 dist = websocket.app.state.ninja.distance_monitor.get_continuous_distance()
                 await websocket.send_json({"distance_mm": dist})
             await asyncio.sleep(0.1)
-    except WebSocketDisconnect:
+    except (WebSocketDisconnect, RuntimeError, OSError):
         pass
+    finally:
+        state.web_sessions.remove_auxiliary(websocket)
+
+
+@app.websocket("/ws/session")
+async def websocket_session(websocket: WebSocket):
+    state = websocket.app.state.ninja
+    manager = state.web_sessions
+    try:
+        if state.shutdown_event.is_set():
+            await websocket.close(code=1001)
+            return
+        if not await manager.connect(websocket):
+            return
+        while not state.shutdown_event.is_set():
+            await asyncio.wait_for(websocket.receive_text(), timeout=HEARTBEAT_TIMEOUT)
+            await websocket.send_json({"type": "session", "status": "pong"})
+    except asyncio.TimeoutError:
+        await websocket.close(code=4408)
+    except (WebSocketDisconnect, RuntimeError, OSError):
+        pass
+    finally:
+        await asyncio.shield(manager.disconnect(websocket))
 
 @app.websocket("/ws/events")
 async def websocket_events(websocket: WebSocket):
-    manager = websocket.app.state.ninja.connection_manager
-    await manager.connect(websocket)
+    state = websocket.app.state.ninja
+    if not await state.web_sessions.accept_auxiliary(websocket):
+        return
+    manager = state.connection_manager
+    await manager.connect(websocket, accepted=True)
     
     # Broadcast welcome on connection (tracked for clean shutdown)
-    welcome_task = asyncio.create_task(trigger_welcome(websocket.app.state.ninja))
+    async def scoped_welcome():
+        context = SESSION_CONTEXT.set(websocket.cookies.get(SESSION_COOKIE))
+        generation = SESSION_GENERATION.set(state.web_sessions.generation)
+        try:
+            await trigger_welcome(state)
+        finally:
+            SESSION_CONTEXT.reset(context)
+            SESSION_GENERATION.reset(generation)
+
+    welcome_task = asyncio.create_task(scoped_welcome())
     websocket.app.state.ninja.tasks.add(welcome_task)
     welcome_task.add_done_callback(websocket.app.state.ninja.tasks.discard)
+    state.welcome_tasks.add(welcome_task)
+    welcome_task.add_done_callback(state.welcome_tasks.discard)
     
     try:
         while not websocket.app.state.ninja.shutdown_event.is_set():
-            # Keep connection alive - broadcasts are pushed via manager.broadcast()
-            # Using sleep instead of receive to allow async broadcasts to work
-            await asyncio.sleep(1)
-    except WebSocketDisconnect:
+            await websocket.receive_text()
+    except (WebSocketDisconnect, RuntimeError, OSError):
+        pass
+    finally:
         manager.disconnect(websocket)
+        state.web_sessions.remove_auxiliary(websocket)
 
 def check_port_available(host: str, port: int) -> bool:
     """Checks if the port is available."""

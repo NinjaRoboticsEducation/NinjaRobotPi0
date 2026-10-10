@@ -61,6 +61,7 @@ def path_errors(root):
 # Vite 7 and @vitejs/plugin-react engines in the committed package-lock.json.
 NODE_REQUIREMENT = "Node 20.19+ in 20.x, or >=22.12.0"
 UV_FLAGS = ("--locked", "--no-dev", "--python", "--directory", "--all-extras")
+UV_VENV_FLAGS = ("--allow-existing", "--prompt", "--python")
 
 
 def tool_error(command, executable):
@@ -92,6 +93,13 @@ def tool_error(command, executable):
             missing = [flag for flag in UV_FLAGS if flag not in result.stdout.split()]
             if result.returncode or missing:
                 return f"Incompatible uv at {executable}: uv sync must support {', '.join(UV_FLAGS)}."
+            result = subprocess.run(
+                [str(executable), "venv", "--help"],
+                capture_output=True, text=True, timeout=20,
+            )
+            missing = [flag for flag in UV_VENV_FLAGS if flag not in result.stdout.split()]
+            if result.returncode or missing:
+                return f"Incompatible uv at {executable}: uv venv must support {', '.join(UV_VENV_FLAGS)}."
         elif command == "pigpiod" and actual != "79":
             return f"pigpiod version mismatch: required 79, detected {actual[:160]!r} at {executable}."
     except (OSError, subprocess.TimeoutExpired):

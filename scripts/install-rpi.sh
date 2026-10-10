@@ -46,7 +46,7 @@ NinjaRobotPi0 software installation:
   pigpio commit $PIGPIO_COMMIT
   apt: build-essential ca-certificates curl git python3-dev python3-venv xz-utils bluez dbus
   privileged files: pigpiod /usr/local/bin, library /usr/local/lib, optional inactive systemd unit
-  Python: locked production .venv; frontend: npm ci and build
+  Python: locked production .venv (prompt: ninjarobotpi0); frontend: npm ci and build
   wiki environment: $wiki (0=skip, 1=explicit setup)
 No hardware/service activation, calibration, credentials, robot start, or reboot.
 EOF
@@ -130,7 +130,7 @@ EOF
     sudo systemctl daemon-reload
   fi
   install_stage "Locked Python environment (.venv)"
-  (cd "$root"; uv sync --locked --no-dev --python /usr/bin/python3)
+  (cd "$root"; uv venv --allow-existing --prompt ninjarobotpi0 --python /usr/bin/python3 .venv; uv sync --locked --no-dev --python /usr/bin/python3)
   install_stage "Frontend dependencies and build"
   (cd "$root/ninja_webapp"; npm ci --include=dev --no-audit --no-fund; npm run build)
   install_stage "Optional wiki setup"

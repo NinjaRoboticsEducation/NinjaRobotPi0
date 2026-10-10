@@ -29,7 +29,18 @@ const shots = process.env.UI_SCREENSHOTS;
       const context = await browser.newContext({ viewport, locale: 'en-US', reducedMotion: 'reduce' });
       await context.addInitScript(() => {
         window.__sockets = [];
-        window.WebSocket = class { constructor(url) { this.url = url; window.__sockets.push(this); } close() {} };
+        window.WebSocket = class {
+          static OPEN = 1;
+          constructor(url) {
+            this.url = url; this.readyState = 1; window.__sockets.push(this);
+            setTimeout(() => {
+              this.onopen?.();
+              if (url.endsWith('/ws/session')) this.onmessage?.({data:'{"type":"session","status":"connected"}'});
+            }, 0);
+          }
+          send() {}
+          close() { this.readyState = 3; }
+        };
         window.confirm = () => false;
         window.SpeechRecognition = class { start() { throw new Error('Live speech is forbidden in fixtures'); } };
       });
@@ -52,7 +63,7 @@ const shots = process.env.UI_SCREENSHOTS;
       await page.goto(base + '/agent'); await page.waitForLoadState('networkidle');
       assert.ok(await page.getByText('BLE advertising').isVisible()); checks++;
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true); checks++;
-      assert.deepEqual(await page.evaluate(() => window.__sockets.map(s => new URL(s.url).pathname).sort()), ['/ws/distance','/ws/events']); checks++;
+      assert.deepEqual(await page.evaluate(() => window.__sockets.filter(s => s.readyState === 1).map(s => new URL(s.url).pathname).sort()), ['/ws/distance','/ws/events','/ws/session']); checks++;
       await page.evaluate(() => window.__sockets.find(s => s.url.endsWith('/ws/distance')).onmessage({data:'{"distance_mm":123}'}));
       await page.getByText('123 mm').waitFor(); checks++;
       await page.getByRole('textbox').fill('Fixture message');
@@ -76,7 +87,11 @@ const shots = process.env.UI_SCREENSHOTS;
         const text = await page.locator('body').innerText();
         assert.ok(!/home\.(sliderText|systemTitle)|agent\.(welcome|systemLog)|header\.(openMenu|advertising)/.test(text)); checks++;
       }
-      await page.goto(base + '/'); await page.waitForLoadState('networkidle');
+      await page.evaluate(() => { window.__primarySession = window.__sockets.find(s => s.url.endsWith('/ws/session') && s.readyState === 1); });
+      await page.getByRole('button', {name:'Open robot menu'}).click();
+      await page.getByRole('dialog').getByRole('link', {name:'Home', exact:true}).click();
+      await page.getByText('Slide to power off').waitFor();
+      assert.equal(await page.evaluate(() => window.__primarySession === window.__sockets.find(s => s.url.endsWith('/ws/session') && s.readyState === 1)), true); checks++;
       assert.ok(await page.getByText('Slide to power off').isVisible()); checks++;
       const power = page.getByRole('slider');
       await power.focus();

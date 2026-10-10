@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "NinjaRobotV4"
+name = "ninjarobotpi0"
 version = "0.1.0"
 description = "A modular, AI-powered robot platform for Raspberry Pi Zero with servo control, facial expressions, sound, and distance sensing."
 authors = [
@@ -63,8 +63,8 @@ ninja_ble = { path = "./ninja_ble", editable = true }
 dev = ["ruff"]
 
 [project.urls]
-Homepage = "https://github.com/Nilcreator/NinjaRobotV4"
-Repository = "https://github.com/Nilcreator/NinjaRobotV4"
+Homepage = "https://github.com/NinjaRoboticsEducation/NinjaRobotPi0"
+Repository = "https://github.com/NinjaRoboticsEducation/NinjaRobotPi0"
 
 # CLI entry points from all packages
 [project.scripts]
