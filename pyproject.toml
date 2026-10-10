@@ -66,13 +66,8 @@ dev = ["ruff"]
 Homepage = "https://github.com/NinjaRoboticsEducation/NinjaRobotPi0"
 Repository = "https://github.com/NinjaRoboticsEducation/NinjaRobotPi0"
 
-# CLI entry points from all packages
-[project.scripts]
-ninja_core = "ninja_core.__main__:main"
-pi0servo = "pi0servo.__main__:cli"
-pi0disp = "pi0disp.__main__:cli"
-pi0buzzer = "pi0buzzer.__main__:cli"
-pi0vl53l0x = "pi0vl53l0x.__main__:cli"
+# Console scripts belong exclusively to their editable provider packages above.
+# Duplicating them here allows root upgrades/uninstalls to remove their launchers.
 
 [tool.hatch.build.targets.wheel]
 packages = [

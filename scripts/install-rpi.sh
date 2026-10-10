@@ -130,7 +130,14 @@ EOF
     sudo systemctl daemon-reload
   fi
   install_stage "Locked Python environment (.venv)"
-  (cd "$root"; uv venv --allow-existing --prompt ninjarobotpi0 --python /usr/bin/python3 .venv; uv sync --locked --no-dev --python /usr/bin/python3)
+  (cd "$root"
+    uv venv --allow-existing --prompt ninjarobotpi0 --python /usr/bin/python3 .venv
+    # Recreate provider-owned launchers after removing old overlapping root metadata.
+    uv sync --locked --no-dev --python /usr/bin/python3 \
+      --reinstall-package ninja-core --reinstall-package pi0servo \
+      --reinstall-package pi0disp --reinstall-package pi0buzzer \
+      --reinstall-package pi0vl53l0x
+  )
   install_stage "Frontend dependencies and build"
   (cd "$root/ninja_webapp"; npm ci --include=dev --no-audit --no-fund; npm run build)
   install_stage "Optional wiki setup"

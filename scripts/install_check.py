@@ -60,8 +60,35 @@ def path_errors(root):
 
 # Vite 7 and @vitejs/plugin-react engines in the committed package-lock.json.
 NODE_REQUIREMENT = "Node 20.19+ in 20.x, or >=22.12.0"
-UV_FLAGS = ("--locked", "--no-dev", "--python", "--directory", "--all-extras")
+UV_FLAGS = (
+    "--locked", "--no-dev", "--python", "--directory", "--all-extras", "--reinstall-package",
+)
 UV_VENV_FLAGS = ("--allow-existing", "--prompt", "--python")
+CLI_PROVIDERS = {
+    "ninja_core": "ninja-core",
+    "pi0servo": "pi0servo",
+    "pi0disp": "pi0disp",
+    "pi0buzzer": "pi0buzzer",
+    "pi0vl53l0x": "pi0vl53l0x",
+}
+
+
+def launcher_errors(root):
+    """Inspect every installed robot CLI without executing a hardware tool."""
+    errors = []
+    for command in CLI_PROVIDERS:
+        path = root / ".venv/bin" / command
+        if not path.is_file():
+            errors.append(f"Missing .venv/bin/{command}; project installation is incomplete.")
+        elif not os.access(path, os.X_OK):
+            errors.append(f"Not executable: .venv/bin/{command}; project environment needs repair.")
+    return errors
+
+
+def cli_repair_command():
+    """Locked local-provider repair preserving unrelated installed/dev packages."""
+    providers = " ".join(f"--reinstall-package {package}" for package in CLI_PROVIDERS.values())
+    return f"env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev {providers}"
 
 
 def tool_error(command, executable):
@@ -123,14 +150,13 @@ def compatible_path(command):
 
 
 def check(root):
-    errors = platform_errors() + path_errors(root)
+    errors = platform_errors() + path_errors(root) + launcher_errors(root)
     for command in ("node", "uv", "npm", "pigpiod"):
         error = tool_error(command, shutil.which(command))
         if error:
             errors.append(error)
     for relative in (
         ".venv/bin/python",
-        ".venv/bin/ninja_core",
         "ninja_webapp/dist/index.html",
     ):
         if not (root / relative).is_file():
@@ -186,6 +212,10 @@ def main():
     for error in errors:
         print(f"FAIL: {error}")
     if errors and not args.platform:
+        if (args.root / ".venv/bin/python").is_file() and launcher_errors(args.root):
+            print("If project packages are already installed but CLI launchers are missing:")
+            print(f"  cd -- {shlex.quote(str(args.root.resolve()))} && {cli_repair_command()}")
+            print("This repairs locked local packages only; it does not start the robot.")
         print("Installation is incomplete or a required tool is incompatible.")
         print(
             "Run the installer as your normal user (it requests sudo only where needed):"

@@ -203,7 +203,7 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
         (tools / "uv").mkdir()
         p = tools / "uv/uv"
         p.write_text(
-            '#!/bin/sh\n[ -z "${UV_PROJECT_ENVIRONMENT:-}${UV_PROJECT:-}${VIRTUAL_ENV:-}" ] || exit 7\ncase "$1" in --version) echo "uv 0.9.26";; venv) if [ "${2:-}" = --help ]; then echo "--allow-existing --prompt --python"; exit 0; fi; [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; sync) if [ "${2:-}" = --help ]; then echo "--locked --no-dev --python --directory --all-extras"; exit 0; fi; [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; *) [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; esac\n'
+            '#!/bin/sh\n[ -z "${UV_PROJECT_ENVIRONMENT:-}${UV_PROJECT:-}${VIRTUAL_ENV:-}" ] || exit 7\ncase "$1" in --version) echo "uv 0.9.26";; venv) if [ "${2:-}" = --help ]; then echo "--allow-existing --prompt --python"; exit 0; fi; [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; sync) if [ "${2:-}" = --help ]; then echo "--locked --no-dev --python --directory --all-extras --reinstall-package"; exit 0; fi; [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; *) [ "${UV_FAIL:-0}" = 0 ] || exit 7; printf "uv:%s\\n" "$*" >> "$CALL_LOG";; esac\n'
         )
         p.chmod(0o755)
     if user_tools:
@@ -250,4 +250,10 @@ def test_local_install_is_rerunnable_or_stops_on_bad_hash(
     else:
         assert calls.count("npm:ci --include=dev --no-audit --no-fund") == 2
         assert calls.count("uv:venv --allow-existing --prompt ninjarobotpi0 --python /usr/bin/python3 .venv") == 2
+        assert calls.count(
+            "uv:sync --locked --no-dev --python /usr/bin/python3 "
+            "--reinstall-package ninja-core --reinstall-package pi0servo "
+            "--reinstall-package pi0disp --reinstall-package pi0buzzer "
+            "--reinstall-package pi0vl53l0x"
+        ) == 2
     assert "systemctl start" not in calls and "ninja_core server" not in calls

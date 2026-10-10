@@ -408,6 +408,26 @@ See the [lifecycle plan](docs/LifecycleRefinementsImplementationPlan.md) and [va
 
 ## 4. Troubleshooting
 
+### `uv run` cannot spawn `ninja_core` after upgrading
+
+`Failed to spawn: ninja_core` / `No such file or directory` means the CLI launcher is missing, not that the server rejected your configuration. The former root project duplicated five package-owned console scripts; an upgrade could remove those shared files even though provider packages stayed installed. The root now delegates commands to their packages, and the installer reinstalls/checks all five providers. A normal sync can leave already-missing launchers untouched.
+
+From your existing checkout containing this fix, stop any running robot in a controlled maintenance session first (shutdown may execute Poweroff), then repair Python as your normal user:
+
+```bash
+cd /home/rogerchang/NinjaRobotPi0  # Use your actual checkout path
+env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev \
+  --reinstall-package ninja-core --reinstall-package pi0servo \
+  --reinstall-package pi0disp --reinstall-package pi0buzzer \
+  --reinstall-package pi0vl53l0x
+uv run --no-sync ninja_core --help
+./install.sh --check
+```
+
+`--inexact` preserves unrelated/dev packages; configuration/calibration is retained. This does not perform apt installation or start hardware/services. If dependencies/interpreter are absent, use the full installer after `./install.sh --dry-run`. For another checkout, first publish this fix, check `git status`, then `git pull --ff-only` on the intended tracking branch; stop on Git errors and preserve local changes. Do not delete `.venv` or your configuration as a first recovery step.
+
+Only after CLI help succeeds **and physical readiness is confirmed**, run `uv run --no-sync ninja_core server` (or `.venv/bin/ninja_core server`). Startup can energize/center servos, initialize display/buzzer and open ngrok; it is not a non-moving smoke test. See [repair plan](docs/CLIEntryPointRepairPlan.md) and [validation](docs/validation/CLIEntryPoints-2026-10-10.md).
+
 ### Installation stopped before Python setup
 
 `Stop pigpiod ... first` or `Stop ninjarobot ... first` means installation stopped **before** dependencies were installed. `PASS: software prerequisites` at this stage is only platform/path preflight; success is **Software installed**. Missing `.venv/bin/ninja_core` or package metadata is an incomplete installation, not a version mismatch.
@@ -765,6 +785,18 @@ NinjaRobotPi0/
 
 ## 4. トラブルシューティング
 
+### 更新後に `ninja_core` を起動できない場合
+
+`Failed to spawn` / `No such file or directory` は CLI 起動ファイルがないことを示します。以前はルートと個別パッケージが同じ起動ファイルを所有していました。修正で重複を解消し、インストーラーが五つを再作成・確認します。稼働中のロボットを安全に停止してから（Poweroff が動く場合があります）、修正済みフォルダーで通常ユーザーとして実行してください：
+
+```bash
+env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev --reinstall-package ninja-core --reinstall-package pi0servo --reinstall-package pi0disp --reinstall-package pi0buzzer --reinstall-package pi0vl53l0x
+uv run --no-sync ninja_core --help
+./install.sh --check
+```
+
+校正・設定と既存の開発用パッケージは保持します。別のフォルダーでは修正の公開後に `git status`、`git pull --ff-only` の順に確認し、Git エラー時は停止してください。ヘルプ成功と実機準備の確認後のみ `uv run --no-sync ninja_core server` を実行します。起動はハードウェアを動かす場合があります。
+
 ### Python 導入前に停止する場合
 
 `Stop pigpiod ... first` / `Stop ninjarobot ... first` は依存関係の導入**前**の停止です。この段階の `PASS: software prerequisites` は OS・パスの確認のみで、完了は **Software installed** です。`.venv/bin/ninja_core` やパッケージ情報がない場合は導入未完了です。
@@ -1066,6 +1098,18 @@ NinjaRobotPi0/
 
 ## 4. 疑難排解
 
+### 更新後無法啟動 `ninja_core`
+
+`Failed to spawn` / `No such file or directory` 表示 CLI 啟動檔不存在，不是伺服器設定遭拒。舊版根專案與個別套件重複擁有相同啟動檔；此次修正移除重複，安裝程式會重建並檢查五個啟動檔。先安全停止正在執行的機器人（可能執行 Poweroff），再於含修正的資料夾以一般使用者執行：
+
+```bash
+env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev --reinstall-package ninja-core --reinstall-package pi0servo --reinstall-package pi0disp --reinstall-package pi0buzzer --reinstall-package pi0vl53l0x
+uv run --no-sync ninja_core --help
+./install.sh --check
+```
+
+保留設定、校準及現有開發套件。其他工作目錄須等修正發布後先查看 `git status`，再執行 `git pull --ff-only`；Git 出錯時停止並保留本機修改。僅在說明指令成功且硬體準備完成後才執行 `uv run --no-sync ninja_core server`；啟動可能驅動硬體。
+
 ### 在安裝 Python 套件前停止
 
 `Stop pigpiod ... first` / `Stop ninjarobot ... first` 代表在安裝依賴套件**前**停止。此時的 `PASS: software prerequisites` 只表示平台與路徑預檢通過，**Software installed** 才代表完成。缺少 `.venv/bin/ninja_core` 或套件中繼資料表示尚未安裝完整。
@@ -1355,6 +1399,18 @@ NinjaRobotPi0/
 ---
 
 ## 4. 故障排除
+
+### 更新后无法启动 `ninja_core`
+
+`Failed to spawn` / `No such file or directory` 表示 CLI 启动文件不存在，不是服务器配置遭拒。旧版根项目与各个包重复拥有相同启动文件；此次修正移除重复，安装程序会重建并检查五个启动文件。先安全停止正在运行的机器人（可能执行 Poweroff），再在包含修正的目录中以普通用户执行：
+
+```bash
+env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev --reinstall-package ninja-core --reinstall-package pi0servo --reinstall-package pi0disp --reinstall-package pi0buzzer --reinstall-package pi0vl53l0x
+uv run --no-sync ninja_core --help
+./install.sh --check
+```
+
+保留配置、校准及现有开发包。其他工作目录须等修正发布后先查看 `git status`，再执行 `git pull --ff-only`；Git 出错时停止并保留本机修改。仅在帮助命令成功且硬件准备完成后才运行 `uv run --no-sync ninja_core server`；启动可能驱动硬件。
 
 ### 在安装 Python 包之前停止
 
