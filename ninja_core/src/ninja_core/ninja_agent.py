@@ -1,6 +1,6 @@
+import asyncio
 import base64
 import json
-import os
 import logging
 from typing import Dict, List
 
@@ -8,12 +8,17 @@ import google.generativeai as genai
 from google.generativeai.types import GenerationConfig, Tool
 
 from .config import NinjaConfig
+from .provider_credentials import resolve_profile
+from .providers.registry import create_provider
+from .providers.base import MAX_AUDIO_BYTES, ProviderError
+from .agent_response import parse_plan, InvalidPlan
 from .builtin_movements import available_movements
 from .action_library import ActionLibrary
 from .facial_expressions import AnimatedFaces
 from .robot_sound import RobotSoundPlayer
 from .gemini_runtime import (
     DEFAULT_GENERATION_TIMEOUT_SECONDS,
+    GeminiRuntimeError,
     generate_content_text,
     requires_thinking_compatibility,
 )
@@ -33,20 +38,27 @@ class NinjaAgent:
     It uses Google Gemini to understand commands and control the robot.
     """
 
-    def __init__(self, config: NinjaConfig, action_library: ActionLibrary | None = None):
+    def __init__(
+        self, config: NinjaConfig, action_library: ActionLibrary | None = None
+    ):
         self.config = config
         self.action_library = action_library or ActionLibrary()
-        self.api_key = config.api_keys.get("gemini")
-        if not self.api_key:
-            raise MissingAPIKeyError(
-                "Gemini API key is missing. Please set it using 'ninja_core config set-key gemini <YOUR_KEY>'."
-            )
-
-        genai.configure(api_key=self.api_key)
-        self.model_name = config.gemini.model
-        self._uses_thinking_compatibility = requires_thinking_compatibility(
-            self.model_name
+        try:
+            self.provider_name, profile, auth = resolve_profile(config)
+        except ProviderError as exc:
+            raise MissingAPIKeyError(str(exc)) from None
+        self.api_key = auth.key
+        self.model_name = profile.model
+        self.provider = create_provider(self.provider_name, auth)
+        self.supports_audio = self.provider.supports_audio(self.model_name)
+        self._generation = 0
+        self._inference_lock = asyncio.Lock()
+        self._uses_thinking_compatibility = (
+            self.provider_name == "google"
+            and requires_thinking_compatibility(self.model_name)
         )
+        if self.provider_name == "google":
+            genai.configure(api_key=self.api_key)
 
         self.robot_capabilities = self._load_robot_capabilities(config)
         self.system_prompt = self._create_system_prompt()
@@ -74,11 +86,27 @@ class NinjaAgent:
 
     def _create_model(self):
         """Create the configured Gemini model with the existing agent settings."""
+        if self.provider_name != "google":
+            return None
         return genai.GenerativeModel(
             model_name=self.model_name,
-            generation_config=GenerationConfig(temperature=0.7),
+            generation_config=GenerationConfig(temperature=0.7, max_output_tokens=2048),
             system_instruction=self.system_prompt,
         )
+
+    @staticmethod
+    def _sdk_visible_text(response):
+        candidates = getattr(response, "candidates", None)
+        if isinstance(candidates, (list, tuple)):
+            for candidate in candidates:
+                reason = getattr(candidate, "finish_reason", None)
+                if (
+                    reason is not None
+                    and reason not in (1, "STOP")
+                    and getattr(reason, "name", None) != "STOP"
+                ):
+                    raise ProviderError("Google response refused or incomplete")
+        return response.text
 
     @staticmethod
     def _convert_rest_parts(content: str | list) -> list[dict]:
@@ -111,6 +139,10 @@ class NinjaAgent:
 
     async def _send_text_command(self, user_input: str) -> str:
         """Send one command while preserving the existing stateless chat behavior."""
+        if self.provider_name != "google":
+            return await self.provider.generate(
+                self.model_name, user_input, system=self.system_prompt
+            )
         if self._uses_thinking_compatibility:
             return await generate_content_text(
                 self.api_key,
@@ -124,10 +156,19 @@ class NinjaAgent:
             user_input,
             request_options={"timeout": DEFAULT_GENERATION_TIMEOUT_SECONDS},
         )
-        return response.text
+        return self._sdk_visible_text(response)
 
-    async def _generate_content(self, content: str | list, *, temperature: float) -> str:
+    async def _generate_content(
+        self, content: str | list, *, temperature: float
+    ) -> str:
         """Generate text with a bounded legacy or Gemini 3-compatible request."""
+        if self.provider_name != "google":
+            return await self.provider.generate(
+                self.model_name,
+                content,
+                system=self.system_prompt,
+                temperature=temperature,
+            )
         if self._uses_thinking_compatibility:
             return await generate_content_text(
                 self.api_key,
@@ -139,10 +180,12 @@ class NinjaAgent:
 
         response = await self.model.generate_content_async(
             content,
-            generation_config=GenerationConfig(temperature=temperature),
+            generation_config=GenerationConfig(
+                temperature=temperature, max_output_tokens=2048
+            ),
             request_options={"timeout": DEFAULT_GENERATION_TIMEOUT_SECONDS},
         )
-        return response.text
+        return self._sdk_visible_text(response)
 
     def _load_robot_capabilities(self, config: NinjaConfig) -> Dict[str, List[str]]:
         """Loads available movements, faces, and sounds from config and classes."""
@@ -150,7 +193,12 @@ class NinjaAgent:
         actions = self.action_library.list_names()
         faces = list(AnimatedFaces(None).animations.keys())  # type: ignore # Hack to get keys without full init
         sounds = list(RobotSoundPlayer.SOUNDS.keys())
-        return {"movements": movements, "actions": actions, "faces": faces, "sounds": sounds}
+        return {
+            "movements": movements,
+            "actions": actions,
+            "faces": faces,
+            "sounds": sounds,
+        }
 
     def refresh_capabilities(self):
         """Refresh saved Blockly action names without restarting the server."""
@@ -214,147 +262,102 @@ Example Interactions:
     }}
 """
 
-    async def process_command(self, user_input: str) -> dict:
-        """Processes a text-based user command."""
-        log_messages = []
+    def cancel_pending(self):
+        """Invalidate responses from any request already in flight or queued."""
+        self._generation += 1
+
+    def _safe_failure(self, exc):
+        # Exception messages from SDKs may contain credentials or request bodies.
+        detail = (
+            str(exc)
+            if isinstance(exc, (ProviderError, GeminiRuntimeError))
+            else type(exc).__name__
+        )
+        return f"{self.provider_name} model '{self.model_name}' failed ({detail}). Select another model or check credentials/network."
+
+    def _result(self, text):
         try:
-            response_text = await self._send_text_command(user_input)
-            
-            # Built-in search is handled automatically by the model/API.
-            # No manual function call handling needed for google_search_retrieval in standard mode.
-            
-            # Parse the final response
-            cleaned_response_text = response_text.strip()
-
-            # Attempt to extract JSON
-            json_start = cleaned_response_text.find("{")
-            json_end = cleaned_response_text.rfind("}") + 1
-
-            action_plan = {}
-
-            if json_start != -1 and json_end != 0:
-                try:
-                    json_str = cleaned_response_text[json_start:json_end]
-                    action_plan = json.loads(json_str)
-                except json.JSONDecodeError:
-                    print("Failed to parse JSON from model response.")
-
-            # Fallback / Auto-Emotion Logic
-            if not action_plan:
-                # If no JSON was found, treat the whole text as the response
-                action_plan = {
-                    "movement": None,
-                    "face": None,
-                    "sound": None,
-                    "response": cleaned_response_text,
-                }
-
-            # Automatic Emotional Expression Rule:
-            # If there is a text response but NO physical actions, add "speaking" face/sound.
-            if (
-                action_plan.get("response")
-                and not action_plan.get("movement")
-                and not action_plan.get("face")
-                and not action_plan.get("sound")
-            ):
-                action_plan["face"] = "speaking"
-                action_plan["sound"] = "speaking"
-
-            self._validate_native_plan(action_plan, log_messages)
-            log_messages.append(f"Action Plan: {action_plan}")
-            final_log = "\n".join(log_messages)
-            print(final_log)
-
-            return {
-                "action_plan": action_plan,
-                "response": action_plan.get("response"),
-                "log": final_log,
-            }
-
-        except Exception as e:
-            error_message = (
-                f"Gemini model '{self.model_name}' failed during command processing "
-                f"({type(e).__name__}): {e}"
+            plan = parse_plan(text, self.robot_capabilities)
+        except InvalidPlan:
+            # Preserve only a string response, never partial model-produced actions.
+            response = (
+                "The model returned an invalid action plan. No actions were executed."
             )
-            log.exception(error_message)
+            try:
+                candidate = json.loads(text[text.index("{") : text.rindex("}") + 1])
+                if isinstance(candidate, dict) and isinstance(
+                    candidate.get("response"), str
+                ):
+                    response = candidate["response"]
+            except (ValueError, TypeError):
+                pass
             return {
                 "action_plan": {},
-                "response": (
-                    f"The configured Gemini model '{self.model_name}' did not respond. "
-                    "Please check the server console or select another model."
-                ),
-                "log": error_message,
+                "response": response,
+                "log": "Rejected native movement plan or invalid model action",
             }
+        return {
+            "action_plan": plan,
+            "response": plan.get("response"),
+            "log": "Validated model response",
+        }
 
-    async def process_audio_command(self, audio_file_path: str) -> dict:
-        """Processes a voice command from an audio file."""
-        log_messages = [f"Processing audio file: {audio_file_path}"]
-        try:
-            if not os.path.exists(audio_file_path):
+    async def process_command(self, user_input: str) -> dict:
+        generation = self._generation
+        async with self._inference_lock:
+            if generation != self._generation:
                 return {
                     "action_plan": {},
-                    "response": "Audio file not found.",
-                    "log": "File error",
+                    "response": "Request superseded.",
+                    "log": "Cancelled",
                 }
+            try:
+                text = await asyncio.wait_for(self._send_text_command(user_input), 60)
+                if generation != self._generation:
+                    return {
+                        "action_plan": {},
+                        "response": "Request superseded.",
+                        "log": "Cancelled",
+                    }
+                result = self._result(text)
+                result["_generation"] = generation
+                return result
+            except Exception as exc:
+                message = self._safe_failure(exc)
+                log.warning(message)
+                return {"action_plan": {}, "response": message, "log": message}
 
-            with open(audio_file_path, "rb") as f:
-                audio_bytes = f.read()
-
-            audio_part = {"mime_type": "audio/webm", "data": audio_bytes}
-
-            prompt = "Transcribe this audio. Respond to the user's command in the same language they spoke. If they ask a question, answer it. If they give a command, generate a JSON action plan."
-
-            response_text = await self._generate_content(
-                [prompt, audio_part], temperature=0.7
-            )
-
-            # Reuse the parsing logic (simplified here, ideally shared)
-            cleaned_response_text = response_text.strip()
-            json_start = cleaned_response_text.find("{")
-            json_end = cleaned_response_text.rfind("}") + 1
-
-            action_plan = {}
-            if json_start != -1 and json_end != 0:
-                try:
-                    json_str = cleaned_response_text[json_start:json_end]
-                    action_plan = json.loads(json_str)
-                except json.JSONDecodeError:
-                    pass
-
-            if not action_plan:
-                action_plan = {
-                    "movement": None,
-                    "face": None,
-                    "sound": None,
-                    "response": cleaned_response_text,
-                }
-
-            # Auto-Emotion for voice too
-            if (
-                action_plan.get("response")
-                and not action_plan.get("movement")
-                and not action_plan.get("face")
-                and not action_plan.get("sound")
-            ):
-                action_plan["face"] = "speaking"
-                action_plan["sound"] = "speaking"
-
-            self._validate_native_plan(action_plan, log_messages)
-            log_messages.append(f"Action Plan from Audio: {action_plan}")
-            return {
-                "action_plan": action_plan,
-                "response": action_plan.get("response"),
-                "log": "\n".join(log_messages),
-            }
-
-        except Exception as e:
-            error_message = f"Error processing audio: {e}"
-            print(error_message)
+    async def process_audio_command(self, audio_file_path: str) -> dict:
+        if not self.supports_audio:
             return {
                 "action_plan": {},
-                "response": "I had trouble hearing that.",
-                "log": error_message,
+                "response": "Voice unavailable for this provider/model. Use text commands.",
+                "log": "Unsupported capability",
             }
+        generation = self._generation
+        async with self._inference_lock:
+            try:
+                if generation != self._generation:
+                    raise ProviderError("Request superseded")
+                with open(audio_file_path, "rb") as stream:
+                    audio = stream.read(MAX_AUDIO_BYTES + 1)
+                if not audio or len(audio) > MAX_AUDIO_BYTES:
+                    raise ProviderError("Empty or oversized audio")
+                content = [
+                    "Transcribe this audio and respond in the same language. Generate a JSON action plan for a command.",
+                    {"mime_type": "audio/webm", "data": audio},
+                ]
+                text = await asyncio.wait_for(
+                    self._generate_content(content, temperature=0.7), 60
+                )
+                if generation != self._generation:
+                    raise ProviderError("Request superseded")
+                result = self._result(text)
+                result["_generation"] = generation
+                return result
+            except Exception as exc:
+                message = self._safe_failure(exc)
+                return {"action_plan": {}, "response": message, "log": message}
 
     def _validate_native_plan(self, plan: dict, logs: list[str]) -> None:
         """Reject an entire unsafe native chain, including hallucinated names."""
@@ -374,9 +377,13 @@ Example Interactions:
                     reason = f"Movement '{item['name']}' is unavailable for {self.config.robot_type}."
                     break
                 if type(repetitions) is not int or not 1 <= repetitions <= 20:
-                    reason = "Native movement repetitions must be an integer from 1 to 20."
+                    reason = (
+                        "Native movement repetitions must be an integer from 1 to 20."
+                    )
                     break
-        if legacy_name and (not isinstance(legacy_name, str) or legacy_name not in allowed):
+        if legacy_name and (
+            not isinstance(legacy_name, str) or legacy_name not in allowed
+        ):
             reason = f"Legacy movement is unavailable for {self.config.robot_type}."
         if reason:
             plan.pop("chain", None)
@@ -399,8 +406,8 @@ Code:
             response_text = await self._generate_content(prompt, temperature=0.1)
             return response_text.strip()
         except Exception as e:
-            log.error(f"Error explaining code: {e}")
-            return f"Unable to explain code: {e}"
+            log.error(f"Error explaining code: {type(e).__name__}")
+            return f"Unable to explain code: {type(e).__name__}"
 
     async def generate_code(self, user_request: str) -> str:
         """Generates Python code from a natural language request (Migrated)."""
@@ -408,14 +415,14 @@ Code:
 "{user_request}"
 
 Use ONLY the documented API (robot.servo, robot.buzzer, etc). Return ONLY the Python code."""
-        
+
         try:
             response_text = await self._generate_content(prompt, temperature=0.1)
             text = response_text.strip()
             return self._extract_code(text)
         except Exception as e:
-            log.error(f"Code generation error: {e}")
-            return f"# Error generating code: {e}"
+            log.error(f"Code generation error: {type(e).__name__}")
+            return f"# Error generating code: {type(e).__name__}"
 
     async def analyze_error(self, code: str, error_msg: str) -> str:
         """Explains an execution error in simple terms (Migrated)."""
@@ -432,8 +439,8 @@ Then provide the corrected code block.
             response_text = await self._generate_content(prompt, temperature=0.1)
             return response_text.strip()
         except Exception as e:
-            log.error(f"Error analysis failed: {e}")
-            return f"Error analyzing failure: {e}"
+            log.error(f"Error analysis failed: {type(e).__name__}")
+            return f"Error analyzing failure: {type(e).__name__}"
 
     async def analyze_code(self, code: str) -> str:
         """Analyzes code for bugs or improvements (Migrated)."""
@@ -448,8 +455,8 @@ Code:
             response_text = await self._generate_content(prompt, temperature=0.1)
             return response_text.strip()
         except Exception as e:
-            log.error(f"Code analysis error: {e}")
-            return f"Error analyzing code: {e}"
+            log.error(f"Code analysis error: {type(e).__name__}")
+            return f"Error analyzing code: {type(e).__name__}"
 
     def _extract_code(self, text: str) -> str:
         """Helper to extract code from markdown blocks."""

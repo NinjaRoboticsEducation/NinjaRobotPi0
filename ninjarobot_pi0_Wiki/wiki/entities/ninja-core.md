@@ -56,11 +56,23 @@ sources:
   resource: urn:llmwiki:source:src-20261010-readme
   title: Readme
   content_hash: sha256:b235cfd4ad67c3dd0da2cd633bdcb8312122de1ff28579fb69ccd716e2400974
+- id: src-20261010-ninja-core-readme
+  resource: urn:llmwiki:source:src-20261010-ninja-core-readme
+  title: Ninja Core Readme
+  content_hash: sha256:0f7d702569807c8458e0b879e6a44941960b7acb8ecbf358e453bc5184950795
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:84b54f247d0b8a3164603c38f1918f48e768975145db6e43cca0a4297458279d
+  performed_at: '2026-10-10T15:28:47.571035+00:00'
+  target_hash: sha256:c009efee82a885b8aeda1de8dd770080de57d367c8e257cb969054e7d0c73591
   result: passed
   checks:
     source_support: passed
@@ -69,11 +81,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ninja_core package against web_sessions.py, movement_cli.py, runtime_pipeline.py,
-    and pyproject.toml. Exclusive launcher ownership, session management, and reconnect
-    QR display hold match code.
-  - Driver safety and neutral home positions are protected by software checks; real
-    hardware testing is pending.
+  - Reviewed ninja_core package against providers/, provider_setup.py, provider_credentials.py,
+    and agent_response.py. Multi-provider CLI selection (select-model), config locking,
+    and action validation match implementation.
+  - Offline host test suite passed; live provider token verification on physical Pi
+    remains pending.
 ---
 
 # ninja_core Package
@@ -102,7 +114,12 @@ New onboarding orchestration calls existing core settings/import helpers from an
 | **`ninja_agent.py`** | Gemini AI integration using configured model for natural language chat, multi-modal action planning, and native movement validation.[^src-20260822-readme-3] [^src-20260822-developmentguide] [^src-20261009-2026-10-09-builtin-movements] |
 | **`movement_controller.py`** | Motion sequence playback engine with position-aware cubic easing, preflight validation, serialized execution locking, and boundary callback checks.[^src-20260822-readme-3] [^src-20260822-developmentguide] [^src-20261009-2026-10-09-builtin-movements] |
 | **`web_server.py`** | FastAPI web server serving REST endpoints (including `/api/servos/movements`), WebSockets (`/ws/events`), and SPA static assets.[^src-20260822-readme-3] [^src-20260822-developmentguide] [^src-20261009-2026-10-09-builtin-movements] |
-| **`init_tool.py`** | Interactive setup wizard for validated Gemini key/model selection, tokens, robot naming, robot type, and hardware import.[^src-20260822-developmentguide] [^src-20260822-developmentlog] |
+| **`init_tool.py`** | Interactive setup wizard for validated model selection (Google, OpenAI, Anthropic, Ollama Cloud), tokens, naming, and hardware import.[^src-20260822-developmentguide] [^src-20261010-modeladapterimplementation] |
+| **`providers/`** | Multi-provider cloud model adapters (`base.py`, `cloud.py`, `registry.py`, `http.py`, `google.py`, `openai.py`, `anthropic.py`, `ollama.py`).[^src-20261010-ninja-core-readme] [^src-20261010-modeladapterimplementation] |
+| **`provider_setup.py`** | Shared discovery, interactive selection, and probe validation logic across CLI and onboarding.[^src-20261010-modeladapterimplementation] |
+| **`provider_credentials.py`** | Secure storage and opaque referencing for provider API keys in `$XDG_CONFIG_HOME/ninjarobot_pi0/credentials/`.[^src-20261010-modeladapterimplementation] |
+| **`private_files.py`** | Atomic file writes with owner-only permissions (0600) and cooperative config locking.[^src-20261010-modeladapterimplementation] |
+| **`agent_response.py`** | Strict validation of model-generated action plans (32 entries cap, 1-20 repetitions, duration limits).[^src-20261010-modeladapterimplementation] |
 
 ## CLI Entrypoints
 
@@ -112,6 +129,7 @@ New onboarding orchestration calls existing core settings/import helpers from an
 * `uv run ninja_core init-tool`: Launches the guided initial configuration wizard.[^src-20260822-developmentlog]
 * `uv run ninja_core config import-all`: Merges individual subsystem configs into `config.json`.[^src-20260822-readme-3]
 * `uv run ninja_core config import`: Merges subsystem configs and seeds profile built-in movements.[^src-20261009-2026-10-09-builtin-movements]
+* `uv run ninja_core config select-model`: Interactive multi-provider model selection (Google, OpenAI, Anthropic, Ollama Cloud).[^src-20261010-ninja-core-readme] [^src-20261010-modeladapterimplementation]
 
 [^src-20260822-readme-3]: ninja_core Readme.
 [^src-20260822-developmentguide]: NinjaRobotPi0 Development Guide.
@@ -152,3 +170,15 @@ Option 6 of `movement_cli.py` is updated to execute configured `Poweroff` (or `h
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-clientrypointrepairplan]: CLI launcher repair plan and root packaging reconciliation.
 [^src-20261010-readme]: ninja_core package README snapshot (2026-10-10 lifecycle).
+
+## Cloud Model Provider Adapters and Credential Storage (2026-10-10)
+
+`ninja_core` adds first-class support for Google, OpenAI, Anthropic, and Ollama Cloud API-key integrations.[^src-20261010-ninja-core-readme] [^src-20261010-modeladapterimplementation]
+* **Configuration Schema**: `config.json` adds an `ai` section containing `version: 1`, `active_provider`, and a `profiles` dictionary. Each profile stores its target model ID, `auth_method: "api_key"`, and an opaque reference to a private credential record.[^src-20261010-modeladapterimplementation]
+* **Credential Isolation**: Keys are stored outside the workspace at `$XDG_CONFIG_HOME/ninjarobot_pi0/credentials/<uuid>.json` with mode `0600`. They are excluded from `/api/agent/status` and public config exports.[^src-20261010-modeladapterimplementation]
+* **Pre-Migration Rollback**: On initial upgrade, `config.pre-provider.json` is preserved to enable rollback to the prior Google-only configuration.[^src-20261010-modeladapterimplementation]
+* **Action Safety Bounds**: `agent_response.py` validates action objects before dispatch: max 32 items, 1–20 repetitions, 60s expression duration limit, and permitted native movement / buzzer / face identifiers.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+
+[^src-20261010-ninja-core-readme]: ninja_core package README (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.

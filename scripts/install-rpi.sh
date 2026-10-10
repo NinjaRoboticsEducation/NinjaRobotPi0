@@ -44,9 +44,10 @@ NinjaRobotPi0 software installation:
   checkout: $root (existing files and Git revision retained)
   reuse compatible Node/uv; fallback downloads: uv $UV_VERSION, Node $NODE_VERSION
   pigpio commit $PIGPIO_COMMIT
-  apt: build-essential ca-certificates curl git python3-dev python3-venv xz-utils bluez dbus
-  privileged files: pigpiod /usr/local/bin, library /usr/local/lib, optional inactive systemd unit
+  apt: build-essential ca-certificates curl git python3-dev python3-venv xz-utils zstd bluez dbus
+  privileged files: Ollama launcher /usr/local/bin, pigpiod /usr/local/bin, library /usr/local/lib, optional inactive systemd unit
   Python: locked production .venv (prompt: ninjarobotpi0); frontend: npm ci and build
+  Ollama: CLI only; ARM64 archive needs 2 GB temporary disk; no daemon or model downloads
   wiki environment: $wiki (0=skip, 1=explicit setup)
 No hardware/service activation, calibration, credentials, robot start, or reboot.
 EOF
@@ -65,7 +66,7 @@ EOF
     PATH="$(dirname -- "$selected_uv"):$PATH"
     export PATH
   fi
-  if ((check)); then "$python" -B "$root/scripts/install_check.py" --root "$root"; return; fi
+  if ((check)); then "$python" -B "$root/scripts/install_check.py" --root "$root"; "$python" -B "$root/scripts/install_ollama.py" --check; return; fi
 
   "$python" -B "$root/scripts/install_check.py" --platform
   for item in pigpiod ninjarobot; do
@@ -104,6 +105,8 @@ EOF
     mv -- "$work/node-v$NODE_VERSION-linux-arm64" "$tools/node"
     export PATH="$tools/node/bin:$PATH"
   fi
+  install_stage "Ollama cloud CLI (no daemon or models)"
+  "$python" -B "$root/scripts/install_ollama.py"
   install_stage "pigpio daemon and inactive service"
   if ! command -v pigpiod >/dev/null; then
     download "https://codeload.github.com/joan2937/pigpio/tar.gz/$PIGPIO_COMMIT" "$work/pigpio.tar.gz"
@@ -144,6 +147,7 @@ EOF
   if ((wiki)); then "$python" -B "$root/scripts/wiki.py" setup; "$python" -B "$root/scripts/wiki.py" prepare; fi
   install_stage "Final software verification"
   "$python" -B "$root/scripts/install_check.py" --root "$root"
+  "$python" -B "$root/scripts/install_ollama.py" --check
   "$python" -B "$root/scripts/install_record.py" "$root"
   rm -rf -- "$work"; work=""; rmdir -- "$root/.ninjarobot-install.lock"; trap - EXIT INT TERM
   echo 'Software installed. Hardware setup remains pending. Next: ./onboard.sh'

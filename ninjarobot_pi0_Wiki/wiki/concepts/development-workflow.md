@@ -51,11 +51,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
   title: Lifecyclerefinementsevidence
   content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
+- id: src-20261010-developmentguide-3
+  resource: urn:llmwiki:source:src-20261010-developmentguide-3
+  title: Developmentguide
+  content_hash: sha256:13c766ddb69a6bee5efcf4d831c47596e6191106c19856a37ff904464c7ac947
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:c70cb91f35d403142f73bda5a4c92548fc09a045f448d5e2ccec1157cf57859d
+  performed_at: '2026-10-10T15:28:47.571035+00:00'
+  target_hash: sha256:7c58c916e68f2a1a2dbc6e7bd5ed3ee007b0f991827d8793baed5db5377c8f56
   result: passed
   checks:
     source_support: passed
@@ -64,10 +72,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed development workflow against 2026-10-10 DevelopmentGuide.md and test
-    suites. ninjarobotpi0 prompt, single-ownership console scripts, and 331 passing
-    tests (1 excluded baseline) match repository practice.
-  - Automated software tests on inert fixtures do not establish physical device readiness.
+  - Reviewed development workflow against tests/test_provider_adapter.py and tests/test_ollama_install.py.
+    Inert test fixtures, mock HTTP transport, and Python 3.10+ boundary match workflow.
+  - Host test results do not imply target-device execution.
 ---
 
 # Development and immutable documentation workflow
@@ -139,3 +146,10 @@ The current development manual records the branding update (`ninjarobotpi0` venv
 [^src-20261010-developmentguide-2]: Current versioned Developmentguide (2026-10-10 CLI recovery).
 [^src-20261010-clientrypointrepairevidence]: CLI launcher repair evidence and validation records.
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
+
+## Multi-provider testing and Python requirements (2026-10-10)
+
+Software testing of cloud model adapters utilizes inert fixtures in `tests/test_provider_adapter.py` and `tests/test_ollama_install.py`, validating discovery pagination, payload parsing, credential migration, and error propagation without live network traffic.[^src-20261010-developmentguide-3] [^src-20261010-modeladaptervalidation] Runtime manifests enforce Python 3.10+ across root and subpackages.[^src-20261010-modeladaptervalidation]
+
+[^src-20261010-developmentguide-3]: Current versioned Developmentguide (2026-10-10 model adapter release).
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.

@@ -13,17 +13,18 @@ from .config import (
     get_robot_type_options,
     import_and_update_config,
     load_config,
-    set_gemini_configuration,
     set_robot_name,
     set_robot_type,
 )
 from .gemini_models import GeminiModelDiscoveryError, list_available_gemini_models
 from .gemini_runtime import GeminiRuntimeError, validate_gemini_model
+from .provider_setup import configure_ai_model
+from .providers.base import ProviderError
 from .ngrok_config import has_ngrok_auth_token, set_ngrok_auth_token
 
 
 MENU_OPTIONS = (
-    ("1", "Set Gemini API Key and Model"),
+    ("1", "Select AI model"),
     ("2", "Set ngrok Token"),
     ("3", "Rename the Ninja Robot"),
     ("4", "Select NinjaRobot Type"),
@@ -46,7 +47,11 @@ def configure_gemini_api_key(
 
     click.echo("Retrieving available Gemini models from Google...")
     models = list_available_gemini_models(normalized_key)
-    current_model = load_config(path).gemini.model if path.exists() else None
+    current_model = None
+    if path.exists():
+        saved = load_config(path)
+        profile = saved.ai.profiles.get("google") if saved.ai else None
+        current_model = profile.model if profile else saved.gemini.model
 
     click.echo("Available Gemini models for NinjaRobot agent operations:")
     for index, model in enumerate(models, start=1):
@@ -70,7 +75,11 @@ def configure_gemini_api_key(
         f"Validating Gemini model '{selected.model_id}' (this can take up to 60 seconds)..."
     )
     validate_gemini_model(normalized_key, selected.model_id)
-    return set_gemini_configuration(normalized_key, selected.model_id, path=path)
+    from .provider_setup import commit_profile
+    from .providers.base import Auth
+    result = commit_profile("google", selected.model_id, Auth(normalized_key), path)
+    click.echo("Google key/model saved privately. Restart the agent/server deliberately to apply.")
+    return result
 
 
 def _print_menu():
@@ -151,7 +160,7 @@ def _start_server():
 def run_init_tool():
     """Run the interactive initialization menu until the user exits."""
     handlers = {
-        "1": _set_gemini_api_key,
+        "1": configure_ai_model,
         "2": _set_ngrok_token,
         "3": _rename_robot,
         "4": _select_robot_type,
@@ -170,6 +179,7 @@ def run_init_tool():
         try:
             handlers[choice]()
         except (
+            ProviderError,
             GeminiModelDiscoveryError,
             GeminiRuntimeError,
             OSError,

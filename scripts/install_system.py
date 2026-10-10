@@ -13,6 +13,7 @@ PACKAGES = (
     "python3-dev",
     "python3-venv",
     "xz-utils",
+    "zstd",
     "bluez",
     "dbus",
 )

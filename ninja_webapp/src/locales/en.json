@@ -37,6 +37,7 @@
         "placeholder": "Type a message...",
         "send": "Send",
         "voice": "Voice Input",
+        "voiceUnavailable": "Voice unavailable for this model. Use text commands.",
         "expressions": "Expressions",
         "sounds": "Sounds",
         "movements": "Movements",

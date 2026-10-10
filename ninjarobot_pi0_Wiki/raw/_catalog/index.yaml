@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-10T12:12:31Z'
+generated_at: '2026-10-10T15:31:53Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -301,6 +301,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentGuide.md
   kind: text
   state: ingested
+- id: src-20261010-developmentguide-3
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentGuide.md
+  kind: text
+  state: ingested
 - id: src-20261010-developmentguide
   title: Developmentguide
   path: raw/articles/ninjarobotpi0/2026-10-10-lifecycle/DevelopmentGuide.md
@@ -311,6 +316,11 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentLog.md
   kind: text
   state: ingested
+- id: src-20261010-developmentlog-3
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentLog.md
+  kind: text
+  state: ingested
 - id: src-20261010-developmentlog
   title: Developmentlog
   path: raw/notes/ninjarobotpi0/2026-10-10-lifecycle/DevelopmentLog.md
@@ -319,6 +329,11 @@ sources:
 - id: src-20261010-installationguide-2
   title: Installationguide
   path: raw/articles/ninjarobotpi0/2026-10-10-cli-repair/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261010-installationguide-3
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-10-model-adapter/InstallationGuide.md
   kind: text
   state: ingested
 - id: src-20261010-installationguide
@@ -341,6 +356,21 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-10-lifecycle/LifecycleRefinementsValidation.md
   kind: text
   state: ingested
+- id: src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  path: raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterImplementation.md
+  kind: text
+  state: ingested
+- id: src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  path: raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterValidation.md
+  kind: text
+  state: ingested
+- id: src-20261010-ninja-core-readme
+  title: Ninja Core Readme
+  path: raw/articles/ninjarobotpi0/2026-10-10-model-adapter/ninja-core-README.md
+  kind: text
+  state: ingested
 - id: src-20261010-readme-2
   title: Readme
   path: raw/articles/ninjarobotpi0/2026-10-10-lifecycle/README.md
@@ -349,6 +379,11 @@ sources:
 - id: src-20261010-readme-3
   title: Readme
   path: raw/articles/ninjarobotpi0/2026-10-10-cli-repair/README.md
+  kind: text
+  state: ingested
+- id: src-20261010-readme-4
+  title: Readme
+  path: raw/articles/ninjarobotpi0/2026-10-10-model-adapter/README.md
   kind: text
   state: ingested
 - id: src-20261010-readme

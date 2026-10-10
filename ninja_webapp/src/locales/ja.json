@@ -37,6 +37,7 @@
         "placeholder": "メッセージを入力...",
         "send": "送信",
         "voice": "音声入力",
+        "voiceUnavailable": "このモデルでは音声を利用できません。テキストを入力してください。",
         "expressions": "表情",
         "sounds": "サウンド",
         "movements": "動き",

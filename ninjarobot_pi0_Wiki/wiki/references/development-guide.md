@@ -55,11 +55,27 @@ sources:
   resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
   title: Lifecyclerefinementsevidence
   content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
+- id: src-20261010-developmentguide-3
+  resource: urn:llmwiki:source:src-20261010-developmentguide-3
+  title: Developmentguide
+  content_hash: sha256:13c766ddb69a6bee5efcf4d831c47596e6191106c19856a37ff904464c7ac947
+- id: src-20261010-ninja-core-readme
+  resource: urn:llmwiki:source:src-20261010-ninja-core-readme
+  title: Ninja Core Readme
+  content_hash: sha256:0f7d702569807c8458e0b879e6a44941960b7acb8ecbf358e453bc5184950795
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:5a1a0708c71538bec6b07b0410938c2b60526a131d14ad29b3504399e13d74cd
+  performed_at: '2026-10-10T15:31:43.935978+00:00'
+  target_hash: sha256:085477e652f7f188c48c2e9449420e1b1fc4f25ea4ed342f1831b7d923ac578e
   result: passed
   checks:
     source_support: passed
@@ -68,15 +84,15 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed development guide manual workflow against project-knowledge.json, test_cli_entrypoints.py,
-    and test_lifecycle_refinements.py. ninjarobotpi0 prompt, single-browser session
-    ownership, option 6 Poweroff exit, and launcher recovery match repository practice.
-  - Software tests do not substitute for physical robot acceptance.
+  - Reviewed development guide against test_provider_adapter.py, config.pre-provider.json
+    rollback, and 2026-10-10 DevelopmentGuide.md. Inert test fixtures, Python 3.10+
+    requirement, and rollback procedures match manual.
+  - Software test suites pass on host; physical hardware testing remains pending.
 ---
 
 # Current development manual
 
-Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261010-developmentguide-2]
+Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261010-developmentguide-3]
 
 [Project overview](/overview.md).
 
@@ -150,7 +166,19 @@ env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev 
 ```
 followed by verification with `uv run --no-sync ninja_core --help` and `./install.sh --check`. Inert tests passed 105 focused and 331 root regression tests (1 excluded baseline). Real environment repair requires explicit owner approval.[^src-20261010-developmentguide-2] [^src-20261010-clientrypointrepairevidence]
 
-[^src-20261010-developmentguide-2]: Current versioned Developmentguide (2026-10-10 CLI recovery).
+[^src-20261010-developmentguide-2]: Historical 2026-10-10 Developmentguide (CLI recovery).
 [^src-20261010-developmentguide]: Versioned Developmentguide (2026-10-10 lifecycle refinements).
 [^src-20261010-clientrypointrepairevidence]: CLI launcher repair evidence and validation records.
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
+
+## Cloud model provider adapter development and testing (2026-10-10)
+
+Development guidelines for `ninja_core.providers` and cloud adapters:[^src-20261010-developmentguide-3] [^src-20261010-ninja-core-readme] [^src-20261010-modeladapterimplementation]
+* **Inert Testing**: Automated test suites (`pytest tests/test_provider_adapter.py`, `tests/test_gemini_runtime.py`, `tests/test_gemini_models.py`, `tests/test_init_tool.py`, `tests/test_ollama_install.py`) use inert HTTP and SDK fixtures; live provider calls are never performed in automated CI.[^src-20261010-modeladaptervalidation]
+* **Rollback and Migration**: Pre-migration configurations are snapshotted to `config.pre-provider.json`. Rolling back requires restoring the previous code/lockfile and config snapshot.[^src-20261010-modeladapterimplementation]
+* **Python Runtime Boundary**: Package manifests require Python 3.10+.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+
+[^src-20261010-developmentguide-3]: Current versioned Developmentguide (2026-10-10 model adapter release).
+[^src-20261010-ninja-core-readme]: ninja_core package README (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.

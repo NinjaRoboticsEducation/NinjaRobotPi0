@@ -56,11 +56,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-installationguide-2
   title: Installationguide
   content_hash: sha256:18d2002125e05e7026c4bc7568ba8fb1f588a466bc7815f850476e07fa922913
+- id: src-20261010-installationguide-3
+  resource: urn:llmwiki:source:src-20261010-installationguide-3
+  title: Installationguide
+  content_hash: sha256:116e93e529583e57b2f300536c8a2367030727c584a83a1a826cd5a53b0d4001
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:f12a776d5402071a53ea9c31055db4c70161a8a2410d850bac5d9b782d771947
+  performed_at: '2026-10-10T15:28:47.571035+00:00'
+  target_hash: sha256:ba29c7e753d5e59d1d88b0995d6093507484f4c31f0f16fea2114c5f0431a6b3
   result: passed
   checks:
     source_support: passed
@@ -69,11 +77,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed installation and wiring reference against 2026-10-10 InstallationGuide.md.
-    Five-launcher verification in .venv/bin and ninjarobotpi0 prompt match installation
-    practice.
-  - Hardware wiring, power isolation, and physical calibration verification remain
-    mandatory before operation.
+  - Reviewed installation and wiring reference against 2026-10-10 InstallationGuide.md
+    and provider_credentials.py. Setup workflow, private permissions, and pinned installer
+    match manual.
+  - Wiring and hardware assembly remain unchanged from previous verified revisions.
 ---
 
 # Installation and Hardware Wiring Reference
@@ -194,3 +201,10 @@ Spider built-in movement import requires all eight BCM GPIO channels 20–27 to 
 The current installation manual records the updated virtual environment branding (`ninjarobotpi0` prompt) and launcher verification. The installer verifies all five launcher executables (`ninja_core`, `pi0servo`, `pi0disp`, `pi0buzzer`, `pi0vl53l0x`) in `.venv/bin` after locked provider reinstallation, ensuring wiring calibration tools can be launched independently.[^src-20261010-installationguide-2]
 
 [^src-20261010-installationguide-2]: Current versioned Installationguide (2026-10-10 CLI recovery).
+
+## Model provider configuration in post-install setup (2026-10-10)
+
+During guided software configuration (`./onboard.sh --step ai_model` or `uv run ninja_core config select-model`), users configure cloud AI credentials for Google, OpenAI, Anthropic, or Ollama Cloud.[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation] API keys are written to `$XDG_CONFIG_HOME/ninjarobot_pi0/credentials/` with owner-only permissions (`0600` file, `0700` directory). Optionally, `scripts/install_ollama.py` can stage the pinned ARM64 Ollama CLI without daemon or weight downloads.[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation]
+
+[^src-20261010-installationguide-3]: Current versioned Installationguide (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.

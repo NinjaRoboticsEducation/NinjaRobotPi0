@@ -24,7 +24,7 @@
 
 ## 1. What Is NinjaRobotPi0?
 
-**NinjaRobotPi0** is an open-source, modular educational robot built on the **Raspberry Pi Zero 2 W** (a tiny, affordable computer about the size of a stick of gum). It brings together servo motors (for movement), an LCD display (the robot's face), a buzzer (for sounds and melodies), a distance sensor, Google Gemini AI chat, Bluetooth Low Energy (BLE), and a browser-based control interface — all in one compact package.
+**NinjaRobotPi0** is an open-source, modular educational robot built on the **Raspberry Pi Zero 2 W** (a tiny, affordable computer about the size of a stick of gum). It brings together servo motors (for movement), an LCD display (the robot's face), a buzzer (for sounds and melodies), a distance sensor, cloud AI chat (Google, OpenAI, Anthropic or Ollama Cloud), Bluetooth Low Energy (BLE), and a browser-based control interface — all in one compact package.
 
 Whether you want to build a tire-type car, a humanoid, or a spider robot, NinjaRobotPi0 gives you the foundation to learn how software, AI, and physical components work together.
 
@@ -32,7 +32,7 @@ Whether you want to build a tire-type car, a humanoid, or a spider robot, NinjaR
 
 - **Move and express itself** — Use the built-in movement library to make your robot walk, wave, or dance. The LCD face shows animated expressions, and the buzzer plays emotion sounds.
 - **Sense distance** — A VL53L0X laser sensor measures distances in millimetres, so your robot can detect obstacles.
-- **Chat with AI** — Connect a Google Gemini API key and let the AI chat with you. The AI can even trigger robot actions like movements and expressions.
+- **Chat with AI** — Choose a cloud provider and connect its API key to chat with the AI. The AI can even trigger robot actions like movements and expressions.
 - **Control from your phone** — Open a web browser on any device and you get a control panel with Home, Agent (AI chat), and Help pages — in English, Japanese, Traditional Chinese, and Simplified Chinese.
 - **Learn step by step** — Calibrate each component with guided tools, then explore the Python packages and web interface at your own pace.
 
@@ -61,7 +61,7 @@ Follow these steps to build and run your own NinjaRobotPi0 from scratch.
 | **Buzzer** | Passive buzzer (3–5 V) | For sounds and melodies |
 | **Setup Access** | Terminal or SSH, internet, normal user with sudo | For installation and configuration |
 
-> **📎 Full hardware details:** See the [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-cli-repair/InstallationGuide.md)
+> **📎 Full hardware details:** See the [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-model-adapter/InstallationGuide.md)
 
 ### 2.2 Hardware Wiring
 
@@ -209,7 +209,7 @@ The wizard walks you through these steps in order:
 | **4. Distance** | Read sensor values, then calibrate at a known distance | Readings match the real distance |
 | **5. Import** | Import display, buzzer, and servo settings into the main `config.json` | All settings pass validation |
 | **6. Identity** | Set a BLE name and choose your robot type: `tire`, `humanoid`, or `spider` | Name and type match your build |
-| **7. Gemini** | Enter your Google Gemini API key (hidden input), choose an AI model | Model validates successfully (internet required) |
+| **7. Select model provider** | Choose Google, OpenAI, Anthropic or Ollama Cloud; enter a hidden API key and select a live model | Model validates successfully (internet required; small provider charge possible) |
 | **8. ngrok** | Optionally enter your ngrok authtoken for remote access | Token is saved (no tunnel opens yet) |
 
 > ⚠️ **Servo warning:** The servo tool can **immediately move** previously calibrated servos when it opens — even before its menu appears. Always support the robot before opening the servo tool.
@@ -228,6 +228,12 @@ The wizard walks you through these steps in order:
 ```
 
 Press **Q** or **Ctrl+C** to save progress and exit. The wizard does not start the server on exit.
+
+### Choose or change the agent model
+
+Run `uv run ninja_core config select-model` (also available in `ninja_core init-tool`, option 1, or `./onboard.sh --step ai_model`). Choose **Google, OpenAI, Anthropic, or Ollama Cloud**, enter your API key privately, then select and validate an available model. Restart the running agent/server deliberately to apply a CLI change. Account login is a later feature; use provider API credentials rather than a ChatGPT/Claude subscription password.
+
+`./install.sh` installs the Ollama CLI automatically; Pi0 uses Ollama Cloud, with no local models or daemon. The official ARM64 archive needs 2 GB free temporary disk space. New keys are stored under `~/.config/ninjarobot_pi0/credentials/` (or `$XDG_CONFIG_HOME`); protect that directory and `config.pre-provider.json`. Voice is enabled only for supported Gemini models; other selections accept text. Cloud calls may incur charges. Detailed behavior and manual validation are in the [model adapter wiki source](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterImplementation.md).
 
 ### 2.6 Create Robot Movements
 
@@ -278,7 +284,7 @@ The web interface has three pages:
 | Page | What it does |
 |---|---|
 | **Home** | Robot entry page with a power-off slider control |
-| **Agent** | AI chat with Gemini, expressions, sounds, movements, and distance readings |
+| **Agent** | AI chat with your selected provider, expressions, sounds, movements, and distance readings |
 | **Help** | Usage guidance; the menu also lets you switch the interface language |
 
 > **Note:** The BLE badge on screen means the robot is **advertising** (broadcasting its Bluetooth signal), not that a controller is connected. Browser speech input depends on browser support and permissions.
@@ -469,7 +475,7 @@ Keep configuration/calibration files. If installation fails again, retain the **
 
 | Problem | Solution |
 |---|---|
-| Gemini setup fails | Check your internet connection and API key. Retry with: `./onboard.sh --step gemini` |
+| Model setup fails | Check your internet connection and API key. Retry with: `./onboard.sh --step gemini` |
 | ngrok setup fails | Check your internet connection and authtoken. Retry with: `./onboard.sh --step ngrok` |
 | Server starts but web page is unreachable | Make sure your phone/computer is on the same Wi-Fi network as the Pi. Try using the Pi's IP address directly. |
 
@@ -495,7 +501,7 @@ To use the AI chat feature, you need a Google Gemini API key. Free-tier availabi
 
 #### Step 3 — Save the key on your Pi
 
-During onboarding, the wizard will ask for your Gemini API key at the **Gemini** step. Paste it in — the input is hidden for security. The wizard then lets you choose from the available AI models associated with your key.
+Choose Google in onboarding step 7, **Select model provider**, to enter your Gemini API key. Paste it in — the input is hidden for security. The wizard then lets you choose from the available AI models associated with your key.
 
 If you already completed onboarding and want to change the key:
 
@@ -541,7 +547,7 @@ From the installation folder, `./onboard.sh --status` checks saved configuration
 
 Protect `config.json` (which may contain your Gemini key), ngrok credentials and calibration files; do not publish them. Gemini pricing/quota and ngrok availability depend on your account. The Pi0 control interface has no user-login protection; an encrypted ngrok tunnel does not add application authentication. Use trusted networks and keep control URLs private.
 
-Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-cli-repair/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentLog.md).
+Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-model-adapter/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentLog.md).
 
 ## License
 
@@ -559,6 +565,8 @@ Made with ❤️ for AI Robotics Education
 <!-- 日本語 -->
 
 # 日本語
+
+モデルの変更: `uv run ninja_core config select-model` または `./onboard.sh --step ai_model` で Google、OpenAI、Anthropic、Ollama Cloud を選び、API キーを非公開で入力してモデルを検証します。変更後はエージェントを手動で再起動してください。Pi0 はクラウド推論のみを使用します。インストーラーは Ollama CLI を導入します（ローカルモデルやデーモンなし、展開用の空き容量 2 GB が必要）。音声は対応する Gemini モデルで利用できます。クラウド利用は課金される場合があります。
 
 ## 1. NinjaRobotPi0 とは？
 
@@ -662,7 +670,7 @@ curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi
 | 4. 距離 | センサー読み取り値を確認・校正 |
 | 5. 取り込み | 設定を `config.json` にインポート |
 | 6. 名前/型 | BLE 名とロボットタイプ（`tire`/`humanoid`/`spider`）を設定 |
-| 7. Gemini | API キーとモデルを設定（インターネット必要） |
+| 7. モデルプロバイダー選択 | Google / OpenAI / Anthropic / Ollama Cloud の API キーとモデルを設定 |
 | 8. ngrok | リモートアクセス用トークン設定（任意） |
 
 > ⚠️ **注意:** サーボツールは開くと**即座に**校正済みサーボを動かす場合があります。必ずロボットを支えてから開いてください。
@@ -873,6 +881,8 @@ AI ロボティクス教育のために ❤️ を込めて作られました
 
 # 繁體中文
 
+更換模型：執行 `uv run ninja_core config select-model` 或 `./onboard.sh --step ai_model`，選擇 Google、OpenAI、Anthropic 或 Ollama Cloud，私下輸入 API 金鑰並驗證模型，然後手動重新啟動代理。Pi0 僅使用雲端推論；安裝程式會安裝 Ollama CLI，不下載本機模型或啟動守護程序，解壓暫存需 2 GB 可用空間。語音僅供支援的 Gemini 模型使用。雲端呼叫可能產生費用。
+
 ## 1. 什麼是 NinjaRobotPi0？
 
 **NinjaRobotPi0** 是一個以 **Raspberry Pi Zero 2 W**（一個口香糖大小的迷你電腦）為核心的開源教育機器人。它整合了伺服馬達（動作）、LCD 顯示螢幕（機器人的臉）、蜂鳴器（音效與旋律）、距離感測器、Google Gemini AI 對話、藍牙低功耗（BLE）以及瀏覽器控制介面——全部濃縮在一個小巧的套件中。
@@ -975,7 +985,7 @@ curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi
 | 4. 距離感測 | 確認與校準感測器讀數 |
 | 5. 匯入設定 | 將設定匯入 `config.json` |
 | 6. 名稱/類型 | 設定 BLE 名稱和機器人類型（`tire`/`humanoid`/`spider`） |
-| 7. Gemini | 設定 API 金鑰和模型（需要網路） |
+| 7. 選擇模型供應商 | 設定 Google / OpenAI / Anthropic / Ollama Cloud API 金鑰和模型 |
 | 8. ngrok | 設定遠端存取權杖（選用） |
 
 > ⚠️ **注意：** 伺服工具開啟時可能**立即移動**校準過的伺服馬達。請務必先支撐好機器人。
@@ -1186,6 +1196,8 @@ Bookworm/Trixie 64-bit 是參考環境，不是 OS 代號白名單。需使用 Z
 
 # 简体中文
 
+更换模型：运行 `uv run ninja_core config select-model` 或 `./onboard.sh --step ai_model`，选择 Google、OpenAI、Anthropic 或 Ollama Cloud，私下输入 API 密钥并验证模型，然后手动重启代理。Pi0 仅使用云端推理；安装程序会安装 Ollama CLI，不下载本地模型或启动守护进程，解压临时文件需要 2 GB 可用空间。语音仅用于受支持的 Gemini 模型。云端调用可能产生费用。
+
 ## 1. 什么是 NinjaRobotPi0？
 
 **NinjaRobotPi0** 是一个以 **Raspberry Pi Zero 2 W**（一个口香糖大小的迷你电脑）为核心的开源教育机器人。它集成了舵机（动作）、LCD 显示屏（机器人的脸）、蜂鸣器（音效与旋律）、距离传感器、Google Gemini AI 对话、蓝牙低功耗（BLE）以及浏览器控制界面——全部浓缩在一个小巧的套件中。
@@ -1288,7 +1300,7 @@ curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi
 | 4. 距离传感 | 确认与校准传感器读数 |
 | 5. 导入设置 | 将设置导入 `config.json` |
 | 6. 名称/类型 | 设置 BLE 名称和机器人类型（`tire`/`humanoid`/`spider`） |
-| 7. Gemini | 设置 API 密钥和模型（需要网络） |
+| 7. 选择模型提供商 | 设置 Google / OpenAI / Anthropic / Ollama Cloud API 密钥和模型 |
 | 8. ngrok | 设置远程访问令牌（可选） |
 
 > ⚠️ **注意：** 舵机工具打开时可能**立即移动**校准过的舵机。请务必先支撑好机器人。

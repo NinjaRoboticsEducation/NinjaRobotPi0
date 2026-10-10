@@ -22,8 +22,8 @@ class FakeResponse:
     def __exit__(self, exc_type, exc, traceback):
         return False
 
-    def read(self):
-        return self._body
+    def read(self, limit=-1):
+        return self._body if limit < 0 else self._body[:limit]
 
 
 def test_gemini_3_generation_uses_low_thinking_and_never_puts_key_in_url():

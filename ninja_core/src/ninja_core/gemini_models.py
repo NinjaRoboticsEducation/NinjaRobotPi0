@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import socket
 from dataclasses import dataclass
-from json import JSONDecodeError
 from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -49,8 +48,11 @@ def _normalize_description(value: Any) -> str:
 
 def _decode_response(response: Any) -> dict[str, Any]:
     try:
-        payload = json.loads(response.read().decode("utf-8"))
-    except (AttributeError, UnicodeDecodeError, JSONDecodeError) as exc:
+        raw = response.read(2 * 1024 * 1024 + 1)
+        if len(raw) > 2 * 1024 * 1024:
+            raise ValueError("Oversized provider response")
+        payload = json.loads(raw.decode("utf-8"))
+    except (AttributeError, UnicodeDecodeError, ValueError) as exc:
         raise GeminiModelDiscoveryError(
             "Google returned an invalid Gemini model response. Please try again."
         ) from exc

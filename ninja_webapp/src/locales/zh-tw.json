@@ -37,6 +37,7 @@
         "placeholder": "輸入訊息...",
         "send": "發送",
         "voice": "語音輸入",
+        "voiceUnavailable": "此模型不支援語音，請使用文字指令。",
         "expressions": "表情",
         "sounds": "聲音",
         "movements": "動作",

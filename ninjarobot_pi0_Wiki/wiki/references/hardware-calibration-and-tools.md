@@ -56,11 +56,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
   title: Lifecyclerefinementsevidence
   content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
+- id: src-20261010-installationguide-3
+  resource: urn:llmwiki:source:src-20261010-installationguide-3
+  title: Installationguide
+  content_hash: sha256:116e93e529583e57b2f300536c8a2367030727c584a83a1a826cd5a53b0d4001
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:a96c12fa780c5656bf15b2fe273fa55fbd5b8c4bb8e372b47f34302c82a58fd2
+  performed_at: '2026-10-10T15:28:47.571035+00:00'
+  target_hash: sha256:76335ab22373367193edee3afb1e164b4be47eb77a38384f1d46a4f8cd817010
   result: passed
   checks:
     source_support: passed
@@ -69,11 +77,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed hardware calibration and tools against movement_cli.py and 2026-10-10
-    lifecycle evidence. Option 6 Poweroff exit, PWM release, and single-ownership
-    launcher execution match code.
-  - Physical support and joint clearance remain critical safety prerequisites before
-    launching calibration tools.
+  - Reviewed calibration tools against init_tool.py option 1 (Select AI model) and
+    provider_setup.py. Terminal-only probe validation without hardware actuation matches
+    implementation.
+  - Physical servo clearance and external power remain required before running motor
+    calibration.
 ---
 
 # Hardware Calibration and Testing Tools Reference
@@ -161,3 +169,10 @@ Movement-tool option 6 commands configured `Poweroff` once before HAL shutdown a
 
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
+
+## AI Model Selection in Initial Configuration Tool (2026-10-10)
+
+In `uv run ninja_core init-tool`, option 1 is updated to **Select AI model** (supporting Google, OpenAI, Anthropic, and Ollama Cloud).[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation] Model discovery, input, and verification probe execute in the terminal without energizing robot servos, playing audio, or launching the robot web server.[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation]
+
+[^src-20261010-installationguide-3]: Current versioned Installationguide (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.

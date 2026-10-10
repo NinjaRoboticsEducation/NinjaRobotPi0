@@ -64,11 +64,23 @@ sources:
   resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
   title: Lifecyclerefinementsevidence
   content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
+- id: src-20261010-developmentguide-3
+  resource: urn:llmwiki:source:src-20261010-developmentguide-3
+  title: Developmentguide
+  content_hash: sha256:13c766ddb69a6bee5efcf4d831c47596e6191106c19856a37ff904464c7ac947
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:4e0602b2d11d5c4728b1dd731f8185ba0add79a6d67094953f5694876f9064f5
+  performed_at: '2026-10-10T15:31:11.753406+00:00'
+  target_hash: sha256:cb118cc5e84cab938e9a621b2b2dfe7e53cb1933c1b32ccb99911931e2ce1ea7
   result: passed
   checks:
     source_support: passed
@@ -77,10 +89,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed REST endpoints, CLI commands, and WebSocket contracts against web_server.py,
-    web_sessions.py, and movement_cli.py. /ws/session endpoint, 423/503/4409 codes,
-    option 6 Poweroff, and single-ownership launchers match code.
-  - Host CLI help checks do not imply remote network acceptance or physical robot
+  - Reviewed REST/CLI reference against web_server.py, movement_cli.py, and provider_setup.py.
+    /api/agent/status metadata, select-model CLI command, and action validation boundaries
+    match implementation.
+  - Host CLI checks do not imply remote cloud quota entitlement or physical robot
     readiness.
 ---
 
@@ -112,7 +124,8 @@ This document provides a consolidated reference for all Python APIs, scriptable 
 
 | Endpoint | Method | Payload / Params | Description |
 |----------|--------|------------------|-------------|
-| `/api/agent/chat` | `POST` | `{"message": "...", "language": "en"}` | AI conversational agent endpoint.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] |
+| `/api/agent/chat` | `POST` | `{"message": "...", "language": "en"}` | AI conversational agent endpoint (voice audio restricted to allowlisted models).[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] [^src-20261010-modeladapterimplementation] |
+| `/api/agent/status` | `GET` | None | Returns agent active state, provider, model ID, and audio input capability flag.[^src-20261010-modeladapterimplementation] |
 | `/api/code/execute` | `POST` | `{"code": "..."}` | Submit Python script for sandboxed execution.[^src-20260822-developmentguide] [^src-20260822-readme-3] |
 | `/api/code/stop` | `POST` | None | Requests cooperative cancellation of the active script; non-cooperative loops may require the Stop Robot path or server restart.[^src-20260822-developmentguide] |
 | `/api/system/shutdown` | `POST` | None | Triggers graceful shutdown animation and OS poweroff.[^src-20260822-developmentguide] [^src-20260822-readme-3] |
@@ -129,7 +142,8 @@ This document provides a consolidated reference for all Python APIs, scriptable 
 uv run ninja_core server [--autostart]    # Launch server and BLE
 uv run ninja_core chat                    # Terminal AI chat
 uv run ninja_core movement-tool           # Servo tool (option 4 runs configured movements)
-uv run ninja_core init-tool               # Guided setup wizard
+uv run ninja_core init-tool               # Guided setup wizard (option 1: Select AI model)
+uv run ninja_core config select-model     # Interactive model provider setup (Google, OpenAI, Anthropic, Ollama)
 uv run ninja_core config set-name "<n>"   # Set Bluetooth name
 uv run ninja_core config set-key gemini <key>  # Discover, validate, and save model
 uv run ninja_core config set-key <k> <v>       # Generic non-Gemini key save
@@ -200,3 +214,14 @@ Web API access requires an active primary session identified by the HttpOnly `ni
 [^src-20261010-developmentguide-2]: Current versioned Developmentguide (2026-10-10 CLI recovery).
 [^src-20261010-clientrypointrepairplan]: CLI launcher repair plan and root packaging reconciliation.
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
+
+## Cloud Model Provider Selection CLI and Status Contracts (2026-10-10)
+
+`uv run ninja_core config select-model` provides interactive model configuration for Google, OpenAI, Anthropic, and Ollama Cloud.[^src-20261010-developmentguide-3] [^src-20261010-modeladapterimplementation]
+* Input accepts `R` to refresh catalog, `B` to re-select provider, or blank to cancel without changes.[^src-20261010-modeladapterimplementation]
+* The selected model is tested with a bounded probe request before saving credentials to `$XDG_CONFIG_HOME/ninjarobot_pi0/credentials/` and updating `config.json`.[^src-20261010-modeladapterimplementation]
+* Action response objects from AI models are bounded to 32 steps and 1–20 repetitions per step; invalid plans are rejected before motor execution.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+
+[^src-20261010-developmentguide-3]: Current versioned Developmentguide (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.

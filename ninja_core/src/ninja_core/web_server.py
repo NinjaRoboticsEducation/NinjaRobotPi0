@@ -12,7 +12,6 @@ from typing import Optional
 
 import qrcode
 import uvicorn
-import shutil
 import tempfile
 from PIL import Image
 from fastapi import FastAPI, APIRouter, Request, HTTPException, WebSocket, WebSocketDisconnect, UploadFile, File
@@ -22,7 +21,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from pyngrok import ngrok
 
-from .config import build_robot_profile, load_config, set_api_key
+from .config import build_robot_profile, load_config
+from .provider_setup import read_configuration, validate_and_save
+from .providers.base import Auth, MAX_AUDIO_BYTES, ProviderError
 from .ngrok_config import has_ngrok_auth_token, set_ngrok_auth_token
 from .action_library import ActionLibrary
 from .hal import HardwareAbstractionLayer
@@ -202,8 +203,8 @@ async def lifespan(app: FastAPI):
             f"with model '{app.state.ninja.agent.model_name}'."
         )
     except MissingAPIKeyError:
-        print("WARNING: Gemini API Key not found. AI Agent will be disabled.")
-        print("Run 'ninja_core config set-key gemini <KEY>' or use the web interface to set it.")
+        print("WARNING: AI credentials unavailable. AI Agent will be disabled.")
+        print("Run 'ninja_core config select-model' to configure a cloud model.")
     except ValueError as e:
         print(f"Ninja AI Agent not initialized: {e}")
 
@@ -383,6 +384,9 @@ async def reclaim_native_runtime(app_state: AppState):
     if not pipeline or pipeline.mode == "native":
         return
 
+    agent = getattr(app_state, "agent", None)
+    if agent is not None and callable(getattr(agent, "cancel_pending", None)):
+        agent.cancel_pending()
     dispatcher = getattr(app_state, "dispatcher", None)
     if dispatcher and dispatcher.safe_executor.is_running():
         dispatcher.safe_executor.stop()
@@ -576,8 +580,10 @@ def safety_check(app_state: AppState) -> bool:
             
     return False
 
-async def execute_action_plan(app_state: AppState, action_plan: dict):
-    if not session_active(app_state):
+async def execute_action_plan(app_state: AppState, action_plan: dict, *, agent=None, generation=None):
+    def current():
+        return agent is None or generation is None or (app_state.agent is agent and agent._generation == generation)
+    if not session_active(app_state) or not current():
         return
     lock = app_state.action_plan_lock
     if lock is None:
@@ -585,7 +591,8 @@ async def execute_action_plan(app_state: AppState, action_plan: dict):
         return
 
     async with lock:
-        await _execute_action_plan_unlocked(app_state, action_plan)
+        if current():
+            await _execute_action_plan_unlocked(app_state, action_plan)
 
 
 async def _execute_action_plan_unlocked(app_state: AppState, action_plan: dict):
@@ -709,26 +716,28 @@ api_router = APIRouter(prefix="/api")
 
 @api_router.get("/agent/status")
 async def agent_status(request: Request):
-    return {"active": request.app.state.ninja.agent is not None}
+    agent = request.app.state.ninja.agent
+    return {"active": agent is not None, "provider": getattr(agent, "provider_name", None), "model": getattr(agent, "model_name", None), "supports_audio": bool(agent and getattr(agent, "supports_audio", False))}
 
 @api_router.post("/agent/set_api_key")
 async def set_key_endpoint(payload: SetApiKeyRequest, request: Request):
     try:
-        # Update .env
-        # We need to know the service name, assuming 'gemini' for now based on V3
-        set_api_key("gemini", payload.api_key)
-        
-        # Reload config and agent
-        config = load_config()
-        request.app.state.ninja.agent = NinjaAgent(
-            config,
-            action_library=request.app.state.ninja.action_library,
-        )
-        if request.app.state.ninja.dispatcher:
-            request.app.state.ninja.dispatcher.attach_agent(request.app.state.ninja.agent)
-        return {"status": "success"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        config = read_configuration(Path("config.json"))
+        profile = config.ai.profiles.get("google") if config.ai else None
+        model = profile.model if profile else config.gemini.model
+        active_google = config.ai is None or config.ai.active_provider == "google"
+        await validate_and_save("google", model, Auth(payload.api_key.strip()), activate=active_google)
+        if active_google:
+            candidate = NinjaAgent(load_config(), action_library=request.app.state.ninja.action_library)
+            prior = request.app.state.ninja.agent
+            if prior:
+                prior.cancel_pending()
+            request.app.state.ninja.agent = candidate
+            if request.app.state.ninja.dispatcher:
+                request.app.state.ninja.dispatcher.attach_agent(candidate)
+        return {"status": "success", "active_provider_unchanged": not active_google}
+    except (ValueError, OSError):
+        raise HTTPException(status_code=400, detail="Google key/model validation failed. Existing active provider retained.") from None
 
 @api_router.post("/agent/chat")
 async def agent_chat(payload: AgentChatRequest, request: Request):
@@ -754,7 +763,10 @@ async def agent_chat(payload: AgentChatRequest, request: Request):
             "interrupted": interruption,
         }
 
-    result = await state.agent.process_command(payload.message)
+    agent = state.agent
+    result = await agent.process_command(payload.message)
+    if state.agent is not agent:
+        result["action_plan"] = {}
     
     if result.get("action_plan"):
         # Log the plan to WS
@@ -762,7 +774,7 @@ async def agent_chat(payload: AgentChatRequest, request: Request):
             "type": "log", 
             "message": f"Agent Plan: {result['action_plan']}"
         })
-        await execute_action_plan(state, result["action_plan"])
+        await execute_action_plan(state, result["action_plan"], agent=agent, generation=result.get("_generation"))
         
     return {"response": result.get("response"), "log": result.get("log")}
 
@@ -798,6 +810,8 @@ async def analyze_code(payload: CodeAnalyzeRequest, request: Request):
 @api_router.post("/agent/voice")
 async def agent_voice(request: Request, file: UploadFile = File(...)):
     state = request.app.state.ninja
+    if not state.agent or not state.agent.supports_audio:
+        raise HTTPException(status_code=400, detail="Voice unavailable for this provider/model. Use text commands.")
     await handle_first_interaction(state)
 
     if not state.agent:
@@ -822,23 +836,33 @@ async def agent_voice(request: Request, file: UploadFile = File(...)):
             suffix = ".webm" # Default to webm if unknown
             
         with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-            shutil.copyfileobj(file.file, tmp)
             tmp_path = tmp.name
+            size = 0
+            while chunk := await file.read(65536):
+                size += len(chunk)
+                if size > MAX_AUDIO_BYTES:
+                    raise ProviderError("Audio exceeded size limit")
+                tmp.write(chunk)
         
         # Process
-        result = await state.agent.process_audio_command(tmp_path)
+        agent = state.agent
+        result = await agent.process_audio_command(tmp_path)
         
         # Cleanup
         os.unlink(tmp_path)
         
         if result.get("action_plan"):
-             await execute_action_plan(state, result["action_plan"])
+             await execute_action_plan(state, result["action_plan"], agent=agent, generation=result.get("_generation"))
              
         return {"response": result.get("response"), "transcription": "Voice Processed", "log": result.get("log")}
 
     except Exception as e:
-        print(f"Voice processing failed: {e}")
+        print(f"Voice processing failed: {type(e).__name__}")
         raise HTTPException(status_code=500, detail=str(e))
+
+    finally:
+        if "tmp_path" in locals():
+            Path(tmp_path).unlink(missing_ok=True)
 
 @api_router.get("/servos/movements")
 def get_movements(request: Request):

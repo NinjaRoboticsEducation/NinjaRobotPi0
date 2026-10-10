@@ -1,0 +1,16 @@
+id: src-20261010-developmentguide-3
+path: raw/articles/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Developmentguide
+added_at: '2026-10-10T15:25:18Z'
+content_hash: sha256:13c766ddb69a6bee5efcf4d831c47596e6191106c19856a37ff904464c7ac947
+state: ingested
+original_uri: urn:llmwiki:source:src-20261010-developmentguide-3
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-10T15:25:28Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-10T15:31:50Z'
+last_plan: pi0-model-adapter-lint-cleanup2-261011

@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 from click.testing import CliRunner
+from ninja_core.provider_credentials import resolve_profile
 
 from ninja_core.__main__ import main
 from ninja_core.config import load_config, save_config
@@ -11,6 +13,11 @@ from ninja_core.gemini_models import (
     GeminiModelOption,
 )
 from ninja_core.gemini_runtime import GeminiRuntimeError
+
+
+@pytest.fixture(autouse=True)
+def private_credentials(tmp_path, monkeypatch):
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "credentials-home"))
 
 
 def _model_options():
@@ -48,7 +55,22 @@ def test_init_tool_selects_robot_type():
         assert load_config().robot_type == "humanoid"
 
 
-def test_init_tool_shows_sanitized_hardware_configuration(monkeypatch):
+def test_init_tool_shows_sanitized_hardware_configuration(monkeypatch, tmp_path):
+    from unittest.mock import AsyncMock, Mock
+    from ninja_core.providers.base import ModelOption
+
+    adapter = Mock()
+    adapter.list_models = AsyncMock(
+        return_value=[
+            ModelOption("gemini-alpha", "Alpha"),
+            ModelOption("gemini-beta", "Beta"),
+        ]
+    )
+    adapter.validate_model = AsyncMock()
+    monkeypatch.setattr(
+        "ninja_core.provider_setup.create_provider", lambda *args: adapter
+    )
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
     runner = CliRunner()
     monkeypatch.setattr(
         "ninja_core.init_tool.list_available_gemini_models",
@@ -63,7 +85,7 @@ def test_init_tool_shows_sanitized_hardware_configuration(monkeypatch):
         result = runner.invoke(
             main,
             ["init-tool"],
-            input="1\nsuper-secret-key\n2\n6\n8\n",
+            input="1\n1\nsuper-secret-key\n2\n6\n8\n",
         )
 
         assert result.exit_code == 0
@@ -93,8 +115,11 @@ def test_config_set_key_gemini_selects_and_persists_model(monkeypatch):
 
         assert result.exit_code == 0
         config = load_config()
-        assert config.api_keys["gemini"] == "super-secret-key"
-        assert config.gemini.model == "gemini-beta"
+        provider, profile, auth = resolve_profile(config)
+        assert provider == "google"
+        assert auth.key == "super-secret-key"
+        assert profile.model == "gemini-beta"
+        assert "super-secret-key" not in Path("config.json").read_text()
         assert validated == ["gemini-beta"]
         assert "super-secret-key" not in result.output
         assert "Gemini Beta" in result.output

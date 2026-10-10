@@ -7,9 +7,9 @@ and provides functions to load, save, and manage the config file.
 
 import json
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Literal, Any, Dict, Optional
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import ConfigDict, model_validator, BaseModel, Field, field_validator
 
 
 DEFAULT_BLE_NAME = "NinjaRobot"
@@ -108,7 +108,9 @@ class DisplayConfig(BaseModel):
     dc: Optional[int] = Field(None, description="The DC (Data/Command) GPIO pin.")
     rst: Optional[int] = Field(None, description="The RST (Reset) GPIO pin.")
     blk: Optional[int] = Field(None, description="The BLK (Backlight) GPIO pin.")
-    rotation: int = Field(90, description="Display rotation in degrees (0, 90, 180, 270).")
+    rotation: int = Field(
+        90, description="Display rotation in degrees (0, 90, 180, 270)."
+    )
 
 
 class SensorConfig(BaseModel):
@@ -146,8 +148,52 @@ class GeminiConfig(BaseModel):
         return normalize_gemini_model_name(value)
 
 
+class AIProfile(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    model: str = Field(min_length=1, max_length=200)
+    auth_method: Literal["api_key"] = "api_key"
+    credential_ref: str = Field(min_length=1, max_length=64)
+    workspace_id: str | None = Field(default=None, max_length=100)
+
+    @field_validator("model")
+    @classmethod
+    def validate_model_id(cls, value):
+        if value != value.strip() or any(ord(c) < 32 for c in value):
+            raise ValueError("Invalid model identifier")
+        return value
+
+
+class AIConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    version: Literal[1] = 1
+    active_provider: Literal["google", "openai", "anthropic", "ollama"]
+    profiles: Dict[str, AIProfile]
+
+    @field_validator("version", mode="before")
+    @classmethod
+    def validate_version(cls, value):
+        if type(value) is not int or value != 1:
+            raise ValueError("Unsupported AI configuration version")
+        return value
+
+    @field_validator("profiles")
+    @classmethod
+    def validate_profiles(cls, value):
+        if any(key not in ("google", "openai", "anthropic", "ollama") for key in value):
+            raise ValueError("Unknown provider profile")
+        return value
+
+    @model_validator(mode="after")
+    def check_active(self):
+        if self.active_provider not in self.profiles:
+            raise ValueError("Active provider profile is missing")
+        return self
+
+
 class NinjaConfig(BaseModel):
     """The root configuration model for the entire robot."""
+
+    model_config = ConfigDict(extra="allow")
 
     servos: ServosConfig = Field(default_factory=ServosConfig)
     buzzer: BuzzerConfig = Field(default_factory=BuzzerConfig)
@@ -162,15 +208,20 @@ class NinjaConfig(BaseModel):
         default_factory=dict, description="Named servo movement sequences."
     )
     movement_robot_types: Dict[str, str] = Field(
-        default_factory=dict, description="Optional robot-type scope for named movements."
+        default_factory=dict,
+        description="Optional robot-type scope for named movements.",
     )
     builtin_movement_hashes: Dict[str, str] = Field(
-        default_factory=dict, description="Last imported built-in values, for preserving edits."
+        default_factory=dict,
+        description="Last imported built-in values, for preserving edits.",
     )
     api_keys: Dict[str, str] = Field(
-        default_factory=dict, description="API keys for services like Google Gemini."
+        default_factory=dict,
+        repr=False,
+        description="API keys for services like Google Gemini.",
     )
     gemini: GeminiConfig = Field(default_factory=GeminiConfig)
+    ai: AIConfig | None = None
 
     @field_validator("robot_type")
     @classmethod
@@ -190,8 +241,10 @@ CONFIG_FILE_PATH = Path("config.json")
 
 def save_config(config: NinjaConfig, path: Path = CONFIG_FILE_PATH):
     """Saves the configuration object to a JSON file."""
-    with open(path, "w") as f:
-        json.dump(config.model_dump(), f, indent=4)
+    from .private_files import atomic_json, config_lock
+
+    with config_lock(path):
+        atomic_json(path, config.model_dump())
 
 
 def _normalize_gpio_pin(value: Any) -> int | None:
@@ -213,20 +266,12 @@ def _model_dump_public(value: Any) -> Any:
 
 def build_hardware_configuration(config: NinjaConfig) -> dict[str, Any]:
     """Build a non-secret hardware configuration snapshot for IDE clients."""
-    servo_pin_values = [
-        _normalize_gpio_pin(pin)
-        for pin in config.servos.pins.values()
-    ]
+    servo_pin_values = [_normalize_gpio_pin(pin) for pin in config.servos.pins.values()]
     servo_calibration_pins = [
-        _normalize_gpio_pin(pin)
-        for pin in config.servos.calibration.keys()
+        _normalize_gpio_pin(pin) for pin in config.servos.calibration.keys()
     ]
     gpio_pins = sorted(
-        {
-            pin
-            for pin in [*servo_pin_values, *servo_calibration_pins]
-            if pin is not None
-        }
+        {pin for pin in [*servo_pin_values, *servo_calibration_pins] if pin is not None}
     )
 
     return {
@@ -394,7 +439,10 @@ def import_and_update_config():
         if "rst_pin" in disp_data and config.display.rst != disp_data["rst_pin"]:
             config.display.rst = disp_data["rst_pin"]
             changed = True
-        if "backlight_pin" in disp_data and config.display.blk != disp_data["backlight_pin"]:
+        if (
+            "backlight_pin" in disp_data
+            and config.display.blk != disp_data["backlight_pin"]
+        ):
             config.display.blk = disp_data["backlight_pin"]
             changed = True
         if "rotation" in disp_data and config.display.rotation != disp_data["rotation"]:
@@ -453,6 +501,11 @@ def set_gemini_configuration(
     normalized_model = normalize_gemini_model_name(model_name)
 
     config = load_config(path)
+    if config.ai is not None:
+        from .provider_setup import commit_profile
+        from .providers.base import Auth
+
+        return commit_profile("google", normalized_model, Auth(normalized_key), path)
     config.api_keys["gemini"] = normalized_key
     config.gemini.model = normalized_model
     save_config(config, path)

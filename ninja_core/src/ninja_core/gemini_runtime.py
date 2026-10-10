@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 import json
 import socket
-from json import JSONDecodeError
 from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote
@@ -48,8 +47,11 @@ def _friendly_http_error(status_code: int) -> str:
 
 def _decode_generation_response(response: Any) -> str:
     try:
-        payload = json.loads(response.read().decode("utf-8"))
-    except (AttributeError, UnicodeDecodeError, JSONDecodeError) as exc:
+        raw = response.read(2 * 1024 * 1024 + 1)
+        if len(raw) > 2 * 1024 * 1024:
+            raise ValueError("Oversized provider response")
+        payload = json.loads(raw.decode("utf-8"))
+    except (AttributeError, UnicodeDecodeError, ValueError) as exc:
         raise GeminiRuntimeError(
             "Google returned an invalid Gemini generation response."
         ) from exc
@@ -66,6 +68,25 @@ def _decode_generation_response(response: Any) -> str:
         )
 
     candidate = candidates[0]
+    if isinstance(candidate, dict) and candidate.get("finishReason") not in (
+        None,
+        "STOP",
+    ):
+        reason = candidate.get("finishReason")
+        label = (
+            reason
+            if reason
+            in (
+                "MAX_TOKENS",
+                "SAFETY",
+                "RECITATION",
+                "OTHER",
+                "BLOCKLIST",
+                "PROHIBITED_CONTENT",
+            )
+            else "UNKNOWN"
+        )
+        raise GeminiRuntimeError(f"Gemini response refused or incomplete ({label}).")
     content = candidate.get("content", {}) if isinstance(candidate, dict) else {}
     parts = content.get("parts", []) if isinstance(content, dict) else []
     text_parts = [
@@ -165,17 +186,47 @@ async def generate_content_text(
     max_output_tokens: int = DEFAULT_MAX_OUTPUT_TOKENS,
     timeout: float = DEFAULT_GENERATION_TIMEOUT_SECONDS,
 ) -> str:
-    """Run the blocking REST request off the asyncio event loop."""
-    return await asyncio.to_thread(
-        generate_content_text_sync,
-        api_key,
-        model_name,
-        parts,
-        system_instruction=system_instruction,
-        temperature=temperature,
-        max_output_tokens=max_output_tokens,
-        timeout=timeout,
-    )
+    """Cancellation-aware REST without a worker thread surviving the deadline."""
+    from io import BytesIO
+    from .providers.http import request_json
+    from .providers.base import ProviderError
+
+    model = model_name.removeprefix("models/").strip()
+    if (
+        not api_key.strip()
+        or not model.startswith("gemini-")
+        or timeout <= 0
+        or max_output_tokens <= 0
+        or not parts
+    ):
+        raise GeminiRuntimeError("Invalid Google generation configuration")
+    controls = {"temperature": temperature, "maxOutputTokens": max_output_tokens}
+    if requires_thinking_compatibility(model):
+        controls["thinkingConfig"] = {"thinkingLevel": "low"}
+    body = {
+        "contents": [{"role": "user", "parts": parts}],
+        "generationConfig": controls,
+    }
+    if system_instruction:
+        body["systemInstruction"] = {"parts": [{"text": system_instruction}]}
+    try:
+        data = await asyncio.wait_for(
+            request_json(
+                "POST",
+                f"{GEMINI_API_ROOT}/models/{quote(model, safe='-._')}:generateContent",
+                headers={
+                    "x-goog-api-key": api_key.strip(),
+                    "Content-Type": "application/json",
+                },
+                body=body,
+            ),
+            timeout,
+        )
+    except (ProviderError, TimeoutError):
+        raise GeminiRuntimeError(
+            "Google generation timed out or request failed; check credentials, model and network"
+        ) from None
+    return _decode_generation_response(BytesIO(json.dumps(data).encode("utf-8")))
 
 
 def validate_gemini_model(api_key: str, model_name: str) -> None:

@@ -40,7 +40,7 @@ EOF
   (( !(preview && check) )) || { echo 'Choose --dry-run or --check.' >&2; return 2; }
   if ((preview)); then
     printf 'Preview: official Pi0 repository, ref %s, new checkout %s.\n' "$ref" "$destination"
-    echo 'Install Git if missing, then verified uv/Node/pigpio, locked Python and frontend. Hardware remains off.'
+    echo 'Install Git if missing, then verified uv/Node/pigpio/Ollama CLI, locked Python and frontend. Hardware remains off.'
     return
   fi
   if ((check)); then

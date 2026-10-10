@@ -36,11 +36,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsvalidation
   title: Lifecyclerefinementsvalidation
   content_hash: sha256:01fa07f823e9dedfcc2d243ae107b496758960b0c5be790db9df2a8deef94066
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:1f446e93aa60794a5c89aa59e2e441fb8753b07f71edfb1168c7b3624a6432b9
+  performed_at: '2026-10-10T15:28:47.571035+00:00'
+  target_hash: sha256:77c91a449b90cec11e84beb48b06be1d38a271ecce79a66c850c8e7a03de3de7
   result: passed
   checks:
     source_support: passed
@@ -49,11 +57,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ninja_webapp package against Layout.jsx, useRobotSession.js, and locale
-    files. Persistent /ws/session across routes, 10s ping, 3s retry, 4409 busy modal,
-    and localized strings match code.
-  - Frontend Vite build and inert hook tests pass; real browser multi-tab testing
-    remains pending.
+  - Reviewed ninja_webapp package against Agent page, Agent.module.css, and /api/agent/status
+    contracts. Gated voice input states, localized tooltips, and stacking order corrections
+    match code.
+  - Mocked browser UI tests pass; real hardware microphone testing remains pending.
 ---
 
 # ninja_webapp Package
@@ -76,7 +83,7 @@ Current frontend metadata declares React 19.2.0; older React 18 descriptions are
 
 * **Home (`/`)**: Hero branding display and interactive slide-to-confirm power-off slider for safe robot shutdown.[^src-20260822-developmentguide]
 * **Agent (`/agent`)**: Main control dashboard featuring:
-  * **AI Chat Dialog**: Conversational text and voice input with Google Gemini.[^src-20260822-readme] [^src-20260822-developmentguide]
+  * **AI Chat Dialog**: Conversational text and voice chat with active cloud provider (Google, OpenAI, Anthropic, Ollama Cloud) and capability-gated voice input.[^src-20260822-readme] [^src-20261010-modeladapterimplementation]
   * **Hardware Quick Controls**: Direct triggering of facial expressions, sounds, and recorded movements.[^src-20260822-developmentguide]
   * **Real-Time Telemetry**: Distance sensor reading display with safety indicators.[^src-20260822-readme] [^src-20260822-developmentguide]
   * **Slidable System Log Panel**: Real-time log monitor for debugging and telemetry.[^src-20260822-developmentguide]
@@ -104,3 +111,10 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.
+
+## Voice capability gating and provider status display (2026-10-10)
+
+The Agent page consumes provider, model, and audio capability metadata from `/api/agent/status`.[^src-20261010-modeladapterimplementation] Voice recording controls are disabled with descriptive localized tooltips when the active model does not support native audio (OpenAI, Anthropic, Ollama Cloud, or non-allowlisted Google models). Backend voice endpoints reject audio payloads upfront if the active provider does not support it.[^src-20261010-modeladapterimplementation] A CSS stacking fix in `Agent.module.css` ensures navigation headers and menu sheets remain fully interactable above open activity panels.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.

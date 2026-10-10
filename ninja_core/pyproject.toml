@@ -9,12 +9,13 @@ description = "Core application logic for the NinjaRobotV4."
 authors = [{ name = "Nil Creator", email = "nilcreator@gmail.com" }]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "fastapi",
     "uvicorn[standard]",
     "jinja2",
     "google-generativeai",
+    "httpx>=0.28.1,<0.29",
     "python-dotenv",
     "websockets",
     "googlesearch-python",

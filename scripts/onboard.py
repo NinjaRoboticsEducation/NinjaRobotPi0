@@ -28,7 +28,7 @@ TOOLS = {
     "servo": ("pi0servo", "servo-tool", "--config", "servo.json"),
     "distance": ("pi0vl53l0x", "sensor-tool"),
 }
-STEPS = (*TOOLS, "import", "identity", "gemini", "ngrok")
+STEPS = (*TOOLS, "import", "identity", "ai_model", "ngrok")
 
 
 def read_json(path):
@@ -200,13 +200,11 @@ def _worker(action):
     ngrok_path = None
     ngrok_prior = None
     try:
-        if action == "gemini":
-            from ninja_core.init_tool import configure_gemini_api_key
+        if action in ("ai_model", "gemini"):
+            from ninja_core.provider_setup import configure_ai_model
 
-            key = getpass.getpass("Google Gemini API key (blank to cancel): ").strip()
-            if not key:
+            if configure_ai_model(path=config) is None:
                 return 2
-            configure_gemini_api_key(key)
             config.chmod(0o600)
         elif action == "ngrok":
             from pyngrok import conf
@@ -302,6 +300,8 @@ def load_progress(path):
     value = read_json(path)
     if value.get("version") != 1 or not isinstance(value.get("steps"), dict):
         raise ValueError("Unsupported progress schema; retained without changes")
+    if "gemini" in value["steps"]:
+        value["steps"].setdefault("ai_model", value["steps"].pop("gemini"))
     for name, record in value["steps"].items():
         if name not in STEPS or not isinstance(record, dict):
             raise ValueError("Invalid progress step; retained without changes")
@@ -463,7 +463,9 @@ def wizard(root, state_path, args, ask=input, execute=run_child):
     print(
         "\n========================================\n          NINJAROBOT PI0\n========================================"
     )
-    print("Welcome! Hardware > saved settings > Google Gemini > ngrok > summary")
+    print(
+        "Welcome! Hardware > saved settings > Select model provider > ngrok > summary"
+    )
     print(
         "Required hardware comes first. Tools can activate devices. Q saves and exits."
     )
@@ -496,7 +498,7 @@ def wizard(root, state_path, args, ask=input, execute=run_child):
                 if step in reused:
                     continue
                 print(
-                    f"\nStep {STEPS.index(step) + 1} of {len(STEPS)} — {step.title()} "
+                    f"\nStep {STEPS.index(step) + 1} of {len(STEPS)} — {('Select model provider' if step == 'ai_model' else step.title())} "
                     + ("[Hardware]" if step in TOOLS else "[Settings]")
                 )
                 if step in TOOLS:
@@ -512,9 +514,9 @@ def wizard(root, state_path, args, ask=input, execute=run_child):
                     if not hardware_step(root, step, progress, ask, execute):
                         break
                 else:
-                    if step == "gemini":
+                    if step == "ai_model":
                         print(
-                            "Google model discovery/validation uses the network. Your key is hidden and stored in config.json."
+                            "Cloud model discovery/validation uses the network and may incur charges. API keys are hidden and stored privately outside the checkout."
                         )
                     elif step == "ngrok":
                         print(
@@ -593,16 +595,18 @@ def main():
         action="store_true",
         help="Reopen saved progress and revalidate settings",
     )
-    parser.add_argument("--step", choices=STEPS)
+    parser.add_argument("--step", choices=(*STEPS, "gemini"))
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--status", action="store_true")
     mode.add_argument("--dry-run", action="store_true")
     parser.add_argument(
         "--worker",
-        choices=("identity", "gemini", "ngrok", "import"),
+        choices=("identity", "ai_model", "gemini", "ngrok", "import"),
         help=argparse.SUPPRESS,
     )
     args = parser.parse_args()
+    if args.step == "gemini":
+        args.step = "ai_model"
     state = (
         Path(os.environ.get("XDG_STATE_HOME", str(Path.home() / ".local/state")))
         / "ninjarobot_pi0/onboarding.json"

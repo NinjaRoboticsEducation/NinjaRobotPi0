@@ -27,11 +27,19 @@ sources:
   resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
+- id: src-20261010-installationguide-3
+  resource: urn:llmwiki:source:src-20261010-installationguide-3
+  title: Installationguide
+  content_hash: sha256:116e93e529583e57b2f300536c8a2367030727c584a83a1a826cd5a53b0d4001
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-08T05:58:15.313130+00:00'
-  target_hash: sha256:bafcd585854d7fa9b597ca14e4b5c0127918874519f62b03226f07001e76c596
+  performed_by: agent:antigravity
+  performed_at: '2026-10-10T15:28:47.571035+00:00'
+  target_hash: sha256:97c553b9801bb5c7b7a1577e110a4f05bb312a925ceb94d0817e5fbb7270eb29
   result: passed
   checks:
     source_support: passed
@@ -40,20 +48,15 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed the current compatibility manual and recorded uv 0.9.26 dry-run against
-    the installer/checker, locked Vite engines and 205 passing host regressions on
-    Python 3.11 and 3.13. Exact Node/uv equality and codename rules are superseded
-    explicitly; device/user requirements, real Node/Python minima, read-only inspection
-    and missing-environment failures remain. Compatible tool reuse and checksum fallback
-    are distinct. Retained hardware/history claims keep their prior sources; no physical
-    or human verification is inferred.
-  - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
-    Physical tests, live accounts and publication remain pending.
+  - Reviewed guided onboarding against onboard.sh and provider_setup.py. Step 7 model
+    provider selection, hidden API-key input, and bounded probe validation match code.
+  - Onboarding model selection is software-only; hardware initialization remains deferred
+    to manual operator startup.
 ---
 
 # Guided Pi0 onboarding
 
-The local ./onboard.sh entry point guides existing Pi0 interactive tools, saved configuration review/import, identity, Gemini key/model, and ngrok token. Tools can activate devices immediately; servo-tool can center saved servos before its menu. Reuse is software validation rather than physical acceptance. Progress is private and contains no credentials. Network-dependent setup can be deferred. Server, boot startup and reboot are later deliberate actions.[^src-20261008-installationguide-3]
+The local ./onboard.sh entry point guides existing Pi0 interactive tools, saved configuration review/import, identity, AI model provider selection (Google, OpenAI, Anthropic, Ollama Cloud), and ngrok token.[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation] Tools can activate devices immediately; servo-tool can center saved servos before its menu. Reuse is software validation rather than physical acceptance. Progress is private and contains no credentials. Network-dependent setup can be deferred. Server, boot startup and reboot are later deliberate actions.[^src-20261008-installationguide-3]
 
 [Project overview](/overview.md).
 
@@ -89,3 +92,10 @@ The shared platform preflight now accepts Bookworm/Trixie 64-bit on Zero 2 W, so
 Onboarding inherits the same codename-independent preflight as the installer and surfaces the actual prerequisite errors. Zero 2 W/aarch64, Debian-family OS, normal-user execution and Python 3.10+ remain required. Step order, hardware readiness confirmations, calibration tools and robot behavior are unchanged.[^src-20261008-2026-10-08-installer-compatibility]
 
 [^src-20261008-2026-10-08-installer-compatibility]: Installer compatibility requirements and validation evidence.
+
+## Model provider selection in onboarding (2026-10-10)
+
+Onboarding step 7 is **Select model provider** (accessible directly via `./onboard.sh --step ai_model`, mapping backward from legacy `--step gemini`).[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation] The user chooses from Google (Gemini), OpenAI, Anthropic (Claude), or Ollama Cloud, provides an API key via hidden console input (or reuses stored credentials), browses retrieved models, and validates the choice with a bounded generation probe before credentials and profile settings are written.[^src-20261010-modeladapterimplementation] Discovery and probing perform no hardware actuation and do not start the robot web server.[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation]
+
+[^src-20261010-installationguide-3]: Current versioned Installationguide (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.

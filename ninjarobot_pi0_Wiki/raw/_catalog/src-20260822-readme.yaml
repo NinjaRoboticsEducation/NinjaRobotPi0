@@ -12,7 +12,7 @@ retrieved_at: null
 normalized_at: '2026-10-07T07:13:39Z'
 normalizer: llmwiki-text/0.2
 error: null
-ingested_at: '2026-10-10T12:12:27Z'
-last_plan: pi0-lifecycle-cli-recovery-261010
+ingested_at: '2026-10-10T15:30:32Z'
+last_plan: pi0-model-adapter-ingest-261011
 previous_content_hash: sha256:f8becc32b9999e418981bf11025a09959dd03b9175fdcb7f86dfbd7f190db909
 changed_at: '2026-10-07T07:13:38Z'

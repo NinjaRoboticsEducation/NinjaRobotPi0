@@ -5,6 +5,9 @@ from .gemini_models import GeminiModelDiscoveryError
 from .gemini_runtime import GeminiRuntimeError
 from .init_tool import configure_gemini_api_key, run_init_tool
 
+from .provider_setup import configure_ai_model
+from .providers.base import ProviderError
+
 from .movement_cli import run_cli as run_movement_cli
 
 
@@ -69,7 +72,22 @@ def set_key(service, key):
             raise click.ClickException(str(exc)) from exc
         return
 
+    if service in ("google", "openai", "anthropic", "ollama"):
+        try:
+            configure_ai_model(service, api_key=key)
+        except (ProviderError, GeminiModelDiscoveryError, GeminiRuntimeError) as exc:
+            raise click.ClickException(str(exc)) from None
+        return
     set_api_key(service, key)
+
+
+@config.command("select-model")
+def select_model():
+    """Select cloud provider, enter a hidden key, and validate a model."""
+    try:
+        configure_ai_model()
+    except (ProviderError, GeminiModelDiscoveryError, GeminiRuntimeError) as exc:
+        raise click.ClickException(str(exc)) from None
 
 
 @config.command("set-name")
@@ -129,7 +147,7 @@ def chat():
             print("Initializing AI Agent...")
             action_library = ActionLibrary()
             agent = NinjaAgent(config, action_library=action_library)
-            print(f"Using Gemini model: {agent.model_name}")
+            print(f"Using {agent.provider_name} model: {agent.model_name}")
             
             # Initialize Controllers
             faces = AnimatedFaces(hal)

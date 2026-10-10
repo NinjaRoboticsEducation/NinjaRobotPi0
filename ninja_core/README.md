@@ -277,3 +277,8 @@ The Web Server provides a user-friendly interface for controlling the robot from
 4.  **Test Obstacle Avoidance (Safety):**
     - While a movement is executing (e.g., a long sequence), place your hand in front of the sensor (< 50mm).
     - **Expected Result:** The robot should **immediately stop**, display a "scary" face, play a warning sound, and the web interface should show an error or stop notification.
+
+
+## Cloud model selection
+
+Use `uv run ninja_core config select-model`, init-tool option 1, or onboarding step 7 to select Google, OpenAI, Anthropic or Ollama Cloud using a hidden API key and a validated live model. Restart an already-running agent deliberately to apply a CLI selection. Pi0 uses cloud inference only; voice is enabled only for supported Google models. Read the [detailed implementation source](../ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-10-model-adapter/ModelAdapterImplementation.md) for private credentials, migration and manual validation.

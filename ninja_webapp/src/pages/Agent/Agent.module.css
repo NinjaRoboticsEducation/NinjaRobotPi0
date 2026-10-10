@@ -336,7 +336,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     transition: transform 0.3s ease;
     transform: translateY(calc(100% - 44px));
-    z-index: 100;
+    z-index: 90; /* Keep the activity panel below the header and its modal. */
     max-height: 280px;
 }
 

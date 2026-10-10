@@ -11,7 +11,7 @@ authors = [
 ]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 # All dependencies from all sub-packages aggregated
 dependencies = [
@@ -37,6 +37,7 @@ dependencies = [
     
     # AI and utilities
     "google-generativeai",
+    "httpx>=0.28.1,<0.29",
     "googlesearch-python",
     "python-dotenv",
     

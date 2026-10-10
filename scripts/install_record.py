@@ -32,6 +32,16 @@ def record(root):
             )
         },
     }
+    settings = dict(
+        line.split("=", 1)
+        for line in (root / "scripts/install-versions.env").read_text().splitlines()
+        if line.startswith("OLLAMA_")
+    )
+    value["ollama"] = {
+        "artifact_version": settings.get("OLLAMA_VERSION"),
+        "artifact_sha256": settings.get("OLLAMA_ARM64_SHA256"),
+        "mode": "cli-only",
+    }
     descriptor, temporary = tempfile.mkstemp(dir=state, prefix=".record-")
     try:
         with os.fdopen(descriptor, "w") as stream:

@@ -15,6 +15,15 @@ function Agent() {
     const [pendingMessages, setPendingMessages] = useState(0);
     const [distance, setDistance] = useState(null);
     const [isRecording, setIsRecording] = useState(false);
+    const [voiceAvailable, setVoiceAvailable] = useState(false);
+
+    useEffect(() => {
+        let active = true;
+        fetch('/api/agent/status').then((res) => res.ok ? res.json() : null)
+            .then((status) => { if (active) setVoiceAvailable(status?.supports_audio === true); })
+            .catch(() => { if (active) setVoiceAvailable(false); });
+        return () => { active = false; };
+    }, []);
     const [logs, setLogs] = useState([]);
     const [isLogPanelOpen, setIsLogPanelOpen] = useState(false);
     const messagesEndRef = useRef(null);
@@ -259,7 +268,8 @@ function Agent() {
                     <button
                         className={`${styles.micButton} ${isRecording ? styles.recording : ''}`}
                         onClick={toggleVoiceRecording}
-                        title={t('agent.voice')} aria-label={t('agent.voice')} aria-pressed={isRecording}
+                        disabled={!voiceAvailable}
+                        title={t(voiceAvailable ? 'agent.voice' : 'agent.voiceUnavailable')} aria-label={t(voiceAvailable ? 'agent.voice' : 'agent.voiceUnavailable')} aria-pressed={isRecording}
                     >
                         {isRecording ? '⏹️' : '🎤'}
                     </button>

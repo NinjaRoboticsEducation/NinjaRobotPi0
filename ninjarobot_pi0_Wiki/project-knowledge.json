@@ -1,13 +1,13 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-10T12:13:00Z",
+  "reviewed_at": "2026-10-10T15:33:31Z",
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-10-cli-repair/InstallationGuide.md",
-      "source_id": "src-20261010-installationguide-2",
-      "content_hash": "sha256:18d2002125e05e7026c4bc7568ba8fb1f588a466bc7815f850476e07fa922913",
+      "path": "raw/articles/ninjarobotpi0/2026-10-10-model-adapter/InstallationGuide.md",
+      "source_id": "src-20261010-installationguide-3",
+      "content_hash": "sha256:116e93e529583e57b2f300536c8a2367030727c584a83a1a826cd5a53b0d4001",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentGuide.md",
-      "source_id": "src-20261010-developmentguide-2",
-      "content_hash": "sha256:a79a71113f70fb1e6b443cd73b9cd688c8f7889ebf4a9df97b521cb3b76e3127",
+      "path": "raw/articles/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentGuide.md",
+      "source_id": "src-20261010-developmentguide-3",
+      "content_hash": "sha256:13c766ddb69a6bee5efcf4d831c47596e6191106c19856a37ff904464c7ac947",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-10-cli-repair/DevelopmentLog.md",
-      "source_id": "src-20261010-developmentlog-2",
-      "content_hash": "sha256:40f6788a77be5b79abd3eb173cb3c0ac836fbe3321ac48d01654f26c77fbf853",
+      "path": "raw/notes/ninjarobotpi0/2026-10-10-model-adapter/DevelopmentLog.md",
+      "source_id": "src-20261010-developmentlog-3",
+      "content_hash": "sha256:7ff79b715f8e759e6838b3137f4e39f4cde865093f0caf7fcf47f328ffdb8a93",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -246,14 +246,14 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "docs/validation/core_baseline.json": {
-      "content_hash": "sha256:54b2aec544fbf67eb207a56ffeef290198b1bd1f7602c5dd2103ac1970515f3f",
+      "content_hash": "sha256:75b8369eb9a17ec9f0cb3d1a07715a6f9ab6288c8067f59d4da44ea48e0906d1",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "install.sh": {
-      "content_hash": "sha256:f5fbd4b008c40891ae5a1aa2b13ff0810a05eadd737873be7d2fc39c6601a44a",
+      "content_hash": "sha256:e0a5418e5c1210a30c3a561c47f6dfedd4dfffa3f5e575d7ce33b882be8d2a3b",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
@@ -294,7 +294,7 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/pyproject.toml": {
-      "content_hash": "sha256:e13a953f6b67892a51b92729e850ab1140b46a5d0177e39c99e0104cf23f433a",
+      "content_hash": "sha256:5ba4cb40fc1d4f1cc8ab387b7b458dcece7b709cb658848c2e187623623069e6",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
@@ -310,7 +310,7 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/__main__.py": {
-      "content_hash": "sha256:8d453d134fb5a2fdeae447caf9c7a8d7d4acd46638c4b93231d2804608078995",
+      "content_hash": "sha256:2c0af816e1811bf546974a566d0b572b0f08cc3efddfb85487c5f07818602be6",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
@@ -334,7 +334,7 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/config.py": {
-      "content_hash": "sha256:74dba29723831a9e75d92f5c1257c5309ba7e409e62b29dcaa82eb07e89084ee",
+      "content_hash": "sha256:88055df8472bce210b792db5bbc3e61eee1a790a90e59425670cce07c8f558c5",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
@@ -366,7 +366,7 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/gemini_models.py": {
-      "content_hash": "sha256:ad684b18e37429d82466818b8b1ef0035c47e14b43b434f23bffb5775c61f018",
+      "content_hash": "sha256:da62ae46295cca5806648fd9ad2c2f300d49412c339e475a8a2c2c981c4d9950",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
@@ -374,7 +374,7 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/gemini_runtime.py": {
-      "content_hash": "sha256:72eb312afd184b724bbd522a0b4773b52f11a3f6cc0d80cc8a9a541bb2ea8c00",
+      "content_hash": "sha256:b215dea5e1a9849464ccb8f2acd080f60068bf7de6d8ad2c7b6b83871d57d45a",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
@@ -390,7 +390,7 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/init_tool.py": {
-      "content_hash": "sha256:b0d39bba282b035c5a9210f00c5f4ca5f67880a657384074eaeb4cd88aa8e474",
+      "content_hash": "sha256:ffeb6e68e211b4038cddc703c8c23047a3a8fe4f11f4c315e2145c26e22bf02c",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
@@ -422,7 +422,7 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/ninja_agent.py": {
-      "content_hash": "sha256:064068edfc9785e225f6964077e6b4dd5f910821abfc805e7907e5ba648ea8b6",
+      "content_hash": "sha256:1171d358cc890165bd381b420135188697311b21ca06210d47cb9e356c10e71a",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
@@ -462,7 +462,7 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/web_server.py": {
-      "content_hash": "sha256:7461b3ae4977413e026b8a645a8a183e8a3e378c4b3c50ec39c138861463adcd",
+      "content_hash": "sha256:7c0f937322cc193ce9b49c41c50fc0162e6d0a8670a213a83afe5ac652f58a27",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/concepts/architecture-and-hal.md"
@@ -686,7 +686,7 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/locales/en.json": {
-      "content_hash": "sha256:17612328aee79748c0d6f5fd0ce341b3ce67b956903e06d402404c3e0e24c16e",
+      "content_hash": "sha256:6e664ace601b01c2eb13bc607acc6e9350a093b09545e149707aaab82eca3716",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
@@ -694,7 +694,7 @@
       "review_note": "Added English localization for session busy modal and reconnect messages."
     },
     "ninja_webapp/src/locales/ja.json": {
-      "content_hash": "sha256:1bbb90176cdd1069baf4147569e6b3b154e77556a9a9dd56f1f3980b054c350c",
+      "content_hash": "sha256:ead8ff0c7c4334a2f50b5e20f20a12c7f2495f71123674be6c9c6ef04047c9a8",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
@@ -702,7 +702,7 @@
       "review_note": "Added Japanese localization for session busy modal and reconnect messages."
     },
     "ninja_webapp/src/locales/zh-cn.json": {
-      "content_hash": "sha256:a9ac59088a082cca3bc80e125f2cc252a0fab5a6b8cdfdf8b6d47df2e31abaab",
+      "content_hash": "sha256:20d5ced9137dffec31b0ee6c219021fecbcc02bb85a31031dca7084862bdaf33",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
@@ -710,7 +710,7 @@
       "review_note": "Added Simplified Chinese localization for session busy modal and reconnect messages."
     },
     "ninja_webapp/src/locales/zh-tw.json": {
-      "content_hash": "sha256:6d3e5f28b9a03bdbb2037fffa548511950011074a4c7680347aa6a70d9a4aba0",
+      "content_hash": "sha256:46eca33984c4ae0543230c9e61ca562c69483f75ac0219d0f7de6a754921b470",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
@@ -726,7 +726,7 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/pages/Agent/Agent.module.css": {
-      "content_hash": "sha256:2b67d32961dc7cc2b226ff436d3709f16ca636a46fc68e6610bf256f229f910a",
+      "content_hash": "sha256:92516817a0bd3537546e54108e2094a48652db9157343b2d974f34e935949c36",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
@@ -734,7 +734,7 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/pages/Agent/index.jsx": {
-      "content_hash": "sha256:b68b6a530591c1321b1c9257f35973c04fbf4091f106d33e7779d2be1ad35ba3",
+      "content_hash": "sha256:c45fb94886aeddcb6b6ff493e90cc7309f57ec069cda0ef018078e7482e99868",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
@@ -1580,14 +1580,14 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "pyproject.toml": {
-      "content_hash": "sha256:3d7baa686a644a68692fefd3873bb4b1372090cb8178129929133cf0cc6a1d1b",
+      "content_hash": "sha256:c810141a86169de6683f7088085e34dd48c32733412271105afa0ad33a4b0740",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Root distribution renamed to ninjarobotpi0; duplicate console script declarations removed."
     },
     "scripts/install-rpi.sh": {
-      "content_hash": "sha256:2b91d9e6b82e5392bac730df103327d6ff1bc5b50492da51527758ae07fca016",
+      "content_hash": "sha256:761ec49e98093354aa02db13f8f3458f4e10f9d7932688ebabb7f37fa9c08481",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
@@ -1596,7 +1596,7 @@
       "review_note": "Installer checks all five launchers and uses uv venv --prompt ninjarobotpi0."
     },
     "scripts/install-versions.env": {
-      "content_hash": "sha256:9677769b8cbc56ca988eebc8d6a3b6403ee02bef3e72869382fd198499643d17",
+      "content_hash": "sha256:a8aae97d246714249744b4c4b23f0f3c0e7f4e1bbded7879e57be6ebdcf189d3",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
@@ -1614,7 +1614,7 @@
       "review_note": "Installation check detects missing launchers and reports minimal locked repair command."
     },
     "scripts/install_record.py": {
-      "content_hash": "sha256:6f63bf879885e2eaa5220f8159c84c61e8d15fad77e6d964729f1c345be16db2",
+      "content_hash": "sha256:3f44fea1df796cc418177b13abda9247ac1d0620c9942a1d33aa890f77b56433",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
@@ -1623,7 +1623,7 @@
       "review_note": "Reviewed fsync, atomic replacement and finally cleanup; injected failure leaves no temporary record."
     },
     "scripts/install_system.py": {
-      "content_hash": "sha256:eecf0601cc936e757e50be7dfd3ba8cac56b261428ff7b64c4b00ce6ef77ffa8",
+      "content_hash": "sha256:a70db4fbe21cab116ceb00d37134ab8308a677d72a3b33ad3deceeede65c7442",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
@@ -1632,7 +1632,7 @@
       "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
     },
     "scripts/onboard.py": {
-      "content_hash": "sha256:332dcc310543cd3cdfa1462ef0d181082bc6eeb321e63a4fe63960849f60b2d0",
+      "content_hash": "sha256:62700ae1dbc9f9d823d3e8abe5b85718ab8c9f1177cc994f8db23fadf739a942",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
@@ -1668,7 +1668,7 @@
       "review_note": "Reviewed explicit setup-only private uv fallback and cleared inherited UV_PROJECT; query paths remain no-sync."
     },
     "tests/browser_ui.cjs": {
-      "content_hash": "sha256:13379f5bd7c71125b784dd5b270089dedff3a661127a620f873dc92006a01bdf",
+      "content_hash": "sha256:4dd266fe079f99da1095131fd5a55b1845b0521b1141b0441c2a73111def778a",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
@@ -1731,21 +1731,21 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_gemini_models.py": {
-      "content_hash": "sha256:da5d553016776c906791901366d7f615bfe822aff3f68da08ee1d50d992fb20c",
+      "content_hash": "sha256:a3f1aa13b740035f63a77add2d98d6ce20f8e7abf77850af5120becf08bc0fa7",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_gemini_runtime.py": {
-      "content_hash": "sha256:bb05ce3a1c3b7cf379616faadb15807c282c47b8de0b18975c83976d8c237a88",
+      "content_hash": "sha256:9ec8de7f2d68b7fee7c366040c3b4c712dee46e465536d128fb8373524eb09b7",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_init_tool.py": {
-      "content_hash": "sha256:3e0da9aa121ee517b09fbcbd3924189d4a8be23c80454c2f440f73108cd65485",
+      "content_hash": "sha256:36e4e4fff7aeb23b8c12b6b2c5c16c7eb1b8bdd79614a14708398e3e8a980133",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
@@ -1801,7 +1801,7 @@
       "review_note": "Upgrade workflow tests updated for single-ownership launchers and repair sync."
     },
     "uv.lock": {
-      "content_hash": "sha256:3e96e098a6990f5d1e1fcbcdac1f6ce731c07e223573bcba167a213c1e011907",
+      "content_hash": "sha256:7c4e68086dc391b3c27590e29f0afb3da508006c44d1f1411119c34ca7424ecb",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
@@ -1811,7 +1811,7 @@
       "pages": [
         "wiki/overview.md"
       ],
-      "content_hash": "sha256:3731345e2630ac64e43d9b74ae6dc3827ec1a710850a5120067af9db0a287612",
+      "content_hash": "sha256:06bac49a88aafffba99eb7fcf82154adc5992bf4a644cc75d35cbbaabfceef40",
       "review_note": "Root README manual links updated to 2026-10-10 CLI recovery version."
     },
     "scripts/build_spider_movements.py": {
@@ -1912,6 +1912,146 @@
         "wiki/concepts/web-interface-design.md"
       ],
       "review_note": "Inert Node test harness verifying session cookie exchange and busy state close code 4409."
+    },
+    ".agents/skills/jev-agent/README.md": {
+      "content_hash": "sha256:090ea1105676986589a1dfd106b13a42ec4dd22ed2f2d955fcdd11faaf99d182",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "JEV decision agent skill documentation and interface."
+    },
+    ".agents/skills/jev-agent/SKILL.md": {
+      "content_hash": "sha256:de3d09d34e4948002bb70a5e5ce1fa858562a62a966ec26142843a1ded3c8982",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "JEV decision agent skill definition and instructions."
+    },
+    "ninja_core/src/ninja_core/agent_response.py": {
+      "content_hash": "sha256:db128990593d04999ee2d0a2225eeb0d343701f3b0499321b1afe992f40b15db",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/action-library-and-ai-agent.md"
+      ],
+      "review_note": "Action object schema validator with 32-step bound, 1-20 repetitions, and 60s face limits."
+    },
+    "ninja_core/src/ninja_core/private_files.py": {
+      "content_hash": "sha256:19c1b20474c8a47b1bdd6c39bcf9091475a83c9ca8ffb4874d17afea83fd70df",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Atomic private file writer with 0600 mode and config file locking."
+    },
+    "ninja_core/src/ninja_core/provider_credentials.py": {
+      "content_hash": "sha256:260249cbbe816374b22183966122e922894642255620dbeb518e5a59b4d6cad1",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Private credential manager storing secrets under ~/.config/ninjarobot_pi0/credentials/."
+    },
+    "ninja_core/src/ninja_core/provider_setup.py": {
+      "content_hash": "sha256:0e0507b178404689cafef76fa474c369b4b8fcc5991751ce9ed6ec67c15a1cd7",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/references/api-and-cli-reference.md"
+      ],
+      "review_note": "Shared provider discovery, interactive selection, and probe validation."
+    },
+    "ninja_core/src/ninja_core/providers/__init__.py": {
+      "content_hash": "sha256:d19a3fe1ee863f419119a69863a7348109aedf89d5d2eb118269a4b4b6800b47",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/action-library-and-ai-agent.md"
+      ],
+      "review_note": "Package exports for cloud model adapters."
+    },
+    "ninja_core/src/ninja_core/providers/anthropic.py": {
+      "content_hash": "sha256:1422f4bb3832d301d4a00b1148bc3d40078fd03ad5929d5cc1535749a04a776b",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/action-library-and-ai-agent.md"
+      ],
+      "review_note": "Anthropic Claude model adapter for messages API and model discovery."
+    },
+    "ninja_core/src/ninja_core/providers/base.py": {
+      "content_hash": "sha256:0510b431e6be389c025a630fba048c3225eb9b36448c581d219e3f662cd4ed40",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Abstract base class and data models for AI model adapters."
+    },
+    "ninja_core/src/ninja_core/providers/cloud.py": {
+      "content_hash": "sha256:0b1bd4c228b3a748d0ed9b46b372e5f04a85df83956095c983b91f339667b0d5",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Base class for cloud HTTP-based AI providers with timeout management."
+    },
+    "ninja_core/src/ninja_core/providers/google.py": {
+      "content_hash": "sha256:44a06bf06cf2b74687e50b90e73f3665ad31d00eb87f1ca139945430024643a3",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/action-library-and-ai-agent.md"
+      ],
+      "review_note": "Google Gemini adapter with REST discovery and SDK generation."
+    },
+    "ninja_core/src/ninja_core/providers/http.py": {
+      "content_hash": "sha256:2df6001a85b6bf61f898bbc666934b4e39ffadea9f8e5040d2b839f02af62afc",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Async HTTP client using httpx with response bounds and redirect safety."
+    },
+    "ninja_core/src/ninja_core/providers/ollama.py": {
+      "content_hash": "sha256:b30ac4906a03f7e97517f7a1ad40c34cd528adc8a477fad225fc043efe43f908",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/action-library-and-ai-agent.md"
+      ],
+      "review_note": "Ollama Cloud adapter for hosted tags discovery and chat endpoint."
+    },
+    "ninja_core/src/ninja_core/providers/openai.py": {
+      "content_hash": "sha256:e5ca28efd2d33373dfece34eabc3f85014930009736435e549a3fe5cc1757bb8",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/action-library-and-ai-agent.md"
+      ],
+      "review_note": "OpenAI adapter for responses API and model discovery."
+    },
+    "ninja_core/src/ninja_core/providers/registry.py": {
+      "content_hash": "sha256:596ae707b43020e9f8a3368614024f65b597f06ef1af8622a44971319c49dc39",
+      "pages": [
+        "wiki/entities/ninja-core.md",
+        "wiki/concepts/architecture-and-hal.md"
+      ],
+      "review_note": "Provider registry mapping identifiers to adapter classes."
+    },
+    "scripts/install_ollama.py": {
+      "content_hash": "sha256:caa604e09a6c30906fa98dce2d5b6ab0d739548bab41046d35cdfce3bf060b88",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/references/installation-and-wiring.md"
+      ],
+      "review_note": "Helper script downloading and staging pinned ARM64 Ollama binary."
+    },
+    "tests/test_ollama_install.py": {
+      "content_hash": "sha256:1616e968b2af4f462c3f04dbf9b7d2c4e6323244934a3a4b80ef7394717d0ebb",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Unit tests for Ollama installer archive extraction and verification."
+    },
+    "tests/test_provider_adapter.py": {
+      "content_hash": "sha256:7d669921f165a76e5cf89ca25e6085d1c2b1e576c35e789d016484ea8f733b9f",
+      "pages": [
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Comprehensive unit tests for 4-provider model adapters with inert fixtures."
     }
   },
   "adapters": [

@@ -60,11 +60,23 @@ sources:
   title: Pi0 README audit evidence and validation limits
   content_hash: sha256:7a945023f45ad2e179e5cae529665df9ed050bfe5cf36f440f857a02e28cfea4
   resource: urn:llmwiki:source:src-20261008-2026-10-08-readme-audit
+- id: src-20261010-readme-4
+  resource: urn:llmwiki:source:src-20261010-readme-4
+  title: Readme
+  content_hash: sha256:006bdb216531773f51628c304ea5ca9ffce7f7e65a3298d8fe0782e4cfe6129e
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-08T14:34:36.833728+00:00'
-  target_hash: sha256:50a7267de857f7048b201d24b078fdde2d761971b637cc5c9eb3afeedeeacfef
+  performed_by: agent:antigravity
+  performed_at: '2026-10-10T15:28:47.571035+00:00'
+  target_hash: sha256:edd690ec6d198d0ca4568ee8c903108b9981975f0d1e086745ff57fe3bee10ee
   result: passed
   checks:
     source_support: passed
@@ -73,16 +85,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed the owner-authored four-language README and registered audit evidence
-    against installer preflight, service-manager uv/PATH and enable behavior, ngrok
-    presence/connection checks, core movement parser, GPIO terminology and shutdown
-    permission/animation limits. Corrections retain the manual structure; optional
-    recovery/status details remain in Troubleshooting/Appendix C. All 54 shell examples
-    parse and four isolated core parser examples pass. No runtime code or physical
-    hardware operation is claimed. Earlier historical sources remain cited; draft/unverified
-    status is preserved.
-  - Source-grounded AI review of changed claims and retained cited context; draft/unverified.
-    Physical tests, live accounts and publication remain pending.
+  - Reviewed overview against 2026-10-10 model adapter release evidence. Multi-provider
+    AI support (Google, OpenAI, Anthropic, Ollama Cloud), private credentials, and
+    pinned Ollama CLI match implementation.
+  - Live provider account verification and physical robot movement tests remain pending.
 ---
 
 # NinjaRobotPi0 Platform Overview
@@ -92,7 +98,7 @@ semantic_review:
 The installer targets Zero 2 W with Debian-based Raspberry Pi OS 64-bit; current requirements are below. `./install.sh` installs software; `./onboard.sh` guides existing hardware tools and Gemini/ngrok settings. Full current manuals are immutable versions inside `ninjarobot_pi0_Wiki`; root manuals preserve public links. Pi0 uses a Pi5-style navy/cyan web presentation with its existing control contracts. Real-device final validation remains pending. Current React metadata is 19.2.0; descriptions of React 18 in earlier reference material are historical. See [guided onboarding](concepts/guided-onboarding.md), [development workflow](concepts/development-workflow.md), [web design](concepts/web-interface-design.md), [installation manual](references/installation-guide.md), and [development manual](references/development-guide.md).[^src-20261008-installationguide-3] [^src-20261008-developmentguide-3]
 
 
-**NinjaRobotPi0** is an advanced, modular AI robot platform designed for research and STEAM education, powered by the Raspberry Pi Zero 2W.[^src-20260822-readme] It integrates a Google Gemini agent with a mobile-first web interface, dual connectivity (Wi-Fi and Bluetooth Low Energy), and rebuilt non-blocking hardware drivers.[^src-20260822-readme] [^src-20260822-developmentguide]
+**NinjaRobotPi0** is an advanced, modular AI robot platform designed for research and STEAM education, powered by the Raspberry Pi Zero 2W.[^src-20260822-readme] It integrates a multi-provider AI agent (Google Gemini, OpenAI, Anthropic Claude, and Ollama Cloud) with a mobile-first web interface, dual connectivity (Wi-Fi and Bluetooth Low Energy), and rebuilt non-blocking hardware drivers.[^src-20260822-readme] [^src-20260822-developmentguide] [^src-20261010-readme-4] [^src-20261010-modeladapterimplementation]
 
 ## Hardware Specifications
 
@@ -113,7 +119,7 @@ The NinjaRobot software stack is organized as a layered monorepo with 7 independ
 * **[Motion System & Easing](concepts/motion-system-and-easing.md)**: Velocity-based servo control and position-aware cubic easing curves.[^src-20260822-developmentguide]
 * **[Dual Connectivity & Protocols](concepts/dual-connectivity-and-protocols.md)**: Centralized command dispatching across BLE and Web interfaces with chunked transport.[^src-20260822-developmentguide]
 * **[Safe Execution & Blockly Runtime](concepts/safe-execution-and-blockly-runtime.md)**: Sandboxed code execution engine and dual runtime pipeline.[^src-20260822-developmentguide]
-* **[Action Library & AI Agent](concepts/action-library-and-ai-agent.md)**: Validated user-selected Gemini models, bounded Gemini 3 compatibility, and a persistent Blockly action library.[^src-20260822-readme] [^src-20260822-developmentguide]
+* **[Action Library & AI Agent](concepts/action-library-and-ai-agent.md)**: Multi-provider cloud model adapters (Google, OpenAI, Anthropic, Ollama Cloud), private credential storage, whole-plan action validation, and a persistent Blockly action library.[^src-20260822-readme] [^src-20260822-developmentguide] [^src-20261010-readme-4] [^src-20261010-modeladapterimplementation]
 * **[Perception & Expression](concepts/perception-and-expression.md)**: Distance monitoring, animated facial expressions, and emotion audio queues.[^src-20260822-developmentguide]
 
 ## Component Packages
@@ -206,3 +212,11 @@ Installer checks now use compatibility instead of exact OS/Node/uv versions. No 
 The owner-expanded README has English, Japanese, Traditional Chinese and Simplified Chinese manuals. A documentation-only audit retained their structure and intentional omissions. It corrected service lifecycle, autostart uv discovery, ngrok behavior, hostname/shutdown assumptions and the unsupported core movement example. Necessary recovery/check details live in Troubleshooting/Appendix C. Robot implementation and dependencies are unchanged; physical acceptance remains separate.[^src-20261008-2026-10-08-readme-audit]
 
 [^src-20261008-2026-10-08-readme-audit]: Four-language README correctness audit and code evidence.
+
+## Cloud model provider adapters and private credentials (2026-10-10)
+
+NinjaRobotPi0 expands AI chat beyond Google Gemini to include OpenAI, Anthropic (Claude), and Ollama Cloud through interactive CLI and onboarding selection (`ninja_core config select-model`, `init-tool` option 1, and `onboard.sh --step ai_model`).[^src-20261010-readme-4] [^src-20261010-modeladapterimplementation] Credentials are saved privately under `$XDG_CONFIG_HOME/ninjarobot_pi0/credentials/` (file mode `0600`, directory mode `0700`) with opaque references in `config.json`.[^src-20261010-modeladapterimplementation] Native voice input is gated by model capabilities (enabled for qualified Gemini models, disabled for OpenAI, Anthropic, and Ollama Cloud).[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+
+[^src-20261010-readme-4]: NinjaRobotPi0 Readme (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.

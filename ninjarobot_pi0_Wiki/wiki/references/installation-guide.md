@@ -71,11 +71,27 @@ sources:
   resource: urn:llmwiki:source:src-20261010-readme-3
   title: Readme
   content_hash: sha256:dd7aadd29af3a65ecd5a300f54a41534f0a212e9b4512ece03d3d21ec9b24922
+- id: src-20261010-installationguide-3
+  resource: urn:llmwiki:source:src-20261010-installationguide-3
+  title: Installationguide
+  content_hash: sha256:116e93e529583e57b2f300536c8a2367030727c584a83a1a826cd5a53b0d4001
+- id: src-20261010-readme-4
+  resource: urn:llmwiki:source:src-20261010-readme-4
+  title: Readme
+  content_hash: sha256:006bdb216531773f51628c304ea5ca9ffce7f7e65a3298d8fe0782e4cfe6129e
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:8035d6d72bf75c3843fe62f0e253f08738309f69fb18a82ea22956fd35ff8315
+  performed_at: '2026-10-10T15:31:43.935978+00:00'
+  target_hash: sha256:11cef2dda7a938f81468fd6da05462bcc35fa7dc6445506eb45e6fbc81fc1acc
   result: passed
   checks:
     source_support: passed
@@ -84,16 +100,16 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed installation manual procedures against install.sh, onboard.sh, and 2026-10-10
-    InstallationGuide.md. ninjarobotpi0 venv prompt, single-ownership launcher verification
-    in .venv/bin, and targeted --reinstall-package repair match current manual.
-  - Installer checks do not auto-activate robot hardware. Real environment repair
-    requires explicit owner authorization.
+  - Reviewed installation guide against scripts/install_ollama.py, install.sh, and
+    2026-10-10 InstallationGuide.md. Pinned ARM64 Ollama v0.40.2 archive, zstd prerequisite,
+    and select-model setup match manual.
+  - Installer check does not download model weights or start background daemons. Physical
+    Pi validation is pending.
 ---
 
 # Current installation manual
 
-Resolve the complete current InstallationGuide through project-knowledge.json or the wiki README. It covers the Raspberry Pi OS 64-bit compatibility requirements, software installation, explicit onboarding, prerequisites, calibration warnings and recovery. Root InstallationGuide.md is a compatibility pointer. Earlier detailed material is preserved as historical reference, with current installation instructions clearly identified.[^src-20261010-installationguide-2]
+Resolve the complete current InstallationGuide through project-knowledge.json or the wiki README. It covers the Raspberry Pi OS 64-bit compatibility requirements, software installation, explicit onboarding, prerequisites, calibration warnings and recovery. Root InstallationGuide.md is a compatibility pointer. Earlier detailed material is preserved as historical reference, with current installation instructions clearly identified.[^src-20261010-installationguide-3]
 
 [Project overview](/overview.md).
 
@@ -163,10 +179,22 @@ Root distribution, lock identity, and default virtual environment prompt become 
 
 Packaging delegates the five robot console commands (`ninja_core`, `pi0servo`, `pi0disp`, `pi0buzzer`, `pi0vl53l0x`) exclusively to their provider packages; the root project `ninjarobotpi0` no longer declares duplicate console scripts, preventing RECORD collision and uninstallation during root upgrades. The installer forces locked targeted reinstallation of the five local providers (`--reinstall-package ninja-core --reinstall-package pi0servo ...`) and verifies that all five executable launcher files exist in `.venv/bin`. Read-only `./install.sh --check` detects missing launchers and reports a minimal locked repair command using `--inexact` without modifying third-party packages or system services. Real environment repair requires explicit owner authorization.[^src-20261010-installationguide-2] [^src-20261010-clientrypointrepairplan] [^src-20261010-clientrypointsvalidation] [^src-20261010-readme-3]
 
-[^src-20261010-installationguide-2]: Current versioned Installationguide (2026-10-10 CLI recovery).
+[^src-20261010-installationguide-2]: Historical 2026-10-10 Installationguide (CLI recovery).
 [^src-20261010-installationguide]: Versioned Installationguide (2026-10-10 lifecycle refinements).
 [^src-20261010-clientrypointrepairplan]: CLI launcher repair plan and root packaging reconciliation.
 [^src-20261010-clientrypointsvalidation]: CLI launcher recovery validation on Raspberry Pi Zero 2 W.
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.
 [^src-20261010-readme-3]: NinjaRobotPi0 English README snapshot (2026-10-10 CLI recovery).
+
+## Cloud model provider setup and Ollama CLI installation (2026-10-10)
+
+The model adapter release introduces multi-provider AI setup (`uv run ninja_core config select-model`, `init-tool` option 1, or `./onboard.sh --step ai_model`) for Google, OpenAI, Anthropic, and Ollama Cloud.[^src-20261010-installationguide-3] [^src-20261010-readme-4] [^src-20261010-modeladapterimplementation]
+* **Ollama CLI Installer**: `install.sh` and `scripts/install-rpi.sh` support installing a pinned official Linux ARM64 binary of Ollama (v0.40.2, sha256 `92b3ef3d5e10f5849273bfa1345000f2a8ce8bc834e95061ff5b9df5d08e3c3f`) via `scripts/install_ollama.py`.[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation]
+* **Resource Prerequisites**: Archive extraction requires `zstd` and at least 2 GB temporary free space (archive size ~1.56 GB). The installer creates a non-overwriting `/usr/local/bin/ollama` launcher and never installs background services, daemons, or model weights.[^src-20261010-installationguide-3] [^src-20261010-modeladapterimplementation]
+* **Runtime Dependencies**: Python 3.10+ and `httpx` (0.28.x) are required.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+
+[^src-20261010-installationguide-3]: Current versioned Installationguide (2026-10-10 model adapter release).
+[^src-20261010-readme-4]: NinjaRobotPi0 Readme (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.

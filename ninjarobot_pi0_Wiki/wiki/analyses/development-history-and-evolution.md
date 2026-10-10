@@ -88,11 +88,23 @@ sources:
   resource: urn:llmwiki:source:src-20261010-clientrypointsvalidation
   title: Clientrypointsvalidation
   content_hash: sha256:7a38fdff3c9c1e9bcb8eb98d85bcd773d2504e6936381994778fb42a95699ce3
+- id: src-20261010-developmentlog-3
+  resource: urn:llmwiki:source:src-20261010-developmentlog-3
+  title: Developmentlog
+  content_hash: sha256:7ff79b715f8e759e6838b3137f4e39f4cde865093f0caf7fcf47f328ffdb8a93
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:ff4e3042563296eafe63aa1adde9778a636203164a568032fc363bc302df64a5
+  performed_at: '2026-10-10T15:28:47.571035+00:00'
+  target_hash: sha256:08a25f64a8c788969884e14b2533dd9d0c380bbef85d2512c7d445a6c0297d6d
   result: passed
   checks:
     source_support: passed
@@ -101,12 +113,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed development history and evolution against 2026-10-10 DevelopmentLog.md,
-    CLI repair plan, and lifecycle refinements plan. Chronology, root rename launcher
-    collision recovery, session ownership protocol, and Poweroff exit match repository
-    records.
-  - Historical entries remain immutable provenance; physical actuator acceptance remains
-    separate.
+  - Reviewed development history against 2026-10-10 DevelopmentLog.md, ModelAdapterImplementation.md,
+    and ModelAdapterValidation.md. Multi-provider transition, private credentials,
+    and pinned Ollama installer match chronological records.
+  - Milestones reflect code-verified host progress; live account and hardware testing
+    remain pending.
 ---
 
 # Development History and Evolution
@@ -222,3 +233,14 @@ Following the root distribution rename, all five `.venv/bin` robot launchers wer
 [^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.
 [^src-20261010-clientrypointrepairplan]: CLI launcher repair plan and root packaging reconciliation.
 [^src-20261010-clientrypointsvalidation]: CLI launcher recovery validation on Raspberry Pi Zero 2 W.
+
+## Cloud model provider adapter milestone (2026-10-10)
+
+The robot agent architecture transitions from a single Google Gemini implementation to a modular cloud adapter framework supporting Google, OpenAI, Anthropic, and Ollama Cloud.[^src-20261010-developmentlog-3] [^src-20261010-modeladapterimplementation]
+* **Security & Storage**: Secrets are moved out of repository files and master `config.json` into dedicated private credential stores (`$XDG_CONFIG_HOME/ninjarobot_pi0/credentials/`, `0600` permissions) with opaque references.[^src-20261010-modeladapterimplementation]
+* **Safety & Control**: AI-generated action responses are strictly validated through `agent_response.py` (32 steps max, 1-20 repetitions, 60s face hold limit).[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+* **Ollama Integration**: Pinned ARM64 release binary installer (v0.40.2) via `scripts/install_ollama.py` without daemon or model weight overhead.[^src-20261010-developmentlog-3] [^src-20261010-modeladapterimplementation]
+
+[^src-20261010-developmentlog-3]: Current versioned DevelopmentLog (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.

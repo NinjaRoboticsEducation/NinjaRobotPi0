@@ -1,6 +1,6 @@
 # Concepts
 
-* [Action Library and AI Agent](action-library-and-ai-agent.md) - Google Gemini-powered agentic AI, saved Blockly action library, action chaining, and cooperative interruption.
+* [Action Library and AI Agent](action-library-and-ai-agent.md) - Multi-provider AI agents (Google, OpenAI, Anthropic, Ollama Cloud), action validation, private credentials, and Blockly action library.
 * [Architecture and Hardware Abstraction Layer](architecture-and-hal.md) - Monorepo structure, dynamic driver loading, interface ABCs, and centralized configuration in NinjaRobotPi0.
 * [Development and immutable documentation workflow](development-workflow.md) - Development and immutable documentation workflow.
 * [Dual Connectivity and Communication Protocols](dual-connectivity-and-protocols.md) - Dual Wi-Fi and Bluetooth Low Energy connectivity, GATT service specifications, and chunked transfer protocols.

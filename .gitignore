@@ -3,6 +3,7 @@
 /servo.json
 /buzzer.json
 /config_bak.json
+.env.jev.local
 
 # Installer/development environments and private workflow state
 .venv/
@@ -19,3 +20,7 @@ __pycache__/
 /pi0servo/src/pi0servo/servo.json
 /pi0vl53l0x/src/pi0vl53l0x/config/vl53l0x.json
 /.config-restore-*
+
+# Private provider migration snapshot and cooperative config lock
+/config.pre-provider.json
+/.config.json.lock

@@ -2,11 +2,11 @@
 
 **Date:** 2026-10-10 (Asia/Tokyo)
 
-**Status:** Draft for owner review; implementation is not authorized by this document.
+**Status:** Owner approved Release 1 on 2026-10-10. Implementation and host validation are recorded in the new model-adapter wiki sources; target-Pi acceptance and manual wiki ingestion/review remain owner-pending. Account login remains a later milestone.
 
 **Repository baseline:** NinjaRobotPi0 `d0f451d`; clean worktree before this plan.
 
-**Deliverable scope:** Research and this plan only. No runtime changes, installations, account access, paid inference, or hardware operations were performed.
+**Original planning deliverable scope:** Research and this plan only. No runtime changes, installations, account access, paid inference, or hardware operations were performed.
 
 ## 1. Outcome and confirmed scope
 

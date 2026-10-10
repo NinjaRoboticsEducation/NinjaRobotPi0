@@ -1,7 +1,8 @@
 ---
 type: Concept
 title: Action Library and AI Agent
-description: Google Gemini-powered agentic AI, saved Blockly action library, action chaining, and cooperative interruption.
+description: Multi-provider AI agents (Google, OpenAI, Anthropic, Ollama Cloud), action
+  validation, private credentials, and Blockly action library.
 status: draft
 generated:
   by: codex/migration-audit
@@ -27,11 +28,27 @@ sources:
   resource: urn:llmwiki:source:src-20261009-2026-10-09-builtin-movements
   title: 2026 10 09 Builtin Movements
   content_hash: sha256:6bd14ef705bb60c2c228c95940fd6cb771299532f13e10fdc4faae22db3f216a
+- id: src-20261010-readme-4
+  resource: urn:llmwiki:source:src-20261010-readme-4
+  title: Readme
+  content_hash: sha256:006bdb216531773f51628c304ea5ca9ffce7f7e65a3298d8fe0782e4cfe6129e
+- id: src-20261010-ninja-core-readme
+  resource: urn:llmwiki:source:src-20261010-ninja-core-readme
+  title: Ninja Core Readme
+  content_hash: sha256:0f7d702569807c8458e0b879e6a44941960b7acb8ecbf358e453bc5184950795
+- id: src-20261010-modeladapterimplementation
+  resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
+  title: Modeladapterimplementation
+  content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261010-modeladaptervalidation
+  resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
+  title: Modeladaptervalidation
+  content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:7cab523a151bf38f67a8020d464fa09f6dc7b93298583d49c6e3a8fae9ab4cf3
+  performed_at: '2026-10-10T15:31:43.935978+00:00'
+  target_hash: sha256:1fa4913594ad738f31e7d3fd0942765bf21963dc0c093095c5ffb18bd6ed40c6
   result: passed
   checks:
     source_support: passed
@@ -40,8 +57,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ActionLibrary and Gemini AI agent native movement planning against ninja_agent.py. Action planning schema, permitted robot-type filtering, repetition bounds, and whole-chain validation match implementation.
-  - Agent relies on configured API keys; configuration actions remain protected.
+  - Reviewed Action Library and AI Agent concept against ninja_agent.py, agent_response.py,
+    and providers/ subsystem. 4-provider adapter matrix, action object bounds (32
+    steps, 1-20 repetitions), and voice capability gating match code.
+  - Cloud model inference was verified using inert test fixtures; physical robot actuation
+    remains pending.
 ---
 
 # Action Library and AI Agent
@@ -97,3 +117,30 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 The Gemini AI agent restricts native movement suggestions to executable movements matching the active robot type (`spider`, `wheel`/`tire`, or `humanoid`). Native movement chains from text and audio plans are validated with strict bounds: maximum 32 entries per chain and 1–20 positive integer repetitions per entry. Any unavailable or type-incompatible movement causes the entire native chain to be rejected while preserving the conversational response and logging the rejection reason.[^src-20261009-2026-10-09-builtin-movements]
 
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
+
+## Cloud Model Provider Adapters (`ninja_core.providers`)
+
+The AI integration supports four cloud model providers through native adapters in `ninja_core.providers`:[^src-20261010-readme-4] [^src-20261010-ninja-core-readme] [^src-20261010-modeladapterimplementation]
+
+| Provider | Discovery Endpoint | Inference API | Authentication & Context | Voice Capability |
+|----------|-------------------|---------------|-------------------------|------------------|
+| **Google** | Gemini REST catalog, `generateContent` filtering | Legacy SDK for older models; cancellation-aware REST for Gemini 3 | `x-goog-api-key` in REST; SDK key | Enabled for allowlisted models (`gemini-2.0-flash`, `gemini-2.5-flash`, etc.) |
+| **OpenAI** | `/v1/models` (`data[]`, non-text families filtered) | `/v1/responses` text items (`store:false`, non-streamed) | Bearer API key | Disabled in this adapter |
+| **Anthropic** | `/v1/models` (paginated `has_more`/`last_id`) | `/v1/messages` (text blocks, final stop reasons) | Bearer API key, `anthropic-version:2023-06-01` | Disabled in this adapter |
+| **Ollama Cloud** | `https://ollama.com/api/tags` | Hosted `/api/chat` (non-streamed `message.content`) | Bearer API key | Disabled in this adapter |
+
+Selection occurs via `uv run ninja_core config select-model`, `init-tool` option 1, or `./onboard.sh --step ai_model`.[^src-20261010-modeladapterimplementation] The active model is persisted only after a bounded verification probe succeeds against the target provider origin.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+
+## Action Response Validation (`ninja_core.agent_response`)
+
+Model-generated action objects are treated as untrusted input and validated strictly by `agent_response.py` before execution:[^src-20261010-modeladapterimplementation]
+* Allowed fields, text response strings, and action chain structure are enforced.
+* Permitted native/saved movement, expression face, and buzzer sound identifiers must match configured capabilities.[^src-20261010-ninja-core-readme] [^src-20261010-modeladapterimplementation]
+* Action sequences are capped at 32 entries, with repetitions strictly bounded between 1 and 20.[^src-20261010-modeladapterimplementation]
+* Facial expression durations are limited to finite positive values up to 60 seconds (or null hold).[^src-20261010-modeladapterimplementation]
+* Malformed action objects reject executable actions while safely preserving the conversational response text.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+
+[^src-20261010-readme-4]: NinjaRobotPi0 Readme (2026-10-10 model adapter release).
+[^src-20261010-ninja-core-readme]: ninja_core package README (2026-10-10 model adapter release).
+[^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+[^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
