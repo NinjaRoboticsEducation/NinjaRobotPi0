@@ -47,11 +47,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-webrefinementevidence
   title: Web refinement code, design and local validation evidence
   content_hash: sha256:5ce2540bcc10522fc7e7dd5d1295c9738c4b0ed695bc4f39359ba91ddf669e69
+- id: src-20261011-developmentguide-2
+  resource: urn:llmwiki:source:src-20261011-developmentguide-2
+  title: Mobile refinement current development guide
+  content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
+- id: src-20261011-webmobilerefinement
+  resource: urn:llmwiki:source:src-20261011-webmobilerefinement
+  title: Web mobile refinement evidence
+  content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T06:54:46.162431+00:00'
-  target_hash: sha256:ba5e411ea2f812e1d674397453295484e94927c88fc56ce8d4bf2910c894637c
+  performed_by: agent:antigravity
+  performed_at: '2026-10-11T09:54:05.388246+00:00'
+  target_hash: sha256:d3ff94c6fa147f82e5aba320608c3bec78a82128e18b27164f16119cc72c0ba8
   result: passed
   checks:
     source_support: passed
@@ -60,12 +68,12 @@ semantic_review:
     claim_strength: passed
     visual_evidence: passed
   notes:
-  - Current Home/Movement/Chat, native/event/session/power and browser voice claims
-    checked against the new guide/evidence and current frontend/backend endpoint definitions.
-  - Six original design references were directly inspected. Presentation intent is
-    sourced; implemented-page screenshots and browser/device acceptance are not claimed.
-  - Source fingerprints were checked; unchanged historical evidence retains its prior
-    source-grounded review context. AI review is not human verification.
+  - Reviewed mobile viewport tracking, body scroll lock, persistent link selection,
+    and GET /api/robot/status against DevelopmentGuide.md and WebMobileRefinement.md.
+  - Inspected visual screenshot evidence across 9 screen resolutions from inert Chromium
+    test matrix.
+  - Automated tests passed; native mobile browser, hardware touchscreen, and live
+    robot acceptance remain pending.
 ---
 
 # Pi0 web interface design and compatibility
@@ -74,7 +82,7 @@ The current Pi0 interface uses Home (`/`) as the combined landing page/menu, Mov
 
 [Project overview](/overview.md).
 
-[^src-20261007-developmentguide-2]: Current versioned Developmentguide.
+[^src-20261007-developmentguide-2]: Historical versioned Developmentguide UI contracts.[^src-20261007-developmentguide-2]
 
 ## Implementation evidence and acceptance limits
 
@@ -112,5 +120,17 @@ Both pages share a folded-by-default floating System Activity drawer containing 
 Four-language keys, frontend lint/build, inert session/stream checks and protected-core verification passed. The owner waived browser validation on Raspberry Pi Lite after startup attempts; no completed browser assertions or implemented-page screenshot review are claimed. Real mobile layout, microphone, ngrok, telemetry/output and controlled motion/power acceptance remain pending. Browser recognition is not guaranteed offline and depends on support, permission, secure context and its speech service.[^src-20261011-webrefinementevidence]
 
 [^src-20261011-developmentguide]: Web refinement current development guide (2026-10-11 web refinement).
-
 [^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).
+
+## Mobile Viewport Adaptation, Selection State, and Fullscreen (2026-10-11)
+
+The mobile web interface refinement resolves short-screen and on-screen keyboard clipping through reactive viewport tracking and stateful UI adaptation:[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Visible Viewport Shell**: The `useAppViewport` hook subscribes to `window.visualViewport` resize and scroll events, dynamically locking whole-document scrolling (`overflow: hidden`) and allocating bounded remaining-height regions for chat messages, prompts, and system logs to prevent layout shifting during keyboard pan/resize.[^src-20261011-webmobilerefinement]
+* **Responsive Layout & Short-Screen Fallbacks**: Replaces fixed vertical height deductions with CSS container allocations, landscape two-column wrapping, compact vertical breakpoints, and minimum 44px tap targets.[^src-20261011-webmobilerefinement]
+* **Mutually Exclusive Interface Selection**: Home (`/`) presents Movement Tool and Chat entry buttons in dark-blue/cyan styling. Activating either route stores that selection in persistent `Layout` state for the session visit. Returning Home exclusively highlights the selected link in orange/white while restoring the other to dark blue; reloading the page resets both to the default base style.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Synchronous Fullscreen Activation**: Interface entry buttons invoke standard and WebKit-prefixed Fullscreen APIs synchronously within the user activation gesture, remaining gracefully interactive when unsupported or denied.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Header Robot Type Status**: Upon acquiring web session ownership, `Layout` retrieves validated HAL metadata via `GET /api/robot/status` and displays `NINJA ROBOT Pi0 - <localized type>` (`Tire`, `Humanoid`, or `Spider`) in the header across English, Japanese, Traditional Chinese, and Simplified Chinese, omitting the suffix on error without guessing.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Browser Validation Matrix**: 612 automated assertions in `tests/browser_ui.cjs` across 9 screen dimensions (320×568 to 1280×900) validated viewport fit, control reachability, selection persistence, and fullscreen fallback; native WebKit/Safari, physical touchscreens, and hardware actuation remain pending owner acceptance.[^src-20261011-webmobilerefinement]
+
+[^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
+[^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).

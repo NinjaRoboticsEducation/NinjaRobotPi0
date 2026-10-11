@@ -10,11 +10,11 @@ generated:
 sources:
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
-  title: NinjaRobotPi0 Development Guide
+  title: Developmentguide
   content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20260822-readme
   resource: urn:llmwiki:source:src-20260822-readme
-  title: NinjaRobotPi0 Readme
+  title: Readme
   content_hash: sha256:3f74856140111a6337bf8b83c58bef7be13f91df9742fc0e36be27ebd35b8df2
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
@@ -68,11 +68,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-readme-final
   title: Web refinement final English README navigation
   content_hash: sha256:149b9d5500e321b8e8b4bfd8eee4e056ef7eef77e5bca6107a9086860f8d1a8b
+- id: src-20261011-developmentguide-2
+  resource: urn:llmwiki:source:src-20261011-developmentguide-2
+  title: Mobile refinement current development guide
+  content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
+- id: src-20261011-webmobilerefinement
+  resource: urn:llmwiki:source:src-20261011-webmobilerefinement
+  title: Web mobile refinement evidence
+  content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T07:05:12.227497+00:00'
-  target_hash: sha256:128f5dd795543a2e7078c2dc4d931546a23ac2413b0cd55b9ebe553bbe68eec4
+  performed_by: agent:antigravity
+  performed_at: '2026-10-11T09:54:05.388246+00:00'
+  target_hash: sha256:4e42661e9613f467fa4043f0c39341ef599828a0f0735297c2873989c7223d87
   result: passed
   checks:
     source_support: passed
@@ -81,21 +89,19 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Current routes, locale sets, HTTP payloads, telemetry/event streams and microphone
-    lifecycle checked against current source and new guide/README/evidence.
-  - Historical provider-audio gating is explicitly superseded; browser speech-service
-    availability and owner-waived browser validation remain limitations.
-  - Source fingerprints were checked; unchanged historical evidence retains its prior
-    source-grounded review context. AI review is not human verification.
-  - Checked the new complete link-corrected log/README navigation source; feature
-    claims and validation limits are unchanged and earlier raw versions remain immutable.
+  - Reviewed useAppViewport hook, fullscreen utility, persistent selection state,
+    and GET /api/robot/status integration against DevelopmentGuide.md and WebMobileRefinement.md.
+  - Verified citations for earlier sources and inert Chromium browser test matrix
+    (612 assertions).
+  - Native browser and Raspberry Pi physical verification remain pending manual owner
+    testing.
 ---
 
 # ninja_webapp Package
 
 ## Current interface and contracts
 
-`ninja_webapp` is the existing React 19.2/Vite SPA with four locale bundles (`en`, `ja`, `zh-TW`, `zh-CN`). The owner-requested refinement changes frontend presentation only; backend/driver APIs, robot configuration, session ownership and shutdown confirmation remain unchanged. BLE advertising is distinct from web controller ownership.[^src-20261011-developmentguide] [^src-20261011-readme-current] [^src-20261011-readme-final]
+`ninja_webapp` is the existing React 19.2/Vite SPA with four locale bundles (`en`, `ja`, `zh-TW`, `zh-CN`). The owner-requested refinement changes frontend presentation only; backend/driver APIs, robot configuration, session ownership and shutdown confirmation remain unchanged. BLE advertising is distinct from web controller ownership.[^src-20261011-developmentguide] [^src-20261011-readme-current] [^src-20261011-readme-final] Earlier foundational contracts originate in the initial repository design.[^src-20260822-developmentguide] [^src-20260822-readme]
 
 ## Application pages
 
@@ -114,7 +120,7 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 
 [^src-20261007-2026-10-07-ninjarobot-pi0-repository-migration]: Registered evidence for the approved 2026-10-07 repository migration.
 
-[^src-20261007-developmentguide-2]: Current versioned Developmentguide.
+[^src-20261007-developmentguide-2]: Historical versioned Developmentguide UI contracts.[^src-20261007-developmentguide-2]
 
 ## Implementation evidence and acceptance limits
 
@@ -147,9 +153,20 @@ The Agent page microphone control uses client-side browser speech recognition (`
 The historical model-audio UI gate above was corrected before this refinement. Current Chat does not fetch provider audio metadata to gate its Web Speech microphone and makes no raw-audio API request. Availability depends on the browser speech service and permissions, not model audio-file capability.[^src-20261011-developmentguide] [^src-20261011-webrefinementevidence]
 
 [^src-20261011-developmentguide]: Web refinement current development guide (2026-10-11 web refinement).
-
 [^src-20261011-readme-current]: Web refinement corrected English README (2026-10-11 web refinement).
-
 [^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).
-
 [^src-20261011-readme-final]: Web refinement final English README navigation; current complete source corrects navigation links while preserving earlier versions.
+[^src-20260822-developmentguide]: NinjaRobotPi0 initial development guide.[^src-20260822-developmentguide]
+[^src-20260822-readme]: NinjaRobotPi0 initial README.[^src-20260822-readme]
+
+## Mobile Viewport Hooks, Layout State, and Status Integration (2026-10-11)
+
+The mobile web refinement incorporates dedicated responsive infrastructure and metadata display:[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Viewport Hook (`useAppViewport.js`)**: Observes `window.visualViewport` geometry changes to compute dynamic CSS variables for available height and keyboard offsets. Enforces document-level scroll locking (`document.body.style.overflow = 'hidden'`) while preserving internal component scrolling.[^src-20261011-webmobilerefinement]
+* **Cross-Browser Fullscreen (`fullscreen.js`)**: Encapsulates standard `requestFullscreen` and WebKit-prefixed API methods to trigger fullscreen mode during user touch/click events on interface selection cards.[^src-20261011-webmobilerefinement]
+* **Persistent Link Selection**: `Layout.jsx` maintains selected interface state across route transitions. Navigating back to Home highlights the active interface in orange/white and resets the other to default dark blue; a browser reload clears persistent selection.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Header Robot Type Badge**: Once `/ws/session` ownership is active, `Layout` queries `GET /api/robot/status` to obtain in-memory HAL configuration and passes the localized suffix (`Tire`, `Humanoid`, `Spider`) to `Header.jsx`.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Validation Coverage**: 612 assertions in `tests/browser_ui.cjs` validated all 4 languages and 9 screen dimensions under Chromium mobile emulation; physical device touch, microphone, and hardware verification remain pending.[^src-20261011-webmobilerefinement]
+
+[^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
+[^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).

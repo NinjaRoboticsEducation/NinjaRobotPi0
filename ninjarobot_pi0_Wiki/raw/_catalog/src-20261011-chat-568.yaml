@@ -1,0 +1,24 @@
+id: src-20261011-chat-568
+path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/chat-568.png
+media_type: image/png
+kind: image
+title: Chat 568px landscape viewport screenshot
+added_at: '2026-10-11T09:48:27Z'
+content_hash: sha256:d9464e66fbc56f37b97d612b9e217a0c8fc283e7ae7a7f26f518b86461f2a98c
+state: pending
+original_uri: urn:llmwiki:source:src-20261011-chat-568
+source_version: 2026-10-11-mobile-refinement
+retrieved_at: null
+normalized_at: '2026-10-11T09:48:44Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 568
+  height: 320
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:18e4317a8d9ae3412f5e361ba44827200b09a56f5719973573a9acd85f486dfa

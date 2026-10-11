@@ -24,10 +24,14 @@ const shots = process.env.UI_SCREENSHOTS;
   try {
     browser = await chromium.launch({ headless: true });
     const base = `http://127.0.0.1:${server.address().port}`;
-    for (const viewport of [{width:320,height:568},{width:360,height:800},{width:390,height:844},{width:430,height:932},{width:844,height:390},{width:768,height:1024},{width:1280,height:900}]) {
-      const context = await browser.newContext({ viewport, locale: 'en-US', reducedMotion: 'reduce' });
+    for (const viewport of [{width:320,height:568},{width:360,height:640},{width:360,height:800},{width:390,height:844},{width:430,height:932},{width:568,height:320},{width:844,height:390},{width:768,height:1024},{width:1280,height:900}]) {
+      const mobile = viewport.width < 1000;
+      const context = await browser.newContext({ viewport, isMobile:mobile, hasTouch:mobile, locale: 'en-US', reducedMotion: 'reduce' });
       await context.addInitScript(() => {
-        window.__sockets = []; window.__recognizers = [];
+        window.__sockets = []; window.__recognizers = []; window.__fullscreenRequests = 0;
+        Object.defineProperty(document, 'fullscreenEnabled', { configurable:true, value:true });
+        Object.defineProperty(document, 'webkitFullscreenEnabled', { configurable:true, value:false });
+        Element.prototype.requestFullscreen = () => {window.__fullscreenRequests++;return Promise.reject(new Error('Fixture denied fullscreen'));};
         window.WebSocket = class {
           static OPEN = 1;
           constructor(url) {
@@ -56,6 +60,7 @@ const shots = process.env.UI_SCREENSHOTS;
         requests.push({method:request.method(), path:url.pathname, body:request.postData()});
         assert.notEqual(url.pathname, '/api/system/shutdown');
         let body = {};
+        if (url.pathname === '/api/robot/status') body = { robot_type: 'spider' };
         if (url.pathname === '/api/display/expressions') body = { expressions: ['idle'] };
         if (url.pathname === '/api/sound/emotions') body = { emotions: ['happy'] };
         if (url.pathname === '/api/servos/movements') body = { movements: ['spider_dance'] };
@@ -64,18 +69,47 @@ const shots = process.env.UI_SCREENSHOTS;
       });
       const page = await context.newPage(), errors = [];
       page.on('pageerror', error => errors.push(error.message));
-      const fits = async () => { assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)); checks++; };
+      const fits = async () => {
+        assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth && document.documentElement.scrollHeight <= innerHeight));
+        assert.equal(await page.evaluate(() => { window.scrollTo(0,100); return scrollY; }),0);
+        // Every control stays reachable inside its own scroll region, above the folded drawer.
+        for (const control of await page.locator('main a, main button, main select, main textarea, main [role="slider"]').all()) {
+          if (!await control.isVisible()) continue;
+          await control.scrollIntoViewIfNeeded();
+          const box = await control.boundingBox();
+          assert.ok(box && box.x >= -1 && box.x + box.width <= viewport.width + 1 && box.y >= -1 && box.y + box.height <= viewport.height + 1, `Unreachable control: ${await control.getAttribute('aria-label')}`);
+          assert.ok(await control.evaluate(el=>{const b=el.getBoundingClientRect();return el.contains(document.elementFromPoint(b.x+b.width/2,b.y+b.height/2));}),`Covered control: ${await control.getAttribute('aria-label')}`);
+        }
+        await page.evaluate(()=>document.querySelector('main > div')?.scrollTo(0,0));
+        checks++;
+      };
       const snapshot = async name => {
         if (shots) {fs.mkdirSync(shots,{recursive:true});await page.screenshot({path:path.join(shots,`${name}-${viewport.width}.png`),fullPage:true});}
       };
       const event = (endpoint, data) => page.evaluate(({endpoint,data}) => window.__sockets.find(s=>s.readyState===1 && s.url.endsWith(endpoint)).onmessage({data:JSON.stringify(data)}),{endpoint,data});
-      await page.goto(base);await page.getByRole('link',{name:'Movement Tool'}).waitFor();await fits();await snapshot('home');
+      await page.goto(base);
+      try { await page.getByRole('link',{name:'Movement Tool'}).waitFor(); }
+      catch(error) { console.error({errors,body:await page.locator('body').innerText()}); throw error; }
+      await fits();await snapshot('home');
+      assert.ok(await page.evaluate(()=>document.querySelector('meta[name="viewport"]').content.includes('user-scalable=no') && getComputedStyle(document.documentElement).touchAction==='pan-x pan-y'));checks++;
+      const selection = async expected => {
+        for(const [label,route] of [['Movement Tool','/movement'],['Chat with Robot','/agent']]) {
+          const link=page.getByRole('link',{name:label,exact:true});
+          assert.equal(await link.getAttribute('aria-current'),expected===route?'true':null);
+          assert.equal(await link.evaluate(el=>getComputedStyle(el).backgroundColor),expected===route?'rgb(255, 138, 0)':'rgb(6, 34, 56)');
+        }
+        checks++;
+      };
+      await selection(null);assert.equal(await page.evaluate(()=>window.__fullscreenRequests),0);checks++;
       await page.evaluate(() => {window.__primarySession=window.__sockets.find(s=>s.url.endsWith('/ws/session'));});
       const power = page.getByRole('slider');await power.focus();
       for (let i=0;i<10;i++) await page.keyboard.press('ArrowRight');
       await page.keyboard.press('Enter');assert.equal(await power.getAttribute('aria-valuenow'),'0');checks++;
-      await page.getByRole('link',{name:'Movement Tool'}).click();
+      if(mobile) await page.getByRole('link',{name:'Movement Tool'}).tap();
+      else await page.getByRole('link',{name:'Movement Tool'}).click();
       await page.getByRole('option',{name:'spider_dance'}).waitFor({state:'attached'});
+      await page.getByRole('link',{name:'NINJA ROBOT Pi0 - Spider',exact:true}).waitFor();checks++;
+      assert.equal(await page.evaluate(()=>window.__fullscreenRequests),1);checks++;
       assert.equal(await page.getByRole('textbox').count(),0);checks++;
       await event('/ws/distance',{distance_mm:125});await page.getByRole('status',{name:'Distance Detection: 125 mm'}).waitFor();checks++;
       await event('/ws/distance',{distance_mm:-1});await page.getByRole('status',{name:/Distance Detection: Unavailable/}).waitFor();checks++;
@@ -88,8 +122,9 @@ const shots = process.env.UI_SCREENSHOTS;
       await page.locator('#robot-activity-log').getByRole('button',{name:'Clear Messages'}).click();
       await page.getByText('Events will appear here.').waitFor();checks++;
       await page.keyboard.press('Escape');assert.equal(await activity.getAttribute('aria-expanded'),'false');checks++;
-      await fits();await snapshot('movement');
-      await page.getByRole('link',{name:'Open robot menu'}).click();await page.getByRole('link',{name:'Chat with Robot'}).click();
+      await event('/ws/distance',{distance_mm:125});await fits();await snapshot('movement');
+      await page.getByRole('link',{name:'Open robot menu'}).click();await page.getByRole('link',{name:'Movement Tool',exact:true}).waitFor();await selection('/movement');
+      await page.getByRole('link',{name:'Chat with Robot'}).click();await page.getByRole('heading',{name:'Conversation',exact:true}).waitFor();
       assert.equal(await page.getByRole('combobox').count(),0);checks++;
       const voice = page.getByRole('button',{name:'Voice Input',exact:true});await voice.click();
       assert.equal(await voice.getAttribute('aria-pressed'),'true');checks++;await snapshot('voice-on');
@@ -105,19 +140,60 @@ const shots = process.env.UI_SCREENSHOTS;
       await page.getByRole('button',{name:/System activity/}).click();await snapshot('chat-log');
       await page.keyboard.press('Escape');await voice.click();await page.getByRole('link',{name:'Open robot menu'}).click();
       await page.waitForFunction(()=>window.__recognizers.at(-1).aborted);checks++;
+      await page.getByRole('link',{name:'Movement Tool',exact:true}).waitFor();await selection('/agent');
+      await snapshot('home-selected');
       assert.equal(await page.evaluate(()=>window.__primarySession===window.__sockets.find(s=>s.readyState===1 && s.url.endsWith('/ws/session'))),true);checks++;
+      await page.reload();await page.getByRole('link',{name:'Movement Tool',exact:true}).waitFor();await selection(null);
+      // No Fullscreen API is a supported fallback, and must not block navigation.
+      await page.evaluate(()=>{Object.defineProperty(document,'fullscreenEnabled',{value:false});delete Element.prototype.requestFullscreen;});
       for(const [locale,file] of [['ja','ja'],['zh-TW','zh-tw'],['zh-CN','zh-cn'],['en','en']]) {
         const labels=JSON.parse(fs.readFileSync(path.join(__dirname,'../ninja_webapp/src/locales',file+'.json'),'utf8'));
         await page.getByRole('combobox').selectOption(locale);
         await page.waitForFunction(locale=>document.documentElement.lang===locale,locale);checks++;await fits();
         await page.getByRole('link',{name:labels.home.movementButton}).click();
         await page.getByRole('heading',{name:labels.agent.distance}).waitFor();checks++;await fits();
+        await page.getByRole('link',{name:`NINJA ROBOT Pi0 - ${labels.robotType.spider}`,exact:true}).waitFor();checks++;
         await page.getByRole('link',{name:labels.header.openMenu}).click();await page.getByRole('link',{name:labels.home.chatButton}).click();
         await page.getByRole('heading',{name:labels.agent.conversation}).waitFor();checks++;await fits();
         await page.getByRole('button',{name:labels.agent.voice,exact:true}).click();
         assert.equal(await page.evaluate(()=>window.__recognizers.at(-1).lang),{en:'en-US',ja:'ja-JP','zh-TW':'zh-TW','zh-CN':'zh-CN'}[locale]);checks++;
         await page.getByRole('link',{name:labels.header.openMenu}).click();
       }
+      // Emulate the visual viewport shrinking/panning above the keyboard without navigating.
+      await page.getByRole('link',{name:'Chat with Robot'}).click();await page.getByRole('heading',{name:'Conversation',exact:true}).waitFor();
+      await page.evaluate(()=>{
+        Object.defineProperty(visualViewport,'height',{configurable:true,value:300});
+        Object.defineProperty(visualViewport,'offsetTop',{configurable:true,value:20});
+        visualViewport.dispatchEvent(new Event('resize'));
+      });
+      assert.equal(await page.locator('main').evaluate(el=>el.parentElement.getBoundingClientRect().height),300);checks++;
+      assert.equal(await page.locator('main').evaluate(el=>el.parentElement.getBoundingClientRect().top),20);checks++;
+      await page.evaluate(()=>{delete visualViewport.height;delete visualViewport.offsetTop;visualViewport.dispatchEvent(new Event('resize'));});
+      await page.getByRole('button',{name:/System activity/}).click();
+      for(let i=0;i<60;i++) await event('/ws/events',{type:'log',message:`Fixture long activity ${i} ${'long '.repeat(30)}`});
+      assert.equal(await page.locator('#robot-activity-log time').count(),50);checks++;
+      assert.ok(await page.getByRole('log').last().evaluate(el=>el.scrollHeight>el.clientHeight));checks++;
+      const menu=page.getByRole('link',{name:'Open robot menu'});
+      assert.ok(await menu.evaluate(el=>{const b=el.getBoundingClientRect();return el.contains(document.elementFromPoint(b.x+b.width/2,b.y+b.height/2));}));checks++;
+      await snapshot('long-log');
+      await page.keyboard.press('Escape');
+      // A successful fullscreen request is made directly by the selection gesture.
+      await menu.click();await page.getByRole('link',{name:'Movement Tool',exact:true}).waitFor();
+      await page.evaluate(()=>{
+        Object.defineProperty(document,'fullscreenEnabled',{value:true});
+        Element.prototype.requestFullscreen=function(options){window.__fullscreenOptions=options;return Promise.resolve();};
+      });
+      await page.getByRole('link',{name:'Movement Tool',exact:true}).click();
+      await page.getByRole('heading',{name:'Distance Detection',exact:true}).waitFor();
+      assert.deepEqual(await page.evaluate(()=>window.__fullscreenOptions),{navigationUI:'hide'});checks++;
+      await page.getByRole('link',{name:'Open robot menu'}).click();await page.getByRole('link',{name:'Chat with Robot',exact:true}).waitFor();
+      await page.evaluate(()=>{
+        Object.defineProperty(document,'fullscreenEnabled',{value:false});
+        Object.defineProperty(document,'webkitFullscreenEnabled',{value:true});
+        Element.prototype.webkitRequestFullscreen=()=>{window.__prefixedFullscreen=true;};
+      });
+      await page.getByRole('link',{name:'Chat with Robot',exact:true}).click();await page.getByRole('heading',{name:'Conversation',exact:true}).waitFor();
+      assert.equal(await page.evaluate(()=>window.__prefixedFullscreen),true);checks++;
       await page.goto(base+'/help');await page.getByRole('heading',{name:'Welcome to NinjaRobot'}).waitFor();assert.equal(new URL(page.url()).pathname,'/');checks++;
       assert.deepEqual(errors,[]);checks++;await context.close();
     }

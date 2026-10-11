@@ -1,0 +1,24 @@
+id: src-20261011-long-log-390
+path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/long-log-390.png
+media_type: image/png
+kind: image
+title: Long system log 390px viewport screenshot
+added_at: '2026-10-11T09:48:29Z'
+content_hash: sha256:201d6f0ebde9e04634214fecb9efe3055356f0f937108dfb610341a8626c40c2
+state: pending
+original_uri: urn:llmwiki:source:src-20261011-long-log-390
+source_version: 2026-10-11-mobile-refinement
+retrieved_at: null
+normalized_at: '2026-10-11T09:48:47Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 844
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:5a539932c5ec51a7ab6b1a57f440a3f1d0bc75aa8d990fe50bb849637cea40db

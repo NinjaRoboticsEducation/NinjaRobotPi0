@@ -93,5 +93,10 @@
         "soundsDescription": "組み込みのロボット音を再生",
         "noActions": "利用できる動作がありません",
         "distanceUnavailable": "取得できません"
+    },
+    "robotType": {
+        "tire": "タイヤ型",
+        "humanoid": "ヒューマノイド型",
+        "spider": "スパイダー型"
     }
 }

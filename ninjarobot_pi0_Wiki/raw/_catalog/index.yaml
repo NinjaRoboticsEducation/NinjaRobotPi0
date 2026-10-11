@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-11T07:07:20Z'
+generated_at: '2026-10-11T09:55:58Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -416,6 +416,21 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/ShutdownVoiceFixes.md
   kind: text
   state: ingested
+- id: src-20261011-chat-390
+  title: Chat 390px viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/chat-390.png
+  kind: image
+  state: pending
+- id: src-20261011-chat-568
+  title: Chat 568px landscape viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/chat-568.png
+  kind: image
+  state: pending
+- id: src-20261011-developmentguide-2
+  title: Mobile refinement current development guide
+  path: raw/articles/ninjarobotpi0/2026-10-11-mobile-refinement/DevelopmentGuide.md
+  kind: text
+  state: ingested
 - id: src-20261011-developmentguide
   title: Web refinement current development guide
   path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md
@@ -426,11 +441,51 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md
   kind: text
   state: ingested
+- id: src-20261011-developmentlog-3
+  title: Mobile refinement current development log
+  path: raw/notes/ninjarobotpi0/2026-10-11-mobile-refinement/DevelopmentLog.md
+  kind: text
+  state: ingested
 - id: src-20261011-developmentlog
   title: Web refinement current development log
   path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentLog.md
   kind: text
   state: ingested
+- id: src-20261011-home-320
+  title: Home 320px viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/home-320.png
+  kind: image
+  state: pending
+- id: src-20261011-home-390
+  title: Home 390px viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/home-390.png
+  kind: image
+  state: pending
+- id: src-20261011-home-568
+  title: Home 568px landscape viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/home-568.png
+  kind: image
+  state: pending
+- id: src-20261011-home-selected-390
+  title: Home selected 390px viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/home-selected-390.png
+  kind: image
+  state: pending
+- id: src-20261011-long-log-390
+  title: Long system log 390px viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/long-log-390.png
+  kind: image
+  state: pending
+- id: src-20261011-movement-390
+  title: Movement 390px viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/movement-390.png
+  kind: image
+  state: pending
+- id: src-20261011-movement-568
+  title: Movement 568px landscape viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/movement-568.png
+  kind: image
+  state: pending
 - id: src-20261011-readme-current
   title: Web refinement corrected English README
   path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/README-current.md
@@ -446,6 +501,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/README.md
   kind: text
   state: pending
+- id: src-20261011-webmobilerefinement
+  title: Web mobile refinement evidence
+  path: raw/notes/ninjarobotpi0/2026-10-11-mobile-refinement/WebMobileRefinement.md
+  kind: text
+  state: ingested
 - id: src-20261011-webrefinementevidence
   title: Web refinement code, design and local validation evidence
   path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement/WebRefinementEvidence.md

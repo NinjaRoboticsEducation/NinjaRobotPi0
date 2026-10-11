@@ -16,19 +16,19 @@ sources:
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
 - id: src-20261007-2026-10-08-upgrade-audit
-  resource: urn:llmwiki:source:src-20261008-upgrade-audit
+  resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
 - id: src-20261008-2026-10-08-trixie-support
-  resource: urn:llmwiki:source:src-20261008-trixie-support
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
   content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
 - id: src-20261008-2026-10-08-installer-recovery
-  resource: urn:llmwiki:source:src-20261008-installer-recovery
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
   title: Installer diagnostics and recovery validation
   content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
 - id: src-20261008-2026-10-08-installer-compatibility
-  resource: urn:llmwiki:source:src-20261008-installer-compatibility
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
 - id: src-20261009-2026-10-09-spider-otto
@@ -75,11 +75,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-webrefinementevidence
   title: Web refinement code, design and local validation evidence
   content_hash: sha256:5ce2540bcc10522fc7e7dd5d1295c9738c4b0ed695bc4f39359ba91ddf669e69
+- id: src-20261011-developmentguide-2
+  resource: urn:llmwiki:source:src-20261011-developmentguide-2
+  title: Mobile refinement current development guide
+  content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
+- id: src-20261011-webmobilerefinement
+  resource: urn:llmwiki:source:src-20261011-webmobilerefinement
+  title: Web mobile refinement evidence
+  content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T06:55:28.993421+00:00'
-  target_hash: sha256:03e228f7f11f32a6770ec5deb68295c322c0afd00a61b6f4a222d9eadf73b338
+  performed_by: agent:antigravity
+  performed_at: '2026-10-11T09:54:05.388246+00:00'
+  target_hash: sha256:1fe6d4326630da1dbeb7b47e73ce55028c153ea0e4925b20c9fb6c98f13bb7fb
   result: passed
   checks:
     source_support: passed
@@ -88,12 +96,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - New refinement workflow and executed lint/build/locale/session/stream/core checks
-    checked against registered current guide/evidence.
-  - Browser test execution was waived; optional fixture-suite updates are not described
-    as completed browser validation.
-  - Source fingerprints were checked; unchanged historical evidence retains its prior
-    source-grounded review context. AI review is not human verification.
+  - Reviewed browser test matrix (612 assertions), isolated route tests, and validation
+    boundaries against WebMobileRefinement.md.
+  - Confirmed strict distinction between simulated Chromium fixtures and physical
+    hardware validation.
 ---
 
 # Development and immutable documentation workflow
@@ -192,3 +198,14 @@ Frontend lint/build, four-locale completeness, inert session/auxiliary-stream ch
 [^src-20261011-developmentguide]: Web refinement current development guide (2026-10-11 web refinement).
 
 [^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).
+
+
+## Mobile Web Refinement and Responsive Testing Workflow (2026-10-11)
+
+The mobile refinement workflow incorporates comprehensive automated browser assertions and isolated endpoint testing:[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Browser UI Test Matrix**: `tests/browser_ui.cjs` executed 612 assertions in Chromium with mobile touch emulation, verifying viewport fitting across 9 resolutions (320×568, 360×640, 360×800, 390×844, 430×932, 568×320, 844×390, 768×1024, 1280×900), simulated keyboard offsets (VisualViewport 300px), and all four localization bundles.[^src-20261011-webmobilerefinement]
+* **Isolated Endpoint Testing**: `tests/test_web_robot_status.py` validates `GET /api/robot/status` through AST route extraction without initializing production hardware dependencies, verifying minimal JSON payloads, non-owner session gating (423), and server shutdown handling (503).[^src-20261011-webmobilerefinement]
+* **Testing Boundaries**: Host Chromium emulation does not substitute for real WebKit/Safari or mobile Firefox validation; actual hardware touchscreens, microphones, and physical robot movements remain pending owner acceptance.[^src-20261011-webmobilerefinement]
+
+[^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
+[^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).

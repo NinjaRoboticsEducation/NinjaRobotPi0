@@ -93,5 +93,10 @@
         "soundsDescription": "播放內建機器人音效",
         "noActions": "沒有可用的動作",
         "distanceUnavailable": "無法取得"
+    },
+    "robotType": {
+        "tire": "輪胎型",
+        "humanoid": "人形",
+        "spider": "蜘蛛型"
     }
 }

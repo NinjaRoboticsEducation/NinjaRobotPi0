@@ -1,0 +1,24 @@
+id: src-20261011-home-320
+path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/home-320.png
+media_type: image/png
+kind: image
+title: Home 320px viewport screenshot
+added_at: '2026-10-11T09:48:08Z'
+content_hash: sha256:92f343f0730102b0ce463df4984a011be61db73f6b2ee08387a9b62e4b3a1fd4
+state: pending
+original_uri: urn:llmwiki:source:src-20261011-home-320
+source_version: 2026-10-11-mobile-refinement
+retrieved_at: null
+normalized_at: '2026-10-11T09:48:35Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 320
+  height: 568
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:550013adcf72c027ac8ffce49b94876362e130c13bf08b98057a3f29b9aa3718

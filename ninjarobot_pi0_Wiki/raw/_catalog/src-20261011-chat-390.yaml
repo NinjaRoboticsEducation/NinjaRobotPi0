@@ -1,0 +1,24 @@
+id: src-20261011-chat-390
+path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/chat-390.png
+media_type: image/png
+kind: image
+title: Chat 390px viewport screenshot
+added_at: '2026-10-11T09:48:26Z'
+content_hash: sha256:fed91ab1a85df14fac00bff03552851021815719f509c8260a8d3478d0d17ded
+state: pending
+original_uri: urn:llmwiki:source:src-20261011-chat-390
+source_version: 2026-10-11-mobile-refinement
+retrieved_at: null
+normalized_at: '2026-10-11T09:48:43Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 844
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:593a79818ef5d5356e485a4fd8cacfff588718ba1258eafbbf8b2d736b885bc0

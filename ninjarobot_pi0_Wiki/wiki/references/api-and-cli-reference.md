@@ -10,27 +10,27 @@ generated:
 sources:
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
-  title: NinjaRobotPi0 Development Guide
+  title: Developmentguide
   content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20260822-readme-3
   resource: urn:llmwiki:source:src-20260822-readme-3
-  title: ninja_core Readme
+  title: Readme
   content_hash: sha256:502427fd1c9031fea178cc56a037d30e880c5b5c78875618d2ab173a8543d2df
 - id: src-20260822-readme-5
   resource: urn:llmwiki:source:src-20260822-readme-5
-  title: pi0buzzer Readme
+  title: Readme
   content_hash: sha256:2d45a1426b50788922f073ae4e8236e7e16e63c22c329fce016c782ce7b127fa
 - id: src-20260822-readme-6
   resource: urn:llmwiki:source:src-20260822-readme-6
-  title: pi0disp Readme
+  title: Readme
   content_hash: sha256:ccc2a3f07c0591dfe2c1828c8e01365b1820b386a68ad30a751959a9f5bb3ba2
 - id: src-20260822-readme-7
   resource: urn:llmwiki:source:src-20260822-readme-7
-  title: pi0servo Readme
+  title: Readme
   content_hash: sha256:23793729576aa0b8f5b460d7fe4e47ab1d7ad4f9a6af4348bf4c8208a6610a76
 - id: src-20260822-readme-8
   resource: urn:llmwiki:source:src-20260822-readme-8
-  title: pi0vl53l0x Readme
+  title: Readme
   content_hash: sha256:ddf100f609e7335b81dc3803c453c3d0dc66fbe0c20a52917d90407bc1d2f35e
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
@@ -84,11 +84,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-developmentguide-4
   title: Developmentguide
   content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
+- id: src-20261011-webmobilerefinement
+  resource: urn:llmwiki:source:src-20261011-webmobilerefinement
+  title: Web mobile refinement evidence
+  content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
+- id: src-20261011-developmentguide-2
+  resource: urn:llmwiki:source:src-20261011-developmentguide-2
+  title: Mobile refinement current development guide
+  content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T17:23:23.105961+00:00'
-  target_hash: sha256:f8e71836a5c89cf2cead0dc5333617707d6c920b57c0c922b3c43bdc21e1f835
+  performed_at: '2026-10-11T09:54:05.388246+00:00'
+  target_hash: sha256:b718e9bb0fe9d0021fc1bfcfc830402ca761f430f2e344a1e709a459c18c4a9e
   result: passed
   checks:
     source_support: passed
@@ -97,9 +105,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed REST endpoints (/api/agent/chat, /api/system/shutdown) and signal replay
-    fixes against web_server.py.
-  - Inert regression suite passed; physical device power-off acceptance remains pending.
+  - Reviewed GET /api/robot/status REST endpoint specification and session ownership
+    gating against web_server.py and WebMobileRefinement.md.
+  - Inert endpoint tests in test_web_robot_status.py passed; live robot HAL validation
+    remains pending.
 ---
 
 # API and CLI Reference
@@ -136,6 +145,7 @@ This document provides a consolidated reference for all Python APIs, scriptable 
 | `/api/code/stop` | `POST` | None | Requests cooperative cancellation of the active script; non-cooperative loops may require the Stop Robot path or server restart.[^src-20260822-developmentguide] |
 | `/api/system/shutdown` | `POST` | None | Triggers graceful shutdown animation, configured rest posture, and OS poweroff via unified async shutdown worker.[^src-20260822-developmentguide] [^src-20260822-readme-3] [^src-20261010-shutdownvoicefixes] |
 | `/api/ble/status` | `GET` | None | Returns BLE advertising status and service name.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] |
+| `/api/robot/status` | `GET` | None | Returns minimal read-only HAL metadata `{"robot_type": "tire"|"humanoid"|"spider"}`; requires active session ownership (423 if inactive, 503 during shutdown or if HAL missing).[^src-20261011-webmobilerefinement] [^src-20261011-developmentguide-2] |
 | `/api/servos/movements` | `GET` | None | Lists available compatible movement names for the configured robot type.[^src-20261009-2026-10-09-builtin-movements] |
 | `/api/servos/movements/{name}/execute` | `POST` | None | Executes named movement; returns 404 for unknown, 422 for invalid/incompatible before runtime reclamation, 409 on abort.[^src-20261009-2026-10-09-builtin-movements] |
 | `/ws/distance` | `WebSocket` | None | Distance telemetry with `distance_mm`.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2] |
@@ -239,3 +249,6 @@ Browser speech input transcribes spoken text client-side via Web Speech API and 
 
 [^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
 [^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
+
+[^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
+[^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).

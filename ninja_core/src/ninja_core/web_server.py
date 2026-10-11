@@ -753,6 +753,14 @@ async def _execute_action_plan_unlocked(app_state: AppState, action_plan: dict):
 # --- API Router ---
 api_router = APIRouter(prefix="/api")
 
+@api_router.get("/robot/status")
+def robot_status(request: Request):
+    """Read the configured type without exposing configuration or operating hardware."""
+    hal = request.app.state.ninja.hal
+    if hal is None:
+        raise HTTPException(status_code=503, detail="Robot configuration unavailable")
+    return {"robot_type": hal.config.robot_type}
+
 @api_router.get("/agent/status")
 async def agent_status(request: Request):
     agent = request.app.state.ninja.agent

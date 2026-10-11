@@ -16,19 +16,19 @@ sources:
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
 - id: src-20261007-2026-10-08-upgrade-audit
-  resource: urn:llmwiki:source:src-20261008-upgrade-audit
+  resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
 - id: src-20261008-2026-10-08-trixie-support
-  resource: urn:llmwiki:source:src-20261008-trixie-support
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
   content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
 - id: src-20261008-2026-10-08-installer-recovery
-  resource: urn:llmwiki:source:src-20261008-installer-recovery
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
   title: Installer diagnostics and recovery validation
   content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
 - id: src-20261008-2026-10-08-installer-compatibility
-  resource: urn:llmwiki:source:src-20261008-installer-compatibility
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
 - id: src-20261009-2026-10-09-spider-otto
@@ -87,11 +87,23 @@ sources:
   resource: urn:llmwiki:source:src-20261011-webrefinementevidence
   title: Web refinement code, design and local validation evidence
   content_hash: sha256:5ce2540bcc10522fc7e7dd5d1295c9738c4b0ed695bc4f39359ba91ddf669e69
+- id: src-20261011-developmentguide-2
+  resource: urn:llmwiki:source:src-20261011-developmentguide-2
+  title: Mobile refinement current development guide
+  content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
+- id: src-20261011-webmobilerefinement
+  resource: urn:llmwiki:source:src-20261011-webmobilerefinement
+  title: Web mobile refinement evidence
+  content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
+- id: src-20261011-developmentlog-3
+  resource: urn:llmwiki:source:src-20261011-developmentlog-3
+  title: Mobile refinement current development log
+  content_hash: sha256:681a0756d6562ccdbcfbd268e31f7e8856b70008204d342a5a366443314b1749
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T06:55:15.207816+00:00'
-  target_hash: sha256:6234e9c742a34d17420dc9d57fb050c3eed94f304ad98a9ea8e4e82c5289d58b
+  performed_by: agent:antigravity
+  performed_at: '2026-10-11T09:54:05.388246+00:00'
+  target_hash: sha256:615903005b1e43d094121eb33365a613b4252cc8b5ae401c1164b7af9d798bce
   result: passed
   checks:
     source_support: passed
@@ -100,17 +112,15 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Current complete manual pointers, frontend scope and preserved core/contracts
-    checked against the new guide and implementation evidence.
-  - Historical manual/software milestones retain original dated sources; this review
-    adds no human or physical acceptance.
-  - Source fingerprints were checked; unchanged historical evidence retains its prior
-    source-grounded review context. AI review is not human verification.
+  - Reviewed current manual pointers, mobile viewport management, GET /api/robot/status,
+    and test matrix against DevelopmentGuide.md and WebMobileRefinement.md.
+  - Historical manual milestones retain prior source-grounded review context.
+  - Physical Pi hardware and live mobile browser acceptance remain pending owner testing.
 ---
 
 # Current development manual
 
-Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context. The current complete English-only web-refinement version adds Home/menu, Movement and Chat guidance, preserved native/session/power contracts and the owner's browser-validation waiver.[^src-20261011-developmentguide]
+Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context. The current complete English-only manual adds mobile viewport adaptation, persistent interface selection, fullscreen activation, localized robot type status, and browser UI test matrix guidance.[^src-20261011-developmentguide-2] Earlier web-refinement guidance is preserved in the preceding version.[^src-20261011-developmentguide]
 
 [Project overview](/overview.md).
 
@@ -218,3 +228,16 @@ The phased frontend plan and code review keep robot behavior unchanged. New comp
 [^src-20261011-developmentguide]: Web refinement current development guide (2026-10-11 web refinement).
 
 [^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).
+
+
+## Mobile Viewport Refinement and Robot Status Endpoint (2026-10-11)
+
+The mobile web refinement documents responsive viewport geometry, persistent layout selection, and server metadata integration:[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Viewport Geometry & Scroll Boundaries**: `useAppViewport` tracks `window.visualViewport` to allocate dynamic heights, lock document body overflow, and provide internal scroll containers for messages and logs, avoiding fixed-pixel height deductions.[^src-20261011-webmobilerefinement]
+* **Persistent Layout Selection & Fullscreen**: Interface activation remembers selected state across navigation, rendering exclusive orange/white highlights on return to Home and resetting upon reload. Activation buttons synchronously trigger Fullscreen API calls with WebKit fallback.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Robot Type Status Endpoint**: Additive `GET /api/robot/status` exposes read-only HAL metadata (`tire`, `humanoid`, `spider`) protected by session middleware (423 inactive, 503 shutdown). Tested via AST compilation in `tests/test_web_robot_status.py`.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Testing Matrix**: 612 automated browser assertions in `tests/browser_ui.cjs` across 9 screen sizes and 4 languages; physical touch, microphone, and hardware verification remain pending.[^src-20261011-webmobilerefinement]
+
+[^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
+[^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
+[^src-20261011-developmentlog-3]: Mobile refinement current development log (2026-10-11 mobile refinement).

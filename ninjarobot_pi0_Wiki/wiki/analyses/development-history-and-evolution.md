@@ -10,11 +10,11 @@ generated:
 sources:
 - id: src-20260822-developmentlog
   resource: urn:llmwiki:source:src-20260822-developmentlog
-  title: NinjaRobotPi0 Development Log
+  title: Developmentlog
   content_hash: sha256:54cdbd7e50fd0cbfbfaba5073d6ed89379181b78bc3d7267d64518f15e9bfe02
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
-  title: NinjaRobotPi0 Development Guide
+  title: Developmentguide
   content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
@@ -29,24 +29,24 @@ sources:
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
 - id: src-20261007-2026-10-08-upgrade-audit
-  resource: urn:llmwiki:source:src-20261008-upgrade-audit
+  resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
 - id: src-20261008-2026-10-08-trixie-support
-  resource: urn:llmwiki:source:src-20261008-trixie-support
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-trixie-support
   title: Trixie installer correction and validation boundary
   content_hash: sha256:3aae04cfab13e782c5748e8ca26721d860d0d842ac18c5544fd8ae0f82dc2945
 - id: src-20261008-2026-10-08-installer-recovery
-  resource: urn:llmwiki:source:src-20261008-installer-recovery
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-recovery
   title: Installer diagnostics and recovery validation
   content_hash: sha256:416eea41c04d6dc6ed633fa695b276a48574d22eacb21db5131de3577dbe4fc3
 - id: src-20261008-2026-10-08-installer-compatibility
-  resource: urn:llmwiki:source:src-20261008-installer-compatibility
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-installer-compatibility
   title: 2026 10 08 Installer Compatibility
   content_hash: sha256:7eaa21e7a1f79122e25e10dc37ae91a488aebe3ccff9db5e6c7b59db0684928f
 - id: src-20261008-2026-10-08-readme-audit
-  resource: urn:llmwiki:source:src-20261008-readme-audit
-  title: 2026 10 08 Readme Audit
+  resource: urn:llmwiki:source:src-20261008-2026-10-08-readme-audit
+  title: Pi0 README audit evidence and validation limits
   content_hash: sha256:7a945023f45ad2e179e5cae529665df9ed050bfe5cf36f440f857a02e28cfea4
 - id: src-20261009-2026-10-09-spider-otto
   resource: urn:llmwiki:source:src-20261009-2026-10-09-spider-otto
@@ -120,11 +120,23 @@ sources:
   resource: urn:llmwiki:source:src-20261011-developmentlog-2
   title: Web refinement link-corrected current development log
   content_hash: sha256:4efb54443f0dac7c48f1b8e722574e4e486ed5dd6db6f0074ea7aafe52478061
+- id: src-20261011-developmentlog-3
+  resource: urn:llmwiki:source:src-20261011-developmentlog-3
+  title: Mobile refinement current development log
+  content_hash: sha256:681a0756d6562ccdbcfbd268e31f7e8856b70008204d342a5a366443314b1749
+- id: src-20261011-webmobilerefinement
+  resource: urn:llmwiki:source:src-20261011-webmobilerefinement
+  title: Web mobile refinement evidence
+  content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
+- id: src-20261011-developmentguide-2
+  resource: urn:llmwiki:source:src-20261011-developmentguide-2
+  title: Mobile refinement current development guide
+  content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T07:05:12.227497+00:00'
-  target_hash: sha256:5a98c223e72e6be6e8bcf382e26431d9f1f3f8fa14a6352755cac5a02d45ae6d
+  performed_by: agent:antigravity
+  performed_at: '2026-10-11T09:54:05.388246+00:00'
+  target_hash: sha256:ff1a4b8aca0bc4af577476c4f2727b3a1e8ded7bc64b36565a279d08fc214ef5
   result: passed
   checks:
     source_support: passed
@@ -133,14 +145,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - New frontend milestone and actual software-validation limits checked against current
-    log/evidence; earlier milestones retain dated provenance.
-  - Owner-waived browser testing, pending microphone/hardware acceptance and immutable
-    corrected README versioning are explicitly recorded.
-  - Source fingerprints were checked; unchanged historical evidence retains its prior
-    source-grounded review context. AI review is not human verification.
-  - Checked the new complete link-corrected log/README navigation source; feature
-    claims and validation limits are unchanged and earlier raw versions remain immutable.
+  - Reviewed mobile refinement milestone, viewport shell adaptation, GET /api/robot/status,
+    and 612 browser assertions against DevelopmentLog.md and WebMobileRefinement.md.
+  - All historical development milestones retain their prior source-grounded review
+    context.
 ---
 
 # Development History and Evolution
@@ -289,3 +297,16 @@ Frontend lint/build, locale/session/stream checks and protected-core verificatio
 [^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).
 
 [^src-20261011-developmentlog-2]: Web refinement link-corrected current development log; current complete source corrects navigation links while preserving earlier versions.
+
+
+## Mobile Web Interface Refinement and Robot Type Status (2026-10-11)
+
+Following the initial three-page web interface restructuring, the owner approved a mobile refinement phase to address viewport scrolling, on-screen keyboard clipping, interface selection memory, and robot configuration visibility:[^src-20261011-developmentlog-3] [^src-20261011-webmobilerefinement]
+* **Viewport & Layout Adaptation**: Replaced fixed vertical height math with dynamic `VisualViewport` tracking via `useAppViewport`. The app shell locks document body scrolling (`overflow: hidden`), retains internal scroll fallbacks for chat messages and logs, adapts short screens with landscape multi-columns, and enforces minimum 44px tap targets.[^src-20261011-webmobilerefinement]
+* **Stateful Selection & Fullscreen**: Home (`/`) button selection is tracked in persistent `Layout` state, highlighting the active interface in orange/white upon returning Home and resetting upon browser reload. Synchronous Fullscreen API requests are made during interface activation clicks.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Additive Status Route**: Added read-only `GET /api/robot/status` in `ninja_core/web_server.py`, returning minimal in-memory HAL configuration (`tire`, `humanoid`, `spider`) gated by session ownership middleware. Header displays localized robot type suffix across four languages.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Verification**: 612 assertions in `tests/browser_ui.cjs` across 9 viewport resolutions in mobile-emulated Chromium, 3 isolated status route tests, and core baseline verification passed; physical hardware testing remains pending.[^src-20261011-webmobilerefinement]
+
+[^src-20261011-developmentlog-3]: Mobile refinement current development log (2026-10-11 mobile refinement).
+[^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
+[^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).

@@ -1,12 +1,14 @@
-.homePage { width: min(calc(100% - 24px), 684px); margin: 24px auto; padding: clamp(16px, 5vw, 40px); border: 1px solid var(--color-primary); border-radius: 28px; background: var(--color-surface); display: grid; gap: 22px; }
-.homePage h1 { color: var(--color-primary); text-align: center; font-size: clamp(24px, 5.6vw, 40px); margin: 0 0 4px; overflow-wrap: anywhere; }
-.block { min-width: 0; padding: clamp(14px, 4vw, 26px); border: 1px solid var(--color-primary); border-radius: 18px; background: var(--color-bg); }
-.block h2 { color: var(--color-primary); font-size: clamp(18px, 3.5vw, 24px); margin-bottom: 14px; }
-.block p { color: var(--color-subtext); margin-bottom: 14px; font-weight: 600; }
-.movementAction, .chatAction { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; min-height: 58px; padding: 12px; border: 1px solid var(--color-primary); border-radius: 16px; font-size: clamp(18px, 4vw, 28px); font-weight: 750; text-align: center; line-height: 1.25; }
-.movementAction { margin-bottom: 16px; }
-.movementAction span { font-size: 32px; }
-.chatAction { background: var(--color-power); border-color: var(--color-power); color: #fff; }
-.chatAction svg { flex-shrink: 0; }
-.chatAction:hover { color: #fff; background: #e87900; }
-@media (max-width: 360px) { .homePage { margin: 12px auto; padding: 14px; gap: 16px; } }
+.homePage { width: min(calc(100% - max(12px, env(safe-area-inset-left)) - max(12px, env(safe-area-inset-right))), 684px); flex: 1; min-height: 0; margin: 12px auto; padding: clamp(10px, 2.5dvh, 28px); border: 1px solid var(--color-primary); border-radius: 24px; background: var(--color-surface); display: flex; flex-direction: column; justify-content: space-evenly; gap: clamp(8px, 1.8dvh, 18px); overflow-y: auto; overscroll-behavior: contain; }
+.homePage h1 { flex-shrink: 0; color: var(--color-primary); text-align: center; font-size: clamp(22px, 5vw, 36px); margin: 0; overflow-wrap: anywhere; }
+.block { flex-shrink: 0; min-width: 0; padding: clamp(10px, 2dvh, 24px); border: 1px solid var(--color-primary); border-radius: 16px; background: var(--color-bg); }
+.block h2 { color: var(--color-primary); font-size: clamp(16px, 3.5vw, 22px); margin-bottom: 8px; }
+.block p { color: var(--color-subtext); margin-bottom: 8px; font-size: clamp(13px, 3.3vw, 16px); line-height: 1.35; font-weight: 600; }
+.interfaceAction { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px; border: 1px solid var(--color-primary); border-radius: 12px; background: #062238; color: var(--color-primary); font-size: clamp(17px, 4vw, 26px); font-weight: 750; text-align: center; line-height: 1.2; }
+.interfaceAction:hover { color: var(--color-accent); background: #09324e; text-decoration: none; }
+.interfaceAction svg { flex-shrink: 0; }
+.movementAction { margin-bottom: 8px; }
+.movementAction span { font-size: 26px; }
+.selected { background: var(--color-power); border-color: var(--color-power); color: #fff; }
+.selected:hover { color: #fff; background: #e87900; }
+@media (max-height: 700px) { .homePage { margin: 8px auto; padding: 8px; gap: 6px; justify-content: flex-start; } .homePage h1 { font-size: 22px; } .block { padding: 8px; } .block h2 { font-size: 16px; margin-bottom: 4px; } .block p { font-size: 12px; line-height: 1.3; margin-bottom: 4px; } .movementAction { margin-bottom: 4px; } }
+@media (max-height: 600px) and (min-width: 480px) { .homePage { width: min(calc(100% - max(12px, env(safe-area-inset-left)) - max(12px, env(safe-area-inset-right))), 1100px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); align-items: start; gap: 10px; } .homePage h1 { grid-column: 1 / -1; } .block { width: 100%; } .interfaceAction { font-size: 18px; gap: 6px; } .interfaceAction svg { width: 22px; height: 22px; } .movementAction span { font-size: 22px; } }

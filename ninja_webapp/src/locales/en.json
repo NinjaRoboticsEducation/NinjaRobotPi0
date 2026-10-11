@@ -93,5 +93,10 @@
         "soundsDescription": "Play built-in robot sounds",
         "noActions": "No actions available",
         "distanceUnavailable": "Unavailable"
+    },
+    "robotType": {
+        "tire": "Tire",
+        "humanoid": "Humanoid",
+        "spider": "Spider"
     }
 }

@@ -10,15 +10,15 @@ generated:
 sources:
 - id: src-20260822-readme-3
   resource: urn:llmwiki:source:src-20260822-readme-3
-  title: ninja_core Readme
+  title: Readme
   content_hash: sha256:502427fd1c9031fea178cc56a037d30e880c5b5c78875618d2ab173a8543d2df
 - id: src-20260822-developmentguide
   resource: urn:llmwiki:source:src-20260822-developmentguide
-  title: NinjaRobotPi0 Development Guide
+  title: Developmentguide
   content_hash: sha256:d1f8e19627223cb320b2e05df9a141c768ca0f418a7f77d160b6127d08c439e9
 - id: src-20260822-developmentlog
   resource: urn:llmwiki:source:src-20260822-developmentlog
-  title: NinjaRobotPi0 Development Log
+  title: Developmentlog
   content_hash: sha256:54cdbd7e50fd0cbfbfaba5073d6ed89379181b78bc3d7267d64518f15e9bfe02
 - id: src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
   resource: urn:llmwiki:source:src-20261007-2026-10-07-ninjarobot-pi0-repository-migration
@@ -33,7 +33,7 @@ sources:
   title: Pi0 upgrade implementation and current UI contracts
   content_hash: sha256:1545ea683947c315a9ea0d4c30258c228e975a78e39062b2e045669fcff0cb9c
 - id: src-20261007-2026-10-08-upgrade-audit
-  resource: urn:llmwiki:source:src-20261008-upgrade-audit
+  resource: urn:llmwiki:source:src-20261007-2026-10-08-upgrade-audit
   title: Pi0 upgrade audit findings and boundaries
   content_hash: sha256:7112a6575c6288875e3fdad33679f094b22908e0ee729b29f5dfbfc55f48de64
 - id: src-20261009-readme
@@ -80,11 +80,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-developmentguide-4
   title: Developmentguide
   content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
+- id: src-20261011-webmobilerefinement
+  resource: urn:llmwiki:source:src-20261011-webmobilerefinement
+  title: Web mobile refinement evidence
+  content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
+- id: src-20261011-developmentguide-2
+  resource: urn:llmwiki:source:src-20261011-developmentguide-2
+  title: Mobile refinement current development guide
+  content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T17:23:23.105961+00:00'
-  target_hash: sha256:082e24fc5af757be29dfd237a9eb39a56ed4da56864a380fddb935f21fe7bc6a
+  performed_at: '2026-10-11T09:54:05.388246+00:00'
+  target_hash: sha256:57d5c4ef5de3b68a74d898a03821dfbe14f28e74c3f09575f3dff3d091688aae
   result: passed
   checks:
     source_support: passed
@@ -93,10 +101,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed coordinated async shutdown, Uvicorn signal replay fix, Poweroff sequencing,
-    and cancellation shielding against web_server.py and ShutdownVoiceFixes.md.
-  - Host regression tests passed; physical Pi servo rest pose and timing verification
-    remain pending.
+  - Reviewed GET /api/robot/status endpoint implementation, session middleware gating,
+    and AST route verification against web_server.py and WebMobileRefinement.md.
+  - Inert unit tests passed; live HAL hardware validation remains pending.
 ---
 
 # ninja_core Package
@@ -124,7 +131,7 @@ New onboarding orchestration calls existing core settings/import helpers from an
 | **`gemini_runtime.py`** | Bounded Gemini 3 REST generation with low thinking, safe errors, and non-blocking thread offload.[^src-20260822-developmentguide] [^src-20260822-developmentlog] |
 | **`ninja_agent.py`** | Gemini AI integration using configured model for natural language chat, multi-modal action planning, and native movement validation.[^src-20260822-readme-3] [^src-20260822-developmentguide] [^src-20261009-2026-10-09-builtin-movements] |
 | **`movement_controller.py`** | Motion sequence playback engine with position-aware cubic easing, preflight validation, serialized execution locking, and boundary callback checks.[^src-20260822-readme-3] [^src-20260822-developmentguide] [^src-20261009-2026-10-09-builtin-movements] |
-| **`web_server.py`** | FastAPI web server serving REST endpoints (including `/api/servos/movements`), WebSockets (`/ws/events`), and SPA static assets.[^src-20260822-readme-3] [^src-20260822-developmentguide] [^src-20261009-2026-10-09-builtin-movements] |
+| **`web_server.py`** | FastAPI web server serving REST endpoints (including `/api/servos/movements` and `/api/robot/status`), WebSockets (`/ws/events`), and SPA static assets.[^src-20260822-readme-3] [^src-20260822-developmentguide] [^src-20261009-2026-10-09-builtin-movements] [^src-20261011-webmobilerefinement] |
 | **`init_tool.py`** | Interactive setup wizard for validated model selection (Google, OpenAI, Anthropic, Ollama Cloud), tokens, naming, and hardware import.[^src-20260822-developmentguide] [^src-20261010-modeladapterimplementation] |
 | **`providers/`** | Multi-provider cloud model adapters (`base.py`, `cloud.py`, `registry.py`, `http.py`, `google.py`, `openai.py`, `anthropic.py`, `ollama.py`).[^src-20261010-ninja-core-readme] [^src-20261010-modeladapterimplementation] |
 | **`provider_setup.py`** | Shared discovery, interactive selection, and probe validation logic across CLI and onboarding.[^src-20261010-modeladapterimplementation] |
@@ -204,3 +211,14 @@ Option 6 of `movement_cli.py` is updated to execute configured `Poweroff` (or `h
 [^src-20261010-ninja-core-readme-2]: ninja_core package README (2026-10-11 shutdown & voice regression fixes).
 [^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
 [^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
+
+
+## Read-Only Robot Type Status Endpoint (2026-10-11)
+
+`ninja_core` adds an additive read-only endpoint `GET /api/robot/status` in `ninja_core/web_server.py`:[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+* **Minimal HAL Metadata**: Reads validated in-memory HAL configuration and returns `{"robot_type": "tire"}` (or `"humanoid"` / `"spider"`). It does not write configuration files, expose credentials, or trigger hardware I/O.[^src-20261011-webmobilerefinement]
+* **Session Ownership Middleware**: Protected by existing `web_sessions` middleware: requests from inactive or non-owner browsers receive HTTP 423; requests during server shutdown or when HAL is uninitialized receive HTTP 503.[^src-20261011-webmobilerefinement]
+* **Isolated Testing**: Verified by `tests/test_web_robot_status.py` compiling route AST in an inert test application without starting production lifespans or hardware.[^src-20261011-webmobilerefinement]
+
+[^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
+[^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).

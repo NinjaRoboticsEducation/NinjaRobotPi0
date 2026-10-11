@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
 
-function Header({ status }) {
+function Header({ status, robotType }) {
     const { t } = useTranslation();
     return (
         <header className={styles.header}>
             <div className={styles.identity}>
-                <Link to="/" className={styles.logo}>NINJA ROBOT Pi0</Link>
+                <Link to="/" className={styles.logo}>NINJA ROBOT Pi0{robotType && ` - ${t(`robotType.${robotType}`)}`}</Link>
                 <span role="status" className={`${styles.badge} ${status === 'connected' ? styles.active : ''}`}>
                     {t(status === 'connected' ? 'header.controllerActive' : `session.${status}`)}
                 </span>

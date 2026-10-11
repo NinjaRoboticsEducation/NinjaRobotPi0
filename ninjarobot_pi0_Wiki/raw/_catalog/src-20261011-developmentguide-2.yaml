@@ -1,0 +1,16 @@
+id: src-20261011-developmentguide-2
+path: raw/articles/ninjarobotpi0/2026-10-11-mobile-refinement/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Mobile refinement current development guide
+added_at: '2026-10-11T09:47:12Z'
+content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-developmentguide-2
+source_version: 2026-10-11-mobile-refinement
+retrieved_at: null
+normalized_at: '2026-10-11T09:48:00Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-11T09:55:51Z'
+last_plan: pi0-mobile-refinement-ingest-261011
