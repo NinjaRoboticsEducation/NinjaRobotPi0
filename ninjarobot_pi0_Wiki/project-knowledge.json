@@ -1,7 +1,7 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-10T17:28:00Z",
+  "reviewed_at": "2026-10-11T07:08:08.953735+00:00",
   "documents": [
     {
       "name": "InstallationGuide.md",
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentGuide.md",
-      "source_id": "src-20261010-developmentguide-4",
-      "content_hash": "sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc",
+      "path": "raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md",
+      "source_id": "src-20261011-developmentguide",
+      "content_hash": "sha256:a3cbb8265b1fd651a73fcd826a58f239d60fd28f128d2b82de7d628fec8ec738",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentLog.md",
-      "source_id": "src-20261010-developmentlog-4",
-      "content_hash": "sha256:1c8476bbc6cee113cf7a6c4c2a966d42b92e96f027abf418aab73aa7b26c5ff3",
+      "path": "raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md",
+      "source_id": "src-20261011-developmentlog-2",
+      "content_hash": "sha256:4efb54443f0dac7c48f1b8e722574e4e486ed5dd6db6f0074ea7aafe52478061",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -276,11 +276,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "README.md": {
-      "content_hash": "sha256:b4512feadf8dc005033d2cbdc31b8c7a8aabf07fc308e7d5b62fa5b61eb6c23d",
+      "content_hash": "sha256:0d79273c8420f6472b3aba2b9eae6c3634de047ceba863ce73165d3812f97b02",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Root README manual links updated to 2026-10-11 shutdown voice fixes version."
+      "review_note": "Reviewed four-language UI guidance and corrected current-manual navigation; final English snapshot is src-20261011-readme-final. Browser/hardware acceptance remains pending."
     },
     "docs/validation/core_baseline.json": {
       "content_hash": "sha256:80159f37e3b62a1033eaea3e803642c0952cb5821d04e2677ceda25459c1cbab",
@@ -716,12 +716,12 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/App.jsx": {
-      "content_hash": "sha256:92186e11c3d89e51b093686b2c7cb9323dfbd173d3bb799bd9f9d182e9cb5191",
+      "content_hash": "sha256:8231d13139644ffbb91132bb0d5ceab45eb22bf1f403ec22e4e03b0083e52c14",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/components/common/Button.jsx": {
       "content_hash": "sha256:22b676b83869b844f8358fbe2551edb15af19abe130f7623fee4dc872ae49bc9",
@@ -756,36 +756,36 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/components/common/LanguageSelector.jsx": {
-      "content_hash": "sha256:5390a4692d4aad7c529ab02f5d50800ccf0a1673d7dc40f864b363c383ce119a",
+      "content_hash": "sha256:9d5f662c6e27697e3ea983bc4aa88870e5e8ce9f1dd892fa2e9d971e2f839ef0",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/components/common/LanguageSelector.module.css": {
-      "content_hash": "sha256:a35aedc431bce3edd7723d0aa22785b6cfcdf60074103b58741ce2507aa58548",
+      "content_hash": "sha256:d6e224a544a2a13229a1c210bce81ee8c2d841623f0a2d4f4b51e6f1a1af13fb",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/components/common/PowerOffSlider.jsx": {
-      "content_hash": "sha256:85bbe0bf3f0fd9f9f7726cb8fe6a84489f5785a8d0297f94ea51808ebaceb211",
+      "content_hash": "sha256:d7220e873a83b9bc71bcf32a36f72984ee2fc4407bfc248ce916a1e12e20b14f",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed viewport ResizeObserver geometry only; staged drag/keyboard intent, confirmation and shutdown request logic are preserved. Protected core remains unchanged."
     },
     "ninja_webapp/src/components/common/PowerOffSlider.module.css": {
-      "content_hash": "sha256:326327fc7dc91f9b21e365f483bd2d7f89eea72ae2c34a1547fa72bc54d6de92",
+      "content_hash": "sha256:581a4eb130d341af419b233292286feccacb40efc319e43d412418b4976b5e70",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/components/layout/Footer.jsx": {
       "content_hash": "sha256:1b4fc074e9be821b7441c8a4e8fff67fe33600e2656d09e052e43594066b9538",
@@ -804,28 +804,28 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/components/layout/Header.jsx": {
-      "content_hash": "sha256:4d740a4eacff987d989a5eb4cd428f037b860c4bca63a68e13feb670bb2e4ad1",
+      "content_hash": "sha256:8e6974c3bac6e1a0064c130d1c08babe22899415ff80f5f7307f0edadab58390",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/components/layout/Header.module.css": {
-      "content_hash": "sha256:c49ca0da1e9a4697ddb28d29a9c8fcaa170b7a7e82d2fe511e794d39678967a0",
+      "content_hash": "sha256:7fb8aaf18313c16c7e092ad5112169ea04075934c112a03e63b4b8a772b06c05",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/components/layout/Layout.jsx": {
-      "content_hash": "sha256:d6006f3702e415714b349ea643096ec051efb67ab009bad59f39aa35de0e3eb7",
+      "content_hash": "sha256:4abdf0d03c113608121d80066900f88874a49ce01d34f0057e927b7547112d70",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Shared layout maintains persistent /ws/session across Home, Agent, and Help routes."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/components/layout/Layout.module.css": {
       "content_hash": "sha256:b1c32b0c921d42d650aca0c0eb4255d4399402300d2d5753847a5bf3701afc1e",
@@ -844,52 +844,52 @@
       "review_note": "React hook managing persistent /ws/session connection, 10s ping, 3s retry, and busy modal handling."
     },
     "ninja_webapp/src/i18n.js": {
-      "content_hash": "sha256:52172cea42887cb5bb26f01f05b21b799f63bf6044ea6e92528c5d85c054ee19",
+      "content_hash": "sha256:f61afb69aaeb298d9e7ac5ccd494cd81afe3c80431ae0be709f06a5e69c7c69b",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/index.css": {
-      "content_hash": "sha256:b23fae1058d6682792e08c9cffcbe366886fc8156b7c08bf252b8033ece6b572",
+      "content_hash": "sha256:c52d4b90a9fb658d9f98d77e679c1c4dbabc7bd11704b5c820ca4bbce33938f5",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/locales/en.json": {
-      "content_hash": "sha256:6e664ace601b01c2eb13bc607acc6e9350a093b09545e149707aaab82eca3716",
+      "content_hash": "sha256:621338492ad6ea17a5e7c71316034c00b2b806e036125c3a7e7d8f96427870f3",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Added English localization for session busy modal and reconnect messages."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/locales/ja.json": {
-      "content_hash": "sha256:ead8ff0c7c4334a2f50b5e20f20a12c7f2495f71123674be6c9c6ef04047c9a8",
+      "content_hash": "sha256:916736297055f1ffec38de73cbde85d2334c4ea476f457bd3eeb46407e9617bc",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Added Japanese localization for session busy modal and reconnect messages."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/locales/zh-cn.json": {
-      "content_hash": "sha256:20d5ced9137dffec31b0ee6c219021fecbcc02bb85a31031dca7084862bdaf33",
+      "content_hash": "sha256:08cb29ee5072b30c007f03283e6ccefc57a44526183180daf22907eb8eb6cf6e",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Added Simplified Chinese localization for session busy modal and reconnect messages."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/locales/zh-tw.json": {
-      "content_hash": "sha256:46eca33984c4ae0543230c9e61ca562c69483f75ac0219d0f7de6a754921b470",
+      "content_hash": "sha256:05bd2eb90929571bf4142827366e80586a15de66c58a2327057592e4379596c2",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Added Traditional Chinese localization for session busy modal and reconnect messages."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/main.jsx": {
       "content_hash": "sha256:227fb9cc1dd4c0f0c2384eb498eee6e1d97dd9615fc3c5213335885595304a09",
@@ -900,52 +900,36 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/pages/Agent/Agent.module.css": {
-      "content_hash": "sha256:92516817a0bd3537546e54108e2094a48652db9157343b2d974f34e935949c36",
+      "content_hash": "sha256:ba1d30f4f4ea57474ba58d534539e20d1e5a25abb678f039734c031505757eda",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/pages/Agent/index.jsx": {
-      "content_hash": "sha256:c210ca7877fba42a3e711459290712d5cdbe067dfd8efe9216ca0c764b432823",
+      "content_hash": "sha256:45081a638ce61f7148b2648dea55b5c321b620f1c791a32172c478b06a347ec9",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Speech recognition decoupling from supports_audio flag and unmount abort cleanup."
-    },
-    "ninja_webapp/src/pages/Help/Help.module.css": {
-      "content_hash": "sha256:ee2060d1ceedd83e8309612efe41d0e98c4b835ef659b30a535a25d8ab3af9b8",
-      "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
-      ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
-    },
-    "ninja_webapp/src/pages/Help/index.jsx": {
-      "content_hash": "sha256:ae526c6b6f15c9f4917be0f257c0bc36cf9314d55801b4e37f7421c14f2ffef5",
-      "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
-      ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/pages/Home/Home.module.css": {
-      "content_hash": "sha256:2a1b372d58254bf87a4727d0dbce3125ea8098ac0ac85c4042e63a3f45db39c5",
+      "content_hash": "sha256:761c33a90eb6b9e0c94882eeb082db0933b4670ae731eacc85e1499e396a45bf",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/pages/Home/index.jsx": {
-      "content_hash": "sha256:efca99b9d5affb86c78b7964547e171a10fc45c059e1b51d0d063239c86f4a7a",
+      "content_hash": "sha256:f0bf58f8e641eb6f422d3f82c5e2f047b88b8e01fe1d9dd188db000140f34e4f",
       "pages": [
         "wiki/entities/ninja-webapp.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/vite.config.js": {
       "content_hash": "sha256:21f56ad70aed71dce16a3e3efdafe7eb80e5ae057a8de9ccd4536ab4e0b33109",
@@ -1858,12 +1842,12 @@
       "review_note": "Reviewed explicit setup-only private uv fallback and cleared inherited UV_PROJECT; query paths remain no-sync."
     },
     "tests/browser_ui.cjs": {
-      "content_hash": "sha256:48337db18d9a3f3a513b97edd96d32531e78990821b29613f732435bec73fc96",
+      "content_hash": "sha256:f8e5ac9ca979918fc272157d19c224302bdc4701d17d0acc39d49507684fb109",
       "pages": [
         "wiki/concepts/development-workflow.md",
         "wiki/concepts/web-interface-design.md"
       ],
-      "review_note": "Browser test suite verifying speech recognition lifecycle and transcript chat submission."
+      "review_note": "Optional inert Playwright fixture suite updated for Home/menu, Movement/Chat, direct endpoints, speech lifecycle, four locales and Help redirect. Syntax checked; browser execution explicitly waived by owner on Pi Lite. No completed browser assertions claimed."
     },
     "tests/conftest.py": {
       "content_hash": "sha256:2a6742af9e8c1f1a740334bf56bec080dbb63019ca7ac1240356492036784557",
@@ -2061,6 +2045,54 @@
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Root distribution identity and prompt renamed to ninjarobotpi0 with unchanged dependencies."
+    },
+    "ninja_webapp/src/hooks/useRobotActivity.js": {
+      "content_hash": "sha256:4ab4b74c7d4af2eaba574004d24318e3b5a97a9bb554265cc21cd7cf5b7991f9",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+    },
+    "ninja_webapp/src/hooks/useRobotStream.js": {
+      "content_hash": "sha256:e2b01f8da7130c5164b4df900f401419082cb2a7ded722f6c5ccc9e434cf77bd",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+    },
+    "ninja_webapp/src/components/common/SystemActivity.module.css": {
+      "content_hash": "sha256:cf49dd97545849f59d5afc2261fe95390aa76444d038532599e4d4ccbf882cc4",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+    },
+    "ninja_webapp/src/components/common/SystemActivity.jsx": {
+      "content_hash": "sha256:a70132ced3ecf80b4054283da768ae41befea1d0d3614db4d78f7ff46eca9266",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+    },
+    "ninja_webapp/src/pages/Movement/Movement.module.css": {
+      "content_hash": "sha256:ad0f4cd559470ac15e26b75090ee2d6bafa21f21860d19c318fb001b5d6dd750",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+    },
+    "ninja_webapp/src/pages/Movement/index.jsx": {
+      "content_hash": "sha256:61766f1188de11f42d44a4288e826a1682009d252811ca79f75151faa883eba2",
+      "pages": [
+        "wiki/entities/ninja-webapp.md",
+        "wiki/concepts/web-interface-design.md"
+      ],
+      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
     }
   },
   "adapters": [
@@ -2209,7 +2241,11 @@
     "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-09-spider/DevelopmentGuide.md",
     "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-09-spider/DevelopmentLog.md",
     "DevelopmentPlanDoc/SpiderBuildinMovements.md",
-    "DevelopmentPlanDoc/Pi0BuildinMovementsRefinement.md"
+    "DevelopmentPlanDoc/Pi0BuildinMovementsRefinement.md",
+    "DevelopmentPlanDoc/NinjaRobotPi0WebRefinement_261011.md",
+    "docs/validation/WebRefinement-2026-10-11.md",
+    "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md",
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md"
   ],
   "limits": [
     "AI source-grounded review is not human verification or physical qualification.",

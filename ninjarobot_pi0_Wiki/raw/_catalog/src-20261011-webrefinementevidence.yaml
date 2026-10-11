@@ -1,0 +1,16 @@
+id: src-20261011-webrefinementevidence
+path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement/WebRefinementEvidence.md
+media_type: text/markdown
+kind: text
+title: Web refinement code, design and local validation evidence
+added_at: '2026-10-11T06:46:57Z'
+content_hash: sha256:5ce2540bcc10522fc7e7dd5d1295c9738c4b0ed695bc4f39359ba91ddf669e69
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-webrefinementevidence
+source_version: 2026-10-11-web-refinement
+retrieved_at: null
+normalized_at: '2026-10-11T06:47:29Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-11T07:06:33Z'
+last_plan: web-refinement-navigation-20261011

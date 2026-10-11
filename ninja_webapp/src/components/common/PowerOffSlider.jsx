@@ -20,9 +20,16 @@ function PowerOffSlider() {
     const maxSlideRef = useRef(0);
 
     useEffect(() => {
-        if (containerRef.current && thumbRef.current) {
-            maxSlideRef.current = containerRef.current.clientWidth - thumbRef.current.clientWidth - 8;
-        }
+        const measure = () => {
+            if (containerRef.current && thumbRef.current) {
+                maxSlideRef.current = Math.max(0, containerRef.current.clientWidth - thumbRef.current.clientWidth - 8);
+            }
+        };
+        measure();
+        const observer = new ResizeObserver(measure);
+        observer.observe(containerRef.current);
+        observer.observe(thumbRef.current);
+        return () => observer.disconnect();
     }, []);
 
     const handleStart = (e) => {

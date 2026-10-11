@@ -108,11 +108,23 @@ sources:
   resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
   title: Shutdownvoicefixes
   content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261011-developmentlog
+  resource: urn:llmwiki:source:src-20261011-developmentlog
+  title: Web refinement current development log
+  content_hash: sha256:db27140d13ea4df882914e313f8e2ed5e5684dae297f590a6985bac83951216b
+- id: src-20261011-webrefinementevidence
+  resource: urn:llmwiki:source:src-20261011-webrefinementevidence
+  title: Web refinement code, design and local validation evidence
+  content_hash: sha256:5ce2540bcc10522fc7e7dd5d1295c9738c4b0ed695bc4f39359ba91ddf669e69
+- id: src-20261011-developmentlog-2
+  resource: urn:llmwiki:source:src-20261011-developmentlog-2
+  title: Web refinement link-corrected current development log
+  content_hash: sha256:4efb54443f0dac7c48f1b8e722574e4e486ed5dd6db6f0074ea7aafe52478061
 semantic_review:
   version: 1
-  performed_by: agent:antigravity
-  performed_at: '2026-10-10T17:23:23.105961+00:00'
-  target_hash: sha256:95f5bef3fcd34403e11327199092122f0be2c4fd63ea82ae463a0932515339e3
+  performed_by: agent:codex
+  performed_at: '2026-10-11T07:05:12.227497+00:00'
+  target_hash: sha256:5a98c223e72e6be6e8bcf382e26431d9f1f3f8fa14a6352755cac5a02d45ae6d
   result: passed
   checks:
     source_support: passed
@@ -121,10 +133,14 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed 2026-10-11 shutdown and browser voice regression milestone against DevelopmentLog.md
-    and ShutdownVoiceFixes.md.
-  - Chronological milestones reflect host-verified test suite results; physical hardware
-    verification remains pending.
+  - New frontend milestone and actual software-validation limits checked against current
+    log/evidence; earlier milestones retain dated provenance.
+  - Owner-waived browser testing, pending microphone/hardware acceptance and immutable
+    corrected README versioning are explicitly recorded.
+  - Source fingerprints were checked; unchanged historical evidence retains its prior
+    source-grounded review context. AI review is not human verification.
+  - Checked the new complete link-corrected log/README navigation source; feature
+    claims and validation limits are unchanged and earlier raw versions remain immutable.
 ---
 
 # Development History and Evolution
@@ -227,7 +243,7 @@ Additive metadata `movement_robot_types` and `builtin_movement_hashes` ensure id
 ## Lifecycle refinements and reconnect screen (2026-10-10)
 
 Movement-tool deliberate exit (option 6) executes configured `Poweroff` (or `home` fallback) before HAL shutdown and configuration save, without subsequent centering. HAL shutdown releases PWM rather than holding torque.
-The web interface adds a single-browser session ownership contract: the shared layout maintains a persistent `/ws/session` socket and an opaque HttpOnly `ninja_web_session` cookie. Only one browser controls web APIs; another browser receives a busy 4409 modal and cannot trigger actions. Every `/api/` endpoint and auxiliary socket requires live primary ownership (returning 423 if inactive, 503 during shutdown). Browser disconnect or a 35s timeout cooperatively cancels pending browser tasks, aborts active native/Blockly work, and restores the waiting QR on the display while suppressing idle animations.
+The web interface adds a single-browser session ownership contract: the shared layout maintains a persistent `/ws/session` socket and an opaque HttpOnly `ninja_web_session` cookie. Only one browser controls web APIs; another browser receives a busy/4409 response and cannot trigger actions. Every `/api/` endpoint and auxiliary socket requires live primary ownership (returning 423 if inactive, 503 during shutdown). Browser disconnect or a 35s timeout cooperatively cancels pending browser tasks, aborts active native/Blockly work, and restores the waiting QR on the display while suppressing idle animations.
 The root package and virtual environment prompt are updated to `ninjarobotpi0`.[^src-20261010-developmentlog] [^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsvalidation]
 
 ## CLI launcher recovery and packaging reconciliation (2026-10-10)
@@ -261,3 +277,15 @@ The owner authorized regression fixes following the cloud model adapter release 
 
 [^src-20261010-developmentlog-4]: Current versioned DevelopmentLog (2026-10-11 shutdown & voice fixes).
 [^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+
+## Home, Movement and Chat presentation refinement — 2026-10-11
+
+The owner-requested frontend refinement combined Home with the menu, split direct native controls into Movement Tool, retained Chat at `/agent`, added the shared floating folded activity drawer and removed Help with a legacy redirect. It adopted the inspected voice active/idle references and added four-language labels/document language without changing robot/runtime/driver behavior or API/power contracts.[^src-20261011-developmentlog] [^src-20261011-webrefinementevidence] [^src-20261011-developmentlog-2]
+
+Frontend lint/build, locale/session/stream checks and protected-core verification passed. Browser startup attempts were stopped when the owner waived testing on Pi Lite; no completed browser assertions, implemented-page screenshot review, real microphone or hardware acceptance is claimed. New complete English manual/log versions, corrected English README evidence and current pointers preserve earlier sources.[^src-20261011-developmentlog] [^src-20261011-webrefinementevidence] [^src-20261011-developmentlog-2]
+
+[^src-20261011-developmentlog]: Web refinement current development log (2026-10-11 web refinement).
+
+[^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).
+
+[^src-20261011-developmentlog-2]: Web refinement link-corrected current development log; current complete source corrects navigation links while preserving earlier versions.

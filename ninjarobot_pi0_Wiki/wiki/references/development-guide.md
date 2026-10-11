@@ -79,11 +79,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
   title: Shutdownvoicefixes
   content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261011-developmentguide
+  resource: urn:llmwiki:source:src-20261011-developmentguide
+  title: Web refinement current development guide
+  content_hash: sha256:a3cbb8265b1fd651a73fcd826a58f239d60fd28f128d2b82de7d628fec8ec738
+- id: src-20261011-webrefinementevidence
+  resource: urn:llmwiki:source:src-20261011-webrefinementevidence
+  title: Web refinement code, design and local validation evidence
+  content_hash: sha256:5ce2540bcc10522fc7e7dd5d1295c9738c4b0ed695bc4f39359ba91ddf669e69
 semantic_review:
   version: 1
-  performed_by: agent:antigravity
-  performed_at: '2026-10-10T17:23:23.105961+00:00'
-  target_hash: sha256:6e3753e732c3bfa06940ef04109bb924cf8f35c5074ac81ed05f0d7604fe0070
+  performed_by: agent:codex
+  performed_at: '2026-10-11T06:55:15.207816+00:00'
+  target_hash: sha256:6234e9c742a34d17420dc9d57fb050c3eed94f304ad98a9ea8e4e82c5289d58b
   result: passed
   checks:
     source_support: passed
@@ -92,15 +100,17 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed current DevelopmentGuide (2026-10-11) manual pointers, shutdown sequence,
-    and regression test records.
-  - Offline test suites passed on Python 3.11 and 3.13; target-device hardware checks
-    remain pending.
+  - Current complete manual pointers, frontend scope and preserved core/contracts
+    checked against the new guide and implementation evidence.
+  - Historical manual/software milestones retain original dated sources; this review
+    adds no human or physical acceptance.
+  - Source fingerprints were checked; unchanged historical evidence retains its prior
+    source-grounded review context. AI review is not human verification.
 ---
 
 # Current development manual
 
-Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context.[^src-20261010-developmentguide-4]
+Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context. The current complete English-only web-refinement version adds Home/menu, Movement and Chat guidance, preserved native/session/power contracts and the owner's browser-validation waiver.[^src-20261011-developmentguide]
 
 [Project overview](/overview.md).
 
@@ -161,7 +171,7 @@ The current development manual records native built-in movement import, type rec
 ## Lifecycle refinements and reconnect screen (2026-10-10)
 
 Movement-tool deliberate exit (option 6) validates and executes configured `Poweroff` before releasing hardware, without subsequent centering. When `Poweroff` is absent (Wheel/Humanoid), configured `home` is executed. HAL shutdown releases PWM rather than electrically holding the final pose.
-The web interface adds a single-browser session ownership contract: the shared layout maintains a persistent `/ws/session` socket and an opaque HttpOnly `ninja_web_session` cookie across Home, Agent, and Help views. Only one browser controls web APIs; another browser receives a busy 4409 modal and cannot trigger actions. Every `/api/` endpoint and auxiliary socket requires live primary ownership (returning 423 if inactive, 503 during shutdown). Browser disconnect or a 35s timeout cooperatively cancels pending browser tasks, aborts active native/Blockly work, and restores the waiting QR on the display while suppressing idle animations.[^src-20261010-developmentguide] [^src-20261010-lifecyclerefinementsevidence]
+The web interface adds a single-browser session ownership contract: the shared layout maintains a persistent `/ws/session` socket and an opaque HttpOnly `ninja_web_session` cookie across frontend routes (historically Home, Agent and Help). Only one browser controls web APIs; another browser receives a busy/4409 response and cannot trigger actions. Every `/api/` endpoint and auxiliary socket requires live primary ownership (returning 423 if inactive, 503 during shutdown). Browser disconnect or a 35s timeout cooperatively cancels pending browser tasks, aborts active native/Blockly work, and restores the waiting QR on the display while suppressing idle animations.[^src-20261010-developmentguide] [^src-20261010-lifecyclerefinementsevidence]
 
 ## CLI launcher recovery and single-ownership packaging (2026-10-10)
 
@@ -200,3 +210,11 @@ The current development manual documents the unified asynchronous server shutdow
 
 [^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
 [^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+
+## Current web refinement workflow — 2026-10-11
+
+The phased frontend plan and code review keep robot behavior unchanged. New complete manual/log versions and corrected English README evidence preserve registered originals; root README retains its four-language order. Local lint/build, locale/session/stream checks and core verification passed. Browser validation on Pi Lite was waived; controlled physical and real-browser checks remain pending.[^src-20261011-developmentguide] [^src-20261011-webrefinementevidence]
+
+[^src-20261011-developmentguide]: Web refinement current development guide (2026-10-11 web refinement).
+
+[^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).

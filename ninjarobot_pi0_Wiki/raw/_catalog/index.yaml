@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-10T17:27:40Z'
+generated_at: '2026-10-11T07:07:20Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -414,5 +414,40 @@ sources:
 - id: src-20261010-shutdownvoicefixes
   title: Shutdownvoicefixes
   path: raw/notes/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/ShutdownVoiceFixes.md
+  kind: text
+  state: ingested
+- id: src-20261011-developmentguide
+  title: Web refinement current development guide
+  path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261011-developmentlog-2
+  title: Web refinement link-corrected current development log
+  path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261011-developmentlog
+  title: Web refinement current development log
+  path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261011-readme-current
+  title: Web refinement corrected English README
+  path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/README-current.md
+  kind: text
+  state: ingested
+- id: src-20261011-readme-final
+  title: Web refinement final English README navigation
+  path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/README-final.md
+  kind: text
+  state: ingested
+- id: src-20261011-readme
+  title: Web refinement English README
+  path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/README.md
+  kind: text
+  state: pending
+- id: src-20261011-webrefinementevidence
+  title: Web refinement code, design and local validation evidence
+  path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement/WebRefinementEvidence.md
   kind: text
   state: ingested

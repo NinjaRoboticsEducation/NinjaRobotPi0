@@ -5,15 +5,15 @@
 /* ---------- CSS Variables (Core Tokens) ---------- */
 :root {
   /* Colors */
-  --color-bg: #03080c;
-  --color-surface: #06131b;
+  --color-bg: #03070a;
+  --color-surface: #051017;
   --color-text: #f2f6fa;
   --color-subtext: #bdc4ca;
   --color-primary: #00a3ff;
   --color-accent: #75cdff;
   --color-cta: #00a3ff;
-  --color-border: rgba(0, 163, 255, 0.28);
-  --color-success: #4de2a4;
+  --color-border: #00a3ff;
+  --color-success: #16c553;
   --color-danger: #ff526d;
 
   /* Typography */
@@ -70,10 +70,9 @@ body {
   font-size: var(--type-body);
   line-height: var(--line-height-normal);
   color: var(--color-text);
-  background: radial-gradient(circle at 15% 5%, rgba(0, 163, 255, .14), transparent 31rem), linear-gradient(165deg, #06131b, #03080c 72%);
+  background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 /* ---------- Typography ---------- */

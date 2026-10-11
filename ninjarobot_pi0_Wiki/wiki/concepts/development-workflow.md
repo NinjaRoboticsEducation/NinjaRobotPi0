@@ -67,11 +67,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
   title: Shutdownvoicefixes
   content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261011-developmentguide
+  resource: urn:llmwiki:source:src-20261011-developmentguide
+  title: Web refinement current development guide
+  content_hash: sha256:a3cbb8265b1fd651a73fcd826a58f239d60fd28f128d2b82de7d628fec8ec738
+- id: src-20261011-webrefinementevidence
+  resource: urn:llmwiki:source:src-20261011-webrefinementevidence
+  title: Web refinement code, design and local validation evidence
+  content_hash: sha256:5ce2540bcc10522fc7e7dd5d1295c9738c4b0ed695bc4f39359ba91ddf669e69
 semantic_review:
   version: 1
-  performed_by: agent:antigravity
-  performed_at: '2026-10-10T17:23:23.105961+00:00'
-  target_hash: sha256:5ac953bf123f4300fb38192e7bd6e7e71e25e513b090f1e2b1f451188be73b28
+  performed_by: agent:codex
+  performed_at: '2026-10-11T06:55:28.993421+00:00'
+  target_hash: sha256:03e228f7f11f32a6770ec5deb68295c322c0afd00a61b6f4a222d9eadf73b338
   result: passed
   checks:
     source_support: passed
@@ -80,9 +88,12 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed regression testing workflow, test_server_shutdown.py inert test suite,
-    and browser_ui.cjs mock assertions.
-  - Host test results documented; physical Raspberry Pi validation remains pending.
+  - New refinement workflow and executed lint/build/locale/session/stream/core checks
+    checked against registered current guide/evidence.
+  - Browser test execution was waived; optional fixture-suite updates are not described
+    as completed browser validation.
+  - Source fingerprints were checked; unchanged historical evidence retains its prior
+    source-grounded review context. AI review is not human verification.
 ---
 
 # Development and immutable documentation workflow
@@ -171,3 +182,13 @@ The regression testing workflow validates coordinated server exit and browser mi
 
 [^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
 [^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+
+## Frontend refinement and validation boundary — 2026-10-11
+
+The frontend-only refinement uses wiki evidence, current code and inspected owner mockups, then a phased plan and small presentation changes. It preserves robot/runtime/driver behavior, session ownership, native request contracts and power confirmation. Current complete English-only manuals remain immutable dated sources; root README alone keeps four languages.[^src-20261011-developmentguide]
+
+Frontend lint/build, four-locale completeness, inert session/auxiliary-stream checks and protected-core verification passed. The existing optional Playwright suite was updated for the new routes. The owner explicitly waived browser testing on Raspberry Pi Lite; there are no completed browser assertions or implemented-page screenshot acceptance results for this refinement. Real microphone/mobile/ngrok/hardware tests remain controlled owner acceptance. Wiki dependency setup occurred only after explicit authorization and retained project locks/system uv.[^src-20261011-webrefinementevidence]
+
+[^src-20261011-developmentguide]: Web refinement current development guide (2026-10-11 web refinement).
+
+[^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).

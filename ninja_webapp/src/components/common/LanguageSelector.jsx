@@ -21,11 +21,8 @@ function LanguageSelector() {
         i18n.changeLanguage(e.target.value);
     };
 
-    const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
-
     return (
         <div className={styles.selector}>
-            <span className={styles.flag}>{currentLang.flag}</span>
             <select
                 value={i18n.language}
                 onChange={handleChange}

@@ -33,7 +33,7 @@ Whether you want to build a tire-type car, a humanoid, or a spider robot, NinjaR
 - **Move and express itself** — Use the built-in movement library to make your robot walk, wave, or dance. The LCD face shows animated expressions, and the buzzer plays emotion sounds.
 - **Sense distance** — A VL53L0X laser sensor measures distances in millimetres, so your robot can detect obstacles.
 - **Chat with AI** — Choose a cloud provider and connect its API key to chat with the AI. The AI can even trigger robot actions like movements and expressions.
-- **Control from your phone** — Open a web browser on any device and you get a control panel with Home, Agent (AI chat), and Help pages — in English, Japanese, Traditional Chinese, and Simplified Chinese.
+- **Control from your phone** — Open a web browser on any device and you get a control panel with Home, Movement Tool, and Chat pages — in English, Japanese, Traditional Chinese, and Simplified Chinese.
 - **Learn step by step** — Calibrate each component with guided tools, then explore the Python packages and web interface at your own pace.
 
 ### Who is this for?
@@ -283,11 +283,11 @@ The web interface has three pages:
 
 | Page | What it does |
 |---|---|
-| **Home** | Robot entry page with a power-off slider control |
-| **Agent** | AI chat with your selected provider, expressions, sounds, movements, and distance readings |
-| **Help** | Usage guidance; the menu also lets you switch the interface language |
+| **Home (`/`)** | Language selection, control interface selection and confirmed power-off slider |
+| **Movement Tool (`/movement`)** | Distance telemetry and direct built-in movements, face expressions and sounds, without Ninja Agent |
+| **Chat (`/agent`)** | AI prompts and browser voice input; expandable real-time System Activity |
 
-> **Note:** The BLE badge on screen means the robot is **advertising** (broadcasting its Bluetooth signal), not that a controller is connected. Browser speech input depends on browser support and permissions.
+The hamburger links on Movement Tool and Chat return to Home. Both control pages have a System Activity panel that starts folded at the bottom and expands over content. Clear Messages clears displayed history locally. Help has been removed; old `/help` bookmarks return to Home. The controller badge reports the active web session. Browser voice input depends on browser support, microphone permission and its speech service; it fills the prompt for review before Send.
 
 ---
 
@@ -386,7 +386,7 @@ After calibrating the servos for your build, select the robot type and import th
 
 Spider receives 19 `spider_*` movements and the exact `Poweroff` pose from the Spider proposal when GPIO20–27 are configured. Wheel and Humanoid currently receive only `home`, which commands every configured servo to 0° at Slow speed. Their other default movements will be added later. No movements run during import. Restart an already running server/tool deliberately to load the updated configuration.
 
-Once the robot is supported and ready to move, use movement-tool option 4, the web Agent page's movement dropdown, or ask Ninja agent for an available movement. Opening movement-tool or starting the server can initialize hardware; server shutdown can run `Poweroff`. Spider's sampled waypoints preserve targets, not OTTO's exact timing or physical walking distance. Validate direction, clearance, power and calibration before grouped motion, especially the ±90° shutdown pose.
+Once the robot is supported and ready to move, use movement-tool option 4, the web Movement Tool page's movement dropdown, or ask Ninja agent for an available movement. Opening movement-tool or starting the server can initialize hardware; server shutdown can run `Poweroff`. Spider's sampled waypoints preserve targets, not OTTO's exact timing or physical walking distance. Validate direction, clearance, power and calibration before grouped motion, especially the ±90° shutdown pose.
 
 Reimport preserves custom sequences and edited built-ins. Type changes remove only unchanged imported built-ins; edited movements retain their type scope and are hidden/rejected on incompatible profiles. Native playback validates the entire sequence before its first servo command. Invalid or incompatible web requests return an error and are recorded in the page's log. Missing active channels also block playback. Built-ins can be restored by removing an unwanted edited entry and importing again; back up your configuration first. Existing custom `home`/`Poweroff` name collisions are preserved rather than overwritten.
 
@@ -400,7 +400,7 @@ The [implementation plan](docs/BuiltinMovementsImplementationPlan.md) and [valid
 
 Movement-tool **6. Exit** executes configured `Poweroff` before HAL shutdown, without a following center command. Wheel/Humanoid without `Poweroff` use their configured `home`. Invalid/incompatible poses are refused; shutdown and configuration save still run. Opening the tool centers servos, and exiting can move them; check clearance and support the robot first. Shutdown releases PWM, so the final pose is not held electrically afterward.
 
-One browser identity controls the web interface at a time; tabs sharing its session cookie count as one controller. Home/Agent/Help navigation retains the connection. Closing its last tab restores the saved ngrok QR (or LAN QR if tunneling failed), stops active browser-owned work and permits another browser to connect. A lost network is released after 35 seconds without a heartbeat; browsers retry every 3 seconds. Missing/failing displays do not prevent reconnection. This ownership guard is not login authentication, and BLE remains a separate existing protocol. REST `/api/` calls and distance/events sockets require the active browser session; inactive API requests return 423.
+One browser identity controls the web interface at a time; tabs sharing its session cookie count as one controller. Home/Movement Tool/Chat navigation retains the connection. Closing its last tab restores the saved ngrok QR (or LAN QR if tunneling failed), stops active browser-owned work and permits another browser to connect. A lost network is released after 35 seconds without a heartbeat; browsers retry every 3 seconds. Missing/failing displays do not prevent reconnection. This ownership guard is not login authentication, and BLE remains a separate existing protocol. REST `/api/` calls and distance/events sockets require the active browser session; inactive API requests return 423.
 
 The installer retains the `.venv` directory and now sets its prompt to `(ninjarobotpi0)` with `uv venv --allow-existing --prompt ninjarobotpi0`, then performs locked synchronization. It does not clear the environment. Re-activate your current shell after upgrading: `deactivate` (if active), then `source .venv/bin/activate`. The local environment's activation scripts have also been updated without reinstalling packages.
 
@@ -547,7 +547,7 @@ From the installation folder, `./onboard.sh --status` checks saved configuration
 
 Protect `config.json` (which may contain your Gemini key), ngrok credentials and calibration files; do not publish them. Gemini pricing/quota and ngrok availability depend on your account. The Pi0 control interface has no user-login protection; an encrypted ngrok tunnel does not add application authentication. Use trusted networks and keep control URLs private.
 
-Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-model-adapter/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/DevelopmentLog.md).
+Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-10-model-adapter/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md).
 
 ## License
 
@@ -579,7 +579,7 @@ Made with ❤️ for AI Robotics Education
 - **動いて表情を見せる** — 内蔵の動作ライブラリで歩行・ウェーブ・ダンスが可能。LCD にアニメ表情、ブザーで感情サウンドを再生。
 - **距離を測る** — VL53L0X レーザーセンサーがミリメートル単位で障害物を検知。
 - **AI とチャット** — Google Gemini API キーを接続すれば AI と会話でき、動作やアクションも起動可能。
-- **スマホから操作** — ブラウザで Home・Agent（AI チャット）・Help の 3 ページを操作。英語・日本語・繁體中文・简体中文に対応。
+- **スマホから操作** — ブラウザで Home・動作ツール・チャットの 3 ページを操作。英語・日本語・繁體中文・简体中文に対応。
 - **段階的に学べる** — ガイド付きツールで各部品を校正し、Python パッケージや Web インターフェースを自分のペースで探索。
 
 ---
@@ -710,9 +710,11 @@ curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi
 
 | ページ | 機能 |
 |---|---|
-| **Home** | ロボットのホーム画面、電源オフ制御 |
-| **Agent** | AI チャット、表情・サウンド・動作 |
-| **Help** | 使い方ガイド、言語切替 |
+| **Home (`/`)** | 言語・操作画面の選択、確認付き電源オフ |
+| **動作ツール (`/movement`)** | 距離表示、AI を使わない組み込み動作・表情・音 |
+| **チャット (`/agent`)** | AI への入力、ブラウザー音声入力、展開できる活動ログ |
+
+動作ツールとチャットのメニューアイコンで Home に戻ります。両画面の活動ログは下部で折りたたまれ、展開すると内容の上に表示されます。旧 Help は Home に転送されます。
 
 ---
 
@@ -894,7 +896,7 @@ AI ロボティクス教育のために ❤️ を込めて作られました
 - **移動與表達** — 內建動作庫讓機器人行走、揮手、跳舞。LCD 顯示動畫表情，蜂鳴器播放情感音效。
 - **感測距離** — VL53L0X 雷射感測器以毫米為單位量測距離，偵測障礙物。
 - **AI 對話** — 連接 Google Gemini API 金鑰後即可和 AI 聊天，AI 還能觸發機器人動作。
-- **手機操控** — 用任何裝置的瀏覽器開啟 Home、Agent（AI 聊天）和 Help 頁面，支援英文、日文、繁體中文、簡體中文。
+- **手機操控** — 用任何裝置的瀏覽器開啟 Home、動作工具和聊天頁面，支援英文、日文、繁體中文、簡體中文。
 - **循序漸進學習** — 用引導式工具校準每個元件，再依自己的節奏探索 Python 套件和 Web 介面。
 
 ---
@@ -1025,9 +1027,11 @@ curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi
 
 | 頁面 | 功能 |
 |---|---|
-| **Home** | 機器人首頁、關機控制 |
-| **Agent** | AI 聊天、表情、音效、動作 |
-| **Help** | 使用指南、語言切換 |
+| **Home (`/`)** | 語言與控制介面選擇、確認後關機 |
+| **動作工具 (`/movement`)** | 即時距離、無需 AI 的內建動作、表情與音效 |
+| **聊天 (`/agent`)** | AI 提示、瀏覽器語音輸入、可展開的系統活動 |
+
+動作工具與聊天頁的選單圖示返回 Home。兩頁底部的系統活動預設收合，展開時浮於內容上方。舊 Help 連結返回 Home。
 
 ---
 
@@ -1209,7 +1213,7 @@ Bookworm/Trixie 64-bit 是參考環境，不是 OS 代號白名單。需使用 Z
 - **移动与表达** — 内置动作库让机器人行走、挥手、跳舞。LCD 显示动画表情，蜂鸣器播放情感音效。
 - **感测距离** — VL53L0X 激光传感器以毫米为单位测量距离，检测障碍物。
 - **AI 对话** — 连接 Google Gemini API 密钥后即可和 AI 聊天，AI 还能触发机器人动作。
-- **手机操控** — 用任何设备的浏览器打开 Home、Agent（AI 聊天）和 Help 页面，支持英文、日文、繁体中文、简体中文。
+- **手机操控** — 用任何设备的浏览器打开 Home、动作工具和聊天页面，支持英文、日文、繁体中文、简体中文。
 - **循序渐进学习** — 用引导式工具校准每个组件，再按自己的节奏探索 Python 包和 Web 界面。
 
 ---
@@ -1340,9 +1344,11 @@ curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi
 
 | 页面 | 功能 |
 |---|---|
-| **Home** | 机器人首页、关机控制 |
-| **Agent** | AI 聊天、表情、音效、动作 |
-| **Help** | 使用指南、语言切换 |
+| **Home (`/`)** | 语言与控制界面选择、确认后关机 |
+| **动作工具 (`/movement`)** | 实时距离、无需 AI 的内置动作、表情与音效 |
+| **聊天 (`/agent`)** | AI 提示、浏览器语音输入、可展开的系统活动 |
+
+动作工具与聊天页的菜单图标返回 Home。两页底部的系统活动默认折叠，展开时浮于内容上方。旧 Help 链接返回 Home。
 
 ---
 

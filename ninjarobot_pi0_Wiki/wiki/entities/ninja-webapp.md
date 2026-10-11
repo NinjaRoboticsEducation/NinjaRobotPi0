@@ -52,11 +52,27 @@ sources:
   resource: urn:llmwiki:source:src-20261010-developmentguide-4
   title: Developmentguide
   content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
+- id: src-20261011-developmentguide
+  resource: urn:llmwiki:source:src-20261011-developmentguide
+  title: Web refinement current development guide
+  content_hash: sha256:a3cbb8265b1fd651a73fcd826a58f239d60fd28f128d2b82de7d628fec8ec738
+- id: src-20261011-readme-current
+  resource: urn:llmwiki:source:src-20261011-readme-current
+  title: Web refinement corrected English README
+  content_hash: sha256:4058c6f103ff077f356228e7e4fb6728f5314b0c7602db00f231be8a08a5fc77
+- id: src-20261011-webrefinementevidence
+  resource: urn:llmwiki:source:src-20261011-webrefinementevidence
+  title: Web refinement code, design and local validation evidence
+  content_hash: sha256:5ce2540bcc10522fc7e7dd5d1295c9738c4b0ed695bc4f39359ba91ddf669e69
+- id: src-20261011-readme-final
+  resource: urn:llmwiki:source:src-20261011-readme-final
+  title: Web refinement final English README navigation
+  content_hash: sha256:149b9d5500e321b8e8b4bfd8eee4e056ef7eef77e5bca6107a9086860f8d1a8b
 semantic_review:
   version: 1
-  performed_by: agent:antigravity
-  performed_at: '2026-10-10T17:23:23.105961+00:00'
-  target_hash: sha256:d9cf8f06faeb5ef4932a751a5e954af36ba560cca8ce6b06cb874d6c7073f9f1
+  performed_by: agent:codex
+  performed_at: '2026-10-11T07:05:12.227497+00:00'
+  target_hash: sha256:128f5dd795543a2e7078c2dc4d931546a23ac2413b0cd55b9ebe553bbe68eec4
   result: passed
   checks:
     source_support: passed
@@ -65,40 +81,32 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed browser speech recognition decoupling from supports_audio flag against
-    Agent/index.jsx and ShutdownVoiceFixes.md.
-  - Mock browser test assertions passed; real microphone and physical device validation
-    remain pending.
+  - Current routes, locale sets, HTTP payloads, telemetry/event streams and microphone
+    lifecycle checked against current source and new guide/README/evidence.
+  - Historical provider-audio gating is explicitly superseded; browser speech-service
+    availability and owner-waived browser validation remain limitations.
+  - Source fingerprints were checked; unchanged historical evidence retains its prior
+    source-grounded review context. AI review is not human verification.
+  - Checked the new complete link-corrected log/README navigation source; feature
+    claims and validation limits are unchanged and earlier raw versions remain immutable.
 ---
 
 # ninja_webapp Package
 
-## Current visual design
+## Current interface and contracts
 
-Current frontend metadata declares React 19.2.0; older React 18 descriptions are historical. The Pi5-derived navy/cyan tokens, panels, menu sheet and activity drawer apply to Pi0 Home, Agent and Help. Routes, request payloads, WebSocket events, millimetre units and existing action selectors remain Pi0-specific. BLE advertising is not controller connection. Four locale sets include previously missing labels; power still requires staged user action plus confirmation, with an accessible keyboard alternative.[^src-20261007-developmentguide-2]
+`ninja_webapp` is the existing React 19.2/Vite SPA with four locale bundles (`en`, `ja`, `zh-TW`, `zh-CN`). The owner-requested refinement changes frontend presentation only; backend/driver APIs, robot configuration, session ownership and shutdown confirmation remain unchanged. BLE advertising is distinct from web controller ownership.[^src-20261011-developmentguide] [^src-20261011-readme-current] [^src-20261011-readme-final]
 
+## Application pages
 
-`ninja_webapp` is the modern web frontend for NinjaRobotPi0, previously described as React 18, Vite, and `react-router-dom`.[^src-20260822-readme] [^src-20260822-developmentguide]
+- **Home (`/`)** combines language, interface selection and confirmed System Power. It is also the hamburger-menu destination.
+- **Movement Tool (`/movement`)** contains live distance and server-supplied native movement, face and sound selectors. Execution uses the existing direct POST endpoints and does not call Ninja Agent.
+- **Chat (`/agent`)** contains conversation/local clear, a prompt/send row and browser voice transcription into the prompt. It keeps the existing `{message, language}` chat payload and aborts recognition on navigation.
+- **Legacy Help (`/help`)** redirects Home; the Help implementation is removed. Unknown frontend routes also return Home.[^src-20261011-developmentguide] [^src-20261011-readme-current]
 
-## Architecture & Technology
+Movement and Chat share a bottom System Activity drawer, folded by default and expanded above content with timestamp/message rows, local clear and independent scrolling. `/ws/distance` remains a separate millimetre stream; `/ws/events` supplies actual runtime activity. The header badge uses real `/ws/session` ownership, not BLE advertising. Mobile-first columns, bounded widths, wrapping forms/messages, safe areas and localized/document-language labels implement the supplied design.[^src-20261011-developmentguide] [^src-20261011-webrefinementevidence]
 
-* **Earlier framework description**: React 18 + Vite.[^src-20260822-developmentguide]
-* **Styling**: Vanilla CSS with curated responsive tokens and modern micro-animations.[^src-20260822-developmentguide]
-* **Internationalization**: `react-i18next` translations for English (`en`), Japanese (`ja`), Traditional Chinese (`zh-tw`), and Simplified Chinese (`zh-cn`).[^src-20260822-readme] [^src-20260822-developmentguide]
-* **Real-Time Communication**: `/ws/distance` supplies `distance_mm`; `/ws/events` supplies activity/log events. The old combined-distance description was documentation drift.[^src-20261007-2026-10-07-install-onboard-wiki-ui-2]
-
-## Application Pages
-
-* **Home (`/`)**: Hero branding display and interactive slide-to-confirm power-off slider for safe robot shutdown.[^src-20260822-developmentguide]
-* **Agent (`/agent`)**: Main control dashboard featuring:
-  * **AI Chat Dialog**: Conversational text and voice chat with active cloud provider (Google, OpenAI, Anthropic, Ollama Cloud) and capability-gated voice input.[^src-20260822-readme] [^src-20261010-modeladapterimplementation]
-  * **Hardware Quick Controls**: Direct triggering of facial expressions, sounds, and recorded movements.[^src-20260822-developmentguide]
-  * **Real-Time Telemetry**: Distance sensor reading display with safety indicators.[^src-20260822-readme] [^src-20260822-developmentguide]
-  * **Slidable System Log Panel**: Real-time log monitor for debugging and telemetry.[^src-20260822-developmentguide]
-* **Help (`/help`)**: User manual and quick reference documentation.[^src-20260822-developmentguide]
-
-[^src-20260822-developmentguide]: NinjaRobotPi0 Development Guide.
-[^src-20260822-readme]: NinjaRobotPi0 Readme.
+Frontend lint/build, locale completeness, inert session/stream checks and protected-core verification passed. Browser validation was explicitly waived on the Pi Lite host; responsive/browser/device acceptance remains manual and is not implied by source checks.[^src-20261011-webrefinementevidence]
 
 ## Repository migration (2026-10-07)
 
@@ -115,14 +123,14 @@ Host validation and the exact code/tooling boundary are recorded in the approved
 [^src-20261007-2026-10-07-install-onboard-wiki-ui-2]: Pi0 upgrade implementation and current UI contracts.
 ## Shared session lifecycle and reconnect management (2026-10-10)
 
-`ninja_webapp` integrates session management in the shared application layout (`Layout.jsx`) using the `useRobotSession.js` hook.[^src-20261010-lifecyclerefinementsimplementationplan] A persistent `/ws/session` socket connects when the app mounts, carrying the server's HttpOnly session cookie across Home, Agent, and Help views. Heartbeat pings run every 10 seconds, with automatic retry every 3 seconds if disconnected. If a secondary browser attempts to connect while a session is active, the server closes the socket with code 4409, and the web app presents a busy modal preventing unauthorized control. The four locale bundles (`en`, `ja`, `zh-cn`, `zh-tw`) provide localized notifications for busy and reconnecting states.[^src-20261010-lifecyclerefinementsvalidation]
+`ninja_webapp` integrates session management in the shared application layout (`Layout.jsx`) using the `useRobotSession.js` hook.[^src-20261010-lifecyclerefinementsimplementationplan] A persistent `/ws/session` socket connects when the app mounts, carrying the server's HttpOnly session cookie across routes, now Home, Movement Tool and Chat.[^src-20261011-developmentguide] Heartbeat pings run every 10 seconds, with automatic retry every 3 seconds if disconnected. If a secondary browser attempts to connect while a session is active, the server closes the socket with code 4409, and the web app presents a busy status message preventing unauthorized control. The four locale bundles (`en`, `ja`, `zh-cn`, `zh-tw`) provide localized notifications for busy and reconnecting states.[^src-20261010-lifecyclerefinementsvalidation]
 
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-lifecyclerefinementsvalidation]: Lifecycle refinements validation report.
 
-## Voice capability gating and provider status display (2026-10-10)
+## Historical model-audio UI gating (2026-10-10, superseded)
 
-The Agent page consumes provider, model, and audio capability metadata from `/api/agent/status`.[^src-20261010-modeladapterimplementation] Voice recording controls are disabled with descriptive localized tooltips when the active model does not support native audio (OpenAI, Anthropic, Ollama Cloud, or non-allowlisted Google models). Backend voice endpoints reject audio payloads upfront if the active provider does not support it.[^src-20261010-modeladapterimplementation] A CSS stacking fix in `Agent.module.css` ensures navigation headers and menu sheets remain fully interactable above open activity panels.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
+The earlier Agent page consumed provider, model, and audio capability metadata from `/api/agent/status`.[^src-20261010-modeladapterimplementation] That earlier implementation disabled voice recording controls with descriptive localized tooltips when the active model does not support native audio (OpenAI, Anthropic, Ollama Cloud, or non-allowlisted Google models). Backend voice endpoints reject audio payloads upfront if the active provider does not support it.[^src-20261010-modeladapterimplementation] A historical CSS stacking fix in `Agent.module.css` ensures navigation headers and menu sheets remain fully interactable above open activity panels.[^src-20261010-modeladapterimplementation] [^src-20261010-modeladaptervalidation]
 
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
@@ -135,3 +143,13 @@ The Agent page microphone control uses client-side browser speech recognition (`
 
 [^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
 [^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
+
+The historical model-audio UI gate above was corrected before this refinement. Current Chat does not fetch provider audio metadata to gate its Web Speech microphone and makes no raw-audio API request. Availability depends on the browser speech service and permissions, not model audio-file capability.[^src-20261011-developmentguide] [^src-20261011-webrefinementevidence]
+
+[^src-20261011-developmentguide]: Web refinement current development guide (2026-10-11 web refinement).
+
+[^src-20261011-readme-current]: Web refinement corrected English README (2026-10-11 web refinement).
+
+[^src-20261011-webrefinementevidence]: Web refinement code, design and local validation evidence (2026-10-11 web refinement).
+
+[^src-20261011-readme-final]: Web refinement final English README navigation; current complete source corrects navigation links while preserving earlier versions.

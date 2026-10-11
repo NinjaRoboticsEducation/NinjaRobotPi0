@@ -7,8 +7,7 @@
     "nav": {
         "home": "首頁",
         "agent": "助手",
-        "code": "程式",
-        "help": "幫助"
+        "code": "程式"
     },
     "header": {
         "connected": "已連接",
@@ -18,7 +17,8 @@
         "openMenu": "開啟機器人選單",
         "closeMenu": "關閉選單",
         "menuTitle": "機器人選單",
-        "navigation": "導覽"
+        "navigation": "導覽",
+        "controllerActive": "控制器已啟用"
     },
     "home": {
         "welcome": "歡迎使用 NinjaRobot",
@@ -30,27 +30,36 @@
         "shutdownConfirm": "確定關閉機器人電源？",
         "shuttingDown": "正在關機…",
         "shutdownSuccess": "機器人正在關機，請等待指示燈熄滅。",
-        "shutdownError": "無法關機，請重試。"
+        "shutdownError": "無法關機，請重試。",
+        "languageDescription": "介面與語音辨識語言",
+        "controlTitle": "控制介面",
+        "movementButton": "動作工具",
+        "movementDescription": "使用動作工具，不透過 AI 助理即可測試內建動作。",
+        "chatDescription": "向 NinjaRobot Agent 輸入提示來控制機器人。",
+        "powerDescription": "停止機器人硬體與服務，然後關閉 Raspberry Pi。"
     },
     "agent": {
         "title": "忍者助手",
-        "placeholder": "輸入訊息...",
+        "placeholder": "詢問 NinjaRobot，或使用 /new user、/switch user、/identity…",
         "send": "發送",
         "voice": "語音輸入",
         "voiceUnavailable": "此模型不支援語音，請使用文字指令。",
-        "expressions": "表情",
+        "expressions": "臉部表情",
         "sounds": "聲音",
         "movements": "動作",
-        "distance": "距離",
+        "distance": "距離偵測",
         "distanceUnit": "mm",
-        "welcome": "我是 Ninja。請輸入訊息或使用麥克風。",
+        "welcome": "您好，NinjaRobot Agent 已準備就緒。",
         "systemLog": "系統活動",
         "logEmpty": "事件將顯示於此。",
         "runExpressions": "執行表情",
         "runSounds": "播放聲音",
         "runMovements": "執行動作",
         "error": "無法連線至機器人。",
-        "speechNotSupported": "無法使用語音辨識。"
+        "speechNotSupported": "無法使用語音辨識。",
+        "conversation": "對話",
+        "clearMessages": "清除訊息",
+        "replying": "等待回覆"
     },
     "code": {
         "title": "程式",
@@ -66,21 +75,23 @@
         "connected": "已連接到 {{name}}",
         "unsupported": "不支援藍牙"
     },
-    "help": {
-        "title": "幫助與文件",
-        "gettingStarted": "開始使用",
-        "gettingStartedText": "透過藍牙連接您的機器人，使用視覺化積木程式設計或與 AI 助手聊天。",
-        "troubleshooting": "故障排除",
-        "troubleshootingText": "如果遇到問題，請嘗試重新整理頁面或重新啟動機器人。",
-        "onboarding": "初始設定導引",
-        "onboardingText": "在機器人終端執行初始設定工具，校準現有裝置並設定 Gemini 與 ngrok。",
-        "fullGuide": "完整安裝指南"
-    },
     "language": {
         "label": "語言",
         "en": "English",
         "ja": "日本語",
         "zh-TW": "繁體中文",
         "zh-CN": "简体中文"
+    },
+    "activity": {
+        "clear": "清除訊息",
+        "codeReceived": "透過 BLE 收到程式碼（{{count}} 個字元）",
+        "reconnecting": "活動連線已中斷。重新連線中…"
+    },
+    "movement": {
+        "movementsDescription": "執行內建機器人動作",
+        "expressionsDescription": "顯示內建機器人表情",
+        "soundsDescription": "播放內建機器人音效",
+        "noActions": "沒有可用的動作",
+        "distanceUnavailable": "無法取得"
     }
 }

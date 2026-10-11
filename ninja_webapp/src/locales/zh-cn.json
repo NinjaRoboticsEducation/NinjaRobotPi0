@@ -7,8 +7,7 @@
     "nav": {
         "home": "首页",
         "agent": "助手",
-        "code": "程序",
-        "help": "帮助"
+        "code": "程序"
     },
     "header": {
         "connected": "已连接",
@@ -18,7 +17,8 @@
         "openMenu": "打开机器人菜单",
         "closeMenu": "关闭菜单",
         "menuTitle": "机器人菜单",
-        "navigation": "导航"
+        "navigation": "导航",
+        "controllerActive": "控制器已启用"
     },
     "home": {
         "welcome": "欢迎使用 NinjaRobot",
@@ -30,27 +30,36 @@
         "shutdownConfirm": "确定关闭机器人电源？",
         "shuttingDown": "正在关机…",
         "shutdownSuccess": "机器人正在关机，请等待指示灯熄灭。",
-        "shutdownError": "无法关机，请重试。"
+        "shutdownError": "无法关机，请重试。",
+        "languageDescription": "界面与语音识别语言",
+        "controlTitle": "控制界面",
+        "movementButton": "动作工具",
+        "movementDescription": "使用动作工具，无需 AI 助手即可测试内置动作。",
+        "chatDescription": "向 NinjaRobot Agent 输入提示来控制机器人。",
+        "powerDescription": "停止机器人硬件与服务，然后关闭 Raspberry Pi。"
     },
     "agent": {
         "title": "忍者助手",
-        "placeholder": "输入消息...",
+        "placeholder": "询问 NinjaRobot，或使用 /new user、/switch user、/identity…",
         "send": "发送",
         "voice": "语音输入",
         "voiceUnavailable": "此模型不支持语音，请使用文字指令。",
-        "expressions": "表情",
+        "expressions": "面部表情",
         "sounds": "声音",
         "movements": "动作",
-        "distance": "距离",
+        "distance": "距离检测",
         "distanceUnit": "mm",
-        "welcome": "我是 Ninja。请输入消息或使用麦克风。",
+        "welcome": "您好，NinjaRobot Agent 已准备就绪。",
         "systemLog": "系统活动",
         "logEmpty": "事件将显示于此。",
         "runExpressions": "执行表情",
         "runSounds": "播放声音",
         "runMovements": "执行动作",
         "error": "无法连接机器人。",
-        "speechNotSupported": "无法使用语音识别。"
+        "speechNotSupported": "无法使用语音识别。",
+        "conversation": "对话",
+        "clearMessages": "清除消息",
+        "replying": "等待回复"
     },
     "code": {
         "title": "程序",
@@ -66,21 +75,23 @@
         "connected": "已连接到 {{name}}",
         "unsupported": "不支持蓝牙"
     },
-    "help": {
-        "title": "帮助与文档",
-        "gettingStarted": "开始使用",
-        "gettingStartedText": "通过蓝牙连接您的机器人，使用可视化积木编程或与 AI 助手聊天。",
-        "troubleshooting": "故障排除",
-        "troubleshootingText": "如果遇到问题，请尝试刷新页面或重新启动机器人。",
-        "onboarding": "初始设置引导",
-        "onboardingText": "在机器人终端执行初始设置工具，校准现有设备并设置 Gemini 与 ngrok。",
-        "fullGuide": "完整安装指南"
-    },
     "language": {
         "label": "语言",
         "en": "English",
         "ja": "日本語",
         "zh-TW": "繁體中文",
         "zh-CN": "简体中文"
+    },
+    "activity": {
+        "clear": "清除消息",
+        "codeReceived": "通过 BLE 收到代码（{{count}} 个字符）",
+        "reconnecting": "活动连接已断开。正在重新连接…"
+    },
+    "movement": {
+        "movementsDescription": "执行内置机器人动作",
+        "expressionsDescription": "显示内置机器人表情",
+        "soundsDescription": "播放内置机器人音效",
+        "noActions": "没有可用的动作",
+        "distanceUnavailable": "无法获取"
     }
 }

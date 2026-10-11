@@ -7,8 +7,7 @@
     "nav": {
         "home": "Home",
         "agent": "Agent",
-        "code": "Code",
-        "help": "Help"
+        "code": "Code"
     },
     "header": {
         "connected": "Connected",
@@ -18,7 +17,8 @@
         "openMenu": "Open robot menu",
         "closeMenu": "Close robot menu",
         "menuTitle": "Robot menu",
-        "navigation": "Navigation"
+        "navigation": "Navigation",
+        "controllerActive": "Controller active"
     },
     "home": {
         "welcome": "Welcome to NinjaRobot",
@@ -30,27 +30,36 @@
         "shutdownConfirm": "Power off this robot?",
         "shuttingDown": "Shutting down…",
         "shutdownSuccess": "Robot is shutting down. Wait for its light to turn off.",
-        "shutdownError": "Could not shut down. Try again."
+        "shutdownError": "Could not shut down. Try again.",
+        "languageDescription": "Interface and speech recognition language",
+        "controlTitle": "Control Interface",
+        "movementButton": "Movement Tool",
+        "movementDescription": "Use the movement tool to test built-in movements without the AI assistant.",
+        "chatDescription": "Control the robot by sending prompts to the NinjaRobot Agent.",
+        "powerDescription": "Stop robot hardware and services, then shut down the Raspberry Pi."
     },
     "agent": {
         "title": "Ninja Agent",
-        "placeholder": "Type a message...",
+        "placeholder": "Ask NinjaRobot, or use /new user, /switch user, /identity…",
         "send": "Send",
         "voice": "Voice Input",
         "voiceUnavailable": "Voice unavailable for this model. Use text commands.",
-        "expressions": "Expressions",
+        "expressions": "Face Expressions",
         "sounds": "Sounds",
         "movements": "Movements",
-        "distance": "Distance",
+        "distance": "Distance Detection",
         "distanceUnit": "mm",
-        "welcome": "Hi, I'm Ninja. Type a message or use the microphone.",
+        "welcome": "Hello, NinjaRobot Agent is ready.",
         "systemLog": "System activity",
         "logEmpty": "Events will appear here.",
         "runExpressions": "Run expression",
         "runSounds": "Play sound",
         "runMovements": "Run movement",
         "error": "Could not connect to the robot.",
-        "speechNotSupported": "Speech recognition is unavailable."
+        "speechNotSupported": "Speech recognition is unavailable.",
+        "conversation": "Conversation",
+        "clearMessages": "Clear Messages",
+        "replying": "Waiting for a reply"
     },
     "code": {
         "title": "Code",
@@ -66,21 +75,23 @@
         "connected": "Connected to {{name}}",
         "unsupported": "Bluetooth not supported"
     },
-    "help": {
-        "title": "Help & Documentation",
-        "gettingStarted": "Getting Started",
-        "gettingStartedText": "Connect your robot via Bluetooth and start programming with visual blocks or chat with the AI agent.",
-        "troubleshooting": "Troubleshooting",
-        "troubleshootingText": "If you experience issues, try refreshing the page or restarting the robot.",
-        "onboarding": "Guided setup",
-        "onboardingText": "In the robot terminal, run the onboarding tool to calibrate existing devices and configure Gemini and ngrok.",
-        "fullGuide": "Complete installation guide"
-    },
     "language": {
         "label": "Language",
         "en": "English",
         "ja": "日本語",
         "zh-TW": "繁體中文",
         "zh-CN": "简体中文"
+    },
+    "activity": {
+        "clear": "Clear Messages",
+        "codeReceived": "Code received via BLE ({{count}} characters)",
+        "reconnecting": "Activity connection lost. Reconnecting…"
+    },
+    "movement": {
+        "movementsDescription": "Execute built-in robot movements",
+        "expressionsDescription": "Show built-in robot face expressions",
+        "soundsDescription": "Play built-in robot sounds",
+        "noActions": "No actions available",
+        "distanceUnavailable": "Unavailable"
     }
 }

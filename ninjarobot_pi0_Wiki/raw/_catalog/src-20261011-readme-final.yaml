@@ -1,0 +1,16 @@
+id: src-20261011-readme-final
+path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/README-final.md
+media_type: text/markdown
+kind: text
+title: Web refinement final English README navigation
+added_at: '2026-10-11T07:04:00Z'
+content_hash: sha256:149b9d5500e321b8e8b4bfd8eee4e056ef7eef77e5bca6107a9086860f8d1a8b
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-readme-final
+source_version: 2026-10-11-web-refinement-final
+retrieved_at: null
+normalized_at: '2026-10-11T07:04:14Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-11T07:06:33Z'
+last_plan: web-refinement-navigation-20261011
