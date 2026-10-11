@@ -132,11 +132,23 @@ sources:
   resource: urn:llmwiki:source:src-20261011-developmentguide-2
   title: Mobile refinement current development guide
   content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
+- id: src-20261011-developmentlog-4
+  resource: urn:llmwiki:source:src-20261011-developmentlog-4
+  title: Mobile spacing current development log
+  content_hash: sha256:9d4515e6d78af8c58f23d5ae1c72d3253e6112307a73bd6a270e0d575d3c74b0
+- id: src-20261011-developmentguide-3
+  resource: urn:llmwiki:source:src-20261011-developmentguide-3
+  title: Mobile spacing current development guide
+  content_hash: sha256:b855cbbf8072856078c91a45c8defe249cd21098a2df60a578babc5d1bde8b3c
+- id: src-20261011-mobilespacingvalidation
+  resource: urn:llmwiki:source:src-20261011-mobilespacingvalidation
+  title: Mobile spacing validation and owner screenshot evidence
+  content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T09:54:05.388246+00:00'
-  target_hash: sha256:ff1a4b8aca0bc4af577476c4f2727b3a1e8ded7bc64b36565a279d08fc214ef5
+  performed_at: '2026-10-11T11:18:33.727677+00:00'
+  target_hash: sha256:d00d83936fd340d30d922ae82497b30506cbfbda3bf57dcd51c85e3e4f06331c
   result: passed
   checks:
     source_support: passed
@@ -145,10 +157,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed mobile refinement milestone, viewport shell adaptation, GET /api/robot/status,
-    and 612 browser assertions against DevelopmentLog.md and WebMobileRefinement.md.
-  - All historical development milestones retain their prior source-grounded review
-    context.
+  - Reviewed 2026-10-11 mobile spacing and power-label correction milestone against
+    DevelopmentLog.md, DevelopmentGuide.md, and MobileSpacingValidation.md.
+  - Verified 813 assertions test suite expansion across 11 viewports and four locales.
+  - Physical phone and live robot hardware acceptance remain pending owner testing.
 ---
 
 # Development History and Evolution
@@ -310,3 +322,15 @@ Following the initial three-page web interface restructuring, the owner approved
 [^src-20261011-developmentlog-3]: Mobile refinement current development log (2026-10-11 mobile refinement).
 [^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
 [^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
+
+## Owner phone-test spacing and power-label correction milestone (2026-10-11)
+
+Following owner testing on physical Chrome normal mode and Safari fullscreen mode, spacing compression and slider centering were corrected:[^src-20261011-developmentlog-4] [^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Container-Based Allocation**: Layout wraps content in named size container `robot-page`, avoiding media query height distortions from browser toolbars. Home and Movement evenly distribute cards and enforce readable line spacing (1.5 normal, 1.45 compact).[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Short-Landscape Adaptation**: Two-column layout on Home reserves adequate width for the power slider in short landscape mode (height <= 500px, width >= 480px).[^src-20261011-developmentguide-3]
+* **Power Slider Centering**: Track height set to 64px with a 48px thumb, symmetric 54px label clearances, and container-width typography (`clamp(16px, 6.4cqw, 22px)`), achieving exact dual-axis centering across all locales.[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Testing & Boundaries**: 813 inert assertions in `tests/browser_ui.cjs` across 11 viewports and four locales passed; native phone acceptance in Chrome and Safari and Pi execution remain pending.[^src-20261011-mobilespacingvalidation]
+
+[^src-20261011-developmentlog-4]: Current versioned DevelopmentLog (2026-10-11 mobile spacing correction).
+[^src-20261011-developmentguide-3]: Mobile spacing current development guide (2026-10-11 mobile spacing).
+[^src-20261011-mobilespacingvalidation]: Mobile spacing validation and owner screenshot evidence (2026-10-11 mobile spacing).

@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-11T09:55:58Z'
+generated_at: '2026-10-11T12:33:14Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -431,6 +431,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-11-mobile-refinement/DevelopmentGuide.md
   kind: text
   state: ingested
+- id: src-20261011-developmentguide-3
+  title: Mobile spacing current development guide
+  path: raw/articles/ninjarobotpi0/2026-10-11-mobile-spacing/DevelopmentGuide.md
+  kind: text
+  state: ingested
 - id: src-20261011-developmentguide
   title: Web refinement current development guide
   path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md
@@ -444,6 +449,11 @@ sources:
 - id: src-20261011-developmentlog-3
   title: Mobile refinement current development log
   path: raw/notes/ninjarobotpi0/2026-10-11-mobile-refinement/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261011-developmentlog-4
+  title: Mobile spacing current development log
+  path: raw/notes/ninjarobotpi0/2026-10-11-mobile-spacing/DevelopmentLog.md
   kind: text
   state: ingested
 - id: src-20261011-developmentlog
@@ -461,11 +471,31 @@ sources:
   path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/home-390.png
   kind: image
   state: pending
+- id: src-20261011-home-390x670
+  title: Home 390x670 viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/home-390x670.png
+  kind: image
+  state: ingested
+- id: src-20261011-home-390x740
+  title: Home 390x740 viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/home-390x740.png
+  kind: image
+  state: ingested
+- id: src-20261011-home-390x844
+  title: Home 390x844 viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/home-390x844.png
+  kind: image
+  state: ingested
 - id: src-20261011-home-568
   title: Home 568px landscape viewport screenshot
   path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/home-568.png
   kind: image
   state: pending
+- id: src-20261011-home-568x320
+  title: Home 568x320 landscape viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/home-568x320.png
+  kind: image
+  state: ingested
 - id: src-20261011-home-selected-390
   title: Home selected 390px viewport screenshot
   path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/home-selected-390.png
@@ -476,16 +506,41 @@ sources:
   path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/long-log-390.png
   kind: image
   state: pending
+- id: src-20261011-mobilespacingvalidation
+  title: Mobile spacing validation and owner screenshot evidence
+  path: raw/notes/ninjarobotpi0/2026-10-11-mobile-spacing/MobileSpacingValidation.md
+  kind: text
+  state: ingested
 - id: src-20261011-movement-390
   title: Movement 390px viewport screenshot
   path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/movement-390.png
   kind: image
   state: pending
+- id: src-20261011-movement-390x670
+  title: Movement 390x670 viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/movement-390x670.png
+  kind: image
+  state: ingested
+- id: src-20261011-movement-390x740
+  title: Movement 390x740 viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/movement-390x740.png
+  kind: image
+  state: ingested
+- id: src-20261011-movement-390x844
+  title: Movement 390x844 viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/movement-390x844.png
+  kind: image
+  state: ingested
 - id: src-20261011-movement-568
   title: Movement 568px landscape viewport screenshot
   path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/movement-568.png
   kind: image
   state: pending
+- id: src-20261011-movement-568x320
+  title: Movement 568x320 landscape viewport screenshot
+  path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/movement-568x320.png
+  kind: image
+  state: ingested
 - id: src-20261011-readme-current
   title: Web refinement corrected English README
   path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/README-current.md

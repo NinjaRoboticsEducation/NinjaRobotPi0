@@ -1,0 +1,16 @@
+id: src-20261011-mobilespacingvalidation
+path: raw/notes/ninjarobotpi0/2026-10-11-mobile-spacing/MobileSpacingValidation.md
+media_type: text/markdown
+kind: text
+title: Mobile spacing validation and owner screenshot evidence
+added_at: '2026-10-11T11:11:05Z'
+content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-mobilespacingvalidation
+source_version: 2026-10-11-mobile-spacing
+retrieved_at: null
+normalized_at: '2026-10-11T11:11:33Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-11T12:33:05Z'
+last_plan: pi0-mobile-spacing-ingest-261011

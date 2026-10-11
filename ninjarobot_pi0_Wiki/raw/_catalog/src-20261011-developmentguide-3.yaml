@@ -1,0 +1,16 @@
+id: src-20261011-developmentguide-3
+path: raw/articles/ninjarobotpi0/2026-10-11-mobile-spacing/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Mobile spacing current development guide
+added_at: '2026-10-11T11:10:55Z'
+content_hash: sha256:b855cbbf8072856078c91a45c8defe249cd21098a2df60a578babc5d1bde8b3c
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-developmentguide-3
+source_version: 2026-10-11-mobile-spacing
+retrieved_at: null
+normalized_at: '2026-10-11T11:11:32Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-11T12:33:05Z'
+last_plan: pi0-mobile-spacing-ingest-261011

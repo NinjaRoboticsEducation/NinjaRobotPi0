@@ -99,11 +99,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-developmentlog-3
   title: Mobile refinement current development log
   content_hash: sha256:681a0756d6562ccdbcfbd268e31f7e8856b70008204d342a5a366443314b1749
+- id: src-20261011-developmentguide-3
+  resource: urn:llmwiki:source:src-20261011-developmentguide-3
+  title: Mobile spacing current development guide
+  content_hash: sha256:b855cbbf8072856078c91a45c8defe249cd21098a2df60a578babc5d1bde8b3c
+- id: src-20261011-mobilespacingvalidation
+  resource: urn:llmwiki:source:src-20261011-mobilespacingvalidation
+  title: Mobile spacing validation and owner screenshot evidence
+  content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T09:54:05.388246+00:00'
-  target_hash: sha256:615903005b1e43d094121eb33365a613b4252cc8b5ae401c1164b7af9d798bce
+  performed_at: '2026-10-11T11:18:33.727677+00:00'
+  target_hash: sha256:ffa7edc1cdceccdbd23e9660b2ca7bb749f348ab5c7d10fde08d2bb216843473
   result: passed
   checks:
     source_support: passed
@@ -112,15 +120,15 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed current manual pointers, mobile viewport management, GET /api/robot/status,
-    and test matrix against DevelopmentGuide.md and WebMobileRefinement.md.
-  - Historical manual milestones retain prior source-grounded review context.
-  - Physical Pi hardware and live mobile browser acceptance remain pending owner testing.
+  - Reviewed current manual pointers, mobile spacing corrections, named size container
+    queries, and 813 browser test assertions against DevelopmentGuide.md and MobileSpacingValidation.md.
+  - Historical manual versions remain preserved in preceding sources.
+  - Physical Pi hardware and live mobile phone acceptance remain pending owner retest.
 ---
 
 # Current development manual
 
-Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context. The current complete English-only manual adds mobile viewport adaptation, persistent interface selection, fullscreen activation, localized robot type status, and browser UI test matrix guidance.[^src-20261011-developmentguide-2] Earlier web-refinement guidance is preserved in the preceding version.[^src-20261011-developmentguide]
+Resolve the complete current DevelopmentGuide through project-knowledge.json or the wiki README. It documents protected core/driver functions, additive onboarding, UI contract preservation, immutable source versions, native built-in movement execution, and host/wiki validation. Root DevelopmentGuide.md is a compatibility pointer; earlier detailed API/history material is preserved as historical context. The current complete English-only manual adds owner phone-test spacing corrections, named size container queries, centered power-slider dimensions, and 813 browser test assertions.[^src-20261011-developmentguide-3] Earlier mobile and web-refinement guidance is preserved in preceding versions.[^src-20261011-developmentguide-2] [^src-20261011-developmentguide]
 
 [Project overview](/overview.md).
 
@@ -241,3 +249,15 @@ The mobile web refinement documents responsive viewport geometry, persistent lay
 [^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
 [^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
 [^src-20261011-developmentlog-3]: Mobile refinement current development log (2026-10-11 mobile refinement).
+
+## Owner phone-test spacing correction (2026-10-11)
+
+Following owner review of physical Chrome normal mode and Safari fullscreen screenshots, spacing and slider geometry were corrected:[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Container Queries**: Home and Movement query the named `robot-page` container from Layout to adapt to toolbar-constrained mobile viewports.[^src-20261011-developmentguide-3]
+* **Even Card Gaps & Line Height**: Explicit gaps (`clamp(12px, 2cqh, 22px)` normal, 10px compact) and description line heights (1.5 normal, 1.45 compact) eliminate compressed top-packed content and fill lower page space evenly.[^src-20261011-developmentguide-3]
+* **Short-Landscape Home**: Switches to two columns at width >= 480px and height <= 500px, keeping Language and Power on the left and Control Interface on the right.[^src-20261011-developmentguide-3]
+* **Centered Power Slider**: 64px track, 48px thumb, symmetric 54px clearance, and `clamp(16px, 6.4cqw, 22px)` text size centering labels on both axes.[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Browser Test Suite**: 813 assertions in `tests/browser_ui.cjs` across 11 screen dimensions and four locales pass; native phone and Pi validation remain pending.[^src-20261011-mobilespacingvalidation]
+
+[^src-20261011-developmentguide-3]: Mobile spacing current development guide (2026-10-11 mobile spacing).
+[^src-20261011-mobilespacingvalidation]: Mobile spacing validation and owner screenshot evidence (2026-10-11 mobile spacing).

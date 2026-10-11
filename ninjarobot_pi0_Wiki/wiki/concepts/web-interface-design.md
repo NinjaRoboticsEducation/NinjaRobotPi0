@@ -55,11 +55,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-webmobilerefinement
   title: Web mobile refinement evidence
   content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
+- id: src-20261011-developmentguide-3
+  resource: urn:llmwiki:source:src-20261011-developmentguide-3
+  title: Mobile spacing current development guide
+  content_hash: sha256:b855cbbf8072856078c91a45c8defe249cd21098a2df60a578babc5d1bde8b3c
+- id: src-20261011-mobilespacingvalidation
+  resource: urn:llmwiki:source:src-20261011-mobilespacingvalidation
+  title: Mobile spacing validation and owner screenshot evidence
+  content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T09:54:05.388246+00:00'
-  target_hash: sha256:d3ff94c6fa147f82e5aba320608c3bec78a82128e18b27164f16119cc72c0ba8
+  performed_at: '2026-10-11T11:18:33.727677+00:00'
+  target_hash: sha256:b232aecd51c9285404d95e3ae9d561e99111b2af2dcf7533488b818abafb8f0d
   result: passed
   checks:
     source_support: passed
@@ -68,12 +76,12 @@ semantic_review:
     claim_strength: passed
     visual_evidence: passed
   notes:
-  - Reviewed mobile viewport tracking, body scroll lock, persistent link selection,
-    and GET /api/robot/status against DevelopmentGuide.md and WebMobileRefinement.md.
-  - Inspected visual screenshot evidence across 9 screen resolutions from inert Chromium
+  - Reviewed named size container robot-page, card gap sharing, two-column short-landscape
+    Home, and symmetric PowerOffSlider centering against DevelopmentGuide.md and MobileSpacingValidation.md.
+  - Inspected visual screenshot evidence across 11 screen resolutions from inert Chromium
     test matrix.
-  - Automated tests passed; native mobile browser, hardware touchscreen, and live
-    robot acceptance remain pending.
+  - Automated tests passed (813 assertions); native phone testing in Chrome and Safari
+    and Pi hardware acceptance remain pending.
 ---
 
 # Pi0 web interface design and compatibility
@@ -134,3 +142,16 @@ The mobile web interface refinement resolves short-screen and on-screen keyboard
 
 [^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
 [^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
+
+## Owner phone-test spacing correction and centered power label (2026-10-11)
+
+Following native mobile browser testing on owner devices, spacing and slider geometry were corrected to eliminate compressed layouts under browser toolbars and center the power-off label:[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Named Size Container (`robot-page`)**: Layout establishes a `@container robot-page (min-width: 0px)` wrapping main content, ensuring Home and Movement evaluate available viewport space rather than global window dimensions that can be skewed by mobile chrome or on-screen keyboards.[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Card Distribution & Line Spacing**: Cards share remaining vertical height through flex allocation and explicit gap clamps (`clamp(12px, 2cqh, 22px)` normal, 10px compact below 620px/640px page height), preventing dead space below the final card. Card headings use 1.25 line-height, standard descriptions use 1.5, and compact descriptions use 1.45.[^src-20261011-developmentguide-3]
+* **Two-Column Short-Landscape Home**: At container widths of at least 480px and heights up to 500px, Home reorganizes into two columns with Language and Power in the left column and Control Interface spanning both rows on the right, maintaining full slider track width.[^src-20261011-developmentguide-3]
+* **Symmetric Centered Power Slider**: `PowerOffSlider` expands to a 64px track height with a 48px thumb and symmetric 54px left/right clearances, centering the label text on both axes within 1px. Label text uses container-query width sizing (`clamp(16px, 6.4cqw, 22px)`) at 1.25 line-height, ensuring legibility across all four locales.[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Movement Drawer Margin**: Movement Tool scrollport establishes an explicit bottom margin reserving clearance above the collapsed System Activity drawer, preventing long translated controls from slipping beneath the tab.[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Expanded Verification**: 813 assertions in `tests/browser_ui.cjs` across 11 screen sizes (including VisualViewport toolbar simulation at 390×670 and 390×740) and four languages validated no-overflow, minimum 10px gaps, description line heights >=1.4, and slider label centering; physical phone acceptance in Chrome and Safari remains pending retest.[^src-20261011-mobilespacingvalidation]
+
+[^src-20261011-developmentguide-3]: Mobile spacing current development guide (2026-10-11 mobile spacing).
+[^src-20261011-mobilespacingvalidation]: Mobile spacing validation and owner screenshot evidence (2026-10-11 mobile spacing).

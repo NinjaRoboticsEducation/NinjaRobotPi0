@@ -1,0 +1,26 @@
+id: src-20261011-home-568x320
+path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/home-568x320.png
+media_type: image/png
+kind: image
+title: Home 568x320 landscape viewport screenshot
+added_at: '2026-10-11T11:11:17Z'
+content_hash: sha256:80076f80cb336d09c38926e9bf3d280d9835b986d419f50e1bfa8c703646cb95
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-home-568x320
+source_version: 2026-10-11-mobile-spacing
+retrieved_at: null
+normalized_at: '2026-10-11T11:11:43Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 568
+  height: 320
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:7faa468f1a219b31f7dad36d602cf251617b4b752f16dbf84f43ef8365337692
+ingested_at: '2026-10-11T12:33:05Z'
+last_plan: pi0-mobile-spacing-ingest-261011

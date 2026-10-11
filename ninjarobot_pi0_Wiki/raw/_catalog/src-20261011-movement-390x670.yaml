@@ -1,0 +1,26 @@
+id: src-20261011-movement-390x670
+path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/movement-390x670.png
+media_type: image/png
+kind: image
+title: Movement 390x670 viewport screenshot
+added_at: '2026-10-11T11:11:17Z'
+content_hash: sha256:14609d8128493c4b9582d2d4c153cf5dcb7293e40ea2a2777c46f8802d2695f8
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-movement-390x670
+source_version: 2026-10-11-mobile-spacing
+retrieved_at: null
+normalized_at: '2026-10-11T11:11:44Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 670
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:9d690aaf55366a4fcfe6ea376f0f06a72db52a9071b32d59c61712a57117afa1
+ingested_at: '2026-10-11T12:33:05Z'
+last_plan: pi0-mobile-spacing-ingest-261011

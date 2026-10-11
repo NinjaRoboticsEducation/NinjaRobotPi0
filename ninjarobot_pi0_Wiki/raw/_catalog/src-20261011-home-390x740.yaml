@@ -1,0 +1,26 @@
+id: src-20261011-home-390x740
+path: raw/media/ninjarobotpi0/2026-10-11-mobile-spacing/home-390x740.png
+media_type: image/png
+kind: image
+title: Home 390x740 viewport screenshot
+added_at: '2026-10-11T11:11:15Z'
+content_hash: sha256:47eb4a2e57141f0210501004e0088fd292767bbfc2f4761e72fb55566c63947c
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-home-390x740
+source_version: 2026-10-11-mobile-spacing
+retrieved_at: null
+normalized_at: '2026-10-11T11:11:41Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 740
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:8c7e864efd78ba1d88f96ad6a319623cd5e23f88d837bda1da558cbd7be9dfd5
+ingested_at: '2026-10-11T12:33:05Z'
+last_plan: pi0-mobile-spacing-ingest-261011

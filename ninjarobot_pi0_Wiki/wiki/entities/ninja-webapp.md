@@ -76,11 +76,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-webmobilerefinement
   title: Web mobile refinement evidence
   content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
+- id: src-20261011-developmentguide-3
+  resource: urn:llmwiki:source:src-20261011-developmentguide-3
+  title: Mobile spacing current development guide
+  content_hash: sha256:b855cbbf8072856078c91a45c8defe249cd21098a2df60a578babc5d1bde8b3c
+- id: src-20261011-mobilespacingvalidation
+  resource: urn:llmwiki:source:src-20261011-mobilespacingvalidation
+  title: Mobile spacing validation and owner screenshot evidence
+  content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T09:54:05.388246+00:00'
-  target_hash: sha256:4e42661e9613f467fa4043f0c39341ef599828a0f0735297c2873989c7223d87
+  performed_at: '2026-10-11T11:18:33.727677+00:00'
+  target_hash: sha256:ae3eb052e5aded2af0fc7887c259501f7a369b7a56613f679c5edc0583d43541
   result: passed
   checks:
     source_support: passed
@@ -89,12 +97,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed useAppViewport hook, fullscreen utility, persistent selection state,
-    and GET /api/robot/status integration against DevelopmentGuide.md and WebMobileRefinement.md.
+  - Reviewed robot-page container queries, Layout.module.css, Home/Movement spacing
+    CSS rules, and PowerOffSlider dimensions against DevelopmentGuide.md and MobileSpacingValidation.md.
   - Verified citations for earlier sources and inert Chromium browser test matrix
-    (612 assertions).
-  - Native browser and Raspberry Pi physical verification remain pending manual owner
-    testing.
+    expansion (813 assertions).
+  - Native phone browser and physical Raspberry Pi testing remain pending owner acceptance.
 ---
 
 # ninja_webapp Package
@@ -170,3 +177,14 @@ The mobile web refinement incorporates dedicated responsive infrastructure and m
 
 [^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
 [^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
+
+## Responsive Spacing Container and Centered Slider Geometry (2026-10-11)
+
+Following owner native phone inspection, `ninja_webapp` styling was updated to resolve top-compressed cards and an off-center power slider:[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Container Context (`Layout.module.css`)**: Adds `@container robot-page` to the primary page container, allowing subpages to query actual rendered bounds rather than viewport height subject to browser toolbar variation.[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Home & Movement Spacing (`Home.module.css`, `Movement.module.css`)**: Cards share spare vertical height using explicit clamps (`clamp(12px, 2cqh, 22px)` normal, 10px compact) and line-heights (1.5 normal, 1.45 compact). Movement reserves bottom clearance above the System Activity drawer. Home shifts to a 2-column grid in short landscape (width >= 480px, height <= 500px).[^src-20261011-developmentguide-3]
+* **Centered Power Slider (`PowerOffSlider.module.css`)**: Implements a 64px track with a 48px thumb, symmetric 54px label clearances, and container-width font sizing (`clamp(16px, 6.4cqw, 22px)`), aligning text to the track center within 1px horizontally and vertically across all four languages without altering drag/confirmation logic.[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Regressions Suite Expansion**: `tests/browser_ui.cjs` expanded to 813 assertions covering 11 viewports and toolbar height shifts, ensuring no-overflow and text centering; physical touch and mobile browser acceptance remain pending owner retest.[^src-20261011-mobilespacingvalidation]
+
+[^src-20261011-developmentguide-3]: Mobile spacing current development guide (2026-10-11 mobile spacing).
+[^src-20261011-mobilespacingvalidation]: Mobile spacing validation and owner screenshot evidence (2026-10-11 mobile spacing).

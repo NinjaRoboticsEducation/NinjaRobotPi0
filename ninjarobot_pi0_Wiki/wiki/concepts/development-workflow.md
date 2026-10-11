@@ -83,11 +83,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-webmobilerefinement
   title: Web mobile refinement evidence
   content_hash: sha256:f8d7f1c9bdec974150d098e9c6d8b3fd0910b7ee6318368329dc06228c4525f4
+- id: src-20261011-developmentguide-3
+  resource: urn:llmwiki:source:src-20261011-developmentguide-3
+  title: Mobile spacing current development guide
+  content_hash: sha256:b855cbbf8072856078c91a45c8defe249cd21098a2df60a578babc5d1bde8b3c
+- id: src-20261011-mobilespacingvalidation
+  resource: urn:llmwiki:source:src-20261011-mobilespacingvalidation
+  title: Mobile spacing validation and owner screenshot evidence
+  content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T09:54:05.388246+00:00'
-  target_hash: sha256:1fe6d4326630da1dbeb7b47e73ce55028c153ea0e4925b20c9fb6c98f13bb7fb
+  performed_at: '2026-10-11T11:18:33.727677+00:00'
+  target_hash: sha256:a5df2ad5efff222431f9877d85342fad99ba331fdb8cd0a53e367a903caa3be8
   result: passed
   checks:
     source_support: passed
@@ -96,10 +104,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed browser test matrix (612 assertions), isolated route tests, and validation
-    boundaries against WebMobileRefinement.md.
-  - Confirmed strict distinction between simulated Chromium fixtures and physical
-    hardware validation.
+  - Reviewed expanded 813 assertions browser test matrix, toolbar VisualViewport simulation,
+    and regression catches against MobileSpacingValidation.md.
+  - Automated software tests passed; native mobile browser and physical Pi testing
+    remain pending owner acceptance.
 ---
 
 # Development and immutable documentation workflow
@@ -209,3 +217,13 @@ The mobile refinement workflow incorporates comprehensive automated browser asse
 
 [^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
 [^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
+
+## Owner phone-test spacing correction and regression workflow (2026-10-11)
+
+Following owner testing on native mobile devices, the testing matrix expanded to validate responsive layout adaptation under browser chrome constraints:[^src-20261011-developmentguide-3] [^src-20261011-mobilespacingvalidation]
+* **Toolbar Simulation & Assertions Expansion**: `tests/browser_ui.cjs` expanded to 813 assertions across 11 screen sizes (including 390×670, 390×740, 390×844 with VisualViewport-only height constraints) and all four locales. The suite enforces zero page overflow, minimum 10px card gaps, description line-height >=1.4, and power slider text center within 1px of track center.[^src-20261011-mobilespacingvalidation]
+* **Regression Catches**: Initial test runs detected a 26px Home overflow at 390×670 and Japanese Movement controls occluded by the activity drawer; margins and available-height thresholds were adjusted and re-verified without reducing line-height standards.[^src-20261011-mobilespacingvalidation]
+* **Verification Boundary**: All 813 automated assertions passed in inert Chromium, alongside frontend lint/build, session hook, and core boundary checks. Native mobile Safari/Chrome retests and physical Pi validation remain pending owner testing.[^src-20261011-mobilespacingvalidation]
+
+[^src-20261011-developmentguide-3]: Mobile spacing current development guide (2026-10-11 mobile spacing).
+[^src-20261011-mobilespacingvalidation]: Mobile spacing validation and owner screenshot evidence (2026-10-11 mobile spacing).
