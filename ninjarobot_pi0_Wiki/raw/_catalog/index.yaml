@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-11T12:33:14Z'
+generated_at: '2026-10-11T14:27:25Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -416,6 +416,11 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-11-shutdown-voice-fixes/ShutdownVoiceFixes.md
   kind: text
   state: ingested
+- id: src-20261011-2026-10-11-spider-validated
+  title: 2026 10 11 Spider Validated
+  path: raw/notes/changes/2026-10-11-spider-validated.md
+  kind: text
+  state: ingested
 - id: src-20261011-chat-390
   title: Chat 390px viewport screenshot
   path: raw/media/ninjarobotpi0/2026-10-11-mobile-refinement/chat-390.png
@@ -436,6 +441,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-11-mobile-spacing/DevelopmentGuide.md
   kind: text
   state: ingested
+- id: src-20261011-developmentguide-4
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentGuide.md
+  kind: text
+  state: ingested
 - id: src-20261011-developmentguide
   title: Web refinement current development guide
   path: raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md
@@ -454,6 +464,11 @@ sources:
 - id: src-20261011-developmentlog-4
   title: Mobile spacing current development log
   path: raw/notes/ninjarobotpi0/2026-10-11-mobile-spacing/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261011-developmentlog-5
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentLog.md
   kind: text
   state: ingested
 - id: src-20261011-developmentlog

@@ -1,0 +1,16 @@
+id: src-20261011-2026-10-11-spider-validated
+path: raw/notes/changes/2026-10-11-spider-validated.md
+media_type: text/markdown
+kind: text
+title: 2026 10 11 Spider Validated
+added_at: '2026-10-11T14:25:29Z'
+content_hash: sha256:66fbb23415a3ac62be62f096b6fb7bd5ba400538dabe8a29442f92c50d64847e
+state: ingested
+original_uri: urn:llmwiki:source:src-20261011-2026-10-11-spider-validated
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-11T14:25:57Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-11T14:27:17Z'
+last_plan: pi0-spider-validated-261011

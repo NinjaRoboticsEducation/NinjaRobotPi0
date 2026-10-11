@@ -91,11 +91,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-mobilespacingvalidation
   title: Mobile spacing validation and owner screenshot evidence
   content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
+- id: src-20261011-2026-10-11-spider-validated
+  resource: urn:llmwiki:source:src-20261011-2026-10-11-spider-validated
+  title: 2026 10 11 Spider Validated
+  content_hash: sha256:66fbb23415a3ac62be62f096b6fb7bd5ba400538dabe8a29442f92c50d64847e
+- id: src-20261011-developmentguide-4
+  resource: urn:llmwiki:source:src-20261011-developmentguide-4
+  title: Developmentguide
+  content_hash: sha256:3006688d9c9cc558348b9b04ae9a715059b939e2b140d6474861a513dd6a458f
 semantic_review:
   version: 1
-  performed_by: agent:antigravity
-  performed_at: '2026-10-11T11:18:33.727677+00:00'
-  target_hash: sha256:a5df2ad5efff222431f9877d85342fad99ba331fdb8cd0a53e367a903caa3be8
+  performed_by: agent:codex
+  performed_at: '2026-10-11T14:26:52.015630+00:00'
+  target_hash: sha256:840a3fe52a068e99c0557e40862dee42f577bd2aab3a3df77b40cb3716a776e4
   result: passed
   checks:
     source_support: passed
@@ -104,10 +112,13 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed expanded 813 assertions browser test matrix, toolbar VisualViewport simulation,
-    and regression catches against MobileSpacingValidation.md.
-  - Automated software tests passed; native mobile browser and physical Pi testing
-    remain pending owner acceptance.
+  - Replacement claims reviewed against the registered new evidence, exact owner-source/resource/document
+    parity and 146 host tests. Older trajectory statements are explicitly historical;
+    unchanged managed values migrate and edits persist. Prior review by agent:antigravity
+    at 2026-10-11T11:18:33.727677+00:00 remains provenance for retained historical/context
+    claims; this update does not rerun their unrelated validation.
+  - Draft/unverified status remains. Owner-reported movement validation is attributed;
+    no new physical, visual or human wiki verification event is asserted.
 ---
 
 # Development and immutable documentation workflow
@@ -227,3 +238,14 @@ Following owner testing on native mobile devices, the testing matrix expanded to
 
 [^src-20261011-developmentguide-3]: Mobile spacing current development guide (2026-10-11 mobile spacing).
 [^src-20261011-mobilespacingvalidation]: Mobile spacing validation and owner screenshot evidence (2026-10-11 mobile spacing).
+
+
+## Owner-validated Spider catalog replacement (2026-10-11)
+
+The current complete manual/log version records replacement of installed Spider data from the owner-supplied `DevelopmentPlanDoc/spider_movement.json`: 20 definitions, 566 steps, revised run/walk/turn directions and `spider_moonwalk_right`. `Poweroff` remains exact. Existing runtime functions and profile reconciliation are unchanged; unchanged managed entries update while user edits remain. The original OTTO research generator stays historical. See [Spider movement integration](/concepts/spider-otto-waypoint-library.md).[^src-20261011-developmentguide-4] [^src-20261011-2026-10-11-spider-validated]
+
+Host validation passed 146 targeted tests, including all current sequences with inert output and managed-upgrade/custom-edit preservation. No new hardware or Pi operation is claimed; owner-reported validation is separate from these host checks.[^src-20261011-2026-10-11-spider-validated]
+
+[^src-20261011-developmentguide-4]: New complete English version preserving earlier guidance and adding the validated catalog replacement.
+
+[^src-20261011-2026-10-11-spider-validated]: Owner-requested Spider data replacement, exact source parity and host validation evidence.

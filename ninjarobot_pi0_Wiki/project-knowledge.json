@@ -1,7 +1,7 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-11T07:08:08.953735+00:00",
+  "reviewed_at": "2026-10-11T14:27:25.447726+00:00",
   "documents": [
     {
       "name": "InstallationGuide.md",
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md",
-      "source_id": "src-20261011-developmentguide",
-      "content_hash": "sha256:a3cbb8265b1fd651a73fcd826a58f239d60fd28f128d2b82de7d628fec8ec738",
+      "path": "raw/articles/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentGuide.md",
+      "source_id": "src-20261011-developmentguide-4",
+      "content_hash": "sha256:3006688d9c9cc558348b9b04ae9a715059b939e2b140d6474861a513dd6a458f",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md",
-      "source_id": "src-20261011-developmentlog-2",
-      "content_hash": "sha256:4efb54443f0dac7c48f1b8e722574e4e486ed5dd6db6f0074ea7aafe52478061",
+      "path": "raw/notes/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentLog.md",
+      "source_id": "src-20261011-developmentlog-5",
+      "content_hash": "sha256:6bc6d153e74e84ea1e4b5b1d8069a818278c5a4d840109d53694e25e98777f16",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -261,12 +261,12 @@
       "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
     },
     "DevelopmentPlanDoc/SpiderBuildinMovements.md": {
-      "content_hash": "sha256:84665ce845dceb3e77f6e92a942467cb4747f40b515d590056ebd3fa29e48f36",
+      "content_hash": "sha256:77f7a4f415abd530efe4d6772c43b755d6cdc6570694b0261878af2ba20b341f",
       "pages": [
         "wiki/concepts/spider-otto-waypoint-library.md",
         "wiki/concepts/motion-system-and-easing.md"
       ],
-      "review_note": "Reviewed owner-requested document-only spider_* names and exact Poweroff definition: 20 unique JSON entries, 566 steps. Source pack remains unchanged; preview merge converts old prefix and adds Poweroff with collision rejection. Corrected nonexistent ninja_spider.json link. Shutdown helper verified; no Wave_Left_Hand, runtime, live config or calibration change."
+      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
     },
     "GEMINI.md": {
       "content_hash": "sha256:d50fb2b678f918a638cc2257666e2d4028365492b821a165d384b0e35eaa1e24",
@@ -276,11 +276,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "README.md": {
-      "content_hash": "sha256:0d79273c8420f6472b3aba2b9eae6c3634de047ceba863ce73165d3812f97b02",
+      "content_hash": "sha256:32e86e5f2db7620848d272b4ca08ccf052b4ab0c9af76f8d0ad2301728c46237",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Reviewed four-language UI guidance and corrected current-manual navigation; final English snapshot is src-20261011-readme-final. Browser/hardware acceptance remains pending."
+      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
     },
     "docs/validation/core_baseline.json": {
       "content_hash": "sha256:80159f37e3b62a1033eaea3e803642c0952cb5821d04e2677ceda25459c1cbab",
@@ -1878,12 +1878,12 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_builtin_movements.py": {
-      "content_hash": "sha256:375f961035601425f2f862bd0f6a734d6b164ce0c059053e1cd2f8e09fed9d84",
+      "content_hash": "sha256:0cef504ccf75c6dd0af73eeab08ce432c992873bb33636d82ef72c5a892d8a56",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Unit test suite validating built-in movement discovery, profile seeding, preflight error guards, and robot type scoping."
+      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
     },
     "tests/test_chunking.py": {
       "content_hash": "sha256:2ca4c99ce8c3c897af043b15067e4461fe43ac83b37143c0a47e78a5b31484c1",
@@ -2093,6 +2093,41 @@
         "wiki/concepts/web-interface-design.md"
       ],
       "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+    },
+    "DevelopmentGuide.md": {
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md"
+      ],
+      "content_hash": "sha256:ac9e45059ea328eaef4a111c6bef3f10559afd1a35def35d0967b5fdc22e8693",
+      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+    },
+    "DevelopmentLog.md": {
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md"
+      ],
+      "content_hash": "sha256:2dcb11395dee3092a0d3c3fdfdc820530b9de81a575d3771c318dbb2a72799bb",
+      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+    },
+    "ninjarobot_pi0_Wiki/README.md": {
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md"
+      ],
+      "content_hash": "sha256:5ff5f81d3b06ee7f331ac6aa59e0558ecaeb326651107b5a9a9c73bdea9435db",
+      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+    },
+    "ninja_core/src/ninja_core/data/spider_otto.json": {
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md"
+      ],
+      "content_hash": "sha256:2614fcdac82ccbde8f7c00b58c037d120001728d96c0ca07de1d7923d9f0721b",
+      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+    },
+    "DevelopmentPlanDoc/spider_movement.json": {
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md"
+      ],
+      "content_hash": "sha256:e045ebe530b454f2a0dbf285db8d2b429301bff7cb619cb0d4b45b4498f2b560",
+      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
     }
   },
   "adapters": [
@@ -2245,7 +2280,9 @@
     "DevelopmentPlanDoc/NinjaRobotPi0WebRefinement_261011.md",
     "docs/validation/WebRefinement-2026-10-11.md",
     "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md",
-    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md"
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md",
+    "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentGuide.md",
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentLog.md"
   ],
   "limits": [
     "AI source-grounded review is not human verification or physical qualification.",

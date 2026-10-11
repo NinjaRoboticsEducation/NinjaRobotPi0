@@ -1,7 +1,8 @@
 ---
 type: Concept
 title: Spider OTTO waypoint library and native movement integration
-description: Installed Spider movements, native execution preflights, and profile reconciliation.
+description: Installed Spider movements, native execution preflights, and profile
+  reconciliation.
 status: draft
 generated:
   by: agent:codex
@@ -23,11 +24,15 @@ sources:
   resource: urn:llmwiki:source:src-20261009-builtinmovementsvalidation
   title: Builtinmovementsvalidation
   content_hash: sha256:5d551d9332478d7b524e48d7f8f06715498df9a85e13a9099198266f948a6beb
+- id: src-20261011-2026-10-11-spider-validated
+  resource: urn:llmwiki:source:src-20261011-2026-10-11-spider-validated
+  title: 2026 10 11 Spider Validated
+  content_hash: sha256:66fbb23415a3ac62be62f096b6fb7bd5ba400538dabe8a29442f92c50d64847e
 semantic_review:
   version: 1
-  performed_by: agent:antigravity
-  performed_at: '2026-10-09T17:10:48.021602+00:00'
-  target_hash: sha256:fb77dee3794994a67495b192f2c5c44efa7215284d14d0fbe4a624aaff454901
+  performed_by: agent:codex
+  performed_at: '2026-10-11T14:26:52.015630+00:00'
+  target_hash: sha256:b4190f443ad7b41d25228d07f3837427f045235eca99a382cd07d1f1f880a81b
   result: passed
   checks:
     source_support: passed
@@ -36,17 +41,22 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed native Spider OTTO pack against package asset data/spider_otto.json, builtin_movements.py, and test_builtin_movements.py. Seeding (20 entries, 566 steps), BCM 0–27 channel preflights, mode overrides, and inert Pi Zero 2 W host validation (42 passes) are supported.
-  - Absolute terms ('every', 'all') reflect code-level preflight validation; physical balance, dynamic clearance, and real servo load acceptance remain pending.
+  - Replacement claims reviewed against the registered new evidence, exact owner-source/resource/document
+    parity and 146 host tests. Older trajectory statements are explicitly historical;
+    unchanged managed values migrate and edits persist. Prior review by agent:antigravity
+    at 2026-10-09T17:10:48.021602+00:00 remains provenance for retained historical/context
+    claims; this update does not rerun their unrelated validation.
+  - Draft/unverified status remains. Owner-reported movement validation is attributed;
+    no new physical, visual or human wiki verification event is asserted.
 ---
 
 # Spider OTTO waypoint library and native movement integration
 
-The implemented repository asset `ninja_core/movements/spider_otto.json` contains 19 named entries (565 steps), covering 16 OTTO methods and selected direction variants. `scripts/build_spider_movements.py` regenerates it offline; `--check` verifies exact bytes. No existing movement-control function, driver, API, live config, calibration or original OTTO source was changed.[^src-20261009-2026-10-09-spider-otto]
+The original research repository asset `ninja_core/movements/spider_otto.json` contains 19 named entries (565 steps), covering 16 OTTO methods and selected direction variants. `scripts/build_spider_movements.py` regenerates it offline; `--check` verifies exact bytes. No existing movement-control function, driver, API, live config, calibration or original OTTO source was changed.[^src-20261009-2026-10-09-spider-otto]
 
 ## Native built-in movement integration and robot profile scoping
 
-Following the initial opt-in repository pack, `ninja_core` integrates an installed package resource `data/spider_otto.json` containing the 19 `spider_*` trajectories and `Poweroff` (20 entries, 566 steps). When all BCM GPIO 20–27 are configured, module configuration import (`ninja_core config import`) automatically seeds these 20 entries into the Spider profile.[^src-20261009-2026-10-09-builtin-movements]
+In the initial 2026-10-09 native integration, `ninja_core` integrates an installed package resource `data/spider_otto.json` containing the 19 `spider_*` trajectories and `Poweroff` (20 entries, 566 steps). When all BCM GPIO 20–27 are configured, module configuration import (`ninja_core config import`) automatically seeds these 20 entries into the Spider profile.[^src-20261009-2026-10-09-builtin-movements]
 
 The implementation plan establishes profile reconciliation and non-destructive built-in seeding.[^src-20261009-builtinmovementsimplementationplan] By owner confirmation, the Wheel and Humanoid robot profiles receive only an all-configured-servo center movement named `home` (commanding all configured servos to 0° at Slow speed); other default gaits will be implemented later.[^src-20261009-2026-10-09-builtin-movements] Wheel inputs normalize to the canonical `tire` configuration value.[^src-20261009-2026-10-09-builtin-movements]
 
@@ -66,7 +76,7 @@ Each movement is an ordered list of `moves` plus `speed`; existing optional `per
 
 The owner-corrected source mapping is S0→GPIO25, S1→24, S2→27, S3→26, S4→21, S5→20, S6→23, S7→22 (BCM numbers). Nominal conversion is source q−90 degrees. OTTO's own S2 reversal and EEPROM trim are not evidence for a Pi0 inversion; target mounting/clearance is unverified.[^src-20261009-2026-10-09-spider-otto]
 
-The pack covers home, hide, run forward/backward, turn left/right, dance, front-back, up-down, push-up, wave-hand, moonwalk-left, omni true/false at factor2, walk forward/backward, jump, scared and hello. Each periodic entry uses 37 endpoint-inclusive samples at native M; source periods are provenance, not preserved timing. Walk feet have twice the hip frequency. Default omni variants have equal ideal waveforms. Jump/scared pauses are unavailable. Hello is only a representative adaptation of state-dependent buggy helpers and a clipped wave; it is not an exact behavioral port.[^src-20261009-2026-10-09-spider-otto]
+The original research pack covers home, hide, run forward/backward, turn left/right, dance, front-back, up-down, push-up, wave-hand, moonwalk-left, omni true/false at factor2, walk forward/backward, jump, scared and hello. Each periodic entry uses 37 endpoint-inclusive samples at native M; source periods are provenance, not preserved timing. Walk feet have twice the hip frequency. Default omni variants have equal ideal waveforms. Jump/scared pauses are unavailable. Hello is only a representative adaptation of state-dependent buggy helpers and a clipped wave; it is not an exact behavioral port.[^src-20261009-2026-10-09-spider-otto]
 
 ## Separate future controller
 
@@ -85,3 +95,14 @@ See [Motion system and easing](/concepts/motion-system-and-easing.md), [Current 
 [^src-20261009-builtinmovementsvalidation]: Built-in movement validation on Raspberry Pi Zero 2 W with inert hardware.
 
 [^src-20261009-builtinmovementsimplementationplan]: Implementation plan for automatic native built-in movements and profile reconciliation, 2026-10-09.
+
+
+## Current owner-validated catalog replacement (2026-10-11)
+
+The installed `ninja_core/src/ninja_core/data/spider_otto.json` now uses the exact 20 movement definitions and 566 steps supplied by the owner in `DevelopmentPlanDoc/spider_movement.json`. The source is a movements-key fragment; the installed resource adds only enclosing braces and `robot_type: spider`. `spider_moonwalk_right` replaces the earlier left-labelled name; six run/walk/turn definitions use the owner's revised direction choices. `Poweroff` is preserved exactly. No `Wave_Left_Hand` is added. The original research pack/generator remain historical and do not regenerate the installed resource.[^src-20261011-2026-10-11-spider-validated]
+
+Existing config import/load reconciliation replaces unchanged managed definitions, removes the unchanged managed old moonwalk name and seeds the new one, while preserving custom edits and collisions. The loader, controllers and calibration are unchanged. Deploy the updated package and restart/reload through the normal workflow; this task did not overwrite live configuration or operate hardware. A same-name user-edited entry may retain its prior value.[^src-20261011-2026-10-11-spider-validated]
+
+The movement document's 20 inline JSON blocks equal the installed data and supplied source. Host validation passed 146 targeted tests, including every current movement with inert output and old-managed-catalog migration with edited/custom data preservation. Ruff and protected-core checks passed. The owner reports validation, but this update performs no additional physical or Pi acceptance. Timing/pause semantics remain unchanged.[^src-20261011-2026-10-11-spider-validated]
+
+[^src-20261011-2026-10-11-spider-validated]: Owner-requested Spider data replacement, exact source parity and host validation evidence.

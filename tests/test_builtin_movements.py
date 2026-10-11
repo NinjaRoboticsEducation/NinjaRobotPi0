@@ -84,15 +84,14 @@ def test_fresh_default_import_and_existing_load_are_non_actuating(tmp_path, monk
     assert (tmp_path / "config.json").read_bytes() == before
 
 
-def test_resource_matches_original_pack_and_document():
+def test_resource_matches_owner_validated_pack_and_document():
     root = Path(__file__).resolve().parents[1]
-    original = json.loads((root / "ninja_core/movements/spider_otto.json").read_text())
+    supplied = json.loads("{" + (root / "DevelopmentPlanDoc/spider_movement.json").read_text() + "}")["movements"]
     catalog = builtin_catalog("spider", range(20, 28))
-    assert catalog == {
-        **{name.replace("spider_otto_", "spider_", 1): sequence
-           for name, sequence in original["movements"].items()},
-        "Poweroff": SPIDER_POWEROFF,
-    }
+    assert catalog == supplied
+    assert "spider_moonwalk_right" in catalog
+    assert "spider_moonwalk_left" not in catalog
+    assert catalog["Poweroff"] == SPIDER_POWEROFF
     # Parse all 20 documented movement fragments and check exact parity.
     text = (root / "DevelopmentPlanDoc/SpiderBuildinMovements.md").read_text()
     section = text.split("### Complete copyable JSON for every movement")[1]
@@ -337,3 +336,52 @@ def test_web_valid_home_execution_and_unknown_name(monkeypatch):
     with pytest.raises(HTTPException) as error:
         asyncio.run(web_server.execute_movement("missing", request))
     assert error.value.status_code == 404
+
+
+@pytest.mark.parametrize("name", sorted(builtin_catalog("spider", range(20, 28))))
+def test_owner_validated_catalog_executes_exact_gpio_targets(name):
+    config = profile()
+    seed_builtin_movements(config)
+    sequence = config.movements[name]
+    ctrl, servos = controller(config)
+    ctrl.execute_movement(name)
+    assert len(servos.calls) == len(sequence)
+    for (targets, options), step in zip(servos.calls, sequence):
+        assert dict(zip(servos.pins, targets)) == {
+            int(pin): angle for pin, angle in step["moves"].items()
+        }
+        overrides = step.get("per_servo_speeds", {})
+        assert options["speed_mode"] == [
+            overrides.get(str(pin), step["speed"]) for pin in servos.pins
+        ]
+
+
+def test_validated_catalog_upgrade_replaces_managed_directions_and_preserves_edits(monkeypatch):
+    from ninja_core import builtin_movements
+
+    root = Path(__file__).resolve().parents[1]
+    original = json.loads((root / "ninja_core/movements/spider_otto.json").read_text())
+    old_catalog = {
+        name.replace("spider_otto_", "spider_", 1): steps
+        for name, steps in original["movements"].items()
+    }
+    old_catalog["Poweroff"] = deepcopy(SPIDER_POWEROFF)
+    config = profile()
+    current_catalog = builtin_catalog("spider", range(20, 28))
+    with monkeypatch.context() as patch:
+        patch.setattr(builtin_movements, "builtin_catalog", lambda *_: deepcopy(old_catalog))
+        seed_builtin_movements(config)
+    config.movements["spider_turn_right"][0]["moves"]["20"] = 12
+    edited = deepcopy(config.movements["spider_turn_right"])
+    config.movements["custom"] = [{"moves": {"20": 5}, "speed": "S"}]
+    custom = deepcopy(config.movements["custom"])
+    assert seed_builtin_movements(config)
+    assert "spider_moonwalk_left" not in config.movements
+    assert config.movements["spider_moonwalk_right"] == current_catalog["spider_moonwalk_right"]
+    for name in ["spider_run_forward", "spider_run_backward", "spider_walk_forward",
+                 "spider_walk_backward", "spider_turn_left"]:
+        assert config.movements[name] == current_catalog[name]
+        assert config.movements[name] != old_catalog[name]
+    assert config.movements["spider_turn_right"] == edited
+    assert config.movements["custom"] == custom
+    assert not seed_builtin_movements(config)
