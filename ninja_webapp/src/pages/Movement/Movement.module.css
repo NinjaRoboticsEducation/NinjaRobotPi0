@@ -1,13 +1,37 @@
-.movementPage { width: min(100%, 684px); flex: 1; min-height: 0; margin: 0 auto; padding: 8px max(12px, env(safe-area-inset-right)) var(--activity-space) max(12px, env(safe-area-inset-left)); display: flex; flex-direction: column; justify-content: space-evenly; gap: clamp(8px, 1.8dvh, 20px); overflow-y: auto; overscroll-behavior: contain; }
-.card { min-width: 0; flex-shrink: 0; border: 1px solid var(--color-primary); border-radius: 16px; padding: clamp(12px, 2dvh, 24px); background: var(--color-bg); }
-.card h1, .card h2 { color: var(--color-primary); font-size: clamp(17px, 3.5vw, 22px); margin-bottom: 8px; }
-.card p { color: var(--color-subtext); font-size: clamp(13px, 3.4vw, 16px); line-height: 1.35; font-weight: 600; margin-bottom: 8px; }
-.distance { display: grid; text-align: center; line-height: 1.1; gap: 2px; }
-.distance span { color: var(--color-power); font-size: clamp(36px, 7dvh, 64px); font-weight: 750; }
+/* Each card shares spare height instead of leaving a void above the activity tab. */
+.movementPage {
+    width: min(100%, 684px);
+    flex: 1;
+    min-height: 0;
+    margin: 0 auto var(--activity-space);
+    padding: 12px max(12px, env(safe-area-inset-right)) 12px max(12px, env(safe-area-inset-left));
+    display: flex;
+    flex-direction: column;
+    gap: clamp(12px, 2cqh, 22px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+.card { min-width: 0; flex: 1 0 auto; border: 1px solid var(--color-primary); border-radius: 16px; padding: clamp(12px, 2cqh, 22px); background: var(--color-bg); display: flex; flex-direction: column; justify-content: space-evenly; }
+.card h1, .card h2 { color: var(--color-primary); font-size: clamp(17px, 3.5vw, 22px); line-height: 1.25; margin-bottom: 8px; }
+.card p { color: var(--color-subtext); font-size: clamp(14px, 3.4vw, 16px); line-height: 1.5; font-weight: 600; margin-bottom: 8px; }
+.distance { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; line-height: 1.2; gap: 4px; }
+.distance span { color: var(--color-power); font-size: clamp(36px, 7cqh, 64px); font-weight: 750; }
 .distance small { color: var(--color-primary); font-size: 18px; font-weight: 700; }
-.controlRow { display: grid; grid-template-columns: minmax(0, 1fr) 48px; gap: 8px; }
+.controlRow { display: grid; flex-shrink: 0; grid-template-columns: minmax(0, 1fr) 48px; gap: 8px; }
 .controlRow select { min-width: 0; width: 100%; min-height: 44px; padding: 8px 10px; font-size: clamp(16px, 3.5vw, 24px); font-weight: 700; border: 1px solid var(--color-primary); border-radius: 10px; background: var(--color-bg); }
 .controlRow button { min-height: 44px; border: 0; border-radius: 10px; color: white; background: var(--color-power); font-size: 24px; cursor: pointer; }
 .controlRow button:disabled { opacity: .4; cursor: default; }
-@media (max-height: 700px) { .movementPage { justify-content: flex-start; gap: 6px; padding-top: 4px; } .card { padding: 8px 10px; } .card h1, .card h2 { font-size: 16px; margin-bottom: 4px; } .card p { font-size: 12px; margin-bottom: 4px; } .distance span { font-size: 32px; } .distance small { font-size: 16px; } }
-@media (max-height: 600px) and (min-width: 480px) { .movementPage { width: min(100%, 1000px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; align-items: stretch; gap: 10px; } }
+@container robot-page (max-height: 640px) {
+    .movementPage { gap: 10px; padding-top: 10px; }
+    .card { padding: 10px; }
+    .card h1, .card h2 { font-size: 16px; margin-bottom: 6px; }
+    .card p { font-size: 13px; line-height: 1.45; margin-bottom: 6px; }
+    .distance span { font-size: 32px; }
+    .distance small { font-size: 16px; }
+}
+@container robot-page (max-height: 500px) and (min-width: 480px) {
+    .movementPage { width: min(100%, 1000px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(min-content, 1fr)); gap: 10px; }
+    .card { padding: 8px 10px; }
+    .card h1, .card h2 { margin-bottom: 4px; }
+    .card p { font-size: 12px; line-height: 1.45; margin-bottom: 4px; }
+}

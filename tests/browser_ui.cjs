@@ -24,7 +24,7 @@ const shots = process.env.UI_SCREENSHOTS;
   try {
     browser = await chromium.launch({ headless: true });
     const base = `http://127.0.0.1:${server.address().port}`;
-    for (const viewport of [{width:320,height:568},{width:360,height:640},{width:360,height:800},{width:390,height:844},{width:430,height:932},{width:568,height:320},{width:844,height:390},{width:768,height:1024},{width:1280,height:900}]) {
+    for (const viewport of [{width:390,height:670},{width:390,height:740},{width:390,height:844},{width:320,height:568},{width:360,height:640},{width:360,height:800},{width:430,height:932},{width:568,height:320},{width:844,height:390},{width:768,height:1024},{width:1280,height:900}]) {
       const mobile = viewport.width < 1000;
       const context = await browser.newContext({ viewport, isMobile:mobile, hasTouch:mobile, locale: 'en-US', reducedMotion: 'reduce' });
       await context.addInitScript(() => {
@@ -84,13 +84,42 @@ const shots = process.env.UI_SCREENSHOTS;
         checks++;
       };
       const snapshot = async name => {
-        if (shots) {fs.mkdirSync(shots,{recursive:true});await page.screenshot({path:path.join(shots,`${name}-${viewport.width}.png`),fullPage:true});}
+        if (shots) {fs.mkdirSync(shots,{recursive:true});await page.screenshot({path:path.join(shots,`${name}-${viewport.width}x${viewport.height}.png`),fullPage:true});}
+      };
+      const sliderLabelFits = async () => {
+        const geometry = await page.getByRole('slider').evaluate(thumb=>{
+          const container=thumb.parentElement, text=container.querySelector('span');
+          const box=container.getBoundingClientRect(), label=text.getBoundingClientRect(), style=getComputedStyle(text);
+          return {dx:Math.abs(label.x+label.width/2-box.x-box.width/2),dy:Math.abs(label.y+label.height/2-box.y-box.height/2),font:parseFloat(style.fontSize),height:label.height,trackHeight:box.height};
+        });
+        assert.ok(geometry.dx<=1 && geometry.dy<=1,'Power label must share the track center');
+        assert.ok(geometry.font>=16 && geometry.height<=geometry.trackHeight-2,'Power label must remain readable within its track');checks++;
+      };
+      const distributedCards = async activitySpace => {
+        if(viewport.width!==390) return;
+        const layout=await page.locator('main > div').evaluate(el=>{
+          const box=el.getBoundingClientRect(), cards=[...el.querySelectorAll(':scope > section')].map(card=>card.getBoundingClientRect());
+          return {overflow:el.scrollHeight-el.clientHeight,bottomSpace:box.bottom-cards.at(-1).bottom,gaps:cards.slice(1).map((card,i)=>card.top-cards[i].bottom),lineRatios:[...el.querySelectorAll('p')].map(p=>parseFloat(getComputedStyle(p).lineHeight)/parseFloat(getComputedStyle(p).fontSize))};
+        });
+        assert.ok(layout.overflow<=1,`Phone-sized pages should fit without internal overflow: ${JSON.stringify(layout)}`);
+        assert.ok(layout.bottomSpace<=activitySpace+24,'Cards must use the lower page area');
+        assert.ok(layout.gaps.every(gap=>gap>=10) && Math.max(...layout.gaps)-Math.min(...layout.gaps)<=1,'Card gaps must be even and deliberate');
+        assert.ok(layout.lineRatios.every(ratio=>ratio>=1.4),'Descriptions need readable line spacing');checks++;
       };
       const event = (endpoint, data) => page.evaluate(({endpoint,data}) => window.__sockets.find(s=>s.readyState===1 && s.url.endsWith(endpoint)).onmessage({data:JSON.stringify(data)}),{endpoint,data});
       await page.goto(base);
       try { await page.getByRole('link',{name:'Movement Tool'}).waitFor(); }
       catch(error) { console.error({errors,body:await page.locator('body').innerText()}); throw error; }
       await fits();await snapshot('home');
+      await sliderLabelFits();await distributedCards(0);
+      if(viewport.width===390 && viewport.height===844) {
+        // Browser chrome can reduce only the visual viewport, leaving media-query height tall.
+        for(const height of [670,740]) {
+          await page.evaluate(height=>{Object.defineProperty(visualViewport,'height',{configurable:true,value:height});visualViewport.dispatchEvent(new Event('resize'));},height);
+          await distributedCards(0);await sliderLabelFits();
+        }
+        await page.evaluate(()=>{delete visualViewport.height;visualViewport.dispatchEvent(new Event('resize'));});
+      }
       assert.ok(await page.evaluate(()=>document.querySelector('meta[name="viewport"]').content.includes('user-scalable=no') && getComputedStyle(document.documentElement).touchAction==='pan-x pan-y'));checks++;
       const selection = async expected => {
         for(const [label,route] of [['Movement Tool','/movement'],['Chat with Robot','/agent']]) {
@@ -122,7 +151,7 @@ const shots = process.env.UI_SCREENSHOTS;
       await page.locator('#robot-activity-log').getByRole('button',{name:'Clear Messages'}).click();
       await page.getByText('Events will appear here.').waitFor();checks++;
       await page.keyboard.press('Escape');assert.equal(await activity.getAttribute('aria-expanded'),'false');checks++;
-      await event('/ws/distance',{distance_mm:125});await fits();await snapshot('movement');
+      await event('/ws/distance',{distance_mm:125});await fits();await distributedCards(56);await snapshot('movement');
       await page.getByRole('link',{name:'Open robot menu'}).click();await page.getByRole('link',{name:'Movement Tool',exact:true}).waitFor();await selection('/movement');
       await page.getByRole('link',{name:'Chat with Robot'}).click();await page.getByRole('heading',{name:'Conversation',exact:true}).waitFor();
       assert.equal(await page.getByRole('combobox').count(),0);checks++;
@@ -150,6 +179,7 @@ const shots = process.env.UI_SCREENSHOTS;
         const labels=JSON.parse(fs.readFileSync(path.join(__dirname,'../ninja_webapp/src/locales',file+'.json'),'utf8'));
         await page.getByRole('combobox').selectOption(locale);
         await page.waitForFunction(locale=>document.documentElement.lang===locale,locale);checks++;await fits();
+        await sliderLabelFits();
         await page.getByRole('link',{name:labels.home.movementButton}).click();
         await page.getByRole('heading',{name:labels.agent.distance}).waitFor();checks++;await fits();
         await page.getByRole('link',{name:`NINJA ROBOT Pi0 - ${labels.robotType.spider}`,exact:true}).waitFor();checks++;
