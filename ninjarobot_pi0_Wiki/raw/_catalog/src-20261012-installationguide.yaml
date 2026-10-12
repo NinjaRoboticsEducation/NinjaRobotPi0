@@ -1,0 +1,16 @@
+id: src-20261012-installationguide
+path: raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: Humanoid built-in movements installation guide
+added_at: '2026-10-12T02:24:36Z'
+content_hash: sha256:30b40b3338f5e9b912b63cb4146f3fa369a13b3d6848869efbce8ebf3f7eed19
+state: ingested
+original_uri: urn:llmwiki:source:src-20261012-installationguide
+source_version: 2026-10-12-humanoid-builtins
+retrieved_at: null
+normalized_at: '2026-10-12T02:24:58Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-12T02:43:47Z'
+last_plan: pi0-humanoid-citation-cleanup-261012

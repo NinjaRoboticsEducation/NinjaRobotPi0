@@ -54,7 +54,7 @@ def controller(config, pins=None, completed=True):
 
 @pytest.mark.parametrize("kind,name,count", [
     ("spider", "spider_home", 20),
-    ("humanoid", "home", 1),
+    ("humanoid", "home", 35),
     ("wheel", "home", 1),
 ])
 def test_import_seeds_profiles_and_is_idempotent(kind, name, count, tmp_path, monkeypatch):
@@ -225,7 +225,9 @@ def test_web_discovery_and_wrong_type_request_do_not_reclaim_runtime(monkeypatch
     request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(ninja=state)))
     reclaim = AsyncMock()
     monkeypatch.setattr(web_server, "reclaim_native_runtime", reclaim)
-    assert web_server.get_movements(request) == {"movements": ["home"]}
+    assert web_server.get_movements(request) == {
+        "movements": list(builtin_catalog("humanoid", range(20, 28))),
+    }
     with pytest.raises(HTTPException) as error:
         asyncio.run(web_server.execute_movement("spider_home", request))
     assert error.value.status_code == 422
@@ -248,7 +250,9 @@ def test_agent_filters_capabilities_and_rejects_whole_mixed_chain(audio, tmp_pat
     seed_builtin_movements(config)
     config.movements["spider_home"] = builtin_catalog("spider", range(20, 28))["spider_home"]
     ninja = agent(config, monkeypatch)
-    assert ninja.robot_capabilities["movements"] == ["home"]
+    assert ninja.robot_capabilities["movements"] == list(
+        builtin_catalog("humanoid", range(20, 28))
+    )
     assert "Configured robot type: humanoid" in ninja.system_prompt
     response = json.dumps({"response": "Okay", "chain": [
         {"name": "home"}, {"name": "spider_home"},

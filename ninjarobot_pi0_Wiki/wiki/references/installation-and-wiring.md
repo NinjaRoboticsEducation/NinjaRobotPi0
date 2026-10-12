@@ -64,11 +64,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
   title: Modeladapterimplementation
   content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261012-installationguide
+  resource: urn:llmwiki:source:src-20261012-installationguide
+  title: Humanoid built-in movements installation guide
+  content_hash: sha256:30b40b3338f5e9b912b63cb4146f3fa369a13b3d6848869efbce8ebf3f7eed19
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:28:47.571035+00:00'
-  target_hash: sha256:ba29c7e753d5e59d1d88b0995d6093507484f4c31f0f16fea2114c5f0431a6b3
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:24332f20ad74bd436e983d292afe90dfcd72cf23397b074864a81366c55d56a6
   result: passed
   checks:
     source_support: passed
@@ -77,10 +85,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed installation and wiring reference against 2026-10-10 InstallationGuide.md
-    and provider_credentials.py. Setup workflow, private permissions, and pinned installer
-    match manual.
-  - Wiring and hardware assembly remain unchanged from previous verified revisions.
+  - Reviewed Humanoid GPIO 20–27 channel mapping, shoulder neutral status, and conflict
+    boundaries against src-20261012-installationguide.
+  - Hardware wiring safety requirements and power validation limits verified.
 ---
 
 # Installation and Hardware Wiring Reference
@@ -208,3 +215,16 @@ During guided software configuration (`./onboard.sh --step ai_model` or `uv run 
 
 [^src-20261010-installationguide-3]: Current versioned Installationguide (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+
+## Humanoid movement channel wiring (2026-10-12)
+
+Humanoid built-in movement import requires all eight BCM GPIO channels 20–27 to be configured and active:[^src-20261012-installationguide] [^src-20261012-humanoidbuiltinmovementsevidence]
+* **GPIO 20 & 21**: Left and right hips (source YL/YR).[^src-20261012-installationguide]
+* **GPIO 22 & 23**: Left and right feet (source RL/RR).[^src-20261012-installationguide]
+* **GPIO 26 & 27**: Left and right arms (source LA/RA).[^src-20261012-installationguide]
+* **GPIO 24 & 25**: Fore and aft shoulders; remain at nominal 0° pending measured neutral and direction.[^src-20261012-installationguide]
+
+Check display/buzzer/sensor pin conflicts, external servo power, common ground, and calibrated limits before enabling actuators.[^src-20261012-installationguide]
+
+[^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and channel allocation.

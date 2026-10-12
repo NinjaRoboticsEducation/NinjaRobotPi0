@@ -64,11 +64,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
   title: Modeladapterimplementation
   content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261012-installationguide
+  resource: urn:llmwiki:source:src-20261012-installationguide
+  title: Humanoid built-in movements installation guide
+  content_hash: sha256:30b40b3338f5e9b912b63cb4146f3fa369a13b3d6848869efbce8ebf3f7eed19
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:28:47.571035+00:00'
-  target_hash: sha256:76335ab22373367193edee3afb1e164b4be47eb77a38384f1d46a4f8cd817010
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:abce800e3c8f73391c50a15cd88c8d08dbaaacc05987300d95c9734ccb3b0a88
   result: passed
   checks:
     source_support: passed
@@ -77,11 +85,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed calibration tools against init_tool.py option 1 (Select AI model) and
-    provider_setup.py. Terminal-only probe validation without hardware actuation matches
-    implementation.
-  - Physical servo clearance and external power remain required before running motor
-    calibration.
+  - Reviewed movement-tool option 4 profile-scoped discovery and option 6 exit rest
+    posture against src-20261012-installationguide.
+  - Hardware tool safety and calibration bounds verified.
 ---
 
 # Hardware Calibration and Testing Tools Reference
@@ -120,7 +126,8 @@ Gemini model validation can take up to 60 seconds for a thinking model. Discover
 ## Motion Recording (`uv run ninja_core movement-tool`)
 
 * **Option 2 (Record new movement)**: Interactively create multi-servo postures (e.g. `20:45/21:-30`), preview transitions, and save named movements to `config.json`.[^src-20260822-developmentguide]
-* **Option 6 (Deliberate exit)**: Executes configured `Poweroff` (for Spider) or `home` (for Wheel and Humanoid) before HAL shutdown and saving configuration, releasing PWM without subsequent centering.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence]
+* **Option 4 (Execute saved movement)**: Discovers and executes movements scoped to the active robot profile; for Humanoid robots with all GPIO 20–27 configured, 35 native movements (34 `humanoid_*` sequences and `home`) are available.[^src-20261012-installationguide] [^src-20261012-humanoidbuiltinmovementsevidence]
+* **Option 6 (Deliberate exit)**: Executes configured `Poweroff` (for Spider) or `home` (for Wheel and Humanoid) before HAL shutdown and saving configuration, releasing PWM without subsequent centering.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence] [^src-20261012-installationguide]
 
 ## Display Setup & Testing (`uv run pi0disp init` & `display-tool`)
 
@@ -176,3 +183,6 @@ In `uv run ninja_core init-tool`, option 1 is updated to **Select AI model** (su
 
 [^src-20261010-installationguide-3]: Current versioned Installationguide (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+
+[^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and CLI option 4 discovery.

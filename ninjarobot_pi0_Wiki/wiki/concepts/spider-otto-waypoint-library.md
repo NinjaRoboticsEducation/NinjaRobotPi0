@@ -28,11 +28,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-2026-10-11-spider-validated
   title: 2026 10 11 Spider Validated
   content_hash: sha256:66fbb23415a3ac62be62f096b6fb7bd5ba400538dabe8a29442f92c50d64847e
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-developmentlog-2
+  resource: urn:llmwiki:source:src-20261012-developmentlog-2
+  title: Humanoid built-in movements development log
+  content_hash: sha256:73de870ccfd7a010dec09e97fe68c4c5b24929d14043d3e7e6b57410f2df519e
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T14:26:52.015630+00:00'
-  target_hash: sha256:b4190f443ad7b41d25228d07f3837427f045235eca99a382cd07d1f1f880a81b
+  performed_by: agent:antigravity
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:f44c82052875a838e13e96979ea4e1a3dd05dc776509ca1518793ea9a92f714a
   result: passed
   checks:
     source_support: passed
@@ -41,13 +49,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Replacement claims reviewed against the registered new evidence, exact owner-source/resource/document
-    parity and 146 host tests. Older trajectory statements are explicitly historical;
-    unchanged managed values migrate and edits persist. Prior review by agent:antigravity
-    at 2026-10-09T17:10:48.021602+00:00 remains provenance for retained historical/context
-    claims; this update does not rerun their unrelated validation.
-  - Draft/unverified status remains. Owner-reported movement validation is attributed;
-    no new physical, visual or human wiki verification event is asserted.
+  - Reviewed superseded Humanoid-home-only catalog statements against 2026-10-12 Humanoid
+    native catalog evidence.
+  - Preserved Spider catalog facts and historical provenance without asserting new
+    hardware validation.
 ---
 
 # Spider OTTO waypoint library and native movement integration
@@ -58,7 +63,7 @@ The original research repository asset `ninja_core/movements/spider_otto.json` c
 
 In the initial 2026-10-09 native integration, `ninja_core` integrates an installed package resource `data/spider_otto.json` containing the 19 `spider_*` trajectories and `Poweroff` (20 entries, 566 steps). When all BCM GPIO 20–27 are configured, module configuration import (`ninja_core config import`) automatically seeds these 20 entries into the Spider profile.[^src-20261009-2026-10-09-builtin-movements]
 
-The implementation plan establishes profile reconciliation and non-destructive built-in seeding.[^src-20261009-builtinmovementsimplementationplan] By owner confirmation, the Wheel and Humanoid robot profiles receive only an all-configured-servo center movement named `home` (commanding all configured servos to 0° at Slow speed); other default gaits will be implemented later.[^src-20261009-2026-10-09-builtin-movements] Wheel inputs normalize to the canonical `tire` configuration value.[^src-20261009-2026-10-09-builtin-movements]
+The implementation plan establishes profile reconciliation and non-destructive built-in seeding.[^src-20261009-builtinmovementsimplementationplan] By owner confirmation in the initial 2026-10-09 integration, the Wheel and Humanoid robot profiles received only an all-configured-servo center movement named `home` (commanding all configured servos to 0° at Slow speed); other default gaits will be implemented later.[^src-20261009-2026-10-09-builtin-movements] This was superseded on 2026-10-12 for Humanoid by the native Humanoid catalog integration (35 defaults / 1,204 steps with GPIO 20–27), while Wheel/Tire retains generic `home` only.[^src-20261012-humanoidbuiltinmovementsevidence] [^src-20261012-developmentlog-2] Wheel inputs normalize to the canonical `tire` configuration value.[^src-20261009-2026-10-09-builtin-movements]
 
 Additive metadata `movement_robot_types` scopes imported movements to their robot type, and `builtin_movement_hashes` preserves user edits or custom collisions during reimport or type changes. Only unchanged managed values are automatically removed or replaced; custom or edited entries are preserved.[^src-20261009-2026-10-09-builtin-movements]
 
@@ -106,3 +111,6 @@ Existing config import/load reconciliation replaces unchanged managed definition
 The movement document's 20 inline JSON blocks equal the installed data and supplied source. Host validation passed 146 targeted tests, including every current movement with inert output and old-managed-catalog migration with edited/custom data preservation. Ruff and protected-core checks passed. The owner reports validation, but this update performs no additional physical or Pi acceptance. Timing/pause semantics remain unchanged.[^src-20261011-2026-10-11-spider-validated]
 
 [^src-20261011-2026-10-11-spider-validated]: Owner-requested Spider data replacement, exact source parity and host validation evidence.
+
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and profile catalog scope.
+[^src-20261012-developmentlog-2]: Complete immutable DevelopmentLog with Humanoid native catalog integration.

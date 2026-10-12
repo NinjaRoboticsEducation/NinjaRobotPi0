@@ -88,11 +88,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-developmentguide-2
   title: Mobile refinement current development guide
   content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-developmentguide
+  resource: urn:llmwiki:source:src-20261012-developmentguide
+  title: Humanoid built-in movements development guide
+  content_hash: sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T09:54:05.388246+00:00'
-  target_hash: sha256:57d5c4ef5de3b68a74d898a03821dfbe14f28e74c3f09575f3dff3d091688aae
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:a3c077c1c2a3d4445c65c4572b4eb9ce693a9452c43cdfcbd3ccc8e4be700d44
   result: passed
   checks:
     source_support: passed
@@ -101,9 +109,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed GET /api/robot/status endpoint implementation, session middleware gating,
-    and AST route verification against web_server.py and WebMobileRefinement.md.
-  - Inert unit tests passed; live HAL hardware validation remains pending.
+  - Reviewed ninja_core built-in movements module updates, packaged JSON resource,
+    and extraction script against src-20261012-developmentguide.
+  - Package exports and controller interfaces verified consistent.
 ---
 
 # ninja_core Package
@@ -222,3 +230,10 @@ Option 6 of `movement_cli.py` is updated to execute configured `Poweroff` (or `h
 
 [^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
 [^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
+
+## Native Humanoid movement catalog integration (2026-10-12)
+
+`ninja_core.builtin_movements` loads cached installed package resource `data/humanoid_otto.json`.[^src-20261012-developmentguide] When all BCM GPIO 20–27 are configured and robot type is `humanoid`, `builtin_catalog` provides 34 `humanoid_*` sequences and generic `home` (35 defaults, 1,204 steps).[^src-20261012-humanoidbuiltinmovementsevidence] Partial profiles keep only generic `home`.[^src-20261012-humanoidbuiltinmovementsevidence] `validate_movement` recognizes renamed non-neutral Humanoid trajectories, normalizing integer and string GPIO keys.[^src-20261012-developmentguide] `scripts/build_humanoid_movements.py` deterministically extracts standalone library blocks with exact parity against canonical inner-object hash `49f6c4fe998b3c8500347f56eeeb7e165fb442c206ac373485310af7d280d2d6`.[^src-20261012-developmentguide]
+
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and catalog structure.
+[^src-20261012-developmentguide]: Current versioned DevelopmentGuide with Humanoid catalog loading and recognition.

@@ -1,0 +1,16 @@
+id: src-20261012-humanoidmovementreferenceevidence
+path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/HumanoidMovementReferenceEvidence.md
+media_type: text/markdown
+kind: text
+title: Humanoidmovementreferenceevidence
+added_at: '2026-10-12T00:42:26Z'
+content_hash: sha256:7925e73616d27f362c88bf902aa43e5bccfb09cbfc550b2692c3c5df079db9e1
+state: ingested
+original_uri: urn:llmwiki:source:src-20261012-humanoidmovementreferenceevidence
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-12T00:42:33Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-12T02:43:47Z'
+last_plan: pi0-humanoid-citation-cleanup-261012

@@ -87,11 +87,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladaptervalidation
   title: Modeladaptervalidation
   content_hash: sha256:653ade7e3e622c23f29dad7eedb8417a1ed0da58869859db3eb08c7319905938
+- id: src-20261012-installationguide
+  resource: urn:llmwiki:source:src-20261012-installationguide
+  title: Humanoid built-in movements installation guide
+  content_hash: sha256:30b40b3338f5e9b912b63cb4146f3fa369a13b3d6848869efbce8ebf3f7eed19
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:31:43.935978+00:00'
-  target_hash: sha256:11cef2dda7a938f81468fd6da05462bcc35fa7dc6445506eb45e6fbc81fc1acc
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:de8058f1957b4bfccc01d39caf7f84669046ef3393ebe757160c1ebd3f4a0123
   result: passed
   checks:
     source_support: passed
@@ -100,11 +108,8 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed installation guide against scripts/install_ollama.py, install.sh, and
-    2026-10-10 InstallationGuide.md. Pinned ARM64 Ollama v0.40.2 archive, zstd prerequisite,
-    and select-model setup match manual.
-  - Installer check does not download model weights or start background daemons. Physical
-    Pi validation is pending.
+  - Reviewed Humanoid configuration commands and seeding requirements against src-20261012-installationguide.
+  - Non-HAL configuration modification boundaries and physical safety notices verified.
 ---
 
 # Current installation manual
@@ -198,3 +203,17 @@ The model adapter release introduces multi-provider AI setup (`uv run ninja_core
 [^src-20261010-readme-4]: NinjaRobotPi0 Readme (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
 [^src-20261010-modeladaptervalidation]: Cloud model adapter validation report.
+
+## Automatic Humanoid movement defaults configuration (2026-10-12)
+
+After installing the updated package and configuring hardware, run:
+
+```bash
+.venv/bin/ninja_core config set-type humanoid
+.venv/bin/ninja_core config import
+```
+
+`import-all` is an equivalent alias. These commands modify configuration data without initializing HAL.[^src-20261012-installationguide] With all BCM GPIO 20–27 in core servo-calibration keys, import seeds the exact 34 documented `humanoid_*` movement sequences (1,203 keyframes) alongside existing generic `home` (35 defaults / 1,204 steps).[^src-20261012-installationguide] [^src-20261012-humanoidbuiltinmovementsevidence] A partial Humanoid configuration receives only generic `home`.[^src-20261012-installationguide] Reimport preserves custom collisions and user edits through fingerprint provenance.[^src-20261012-installationguide]
+
+[^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and seeding bounds.

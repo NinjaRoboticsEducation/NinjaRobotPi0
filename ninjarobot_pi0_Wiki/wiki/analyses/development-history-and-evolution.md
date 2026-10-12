@@ -152,11 +152,27 @@ sources:
   resource: urn:llmwiki:source:src-20261011-developmentlog-5
   title: Developmentlog
   content_hash: sha256:6bc6d153e74e84ea1e4b5b1d8069a818278c5a4d840109d53694e25e98777f16
+- id: src-20261012-humanoidmovementreferenceevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidmovementreferenceevidence
+  title: Humanoidmovementreferenceevidence
+  content_hash: sha256:7925e73616d27f362c88bf902aa43e5bccfb09cbfc550b2692c3c5df079db9e1
+- id: src-20261012-developmentlog
+  resource: urn:llmwiki:source:src-20261012-developmentlog
+  title: Developmentlog
+  content_hash: sha256:43c971abf2590fbea4b1c75a0e387338aa21c95f8aecbb5894afc2b70ae05804
+- id: src-20261012-developmentlog-2
+  resource: urn:llmwiki:source:src-20261012-developmentlog-2
+  title: Humanoid built-in movements development log
+  content_hash: sha256:73de870ccfd7a010dec09e97fe68c4c5b24929d14043d3e7e6b57410f2df519e
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T14:26:52.015630+00:00'
-  target_hash: sha256:89901dc837a6f87188cae3f18710f09f21d56c22d9504dae1a610b6001b624fc
+  performed_by: agent:antigravity
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:f26aac451de5b9c3b82a3e53ab0311ebb5dfe229a1973e135f2ca50ff7f957be
   result: passed
   checks:
     source_support: passed
@@ -165,13 +181,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Replacement claims reviewed against the registered new evidence, exact owner-source/resource/document
-    parity and 146 host tests. Older trajectory statements are explicitly historical;
-    unchanged managed values migrate and edits persist. Prior review by agent:antigravity
-    at 2026-10-11T11:18:33.727677+00:00 remains provenance for retained historical/context
-    claims; this update does not rerun their unrelated validation.
-  - Draft/unverified status remains. Owner-reported movement validation is attributed;
-    no new physical, visual or human wiki verification event is asserted.
+  - Reviewed Humanoid native built-in movements release milestone against src-20261012-developmentlog-2
+    and HumanoidBuiltinMovementsEvidence.md.
+  - Chronological accuracy, test counts (344 passed / 1 deselected), and physical
+    acceptance limits verified.
 ---
 
 # Development History and Evolution
@@ -356,3 +369,21 @@ Host validation passed 146 targeted tests, including all current sequences with 
 [^src-20261011-developmentlog-5]: New complete English version preserving earlier guidance and adding the validated catalog replacement.
 
 [^src-20261011-2026-10-11-spider-validated]: Owner-requested Spider data replacement, exact source parity and host validation evidence.
+
+
+## Humanoid movement reference (2026-10-12)
+
+The documentation-only [Humanoid Otto reference](/concepts/humanoid-otto-waypoint-library.md) adds 34 complete movement definitions / 1,203 keyframes, preserving existing runtime and installed defaults. Host checks exercise real schema/load/controller behavior with inert output; timing, shoulder orientation and physical gait acceptance remain limited or pending. It is not an automatically installed movement pack.[^src-20261012-humanoidmovementreferenceevidence] [^src-20261012-developmentlog]
+
+[^src-20261012-humanoidmovementreferenceevidence]: Humanoid reference evidence and host validation, without hardware acceptance.
+[^src-20261012-developmentlog]: New complete DevelopmentLog preserving historical milestones and recording this reference.
+
+## Humanoid native built-in movements (2026-10-12)
+
+Following the documentation-only reference milestone, the owner authorized automatic native Humanoid defaults during configuration import and integration across movement-tool, web dropdown, and Ninja Agent.[^src-20261012-developmentlog-2] [^src-20261012-humanoidbuiltinmovementsevidence]
+Packaged all 34 reference sequences / 1,203 keyframes without angle or timing modifications into `ninja_core/data/humanoid_otto.json`; full Humanoid profiles with all BCM GPIO 20–27 configured receive 35 defaults / 1,204 steps (including generic `home`). Partial profiles keep generic `home` only.[^src-20261012-developmentlog-2] [^src-20261012-humanoidbuiltinmovementsevidence]
+
+Recognition of renamed non-neutral Humanoid trajectories (normalizing string/integer GPIO keys and ignoring speed/overrides) and deterministic extraction via `scripts/build_humanoid_movements.py` were added. Host software validation passed 344 tests (1 deselected missing-Spider-fixture test), generator parity (`49f6c4fe998b3c8500347f56eeeb7e165fb442c206ac373485310af7d280d2d6`), Ruff, and protected core.[^src-20261012-humanoidbuiltinmovementsevidence] Physical Raspberry Pi, mechanical motion, power/balance/clearance limits, and browser/cloud acceptance remain pending.[^src-20261012-humanoidbuiltinmovementsevidence]
+
+[^src-20261012-developmentlog-2]: Complete immutable DevelopmentLog with Humanoid native built-in movements milestone.
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and host validation.

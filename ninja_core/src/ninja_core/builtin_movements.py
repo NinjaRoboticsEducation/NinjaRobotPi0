@@ -14,6 +14,7 @@ if TYPE_CHECKING:
     from .config import NinjaConfig
 
 SPIDER_PINS = frozenset(range(20, 28))
+HUMANOID_PINS = frozenset(range(20, 28))
 SPIDER_POWEROFF = [{
     "speed": "S",
     "moves": {"20": -90, "21": 90, "22": 90, "23": -90,
@@ -47,10 +48,33 @@ def _spider_catalog() -> dict[str, list]:
 
 
 @lru_cache(maxsize=1)
+def _humanoid_catalog() -> dict[str, list]:
+    pack = json.loads(files("ninja_core").joinpath("data/humanoid_otto.json").read_text())
+    return pack["movements"]
+
+
+def _movement_poses(sequence: list) -> list[dict | None]:
+    """Compare geometry independently of speed and supported GPIO key types."""
+    if not isinstance(sequence, list):
+        return []
+    return [
+        {str(pin): angle for pin, angle in step["moves"].items()}
+        if isinstance(step, dict) and isinstance(step.get("moves"), dict) else None
+        for step in sequence
+    ]
+
+
+@lru_cache(maxsize=1)
 def _spider_poses() -> list[list[dict]]:
     # Speed edits and omitted empty overrides do not change robot geometry.
-    return [[step["moves"] for step in sequence]
-            for sequence in _spider_catalog().values()]
+    return [_movement_poses(sequence) for sequence in _spider_catalog().values()]
+
+
+@lru_cache(maxsize=1)
+def _humanoid_poses() -> list[list[dict]]:
+    # Generic all-channel centering must remain usable by other profiles.
+    return [_movement_poses(sequence) for sequence in _humanoid_catalog().values()
+            if any(angle != 0 for step in sequence for angle in step["moves"].values())]
 
 
 def builtin_catalog(robot_type: str, pins: Iterable[int]) -> dict[str, list]:
@@ -59,9 +83,12 @@ def builtin_catalog(robot_type: str, pins: Iterable[int]) -> dict[str, list]:
     if robot_type == "spider":
         return deepcopy(_spider_catalog()) if SPIDER_PINS <= pins else {}
     if robot_type in {"tire", "humanoid"} and pins:
-        return {"home": [{
+        catalog = {"home": [{
             "moves": {str(pin): 0 for pin in sorted(pins)}, "speed": "S",
         }]}
+        if robot_type == "humanoid" and HUMANOID_PINS <= pins:
+            catalog.update(deepcopy(_humanoid_catalog()))
+        return catalog
     return {}
 
 
@@ -118,11 +145,12 @@ def validate_movement(config: NinjaConfig, name: str, pins: Iterable[int]) -> No
     scopes.update(scope for prefix, scope in TYPE_PREFIXES.items()
                   if name.lower().startswith(prefix))
     sequence = config.movements[name]
-    # Recognize copied/renamed Spider trajectories, especially legacy Poweroff.
-    poses = [step.get("moves") if isinstance(step, dict) else None
-             for step in sequence]
+    # Retain scope for known copied trajectories even without name/metadata.
+    poses = _movement_poses(sequence)
     if poses in _spider_poses():
         scopes.add("spider")
+    if poses in _humanoid_poses():
+        scopes.add("humanoid")
     if scopes and scopes != {config.robot_type}:
         raise MovementValidationError(
             f"Movement '{name}' requires {', '.join(sorted(scopes))}; robot type is {config.robot_type}."

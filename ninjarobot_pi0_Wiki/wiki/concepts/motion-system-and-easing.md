@@ -40,11 +40,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
   title: Lifecyclerefinementsevidence
   content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-developmentguide
+  resource: urn:llmwiki:source:src-20261012-developmentguide
+  title: Humanoid built-in movements development guide
+  content_hash: sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:ac145507919f3d3575a2e981544ad79df24b4d71c2009d1a848aab3d50159274
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:5a899e4e6203bdb693909ef24712601b8703cdb22779a3ccc940a4ab72e473e4
   result: passed
   checks:
     source_support: passed
@@ -53,11 +61,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed motion system against movement_cli.py, movement_controller.py, and test_lifecycle_refinements.py.
-    Option 6 Poweroff exit, PWM release without subsequent centering, and center_all_servos
-    abort callbacks match code.
-  - Physical clearance for extreme ±90° targets and mechanical holding torque require
-    real hardware verification.
+  - Reviewed Humanoid waypoint structure, key normalization, and recognition against
+    src-20261012-developmentguide and implementation evidence.
+  - Maintained nominal timing and easing limits without claiming physical velocity
+    or balance acceptance.
 ---
 
 # Motion System and Easing Curves
@@ -136,3 +143,10 @@ Additionally, `center_all_servos` supports an optional lifecycle abort callback 
 
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
+
+## Native Humanoid built-in movements (2026-10-12)
+
+The 2026-10-12 update packages 34 `humanoid_*` sequences (1,203 keyframes) and generic `home` (35 defaults / 1,204 steps) as native built-in movements for Humanoid robots with all GPIO 20–27 configured.[^src-20261012-humanoidbuiltinmovementsevidence] Waypoints use standard `moves`, `speed: S`, and optional `per_servo_speeds`.[^src-20261012-humanoidbuiltinmovementsevidence] `MovementController` and `validate_movement` recognize known non-neutral Humanoid trajectories even after renaming or speed adjustments, normalizing integer and string GPIO keys while excluding all-neutral center geometry from Humanoid classification.[^src-20261012-developmentguide]
+
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and trajectory pack.
+[^src-20261012-developmentguide]: Current versioned DevelopmentGuide with Humanoid motion contract and validation.

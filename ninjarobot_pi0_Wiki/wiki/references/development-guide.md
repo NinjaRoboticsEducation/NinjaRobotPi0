@@ -115,11 +115,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-developmentguide-4
   title: Developmentguide
   content_hash: sha256:3006688d9c9cc558348b9b04ae9a715059b939e2b140d6474861a513dd6a458f
+- id: src-20261012-developmentguide
+  resource: urn:llmwiki:source:src-20261012-developmentguide
+  title: Humanoid built-in movements development guide
+  content_hash: sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T14:26:52.015630+00:00'
-  target_hash: sha256:82a955f9be360341fa7e02936d35c07852da198415fb2537fd3aa7ba57b63b47
+  performed_by: agent:antigravity
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:4d3dba9dbdc91a48f660d0971ba520d0413c38695cd02bcb30c6b6f16bbd0e56
   result: passed
   checks:
     source_support: passed
@@ -128,13 +136,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Replacement claims reviewed against the registered new evidence, exact owner-source/resource/document
-    parity and 146 host tests. Older trajectory statements are explicitly historical;
-    unchanged managed values migrate and edits persist. Prior review by agent:antigravity
-    at 2026-10-11T11:18:33.727677+00:00 remains provenance for retained historical/context
-    claims; this update does not rerun their unrelated validation.
-  - Draft/unverified status remains. Owner-reported movement validation is attributed;
-    no new physical, visual or human wiki verification event is asserted.
+  - Reviewed Humanoid native catalog integration and deterministic extractor against
+    src-20261012-developmentguide and evidence.
+  - Host testing scope and physical limitation boundaries verified; citation for mobile
+    log updated.
 ---
 
 # Current development manual
@@ -251,7 +256,7 @@ The phased frontend plan and code review keep robot behavior unchanged. New comp
 
 ## Mobile Viewport Refinement and Robot Status Endpoint (2026-10-11)
 
-The mobile web refinement documents responsive viewport geometry, persistent layout selection, and server metadata integration:[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
+The mobile web refinement documents responsive viewport geometry, persistent layout selection, and server metadata integration:[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement] [^src-20261011-developmentlog-3]
 * **Viewport Geometry & Scroll Boundaries**: `useAppViewport` tracks `window.visualViewport` to allocate dynamic heights, lock document body overflow, and provide internal scroll containers for messages and logs, avoiding fixed-pixel height deductions.[^src-20261011-webmobilerefinement]
 * **Persistent Layout Selection & Fullscreen**: Interface activation remembers selected state across navigation, rendering exclusive orange/white highlights on return to Home and resetting upon reload. Activation buttons synchronously trigger Fullscreen API calls with WebKit fallback.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
 * **Robot Type Status Endpoint**: Additive `GET /api/robot/status` exposes read-only HAL metadata (`tire`, `humanoid`, `spider`) protected by session middleware (423 inactive, 503 shutdown). Tested via AST compilation in `tests/test_web_robot_status.py`.[^src-20261011-developmentguide-2] [^src-20261011-webmobilerefinement]
@@ -283,3 +288,14 @@ Host validation passed 146 targeted tests, including all current sequences with 
 [^src-20261011-developmentguide-4]: New complete English version preserving earlier guidance and adding the validated catalog replacement.
 
 [^src-20261011-2026-10-11-spider-validated]: Owner-requested Spider data replacement, exact source parity and host validation evidence.
+
+## Current Humanoid native catalog integration (2026-10-12)
+
+`builtin_movements.py` loads cached installed `data/humanoid_otto.json`; `builtin_catalog` returns independent copies only for Humanoid with all GPIO 20–27 configured.[^src-20261012-developmentguide] Full Humanoid defaults total 35 entries / 1,204 steps (34 sequences + generic `home`). Partial profiles keep only generic `home`.[^src-20261012-developmentguide] [^src-20261012-humanoidbuiltinmovementsevidence]
+
+`scripts/build_humanoid_movements.py` deterministically extracts standalone library-marker JSON blocks from the reference document, verifying exact installed-resource parity against canonical inner-object hash `49f6c4fe998b3c8500347f56eeeb7e165fb442c206ac373485310af7d280d2d6` via `--check`.[^src-20261012-developmentguide] Shared `validate_movement` recognizes known non-neutral Humanoid trajectories even after renaming or speed edits, normalizing string and integer GPIO keys, while excluding all-neutral center geometry from Humanoid inference.[^src-20261012-developmentguide]
+
+Host validation passed 344 tests with 1 pre-existing missing-Spider-fixture test deselected, confirming full import, idempotency, profile switching, and CLI/web/agent execution.[^src-20261012-developmentguide] [^src-20261012-humanoidbuiltinmovementsevidence] Physical device acceptance and live hardware motion remain pending.[^src-20261012-humanoidbuiltinmovementsevidence]
+
+[^src-20261012-developmentguide]: Current versioned Developmentguide (2026-10-12 Humanoid built-in movements).
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and validation boundaries.

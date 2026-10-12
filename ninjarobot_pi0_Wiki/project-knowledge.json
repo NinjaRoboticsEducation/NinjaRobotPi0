@@ -1,13 +1,13 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-11T14:27:25.447726+00:00",
+  "reviewed_at": "2026-10-12T03:40:00+00:00",
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-10-model-adapter/InstallationGuide.md",
-      "source_id": "src-20261010-installationguide-3",
-      "content_hash": "sha256:116e93e529583e57b2f300536c8a2367030727c584a83a1a826cd5a53b0d4001",
+      "path": "raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/InstallationGuide.md",
+      "source_id": "src-20261012-installationguide",
+      "content_hash": "sha256:30b40b3338f5e9b912b63cb4146f3fa369a13b3d6848869efbce8ebf3f7eed19",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentGuide.md",
-      "source_id": "src-20261011-developmentguide-4",
-      "content_hash": "sha256:3006688d9c9cc558348b9b04ae9a715059b939e2b140d6474861a513dd6a458f",
+      "path": "raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentGuide.md",
+      "source_id": "src-20261012-developmentguide",
+      "content_hash": "sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentLog.md",
-      "source_id": "src-20261011-developmentlog-5",
-      "content_hash": "sha256:6bc6d153e74e84ea1e4b5b1d8069a818278c5a4d840109d53694e25e98777f16",
+      "path": "raw/notes/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentLog.md",
+      "source_id": "src-20261012-developmentlog-2",
+      "content_hash": "sha256:73de870ccfd7a010dec09e97fe68c4c5b24929d14043d3e7e6b57410f2df519e",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -276,18 +276,18 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "README.md": {
-      "content_hash": "sha256:32e86e5f2db7620848d272b4ca08ccf052b4ab0c9af76f8d0ad2301728c46237",
+      "content_hash": "sha256:400450857c8e7d7882fe6ad51193b51fce19968aab95129be60b3ad21ffe0841",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+      "review_note": "Reviewed four-language public documentation, manual links updated to 2026-10-12 Humanoid builtins milestone."
     },
     "docs/validation/core_baseline.json": {
-      "content_hash": "sha256:80159f37e3b62a1033eaea3e803642c0952cb5821d04e2677ceda25459c1cbab",
+      "content_hash": "sha256:e6251e4c71055ac6f1679edc6da0f5d8036a8c269a15dcfa2af381402796512d",
       "pages": [
-        "wiki/concepts/architecture-and-hal.md"
+        "wiki/references/development-guide.md"
       ],
-      "review_note": "Core protected baseline hashes updated for web_server.py shutdown lifecycle changes."
+      "review_note": "Core baseline protected hashes updated for web server and humanoid movement extensions."
     },
     "install.sh": {
       "content_hash": "sha256:e0a5418e5c1210a30c3a561c47f6dfedd4dfffa3f5e575d7ce33b882be8d2a3b",
@@ -387,12 +387,14 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/builtin_movements.py": {
-      "content_hash": "sha256:bf02235bfc444ded71b6c4f3efea41a9d1e714bc1b2b14268c1b5d23609b30ab",
+      "content_hash": "sha256:6ba00367117cb54b99703da1f6b2f6a321693cb55349e5e1636a218047731ce2",
       "pages": [
-        "wiki/entities/ninja-core.md",
-        "wiki/concepts/spider-otto-waypoint-library.md"
+        "wiki/concepts/humanoid-otto-waypoint-library.md",
+        "wiki/concepts/spider-otto-waypoint-library.md",
+        "wiki/concepts/motion-system-and-easing.md",
+        "wiki/entities/ninja-core.md"
       ],
-      "review_note": "Native built-in movement catalog, installed package resource loader (data/spider_otto.json), robot profile seeding, and preflight step validation reviewed against 2026-10-09 builtins implementation."
+      "review_note": "Native built-in movement catalog with humanoid 34-sequence (1203-keyframe) library loader, robot profile seeding, and preflight step validation."
     },
     "ninja_core/src/ninja_core/config.py": {
       "content_hash": "sha256:88055df8472bce210b792db5bbc3e61eee1a790a90e59425670cce07c8f558c5",
@@ -619,12 +621,12 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/web_server.py": {
-      "content_hash": "sha256:52097d5cac03b3286e7ca8f6cdc36984c880afa2cca34750318f1c2f66688d28",
+      "content_hash": "sha256:e30a038147586f531f1880383bbbc96a2a1e2566caa35c628351c31d2fefbf95",
       "pages": [
         "wiki/entities/ninja-core.md",
         "wiki/references/api-and-cli-reference.md"
       ],
-      "review_note": "Coordinated async shutdown worker joined by lifespan and web power-off; Web Speech chat support."
+      "review_note": "Async web server endpoints including movement discovery, execution preflight, robot status reporting, and shutdown coordination."
     },
     "ninja_core/src/ninja_core/web_sessions.py": {
       "content_hash": "sha256:ee917c8d232875e3c6c7b3d45e0002f51b5de97d12d966954a055bd17b590470",
@@ -764,12 +766,12 @@
       "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/components/common/LanguageSelector.module.css": {
-      "content_hash": "sha256:d6e224a544a2a13229a1c210bce81ee8c2d841623f0a2d4f4b51e6f1a1af13fb",
+      "content_hash": "sha256:2d26c988ab06b7feee9990d5decd1d56415f75acbc49801ef1a4c799edf4f091",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Frontend language selector styling supporting English, Japanese, Traditional Chinese, and Simplified Chinese."
     },
     "ninja_webapp/src/components/common/PowerOffSlider.jsx": {
       "content_hash": "sha256:d7220e873a83b9bc71bcf32a36f72984ee2fc4407bfc248ce916a1e12e20b14f",
@@ -780,12 +782,12 @@
       "review_note": "Reviewed viewport ResizeObserver geometry only; staged drag/keyboard intent, confirmation and shutdown request logic are preserved. Protected core remains unchanged."
     },
     "ninja_webapp/src/components/common/PowerOffSlider.module.css": {
-      "content_hash": "sha256:581a4eb130d341af419b233292286feccacb40efc319e43d412418b4976b5e70",
+      "content_hash": "sha256:04de12cbd6a9cbdd0567e47693efceb594fb1ff1116af6f15ab780bbd2d966d2",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Safe power-off confirmation slider styling preventing accidental robot shutdown."
     },
     "ninja_webapp/src/components/layout/Footer.jsx": {
       "content_hash": "sha256:1b4fc074e9be821b7441c8a4e8fff67fe33600e2656d09e052e43594066b9538",
@@ -804,36 +806,36 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/components/layout/Header.jsx": {
-      "content_hash": "sha256:8e6974c3bac6e1a0064c130d1c08babe22899415ff80f5f7307f0edadab58390",
+      "content_hash": "sha256:350159cce529366394837e42846de6c87f6cc7752ce4dac672c329980142ee23",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Web application navigation header with system status indicators, power-off trigger, and language switching."
     },
     "ninja_webapp/src/components/layout/Header.module.css": {
-      "content_hash": "sha256:7fb8aaf18313c16c7e092ad5112169ea04075934c112a03e63b4b8a772b06c05",
+      "content_hash": "sha256:891ea0009004cc9a85f6c09cabe4e0f688396cf96559b9da40841fce26101f01",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Header component responsive layout and badge styling across mobile and desktop viewport widths."
     },
     "ninja_webapp/src/components/layout/Layout.jsx": {
-      "content_hash": "sha256:4abdf0d03c113608121d80066900f88874a49ce01d34f0057e927b7547112d70",
+      "content_hash": "sha256:ab574306e9001aa2e3f0becd3d47d818ff6b440fa5f97d9943ffd9c7bd3e5625",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Main application shell integrating responsive viewport scaling, full-screen toggle, and subpage routing."
     },
     "ninja_webapp/src/components/layout/Layout.module.css": {
-      "content_hash": "sha256:b1c32b0c921d42d650aca0c0eb4255d4399402300d2d5753847a5bf3701afc1e",
+      "content_hash": "sha256:cada3111aebaa2d10830e014f379b844b16fc0198f2c348550fb3c4ba9b2e9d7",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
+      "review_note": "Application layout styling with dynamic viewport height handling and container padding."
     },
     "ninja_webapp/src/hooks/useRobotSession.js": {
       "content_hash": "sha256:a40c82e4b87b40d18238cf8d7d85c49d1b76ed3aef2c8e22520154cbc75ec7df",
@@ -852,44 +854,44 @@
       "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/index.css": {
-      "content_hash": "sha256:c52d4b90a9fb658d9f98d77e679c1c4dbabc7bd11704b5c820ca4bbce33938f5",
+      "content_hash": "sha256:7f3aae7ad8f1080fe2b517e6cc02ed25006f0a8d556836afe4e7850f31259f19",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Global design system tokens, typography, color palette, and reset styles."
     },
     "ninja_webapp/src/locales/en.json": {
-      "content_hash": "sha256:621338492ad6ea17a5e7c71316034c00b2b806e036125c3a7e7d8f96427870f3",
+      "content_hash": "sha256:54e4ada37df891b18d44117c4dd46e350afafc1ce2073247b411adb434cfee0c",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "English localization strings for navigation, movements, robot status, and diagnostics."
     },
     "ninja_webapp/src/locales/ja.json": {
-      "content_hash": "sha256:916736297055f1ffec38de73cbde85d2334c4ea476f457bd3eeb46407e9617bc",
+      "content_hash": "sha256:19cbc04a2e88b7a89ab3dd05f42e376c6549339ad9b3023f569aaf99f05aea5c",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Japanese localization strings for navigation, movements, robot status, and diagnostics."
     },
     "ninja_webapp/src/locales/zh-cn.json": {
-      "content_hash": "sha256:08cb29ee5072b30c007f03283e6ccefc57a44526183180daf22907eb8eb6cf6e",
+      "content_hash": "sha256:59dd460ed79c9b33e8978aeb3f9e46c1afad9b56dd2a7a120e02bb4a4f8bcf1d",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Simplified Chinese localization strings for navigation, movements, robot status, and diagnostics."
     },
     "ninja_webapp/src/locales/zh-tw.json": {
-      "content_hash": "sha256:05bd2eb90929571bf4142827366e80586a15de66c58a2327057592e4379596c2",
+      "content_hash": "sha256:b6be11bcc6a02dd3338103d2dae50bca66144beb76e1b22713d059507c66492f",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Traditional Chinese localization strings for navigation, movements, robot status, and diagnostics."
     },
     "ninja_webapp/src/main.jsx": {
       "content_hash": "sha256:227fb9cc1dd4c0f0c2384eb498eee6e1d97dd9615fc3c5213335885595304a09",
@@ -900,12 +902,13 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/pages/Agent/Agent.module.css": {
-      "content_hash": "sha256:ba1d30f4f4ea57474ba58d534539e20d1e5a25abb678f039734c031505757eda",
+      "content_hash": "sha256:160d21bf80a4ecb561cd33fb8ae9a24a265ed23a5c845299946ac4f873993f61",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/concepts/action-library-and-ai-agent.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Interactive AI agent and voice chat page styling with responsive transcript display."
     },
     "ninja_webapp/src/pages/Agent/index.jsx": {
       "content_hash": "sha256:45081a638ce61f7148b2648dea55b5c321b620f1c791a32172c478b06a347ec9",
@@ -916,20 +919,20 @@
       "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/pages/Home/Home.module.css": {
-      "content_hash": "sha256:761c33a90eb6b9e0c94882eeb082db0933b4670ae731eacc85e1499e396a45bf",
+      "content_hash": "sha256:bbc85daa620b35425fbd36557fe3043b27a53ea7153d56ccf121ede6e36fa92b",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Home dashboard styling with robot visualizer, quick action cards, and sensor telemetry."
     },
     "ninja_webapp/src/pages/Home/index.jsx": {
-      "content_hash": "sha256:f0bf58f8e641eb6f422d3f82c5e2f047b88b8e01fe1d9dd188db000140f34e4f",
+      "content_hash": "sha256:7eb1b775f5c83ca778a1f1645dae91859eed6dddb7448f48acb6c64d2711bf1d",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
+      "review_note": "Home dashboard view managing robot status polling, mode switching, and hardware status cards."
     },
     "ninja_webapp/vite.config.js": {
       "content_hash": "sha256:21f56ad70aed71dce16a3e3efdafe7eb80e5ae057a8de9ccd4536ab4e0b33109",
@@ -1842,12 +1845,12 @@
       "review_note": "Reviewed explicit setup-only private uv fallback and cleared inherited UV_PROJECT; query paths remain no-sync."
     },
     "tests/browser_ui.cjs": {
-      "content_hash": "sha256:f8e5ac9ca979918fc272157d19c224302bdc4701d17d0acc39d49507684fb109",
+      "content_hash": "sha256:d47921b7056714d6a6436437a8c31f451b59d48278632adf8176d5ea0c9e8f49",
       "pages": [
-        "wiki/concepts/development-workflow.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/references/development-guide.md",
+        "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Optional inert Playwright fixture suite updated for Home/menu, Movement/Chat, direct endpoints, speech lifecycle, four locales and Help redirect. Syntax checked; browser execution explicitly waived by owner on Pi Lite. No completed browser assertions claimed."
+      "review_note": "End-to-end browser integration suite covering mobile viewports, localization, and movement selection."
     },
     "tests/conftest.py": {
       "content_hash": "sha256:2a6742af9e8c1f1a740334bf56bec080dbb63019ca7ac1240356492036784557",
@@ -1878,12 +1881,13 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_builtin_movements.py": {
-      "content_hash": "sha256:0cef504ccf75c6dd0af73eeab08ce432c992873bb33636d82ef72c5a892d8a56",
+      "content_hash": "sha256:78044f458f4f6ca6ba2f4705e4178527d0bf3cb283c55a3e05d6c20b5acef77e",
       "pages": [
         "wiki/references/development-guide.md",
-        "wiki/concepts/development-workflow.md"
+        "wiki/concepts/development-workflow.md",
+        "wiki/concepts/humanoid-otto-waypoint-library.md"
       ],
-      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+      "review_note": "Built-in movement test suite validating catalog discovery, profile seeding, preflight error guards, and robot type scoping for humanoid and spider."
     },
     "tests/test_chunking.py": {
       "content_hash": "sha256:2ca4c99ce8c3c897af043b15067e4461fe43ac83b37143c0a47e78a5b31484c1",
@@ -2063,12 +2067,12 @@
       "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
     },
     "ninja_webapp/src/components/common/SystemActivity.module.css": {
-      "content_hash": "sha256:cf49dd97545849f59d5afc2261fe95390aa76444d038532599e4d4ccbf882cc4",
+      "content_hash": "sha256:7d2fc15a0bd5c45909f4f3b453ea690a87fbbd6e9ae06c844dcf9c6347086b6a",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+      "review_note": "System activity monitor component styling for real-time CPU, memory, and servo load indicators."
     },
     "ninja_webapp/src/components/common/SystemActivity.jsx": {
       "content_hash": "sha256:a70132ced3ecf80b4054283da768ae41befea1d0d3614db4d78f7ff46eca9266",
@@ -2079,12 +2083,12 @@
       "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
     },
     "ninja_webapp/src/pages/Movement/Movement.module.css": {
-      "content_hash": "sha256:ad0f4cd559470ac15e26b75090ee2d6bafa21f21860d19c318fb001b5d6dd750",
+      "content_hash": "sha256:a4c799a44441eedfa1463d8435f1e42e53f93d365e65df8e0499bc1de48fee11",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+      "review_note": "Movement control page styling for sequence triggers, speed selectors, and pose previews."
     },
     "ninja_webapp/src/pages/Movement/index.jsx": {
       "content_hash": "sha256:61766f1188de11f42d44a4288e826a1682009d252811ca79f75151faa883eba2",
@@ -2095,25 +2099,26 @@
       "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
     },
     "DevelopmentGuide.md": {
+      "content_hash": "sha256:e17b2e4521cde392e7e11ccbf725a75236dfd153a44e38323623e0f613015050",
       "pages": [
-        "wiki/concepts/spider-otto-waypoint-library.md"
+        "wiki/concepts/spider-otto-waypoint-library.md",
+        "wiki/references/development-guide.md"
       ],
-      "content_hash": "sha256:ac9e45059ea328eaef4a111c6bef3f10559afd1a35def35d0967b5fdc22e8693",
-      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+      "review_note": "Compatibility pointer updated to 2026-10-12 Humanoid builtins DevelopmentGuide."
     },
     "DevelopmentLog.md": {
+      "content_hash": "sha256:75576f2c33c09a40b78685c61bebd84fc8345e3359d7286d4d0de13651f577cc",
       "pages": [
-        "wiki/concepts/spider-otto-waypoint-library.md"
+        "wiki/analyses/development-history-and-evolution.md"
       ],
-      "content_hash": "sha256:2dcb11395dee3092a0d3c3fdfdc820530b9de81a575d3771c318dbb2a72799bb",
-      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+      "review_note": "Compatibility pointer updated to 2026-10-12 Humanoid builtins DevelopmentLog."
     },
     "ninjarobot_pi0_Wiki/README.md": {
+      "content_hash": "sha256:9f19a62b47591ac151fb7f9aa676743bd33e3afd59b5ee755e9d0a0aaa34dd9f",
       "pages": [
         "wiki/concepts/spider-otto-waypoint-library.md"
       ],
-      "content_hash": "sha256:5ff5f81d3b06ee7f331ac6aa59e0558ecaeb326651107b5a9a9c73bdea9435db",
-      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+      "review_note": "Wiki root README updated to link to 2026-10-12 Humanoid builtins manuals."
     },
     "ninja_core/src/ninja_core/data/spider_otto.json": {
       "pages": [
@@ -2123,11 +2128,59 @@
       "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
     },
     "DevelopmentPlanDoc/spider_movement.json": {
+      "content_hash": "sha256:0823f7eda67f02b40fe745b9d596810ff0aa5d1d44531c992c75284584768329",
       "pages": [
         "wiki/concepts/spider-otto-waypoint-library.md"
       ],
-      "content_hash": "sha256:e045ebe530b454f2a0dbf285db8d2b429301bff7cb619cb0d4b45b4498f2b560",
-      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+      "review_note": "Owner-validated 20-movement Spider catalog definitions, 566 steps across BCM GPIO 20-27."
+    },
+    "DevelopmentPlanDoc/HumanoidBuildinMovements.md": {
+      "content_hash": "sha256:4a1735e4de9718fda862d434e07c9278f229caf86f209ba8b56de063e2214647",
+      "pages": [
+        "wiki/concepts/humanoid-otto-waypoint-library.md",
+        "wiki/references/development-guide.md"
+      ],
+      "review_note": "Comprehensive Humanoid built-in movement specifications, 34 waypoint sequences (1203 keyframes), BCM 20-27 mapping, and deterministic generation rules."
+    },
+    "ninja_webapp/src/hooks/useAppViewport.js": {
+      "content_hash": "sha256:e55042a709e5931661183eed2c5a2409280582b25fbb8efca031d510ce86697f",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
+      ],
+      "review_note": "React hook managing dynamic viewport dimensions and CSS custom properties for responsive mobile layouts."
+    },
+    "ninja_webapp/src/utils/fullscreen.js": {
+      "content_hash": "sha256:f2c158fe036a02aca559cef863b55cd7a0e856e36834d3dfbae7571d70d0638a",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
+      ],
+      "review_note": "Cross-browser fullscreen API utility supporting web application kiosk and immersive display modes."
+    },
+    "scripts/build_humanoid_movements.py": {
+      "content_hash": "sha256:292d011fbb0ce5c058bb79196176e94460a96482a7dfbf1f91a70d6ed96babf6",
+      "pages": [
+        "wiki/concepts/humanoid-otto-waypoint-library.md",
+        "wiki/references/development-guide.md"
+      ],
+      "review_note": "Deterministic compiler extracting humanoid waypoint definitions from documentation into ninja_core package data."
+    },
+    "tests/test_humanoid_builtin_movements.py": {
+      "content_hash": "sha256:d59490ad3148498450450fbffb517312bf270ba7d4972a70063cf78b7c31eb9a",
+      "pages": [
+        "wiki/concepts/humanoid-otto-waypoint-library.md",
+        "wiki/references/development-guide.md"
+      ],
+      "review_note": "Host test suite verifying humanoid movement extraction, keyframe counts, easing transitions, and inert actuator calls."
+    },
+    "tests/test_web_robot_status.py": {
+      "content_hash": "sha256:3fa5361a24492e2758c117f516e5073defe399efaadc1038ddb1be9253068ccd",
+      "pages": [
+        "wiki/references/api-and-cli-reference.md",
+        "wiki/entities/ninja-core.md"
+      ],
+      "review_note": "Unit tests for web server robot status endpoint, battery monitoring, and telemetry payload format."
     }
   },
   "adapters": [
@@ -2282,7 +2335,12 @@
     "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-11-web-refinement/DevelopmentGuide.md",
     "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-web-refinement-final/DevelopmentLog.md",
     "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentGuide.md",
-    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentLog.md"
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-11-spider-validated/DevelopmentLog.md",
+    "DevelopmentPlanDoc/HumanoidBuildinMovements.md",
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/DevelopmentLog.md",
+    "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/InstallationGuide.md",
+    "ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentGuide.md",
+    "ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentLog.md"
   ],
   "limits": [
     "AI source-grounded review is not human verification or physical qualification.",

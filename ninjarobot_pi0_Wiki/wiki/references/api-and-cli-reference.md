@@ -92,11 +92,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-developmentguide-2
   title: Mobile refinement current development guide
   content_hash: sha256:d17ec03fe789cd0f8f13824ef0d773c7608fe1efae29150fa1c07610ee4febed
+- id: src-20261012-installationguide
+  resource: urn:llmwiki:source:src-20261012-installationguide
+  title: Humanoid built-in movements installation guide
+  content_hash: sha256:30b40b3338f5e9b912b63cb4146f3fa369a13b3d6848869efbce8ebf3f7eed19
+- id: src-20261012-developmentguide
+  resource: urn:llmwiki:source:src-20261012-developmentguide
+  title: Humanoid built-in movements development guide
+  content_hash: sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T09:54:05.388246+00:00'
-  target_hash: sha256:b718e9bb0fe9d0021fc1bfcfc830402ca761f430f2e344a1e709a459c18c4a9e
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:6e838271a97226dfc83f53a9f5b392ff0b3b94541a4cefe88b59aa5ce8f3e2ca
   result: passed
   checks:
     source_support: passed
@@ -105,10 +113,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed GET /api/robot/status REST endpoint specification and session ownership
-    gating against web_server.py and WebMobileRefinement.md.
-  - Inert endpoint tests in test_web_robot_status.py passed; live robot HAL validation
-    remains pending.
+  - Reviewed Humanoid CLI configuration commands and REST execution HTTP 422 contract
+    against src-20261012-installationguide and DevelopmentGuide.md.
+  - API payload shapes and error handling verified.
 ---
 
 # API and CLI Reference
@@ -252,3 +259,19 @@ Browser speech input transcribes spoken text client-side via Web Speech API and 
 
 [^src-20261011-webmobilerefinement]: Mobile refinement code, design and local validation evidence (2026-10-11 mobile refinement).
 [^src-20261011-developmentguide-2]: Mobile refinement current development guide (2026-10-11 mobile refinement).
+
+## Humanoid Built-in Movement Configuration and REST Execution (2026-10-12)
+
+CLI configuration commands configure and seed native Humanoid movements:[^src-20261012-installationguide]
+
+```bash
+.venv/bin/ninja_core config set-type humanoid
+.venv/bin/ninja_core config import
+```
+
+`import-all` is an accepted alias. When all GPIO 20–27 are present in calibration keys, import seeds 35 defaults (34 `humanoid_*` sequences and `home`).[^src-20261012-installationguide]
+
+In the web REST API, `POST /api/servos/movements/{name}/execute` executes profile-scoped movements; requests with stale or incompatible movement names return HTTP 422 before runtime reclamation.[^src-20261012-developmentguide] [^src-20261012-installationguide]
+
+[^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
+[^src-20261012-developmentguide]: Current versioned Developmentguide with REST movement execution contract.

@@ -99,11 +99,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-developmentguide-4
   title: Developmentguide
   content_hash: sha256:3006688d9c9cc558348b9b04ae9a715059b939e2b140d6474861a513dd6a458f
+- id: src-20261012-developmentguide
+  resource: urn:llmwiki:source:src-20261012-developmentguide
+  title: Humanoid built-in movements development guide
+  content_hash: sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
 semantic_review:
   version: 1
-  performed_by: agent:codex
-  performed_at: '2026-10-11T14:26:52.015630+00:00'
-  target_hash: sha256:840a3fe52a068e99c0557e40862dee42f577bd2aab3a3df77b40cb3716a776e4
+  performed_by: agent:antigravity
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:07a2f5002150105475b29bf057546d7505f7c110fa9ae1aaa336c7410a39f588
   result: passed
   checks:
     source_support: passed
@@ -112,13 +120,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Replacement claims reviewed against the registered new evidence, exact owner-source/resource/document
-    parity and 146 host tests. Older trajectory statements are explicitly historical;
-    unchanged managed values migrate and edits persist. Prior review by agent:antigravity
-    at 2026-10-11T11:18:33.727677+00:00 remains provenance for retained historical/context
-    claims; this update does not rerun their unrelated validation.
-  - Draft/unverified status remains. Owner-reported movement validation is attributed;
-    no new physical, visual or human wiki verification event is asserted.
+  - Reviewed Humanoid deterministic extraction, regression tests, and wheel resource
+    checks against src-20261012-developmentguide.
+  - Testing boundaries and physical verification limits verified.
 ---
 
 # Development and immutable documentation workflow
@@ -249,3 +253,14 @@ Host validation passed 146 targeted tests, including all current sequences with 
 [^src-20261011-developmentguide-4]: New complete English version preserving earlier guidance and adding the validated catalog replacement.
 
 [^src-20261011-2026-10-11-spider-validated]: Owner-requested Spider data replacement, exact source parity and host validation evidence.
+
+## Humanoid built-in movements validation workflow (2026-10-12)
+
+The Humanoid native catalog integration follows deterministic extraction, inert regression testing, and package isolation:[^src-20261012-developmentguide] [^src-20261012-humanoidbuiltinmovementsevidence]
+* **Deterministic Extraction & Hash Verification**: `scripts/build_humanoid_movements.py` extracts standalone library-marker JSON blocks from the reference document. Running `--check` verifies exact installed-resource parity against canonical inner-object hash `49f6c4fe998b3c8500347f56eeeb7e165fb442c206ac373485310af7d280d2d6`.[^src-20261012-developmentguide]
+* **Host Regression Testing**: 344 tests passed on Python 3.13 (with 1 pre-existing missing-Spider-fixture test deselected), verifying configuration import, idempotency, upgrade preservation, type switching, trajectory recognition, and CLI/web/agent execution under inert mocks.[^src-20261012-developmentguide] [^src-20261012-humanoidbuiltinmovementsevidence]
+* **Standalone Wheel Inspection**: Direct zip-resource inspection confirmed standalone wheel resource packaging with 35 defaults / 1,204 steps.[^src-20261012-developmentguide]
+* **Verification Boundaries**: Host software tests and inert mocks do not substitute for physical Raspberry Pi Zero 2W testing; mechanical motion, balance, power limits, and cloud/browser acceptance remain pending owner validation.[^src-20261012-humanoidbuiltinmovementsevidence]
+
+[^src-20261012-developmentguide]: Current versioned Developmentguide with Humanoid extraction and test workflow.
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and validation report.

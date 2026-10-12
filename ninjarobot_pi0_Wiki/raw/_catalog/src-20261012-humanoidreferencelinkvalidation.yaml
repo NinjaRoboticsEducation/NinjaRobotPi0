@@ -1,0 +1,16 @@
+id: src-20261012-humanoidreferencelinkvalidation
+path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/HumanoidReferenceLinkValidation.md
+media_type: text/markdown
+kind: text
+title: Humanoidreferencelinkvalidation
+added_at: '2026-10-12T00:45:48Z'
+content_hash: sha256:f103c92694c27838b136c7836156a88520a6e14654e9b8c8613f77118d722c41
+state: ingested
+original_uri: urn:llmwiki:source:src-20261012-humanoidreferencelinkvalidation
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-12T00:45:48Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-12T02:43:47Z'
+last_plan: pi0-humanoid-citation-cleanup-261012

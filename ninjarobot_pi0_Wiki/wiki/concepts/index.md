@@ -5,6 +5,7 @@
 * [Development and immutable documentation workflow](development-workflow.md) - Development and immutable documentation workflow.
 * [Dual Connectivity and Communication Protocols](dual-connectivity-and-protocols.md) - Dual Wi-Fi and Bluetooth Low Energy connectivity, GATT service specifications, and chunked transfer protocols.
 * [Guided Pi0 onboarding](guided-onboarding.md) - Guided Pi0 onboarding.
+* [Humanoid Otto movement reference and native catalog integration](humanoid-otto-waypoint-library.md) - Complete Humanoid waypoint library, native built-in catalog integration, and validation boundaries.
 * [Motion System and Easing Curves](motion-system-and-easing.md) - Velocity-based physics motion calculations, position-aware easing curves, and the movement command syntax.
 * [Perception and Expression Systems](perception-and-expression.md) - Time-of-Flight distance sensing, thread-safe measurement locks, animated LCD expressions, and emotion audio synthesis.
 * [Safe Code Execution and Blockly Runtime](safe-execution-and-blockly-runtime.md) - Sandboxed Python execution, AST compilation preflight, runtime ownership switching, and GPIO-first wrapper contracts.

@@ -1,0 +1,16 @@
+id: src-20261012-developmentlog
+path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/DevelopmentLog.md
+media_type: text/markdown
+kind: text
+title: Developmentlog
+added_at: '2026-10-12T00:42:26Z'
+content_hash: sha256:43c971abf2590fbea4b1c75a0e387338aa21c95f8aecbb5894afc2b70ae05804
+state: ingested
+original_uri: urn:llmwiki:source:src-20261012-developmentlog
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-12T00:42:34Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-12T02:43:47Z'
+last_plan: pi0-humanoid-citation-cleanup-261012

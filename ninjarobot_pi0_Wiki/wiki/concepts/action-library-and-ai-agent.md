@@ -52,11 +52,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-developmentguide-4
   title: Developmentguide
   content_hash: sha256:b82c27e23387051b0280adf428e34299bbfd65bcf2bcc80d3802027c4f3827bc
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-developmentguide
+  resource: urn:llmwiki:source:src-20261012-developmentguide
+  title: Humanoid built-in movements development guide
+  content_hash: sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T17:23:23.105961+00:00'
-  target_hash: sha256:3dd62023c357a3c9972f50c7857d849a99d71df951c0b97fddf03506dd02d7bb
+  performed_at: '2026-10-12T02:35:00+00:00'
+  target_hash: sha256:5cc430827462dfe3839723e0e5cd159902e9f785bee27ebed48a4642ea2f9b7d
   result: passed
   checks:
     source_support: passed
@@ -65,10 +73,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed voice capability distinction between /api/agent/voice audio upload and
-    /api/agent/chat browser Web Speech input.
-  - Software boundaries verified against Agent/index.jsx; live provider model testing
-    remains pending.
+  - Reviewed AI agent native movement discovery and plan validation with Humanoid
+    catalog against src-20261012-developmentguide.
+  - Whole-chain rejection bounds and cloud adapter security contracts verified.
 ---
 
 # Action Library and AI Agent
@@ -121,7 +128,7 @@ The former NinjaRobotV5 repository is now NinjaRobotPi0 at [NinjaRoboticsEducati
 
 ## Native movement action chaining and execution limits
 
-The Gemini AI agent restricts native movement suggestions to executable movements matching the active robot type (`spider`, `wheel`/`tire`, or `humanoid`). Native movement chains from text and audio plans are validated with strict bounds: maximum 32 entries per chain and 1–20 positive integer repetitions per entry. Any unavailable or type-incompatible movement causes the entire native chain to be rejected while preserving the conversational response and logging the rejection reason.[^src-20261009-2026-10-09-builtin-movements]
+The Gemini AI agent restricts native movement suggestions to executable movements matching the active robot type (`spider`, `wheel`/`tire`, or `humanoid`). Native movement chains from text and audio plans are validated with strict bounds: maximum 32 entries per chain and 1–20 positive integer repetitions per entry. Following the 2026-10-12 Humanoid native catalog integration, Humanoid robots with all GPIO 20–27 configured advertise 35 native movement choices (34 `humanoid_*` sequences and `home`).[^src-20261012-humanoidbuiltinmovementsevidence] Any unavailable or type-incompatible movement causes the entire native chain to be rejected while preserving the conversational response and logging the rejection reason.[^src-20261009-2026-10-09-builtin-movements] [^src-20261012-developmentguide]
 
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
 
@@ -157,3 +164,6 @@ Model-generated action objects are treated as untrusted input and validated stri
 
 [^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
 [^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
+
+[^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and agent catalog scope.
+[^src-20261012-developmentguide]: Current versioned DevelopmentGuide with native movement plan validation details.

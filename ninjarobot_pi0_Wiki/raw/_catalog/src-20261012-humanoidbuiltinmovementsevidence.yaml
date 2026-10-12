@@ -1,0 +1,16 @@
+id: src-20261012-humanoidbuiltinmovementsevidence
+path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-builtins/HumanoidBuiltinMovementsEvidence.md
+media_type: text/markdown
+kind: text
+title: Humanoid built-in movements implementation evidence
+added_at: '2026-10-12T02:24:49Z'
+content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+state: ingested
+original_uri: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
+source_version: 2026-10-12-humanoid-builtins
+retrieved_at: null
+normalized_at: '2026-10-12T02:25:07Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-12T02:43:47Z'
+last_plan: pi0-humanoid-citation-cleanup-261012

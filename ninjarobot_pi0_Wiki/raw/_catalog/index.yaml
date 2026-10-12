@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-11T14:27:25Z'
+generated_at: '2026-10-12T02:43:48Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -579,5 +579,40 @@ sources:
 - id: src-20261011-webrefinementevidence
   title: Web refinement code, design and local validation evidence
   path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement/WebRefinementEvidence.md
+  kind: text
+  state: ingested
+- id: src-20261012-developmentguide
+  title: Humanoid built-in movements development guide
+  path: raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261012-developmentlog-2
+  title: Humanoid built-in movements development log
+  path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261012-developmentlog
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261012-humanoidbuiltinmovementsevidence
+  title: Humanoid built-in movements implementation evidence
+  path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-builtins/HumanoidBuiltinMovementsEvidence.md
+  kind: text
+  state: ingested
+- id: src-20261012-humanoidmovementreferenceevidence
+  title: Humanoidmovementreferenceevidence
+  path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/HumanoidMovementReferenceEvidence.md
+  kind: text
+  state: ingested
+- id: src-20261012-humanoidreferencelinkvalidation
+  title: Humanoidreferencelinkvalidation
+  path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/HumanoidReferenceLinkValidation.md
+  kind: text
+  state: ingested
+- id: src-20261012-installationguide
+  title: Humanoid built-in movements installation guide
+  path: raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/InstallationGuide.md
   kind: text
   state: ingested
