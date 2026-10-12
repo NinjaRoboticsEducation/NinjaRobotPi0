@@ -11,6 +11,7 @@ PACKAGES = (
     "curl",
     "git",
     "python3-dev",
+    "python3-pip",
     "python3-venv",
     "xz-utils",
     "zstd",
@@ -23,7 +24,14 @@ def install_packages(policy, run=subprocess.run):
     if os.geteuid() != 0:
         raise SystemExit("This narrow OS setup helper requires sudo.")
     # Never overwrite or reinterpret an administrator's service policy.
-    descriptor = os.open(policy, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o755)
+    try:
+        descriptor = os.open(policy, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o755)
+    except FileExistsError as exc:
+        raise FileExistsError(
+            f"Existing service policy retained: {policy}. Have the administrator "
+            "review it before retrying; the installer will not overwrite or "
+            "remove it. No OS packages were installed."
+        ) from exc
     owned = os.fstat(descriptor)
     try:
         with os.fdopen(descriptor, "w") as stream:

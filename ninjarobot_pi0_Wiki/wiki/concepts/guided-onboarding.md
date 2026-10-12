@@ -35,11 +35,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-modeladapterimplementation
   title: Modeladapterimplementation
   content_hash: sha256:2c6480a2595936057adf1550e8860044d7269be1b6a860a1395d893ec7a78895
+- id: src-20261012-installationguide-2
+  resource: urn:llmwiki:source:src-20261012-installationguide-2
+  title: Installationguide
+  content_hash: sha256:1e929c9bb26c97da6a66a8dd2ac3da5b3bea12a9c22fe7d5e585ceae64b7464f
+- id: src-20261012-freshinstallevidence
+  resource: urn:llmwiki:source:src-20261012-freshinstallevidence
+  title: Freshinstallevidence
+  content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T15:28:47.571035+00:00'
-  target_hash: sha256:97c553b9801bb5c7b7a1577e110a4f05bb312a925ceb94d0817e5fbb7270eb29
+  performed_at: '2026-10-12T14:15:00+00:00'
+  target_hash: sha256:c15bf7fa32749c4efb9d21deed5dafc1067e8ef47c23e25b0b1466103e1f04e0
   result: passed
   checks:
     source_support: passed
@@ -48,10 +56,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed guided onboarding against onboard.sh and provider_setup.py. Step 7 model
-    provider selection, hidden API-key input, and bounded probe validation match code.
-  - Onboarding model selection is software-only; hardware initialization remains deferred
-    to manual operator startup.
+  - Reviewed against Fresh Lite installation manual and evidence (2026-10-12).
+  - Verified stage-aware error diagnostics, process lock ownership boundaries, and
+    preflight --check unit inspection.
+  - Hardware activation remains unverified; bounded by host simulation.
 ---
 
 # Guided Pi0 onboarding
@@ -99,3 +107,15 @@ Onboarding step 7 is **Select model provider** (accessible directly via `./onboa
 
 [^src-20261010-installationguide-3]: Current versioned Installationguide (2026-10-10 model adapter release).
 [^src-20261010-modeladapterimplementation]: Pi0 Cloud Model Provider Adapter implementation evidence.
+
+## Preflight stage reporting and service unit checks (2026-10-12)
+
+The guided onboarding and installation flow introduces enhanced diagnostics and preflight safety controls:[^src-20261012-installationguide-2] [^src-20261012-freshinstallevidence]
+
+- **Stage-specific failure reporting**: If early preflight checks, confirmation prompts, or lock acquisitions fail, the installer explicitly identifies the interrupted stage rather than failing silently.[^src-20261012-installationguide-2]
+- **Strict lock ownership**: Lock cleanup routines remove only locks created by the current installer process (`.ninjarobot-install.lock/`), preventing accidental disruption of concurrently managed system locks.[^src-20261012-installationguide-2]
+- **Preflight `--check` aggregation**: Aggregated status checks verify core services and local Ollama readiness without starting daemons. Missing virtual environment activation scripts and missing, masked, or broken `pigpiod` service units are rejected, while a loaded inactive unit is safely accepted.[^src-20261012-freshinstallevidence]
+- **Installer prompt routing**: Stdin isolation ensures that piped execution provides `/dev/null` to background setup stages while preserving interactive prompts on `/dev/tty`.[^src-20261012-installationguide-2]
+
+[^src-20261012-installationguide-2]: Fresh Lite installation repair Installation Guide (2026-10-12).
+[^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.

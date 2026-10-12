@@ -95,6 +95,7 @@ def test_missing_launcher_diagnostics_provide_repair_without_running_uv(tmp_path
     monkeypatch.setattr(check, "platform_errors", lambda: [])
     monkeypatch.setattr(check, "path_errors", lambda _: [])
     monkeypatch.setattr(check, "tool_error", lambda *_: None)
+    monkeypatch.setattr(check, "service_errors", lambda: [])
     calls = []
 
     def run(command, **kwargs):

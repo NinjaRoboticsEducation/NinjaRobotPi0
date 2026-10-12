@@ -9,7 +9,9 @@ finish_install() {
     echo 'Keep your configuration/calibration files. --check only inspects; it does not repair.' >&2
   fi
   [[ -z "${INSTALL_WORK:-}" ]] || rm -rf -- "$INSTALL_WORK"
-  rmdir -- "$INSTALL_LOCK" 2>/dev/null || true
+  if [[ "${INSTALL_OWNS_LOCK:-0}" == 1 ]]; then
+    rmdir -- "$INSTALL_LOCK" 2>/dev/null || true
+  fi
   return "$result"
 }
 
@@ -44,7 +46,7 @@ NinjaRobotPi0 software installation:
   checkout: $root (existing files and Git revision retained)
   reuse compatible Node/uv; fallback downloads: uv $UV_VERSION, Node $NODE_VERSION
   pigpio commit $PIGPIO_COMMIT
-  apt: build-essential ca-certificates curl git python3-dev python3-venv xz-utils zstd bluez dbus
+  apt: build-essential ca-certificates curl git python3-dev python3-pip python3-venv xz-utils zstd bluez dbus
   privileged files: Ollama launcher /usr/local/bin, pigpiod /usr/local/bin, library /usr/local/lib, optional inactive systemd unit
   Python: locked production .venv (prompt: ninjarobotpi0); frontend: npm ci and build
   Ollama: CLI only; ARM64 archive needs 2 GB temporary disk; no daemon or model downloads
@@ -53,9 +55,18 @@ No hardware/service activation, calibration, credentials, robot start, or reboot
 EOF
   fi
   ((preview)) && return
+  # Diagnose even failures before dependency installation. Cleanup must never
+  # remove a lock owned by another installer or an interrupted earlier run.
+  if ((!check)); then
+    INSTALL_ROOT="$root"; INSTALL_OWNS_LOCK=0; INSTALL_WORK=""
+    trap finish_install EXIT
+    trap 'exit 130' INT
+    trap 'exit 143' TERM
+    install_stage "Platform and maintenance preflight"
+  fi
   # Reuse compatible system/user tools; private pinned downloads are fallbacks.
   local selected_node selected_uv python
-  python="$(command -v python3)"
+  python="$(command -v python3)" || { echo 'python3 is missing; install python3 with apt first.' >&2; return 1; }
   selected_node="$("$python" -B "$root/scripts/install_check.py" --find-tool node)" || selected_node=""
   if [[ -n "$selected_node" && "$selected_node" != "$(command -v node || true)" ]]; then
     PATH="$(dirname -- "$selected_node"):$PATH"
@@ -66,23 +77,28 @@ EOF
     PATH="$(dirname -- "$selected_uv"):$PATH"
     export PATH
   fi
-  if ((check)); then "$python" -B "$root/scripts/install_check.py" --root "$root"; "$python" -B "$root/scripts/install_ollama.py" --check; return; fi
+  if ((check)); then
+    local failed=0
+    "$python" -B "$root/scripts/install_check.py" --root "$root" || failed=1
+    "$python" -B "$root/scripts/install_ollama.py" --check || failed=1
+    return "$failed"
+  fi
 
   "$python" -B "$root/scripts/install_check.py" --platform
   for item in pigpiod ninjarobot; do
     if systemctl is-active --quiet "$item"; then echo "Stop $item in a controlled maintenance session first." >&2; return 1; fi
   done
   if ((!yes)); then
+    install_stage "Installation confirmation"
     printf 'Type INSTALL to accept these exact system/software changes: ' > /dev/tty
     read -r answer < /dev/tty || return 1
     [[ "$answer" == INSTALL ]] || return 1
   fi
+  install_stage "Installation lock and temporary workspace"
   mkdir -- "$root/.ninjarobot-install.lock" || { echo 'Installation lock exists; review any interrupted run.' >&2; return 1; }
+  INSTALL_LOCK="$root/.ninjarobot-install.lock"; INSTALL_OWNS_LOCK=1
   work="$(mktemp -d)"
-  INSTALL_WORK="$work"; INSTALL_LOCK="$root/.ninjarobot-install.lock"; INSTALL_ROOT="$root"
-  trap finish_install EXIT
-  trap 'exit 130' INT
-  trap 'exit 143' TERM
+  INSTALL_WORK="$work"
   install_stage "OS prerequisites"
   sudo python3 -B "$root/scripts/install_system.py"
   [[ ! -L "$tools" && ! -L "$root/.venv" ]] || { echo "Refusing redirected tools/environment." >&2; return 1; }
@@ -93,7 +109,21 @@ EOF
   if [[ -z "$selected_uv" ]]; then
     download "https://astral.sh/uv/$UV_VERSION/install.sh" "$work/uv.sh"
     verify "$work/uv.sh" "$UV_INSTALLER_SHA256"
-    UV_INSTALL_DIR="$tools/uv" UV_NO_MODIFY_PATH=1 sh "$work/uv.sh"
+    # The verified upstream script downloads the binary itself. Retrying only
+    # the outer curl above does not cover TLS/DNS failures in that download.
+    local attempt
+    for attempt in 1 2 3; do
+      if UV_INSTALL_DIR="$tools/uv" UV_NO_MODIFY_PATH=1 sh "$work/uv.sh"; then
+        break
+      fi
+      if ((attempt == 3)); then
+        echo 'uv installation failed after 3 attempts. Check the errors above.' >&2
+        echo 'For TLS/DNS errors, restore connectivity to releases.astral.sh and github.com, then rerun ./install.sh. Keep certificate verification enabled.' >&2
+        return 1
+      fi
+      printf 'uv installation attempt %s failed; retrying in %s seconds.\n' "$attempt" "$((attempt * 2))" >&2
+      sleep "$((attempt * 2))"
+    done
     export PATH="$tools/uv:$PATH"
   fi
   install_stage "Compatible Node tooling"
@@ -105,8 +135,6 @@ EOF
     mv -- "$work/node-v$NODE_VERSION-linux-arm64" "$tools/node"
     export PATH="$tools/node/bin:$PATH"
   fi
-  install_stage "Ollama cloud CLI (no daemon or models)"
-  "$python" -B "$root/scripts/install_ollama.py"
   install_stage "pigpio daemon and inactive service"
   if ! command -v pigpiod >/dev/null; then
     download "https://codeload.github.com/joan2937/pigpio/tar.gz/$PIGPIO_COMMIT" "$work/pigpio.tar.gz"
@@ -143,6 +171,8 @@ EOF
   )
   install_stage "Frontend dependencies and build"
   (cd "$root/ninja_webapp"; npm ci --include=dev --no-audit --no-fund; npm run build)
+  install_stage "Ollama cloud CLI (no daemon or models)"
+  "$python" -B "$root/scripts/install_ollama.py"
   install_stage "Optional wiki setup"
   if ((wiki)); then "$python" -B "$root/scripts/wiki.py" setup; "$python" -B "$root/scripts/wiki.py" prepare; fi
   install_stage "Final software verification"

@@ -107,11 +107,19 @@ sources:
   resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
   title: Humanoid built-in movements implementation evidence
   content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-developmentguide-2
+  resource: urn:llmwiki:source:src-20261012-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:06114edb8cdfa206122f885e1b8af7b9162ec36c44fadf745f012e38354c2028
+- id: src-20261012-freshinstallevidence
+  resource: urn:llmwiki:source:src-20261012-freshinstallevidence
+  title: Freshinstallevidence
+  content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:07a2f5002150105475b29bf057546d7505f7c110fa9ae1aaa336c7410a39f588
+  performed_at: '2026-10-12T14:15:00+00:00'
+  target_hash: sha256:3a20025d404eb5c5682a57de40845148e7c7eae2a01dcc334de4461f2d71be81
   result: passed
   checks:
     source_support: passed
@@ -120,9 +128,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid deterministic extraction, regression tests, and wheel resource
-    checks against src-20261012-developmentguide.
-  - Testing boundaries and physical verification limits verified.
+  - Reviewed against Fresh Lite installation Development Guide and evidence (2026-10-12).
+  - Verified 124 host test suite, network retry exponential backoff simulation, and
+    offline mock test boundaries.
+  - Physical hardware operations remain unverified.
 ---
 
 # Development and immutable documentation workflow
@@ -264,3 +273,14 @@ The Humanoid native catalog integration follows deterministic extraction, inert 
 
 [^src-20261012-developmentguide]: Current versioned Developmentguide with Humanoid extraction and test workflow.
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and validation report.
+
+## Fresh Lite installation repair and test coverage (2026-10-12)
+
+The 2026-10-12 development milestone integrates a comprehensive verification suite for the fresh installation flow:[^src-20261012-developmentguide-2] [^src-20261012-freshinstallevidence]
+
+- **Host validation test suite**: 124 targeted host tests pass, validating installer preflight stages, lock ownership isolation, transient network recovery, and service status aggregation.[^src-20261012-developmentguide-2]
+- **Network retry verification**: Tests verify the up-to-three-attempt exponential backoff logic (with 2 s and 4 s intervals) for official `uv` downloads, simulating both transient TLS unexpected EOF / DNS failure recovery and exhausted retries.[^src-20261012-freshinstallevidence]
+- **Testing boundary**: All test suites utilize inert dependencies, mock network fixtures, and isolated filesystem locks; physical installation and real service activation on Raspberry Pi Zero 2 W hardware remain pending owner validation.[^src-20261012-developmentguide-2] [^src-20261012-freshinstallevidence]
+
+[^src-20261012-developmentguide-2]: Fresh Lite installation repair Development Guide (2026-10-12).
+[^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.

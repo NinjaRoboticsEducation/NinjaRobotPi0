@@ -391,8 +391,9 @@ def test_wiki_setup_finds_installer_private_uv(tmp_path, monkeypatch):
     monkeypatch.setattr(
         wiki.subprocess,
         "run",
-        lambda command, **kwargs: calls.append(command)
-        or SimpleNamespace(returncode=0),
+        lambda command, **kwargs: (
+            calls.append(command) or SimpleNamespace(returncode=0)
+        ),
     )
     assert wiki.main(["setup"]) == 0
     assert calls[0][0] == str(private)
@@ -542,7 +543,13 @@ def test_incomplete_check_explains_versions_and_repair_without_writes(
     monkeypatch.setattr(check, "platform_errors", lambda: [])
     monkeypatch.setattr(check, "path_errors", lambda _: [])
     monkeypatch.setattr(check.shutil, "which", lambda command: "/system/bin/" + command)
-    versions = {"node": "v20.1.0", "uv": "uv 0.9.26", "pigpiod": "79", "npm": "10.0.0"}
+    versions = {
+        "node": "v20.1.0",
+        "uv": "uv 0.9.26",
+        "pigpiod": "79",
+        "npm": "10.0.0",
+        "systemctl": "loaded",
+    }
     monkeypatch.setattr(
         check.subprocess,
         "run",

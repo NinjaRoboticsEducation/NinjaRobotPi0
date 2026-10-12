@@ -168,11 +168,19 @@ sources:
   resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
   title: Humanoid built-in movements implementation evidence
   content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-developmentlog-3
+  resource: urn:llmwiki:source:src-20261012-developmentlog-3
+  title: Developmentlog
+  content_hash: sha256:9d581c8d88b8c973ea10d7888efc602db9dfe48e047c7c98e368e8832a0c57b7
+- id: src-20261012-freshinstallevidence
+  resource: urn:llmwiki:source:src-20261012-freshinstallevidence
+  title: Freshinstallevidence
+  content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:f26aac451de5b9c3b82a3e53ab0311ebb5dfe229a1973e135f2ca50ff7f957be
+  performed_at: '2026-10-12T14:15:00+00:00'
+  target_hash: sha256:a3b06b13f000510eb0217720a24eb0bd30596b00a40757527627297b06c7ae94
   result: passed
   checks:
     source_support: passed
@@ -181,10 +189,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid native built-in movements release milestone against src-20261012-developmentlog-2
-    and HumanoidBuiltinMovementsEvidence.md.
-  - Chronological accuracy, test counts (344 passed / 1 deselected), and physical
-    acceptance limits verified.
+  - Reviewed against Fresh Lite installation Development Log and evidence (2026-10-12).
+  - Verified milestone chronology, root-cause diagnosis of TLS/DNS failure, backoff
+    retry implementation, and 124 test baseline.
+  - Hardware qualification remains pending owner manual validation.
 ---
 
 # Development History and Evolution
@@ -387,3 +395,17 @@ Recognition of renamed non-neutral Humanoid trajectories (normalizing string/int
 
 [^src-20261012-developmentlog-2]: Complete immutable DevelopmentLog with Humanoid native built-in movements milestone.
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and host validation.
+
+## Fresh Lite installation repair (2026-10-12)
+
+The 2026-10-12 Fresh Lite installation repair addresses installation interruptions reported during fresh Raspberry Pi OS Lite setup:[^src-20261012-developmentlog-3] [^src-20261012-freshinstallevidence]
+
+- **Issue identification**: The initial root cause was identified as a transient network failure during `uv` binary download (TLS unexpected EOF followed by GitHub DNS resolution error), causing subsequent Python and frontend dependencies to be missing.[^src-20261012-freshinstallevidence]
+- **Installer resilience**: The upstream `uv` download was hardened with exponential backoff (up to three attempts, 2 s and 4 s intervals) and SHA-256 verification against `install-versions.env`.[^src-20261012-freshinstallevidence]
+- **OS prerequisites**: `python3-pip` was formally added to the system package prerequisites for Debian 13 (Trixie).[^src-20261012-developmentlog-3]
+- **Pipeline reordering**: System daemon, virtualenv, and frontend setup now precede the large Ollama model archive download.[^src-20261012-developmentlog-3]
+- **Preflight & verification**: Early failures report interrupted stages; lock cleanup is restricted to process-owned locks; and read-only `--check` inspects service units while accepting loaded inactive states without actuating hardware.[^src-20261012-developmentlog-3]
+- **Validation**: 124 targeted host tests passed with inert dependencies and mock fixtures; physical on-device installation remains pending.[^src-20261012-developmentlog-3]
+
+[^src-20261012-developmentlog-3]: Fresh Lite installation repair Development Log (2026-10-12).
+[^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.

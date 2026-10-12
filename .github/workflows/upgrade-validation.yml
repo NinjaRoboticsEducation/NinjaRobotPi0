@@ -37,8 +37,8 @@ jobs:
           done
       - name: Installer and onboarding lint
         run: |
-          uv run --frozen --no-sync ruff check scripts tests/test_upgrade_workflows.py tests/test_installer_bootstrap.py tests/test_project_knowledge.py
-          uv run --frozen --no-sync ruff format --check scripts tests/test_upgrade_workflows.py tests/test_installer_bootstrap.py tests/test_project_knowledge.py
+          uv run --frozen --no-sync ruff check scripts tests/test_fresh_install.py tests/test_upgrade_workflows.py tests/test_installer_bootstrap.py tests/test_project_knowledge.py
+          uv run --frozen --no-sync ruff format --check scripts tests/test_fresh_install.py tests/test_upgrade_workflows.py tests/test_installer_bootstrap.py tests/test_project_knowledge.py
           uv tool run --from shellcheck-py==0.11.0.1 shellcheck -x --source-path=scripts install.sh onboard.sh scripts/install-rpi.sh
       - name: Frontend lint and build from existing lock
         working-directory: ninja_webapp

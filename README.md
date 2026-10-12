@@ -100,7 +100,7 @@ Power off the Pi before connecting any wires. Keep servo power **disconnected** 
 
 1. **Download Raspberry Pi Imager** from [raspberrypi.com/software](https://www.raspberrypi.com/software/) on your computer.
 2. Insert your microSD card and open the Imager.
-3. Choose **Raspberry Pi OS (64-bit)** — Bookworm or Trixie. The Lite (no desktop) edition works fine.
+3. Choose **Raspberry Pi OS Lite (64-bit), Trixie (Debian 13)** for a new installation. The official image listed on 2026-10-12 is dated 2026-10-06; Bookworm is now the Legacy option. Zero 2 W supports this 64-bit image. See the [official OS downloads](https://www.raspberrypi.com/software/operating-systems/).
 4. Open the Imager's **OS customisation** screen to configure:
    - Set your hostname (e.g., `ninjarobotpi0`)
    - Enable SSH (using an SSH key or password authentication)
@@ -139,21 +139,38 @@ Power off the Pi before connecting any wires. Keep servo power **disconnected** 
    cat /etc/os-release              # Inspect OS identity; Bookworm/Trixie are reference releases
    ```
 
+10. Update the fresh OS and install the small set of tools needed to download the installer. Run each command separately and stop if one fails:
+
+    ```bash
+    sudo apt update
+    sudo apt full-upgrade -y
+    sudo apt install -y ca-certificates curl git python3-pip python3-venv
+    sudo reboot
+    ```
+
+    Reconnect over SSH after reboot. These are [official APT update steps](https://www.raspberrypi.com/documentation/computers/os.html#update-your-current-raspberry-pi-software) within your current OS release. The project installer also installs its OS prerequisites, so Git/pip do not need a separate repair afterward. Do not use `sudo pip install` or `--break-system-packages`; project Python dependencies belong in `.venv`.
+
+    **Why not `sudo apt install -y git pigpio python3-pip`?** The current [Raspberry Pi Trixie ARM64 package index](https://archive.raspberrypi.com/debian/dists/trixie/main/binary-arm64/) does not provide `pigpio`/`pigpiod`. The installer builds the verified pigpio daemon and creates its systemd unit when absent. The Python `pigpio` package alone cannot create `pigpiod.service`.
+
 ### 2.4 Project Installation
 
 #### Default installation (recommended)
 
-Run this single command in your Pi's terminal. It clones the project into `~/NinjaRobotPi0`, installs system prerequisites and prepares the project environment:
+Run these steps in your Pi's terminal as your normal user. The installer clones the project into `~/NinjaRobotPi0`, installs system prerequisites and prepares the project environment:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash
+curl -fL --retry 2 --connect-timeout 20 https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$HOME/ninjarobot-install.sh" &&
+  bash "$HOME/ninjarobot-install.sh"
 ```
 
-When prompted, read the installation plan and type `INSTALL` to confirm. The installer will:
+The download must succeed before Bash runs; keeping a local copy also avoids feeding dependency commands from a live download pipe. To preview first, download the file and run `bash "$HOME/ninjarobot-install.sh" --dry-run`. When prompted, read each installation plan and type `INSTALL` to confirm (bootstrap and project setup each ask). The installer will:
 
 - Create the `$HOME/NinjaRobotPi0` directory
 - Install system packages, locked Python dependencies and the web frontend; reuse compatible Node/uv or download verified fallback tools
-- Set up the locked Python environment in `.venv`
+- Build/install `pigpiod` and its inactive systemd unit if absent; install the Ollama cloud CLI
+- Set up the locked Python environment in `.venv`, including its activation script and all robot commands
+
+Wait for **Software installed**. A cloned directory or **PASS: software prerequisites** during preflight is not completion. If installation stops, retain the first error and the reported stage, then use the existing-checkout recovery below.
 
 > **Note:** `HEAD` follows the repository's default branch. Do **not** prefix the command with `sudo`. The installer will ask for your sudo password only when it needs to install system packages.
 
@@ -163,27 +180,56 @@ If you want to install into a different location (e.g., `~/Projects/NinjaRobotPi
 
 ```bash
 mkdir -p "$HOME/Projects"
-curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash -s -- --install-dir "$HOME/Projects/NinjaRobotPi0"
+curl -fL --retry 2 --connect-timeout 20 https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$HOME/ninjarobot-install.sh" &&
+  bash "$HOME/ninjarobot-install.sh" --install-dir "$HOME/Projects/NinjaRobotPi0"
 ```
 
 The `--install-dir` path must be absolute (starting with `/`), must not already exist, and its parent folder must already exist.
 
 #### After installation
 
-Once the installer prints **Software installed**, verify the installation and start the pigpio daemon (a background service that controls GPIO pins):
+After **Software installed**, enter the installation directory:
 
 ```bash
-cd "$HOME/NinjaRobotPi0" &&
-./install.sh --check &&
+cd "$HOME/NinjaRobotPi0"
+```
 
-# Start pigpio now:
+Then run the read-only check as a separate step:
+
+```bash
+./install.sh --check
+```
+
+**Continue only when it exits successfully with no FAIL messages.** It checks tools, the Python environment/launchers, frontend, Ollama CLI and a loaded `pigpiod.service`. It does not install or repair anything, and `pigpiod` is expected to be inactive at this point. If the unit or `.venv/bin/activate` is missing, go to the incomplete-installation recovery below rather than trying to start or activate it.
+
+After a successful check, optionally activate the Python environment:
+
+```bash
+source .venv/bin/activate
+```
+
+You can also use `.venv/bin/ninja_core` directly without activation. If a compatible uv was not already on PATH, the installer puts it under `~/.local/share/ninjarobot_pi0/tools/uv/`; it does not change your shell profile. To use `uv` manually in this terminal:
+
+```bash
+NINJAROBOT_UV="$(python3 -B scripts/install_check.py --find-tool uv)" &&
+  export PATH="$(dirname -- "$NINJAROBOT_UV"):$PATH"
+uv --version
+```
+
+With the robot supported and actuator power still disconnected, start the GPIO daemon only after the software check passes:
+
+```bash
 sudo systemctl start pigpiod
+systemctl is-active pigpiod
+```
 
-# Optional: make pigpio start automatically on future boots:
+Expected result: `active`. Optional autostart on future boots:
+
+```bash
 sudo systemctl enable pigpiod
 ```
 
-> **Important:** The installer leaves `pigpiod` inactive and does not enable autostart. Use your chosen installation path if it differs from the default. `pigpiod` is required for servo, buzzer, and other GPIO hardware to work. If you skip this step, hardware tools will fail to connect.
+> **Important:** The installer creates a missing unit but leaves `pigpiod` inactive and does not enable autostart. Use your chosen installation path if it differs from the default. `pigpiod` is required for servo, buzzer, and other GPIO hardware to work. Installation checks do not establish physical compatibility with a new OS/kernel; complete the device checks during onboarding.
 
 ### 2.5 Onboarding — Set Up Your Robot
 
@@ -436,14 +482,20 @@ Only after CLI help succeeds **and physical readiness is confirmed**, run `uv ru
 
 ### Installation stopped before Python setup
 
+**Missing uv, `.venv/bin/activate`, all robot commands, or `pigpiod.service` means the installation is incomplete.** Do not create an empty environment by hand or repeatedly run `--check`; retry the full installer from the existing directory. A missing service cannot be started.
+
 `Stop pigpiod ... first` or `Stop ninjarobot ... first` means installation stopped **before** dependencies were installed. `PASS: software prerequisites` at this stage is only platform/path preflight; success is **Software installed**. Missing `.venv/bin/ninja_core` or package metadata is an incomplete installation, not a version mismatch.
 
 Support the robot and disconnect actuator power before stopping the foreground robot application. Stop any active robot service **before** pigpiod; then retry from the existing folder:
 
 ```bash
 sudo systemctl stop ninjarobot   # Only if this service is installed/running
-sudo systemctl stop pigpiod
-cd "$HOME/NinjaRobotPi0" && ./install.sh && ./install.sh --check
+sudo systemctl stop pigpiod   # Only if this service exists and is running
+cd "$HOME/NinjaRobotPi0"
+./install.sh --dry-run
+./install.sh
+# Continue only after Software installed:
+./install.sh --check
 ```
 
 Keep configuration/calibration files. If installation fails again, retain the **first error**; `--check` only inspects and does not repair. After successful installation, start pigpiod again before hardware use. To update an existing checkout first, use `git fetch origin HEAD && git merge --ff-only FETCH_HEAD`; stop if Git reports an error. The installer itself does not update existing Git files.
@@ -456,8 +508,11 @@ Keep configuration/calibration files. If installation fails again, retain the **
 | `curl` returns 404 | The installer must be published to the official repository first. For pre-publication testing, use the local checkout: `cd /path/to/NinjaRobotPi0 && ./install.sh` |
 | `Unsupported platform` error | Verify: Raspberry Pi Zero 2 W, `uname -m` shows `aarch64`, Debian-based Raspberry Pi OS 64-bit, Python 3.10+, and you are logged in as a normal user (not root). |
 | `Destination already exists` | The installer will not overwrite an existing folder. Enter that folder and run: `cd "$HOME/NinjaRobotPi0" && ./install.sh` |
+| uv download reports `SSL_read` / `unexpected eof` / `Could not resolve host: github.com` | The download connection or DNS failed before uv installation. The installer retries the verified uv installation up to three times. Check Wi-Fi/internet and DNS resolution for `releases.astral.sh` and `github.com`; restore connectivity, then rerun `./install.sh` in the existing checkout. Keep TLS verification enabled. |
 | Installation stops at OS packages | Check the error message — it is usually an `apt`, network, or `sudo` issue. Fix the underlying problem and re-run `./install.sh`. |
-| `uv is not found` after install | Use `.venv/bin/ninja_core` for runtime commands. Compatible existing tools are reused; fallback tools are private. See the autostart section if that helper needs uv on PATH. |
+| `uv is not found` after install | Run `./install.sh --check`. If it passes, uv is private: locate it with `python3 -B scripts/install_check.py --find-tool uv` and use the PATH step above. If it fails, retry the installer and retain its first error. |
+| `Unit pigpiod.service not found` / missing `.venv/bin/activate` | Installation is incomplete. Enter the existing checkout, run `./install.sh`, wait for **Software installed**, then run `./install.sh --check`. Do not start the daemon or activate the environment until checks pass. |
+| Existing `/usr/sbin/policy-rc.d` | The installer retains administrator service policy and stops before apt. Ask the system administrator to review the policy; do not blindly delete it. |
 
 ### Hardware Issues
 
@@ -626,18 +681,39 @@ GPIO 番号は **BCM 番号**です（物理ピン番号ではありません）
    ```
 4. `sudo raspi-config` で **I2C** と **SPI** を有効化。GPIO 14/15 をディスプレイに使う場合は、そのピンのシリアルコンソールと UART を無効化し、必要に応じて再起動。
 
-### 2.4 プロジェクトのインストール
+Trixie (Debian 13) の **Raspberry Pi OS Lite (64-bit)** を選択してください。2026-10-12 時点の公式イメージは 2026-10-06 版で、Bookworm は Legacy です。SSH 接続後、次を一つずつ実行し、エラーなら停止してください。再起動後は SSH で再接続します。
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash
+sudo apt update
+sudo apt full-upgrade -y
+sudo apt install -y ca-certificates curl git python3-pip python3-venv
+sudo reboot
+```
+
+現在の Trixie ARM64 リポジトリには pigpio/pigpiod パッケージがないため、`apt install pigpio` は不要です。インストーラーが検証済みソースからデーモンとサービスを作成します。Python パッケージは .venv に導入し、sudo pip は使いません。
+
+### 2.4 プロジェクトのインストール
+
+uv のダウンロードで `SSL_read` / `unexpected eof` / `Could not resolve host` が出た場合、通信または DNS が原因です。最大3回再試行します。`releases.astral.sh` と `github.com` への接続を復旧し、既存フォルダで `./install.sh` を再実行してください。TLS 検証は無効にしません。
+
+```bash
+curl -fL --retry 2 --connect-timeout 20 https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$HOME/ninjarobot-install.sh" &&
+  bash "$HOME/ninjarobot-install.sh"
 ```
 
 通常ユーザーで実行し、`INSTALL` と入力して確認。**Software installed** が表示された後に確認し、pigpiod を起動します（インストーラーは起動・自動起動設定を行いません）：
 
 ```bash
-cd "$HOME/NinjaRobotPi0" &&
-./install.sh --check &&
+cd "$HOME/NinjaRobotPi0"
+```
 
+```bash
+./install.sh --check
+```
+
+確認が成功し、FAIL がない場合だけ次へ進んでください。`--check` は修復しません。`.venv/bin/activate` または pigpiod.service がない場合は下記の復旧手順を使います。確認後、任意で `source .venv/bin/activate`。uv は既存 PATH または `~/.local/share/ninjarobot_pi0/tools/uv/` にあります。パスは `python3 -B scripts/install_check.py --find-tool uv` で確認できます。
+
+```bash
 # pigpio を起動（GPIO ハードウェア制御に必要）：
 sudo systemctl start pigpiod
 
@@ -649,7 +725,8 @@ sudo systemctl enable pigpiod
 
 ```bash
 mkdir -p "$HOME/Projects"
-curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash -s -- --install-dir "$HOME/Projects/NinjaRobotPi0"
+curl -fL --retry 2 --connect-timeout 20 https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$HOME/ninjarobot-install.sh" &&
+  bash "$HOME/ninjarobot-install.sh" --install-dir "$HOME/Projects/NinjaRobotPi0"
 ```
 
 > **重要:** 別フォルダを選んだ場合は、以降の `cd` をそのパスに置き換えてください。`pigpiod` はサーボ・ブザーなどの GPIO ハードウェア制御に必須です。
@@ -815,8 +892,12 @@ uv run --no-sync ninja_core --help
 
 ```bash
 sudo systemctl stop ninjarobot   # このサービスを導入・起動している場合のみ
-sudo systemctl stop pigpiod
-cd "$HOME/NinjaRobotPi0" && ./install.sh && ./install.sh --check
+sudo systemctl stop pigpiod   # Only if this service exists and is running
+cd "$HOME/NinjaRobotPi0"
+./install.sh --dry-run
+./install.sh
+# Continue only after Software installed:
+./install.sh --check
 ```
 
 校正・設定を削除せず、再失敗時は最初のエラーを保存してください。`--check` は修復しません。完了後、ハードウェア使用前に pigpiod を再起動します。既存コードの更新は `git fetch origin HEAD && git merge --ff-only FETCH_HEAD` を使い、Git エラー時は停止してください。インストーラーは既存 Git ファイルを更新しません。
@@ -943,18 +1024,39 @@ GPIO 數字是 **BCM 編號**，不是實體排針序號。GPIO 使用 **3.3 V �
    ```
 4. 執行 `sudo raspi-config` 啟用 **I2C** 和 **SPI**；若顯示器使用 GPIO 14/15，停用佔用這些腳位的序列主控台與 UART，需要時重新開機。
 
-### 2.4 安裝專案
+新安裝請選 **Raspberry Pi OS Lite (64-bit), Trixie (Debian 13)**。截至 2026-10-12，官方映像日期為 2026-10-06，Bookworm 為 Legacy。SSH 連線後逐一執行以下命令，遇錯即停止；重新開機後再連線。
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash
+sudo apt update
+sudo apt full-upgrade -y
+sudo apt install -y ca-certificates curl git python3-pip python3-venv
+sudo reboot
+```
+
+目前 Trixie ARM64 套件庫沒有 pigpio/pigpiod，無須執行 `apt install pigpio`。安裝程式會從已驗證的原始碼建立 daemon 與服務。Python 套件放在 .venv，勿用 sudo pip。
+
+### 2.4 安裝專案
+
+若 uv 下載出現 `SSL_read` / `unexpected eof` / `Could not resolve host`，代表連線或 DNS 失敗。安裝程式最多嘗試3次；恢復 `releases.astral.sh` 與 `github.com` 的連線後，在既有資料夾重跑 `./install.sh`，不要停用 TLS 驗證。
+
+```bash
+curl -fL --retry 2 --connect-timeout 20 https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$HOME/ninjarobot-install.sh" &&
+  bash "$HOME/ninjarobot-install.sh"
 ```
 
 以一般使用者執行，輸入 `INSTALL` 確認。看到 **Software installed** 後才檢查並啟動 pigpiod（安裝程式不會啟動它或設定其自動啟動）：
 
 ```bash
-cd "$HOME/NinjaRobotPi0" &&
-./install.sh --check &&
+cd "$HOME/NinjaRobotPi0"
+```
 
+```bash
+./install.sh --check
+```
+
+只有檢查成功且沒有 FAIL 才繼續。`--check` 不會修復；缺少 `.venv/bin/activate` 或 pigpiod.service 時，使用下方復原步驟。成功後可選擇 `source .venv/bin/activate`。uv 位於既有 PATH 或 `~/.local/share/ninjarobot_pi0/tools/uv/`；可用 `python3 -B scripts/install_check.py --find-tool uv` 查詢路徑。
+
+```bash
 # 啟動 pigpio（GPIO 硬體控制必需）：
 sudo systemctl start pigpiod
 
@@ -966,7 +1068,8 @@ sudo systemctl enable pigpiod
 
 ```bash
 mkdir -p "$HOME/Projects"
-curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash -s -- --install-dir "$HOME/Projects/NinjaRobotPi0"
+curl -fL --retry 2 --connect-timeout 20 https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$HOME/ninjarobot-install.sh" &&
+  bash "$HOME/ninjarobot-install.sh" --install-dir "$HOME/Projects/NinjaRobotPi0"
 ```
 
 > **重要：** 若使用自訂安裝資料夾，請將後續 `cd` 換成實際路徑。`pigpiod` 是伺服馬達、蜂鳴器等 GPIO 硬體控制的必要服務。
@@ -1132,8 +1235,12 @@ uv run --no-sync ninja_core --help
 
 ```bash
 sudo systemctl stop ninjarobot   # 僅限已安裝／執行此服務時
-sudo systemctl stop pigpiod
-cd "$HOME/NinjaRobotPi0" && ./install.sh && ./install.sh --check
+sudo systemctl stop pigpiod   # Only if this service exists and is running
+cd "$HOME/NinjaRobotPi0"
+./install.sh --dry-run
+./install.sh
+# Continue only after Software installed:
+./install.sh --check
 ```
 
 保留校準與設定；再次失敗時記錄第一個錯誤。`--check` 不會修復環境。完成後，操作硬體前需重新啟動 pigpiod。若需先更新程式，使用 `git fetch origin HEAD && git merge --ff-only FETCH_HEAD`，Git 報錯就停止。安裝程式不會更新既有 Git 檔案。
@@ -1260,18 +1367,39 @@ GPIO 数字是 **BCM 编号**，不是物理排针序号。GPIO 使用 **3.3 V �
    ```
 4. 运行 `sudo raspi-config` 启用 **I2C** 和 **SPI**；若显示屏使用 GPIO 14/15，禁用占用这些引脚的串口控制台和 UART，需要时重启。
 
-### 2.4 安装项目
+新安装请选择 **Raspberry Pi OS Lite (64-bit), Trixie (Debian 13)**。截至 2026-10-12，官方镜像日期为 2026-10-06，Bookworm 为 Legacy。SSH 连接后逐条执行以下命令，遇错即停止；重启后重新连接。
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash
+sudo apt update
+sudo apt full-upgrade -y
+sudo apt install -y ca-certificates curl git python3-pip python3-venv
+sudo reboot
+```
+
+当前 Trixie ARM64 软件源没有 pigpio/pigpiod，无需执行 `apt install pigpio`。安装程序会从已验证的源码建立 daemon 和服务。Python 包放在 .venv，不要使用 sudo pip。
+
+### 2.4 安装项目
+
+若 uv 下载出现 `SSL_read` / `unexpected eof` / `Could not resolve host`，表示连接或 DNS 失败。安装程序最多尝试3次；恢复 `releases.astral.sh` 和 `github.com` 的连接后，在现有目录重新运行 `./install.sh`，不要关闭 TLS 验证。
+
+```bash
+curl -fL --retry 2 --connect-timeout 20 https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$HOME/ninjarobot-install.sh" &&
+  bash "$HOME/ninjarobot-install.sh"
 ```
 
 以普通用户运行，输入 `INSTALL` 确认。看到 **Software installed** 后再检查并启动 pigpiod（安装程序不会启动它或设置其自启动）：
 
 ```bash
-cd "$HOME/NinjaRobotPi0" &&
-./install.sh --check &&
+cd "$HOME/NinjaRobotPi0"
+```
 
+```bash
+./install.sh --check
+```
+
+只有检查成功且没有 FAIL 才继续。`--check` 不会修复；缺少 `.venv/bin/activate` 或 pigpiod.service 时，使用下方恢复步骤。成功后可选择 `source .venv/bin/activate`。uv 位于已有 PATH 或 `~/.local/share/ninjarobot_pi0/tools/uv/`；可用 `python3 -B scripts/install_check.py --find-tool uv` 查询路径。
+
+```bash
 # 启动 pigpio（GPIO 硬件控制必需）：
 sudo systemctl start pigpiod
 
@@ -1283,7 +1411,8 @@ sudo systemctl enable pigpiod
 
 ```bash
 mkdir -p "$HOME/Projects"
-curl -fsSL https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh | bash -s -- --install-dir "$HOME/Projects/NinjaRobotPi0"
+curl -fL --retry 2 --connect-timeout 20 https://raw.githubusercontent.com/NinjaRoboticsEducation/NinjaRobotPi0/HEAD/install.sh -o "$HOME/ninjarobot-install.sh" &&
+  bash "$HOME/ninjarobot-install.sh" --install-dir "$HOME/Projects/NinjaRobotPi0"
 ```
 
 > **重要：** 若选择自定义安装文件夹，请将后续 `cd` 换成实际路径。`pigpiod` 是舵机、蜂鸣器等 GPIO 硬件控制的必要服务。
@@ -1438,8 +1567,12 @@ uv run --no-sync ninja_core --help
 
 ```bash
 sudo systemctl stop ninjarobot   # 仅在已安装／运行此服务时
-sudo systemctl stop pigpiod
-cd "$HOME/NinjaRobotPi0" && ./install.sh && ./install.sh --check
+sudo systemctl stop pigpiod   # Only if this service exists and is running
+cd "$HOME/NinjaRobotPi0"
+./install.sh --dry-run
+./install.sh
+# Continue only after Software installed:
+./install.sh --check
 ```
 
 保留校准与配置；再次失败时记录第一个错误。`--check` 不会修复环境。完成后，使用硬件前需重新启动 pigpiod。若需先更新代码，使用 `git fetch origin HEAD && git merge --ff-only FETCH_HEAD`，Git 报错就停止。安装程序不会更新现有 Git 文件。

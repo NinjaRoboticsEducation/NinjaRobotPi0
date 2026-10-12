@@ -123,11 +123,19 @@ sources:
   resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
   title: Humanoid built-in movements implementation evidence
   content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-developmentguide-2
+  resource: urn:llmwiki:source:src-20261012-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:06114edb8cdfa206122f885e1b8af7b9162ec36c44fadf745f012e38354c2028
+- id: src-20261012-freshinstallevidence
+  resource: urn:llmwiki:source:src-20261012-freshinstallevidence
+  title: Freshinstallevidence
+  content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:4d3dba9dbdc91a48f660d0971ba520d0413c38695cd02bcb30c6b6f16bbd0e56
+  performed_at: '2026-10-12T14:15:00+00:00'
+  target_hash: sha256:a92469176a5a2edbf7fe1cd07290afec408e94a8a7fc2a46ffa159d625892ded
   result: passed
   checks:
     source_support: passed
@@ -136,10 +144,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid native catalog integration and deterministic extractor against
-    src-20261012-developmentguide and evidence.
-  - Host testing scope and physical limitation boundaries verified; citation for mobile
-    log updated.
+  - Reviewed against Fresh Lite installation Development Guide and evidence (2026-10-12).
+  - Verified network resilience contracts, install stage reporting, pigpiod unit verification,
+    and 124 passing checks.
+  - Hardware activation remains unverified; bounded by host tests.
 ---
 
 # Current development manual
@@ -299,3 +307,15 @@ Host validation passed 344 tests with 1 pre-existing missing-Spider-fixture test
 
 [^src-20261012-developmentguide]: Current versioned Developmentguide (2026-10-12 Humanoid built-in movements).
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and validation boundaries.
+
+## Fresh Lite installation repair and network retry contracts (2026-10-12)
+
+The development guide records the contracts and verification procedures for the 2026-10-12 fresh installation repairs:[^src-20261012-developmentguide-2] [^src-20261012-freshinstallevidence]
+
+- **Preflight & Lock Contracts**: The installer tracks explicit installation stages and reports stage names upon failure. Only locks owned by the running process are purged on error.[^src-20261012-developmentguide-2]
+- **Network Resilience Contracts**: Upstream downloads from `astral.sh` for `uv` incorporate retry logic (maximum three attempts with 2 s and 4 s backoff) to protect against unexpected TLS connection drops and DNS lookup failures.[^src-20261012-freshinstallevidence] Script integrity is validated against SHA-256 hashes recorded in `install-versions.env`.[^src-20261012-freshinstallevidence]
+- **Service Verification**: `--check` validates virtual environment presence, checks activation script availability, and verifies `pigpiod` unit configuration without activating GPIO hardware or starting services.[^src-20261012-developmentguide-2]
+- **Validation**: 124 host tests passed covering Bash syntax, Ruff Pyflakes and formatting, dry-run mode, and protected-core baseline checks.[^src-20261012-developmentguide-2]
+
+[^src-20261012-developmentguide-2]: Fresh Lite installation repair Development Guide (2026-10-12).
+[^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.

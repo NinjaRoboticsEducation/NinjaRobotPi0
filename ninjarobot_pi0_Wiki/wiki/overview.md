@@ -84,11 +84,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-shutdownvoicefixes
   title: Shutdownvoicefixes
   content_hash: sha256:bc56cba07d2aade0773ca839cb060aceb625af2a002344892a6e81f6c0b5c6fb
+- id: src-20261012-readme-english
+  resource: urn:llmwiki:source:src-20261012-readme-english
+  title: Readme English
+  content_hash: sha256:6d1e4eb490624525b5026e34490417b4520e1a2d021a6c7a431c66be501bfceb
+- id: src-20261012-installationguide-2
+  resource: urn:llmwiki:source:src-20261012-installationguide-2
+  title: Installationguide
+  content_hash: sha256:1e929c9bb26c97da6a66a8dd2ac3da5b3bea12a9c22fe7d5e585ceae64b7464f
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T17:27:33.106210+00:00'
-  target_hash: sha256:72147d402f6324bebb8a2c32c1f3d373cbc53e1aba08771148183df19e621b94
+  performed_at: '2026-10-12T14:15:00+00:00'
+  target_hash: sha256:69aced712a20b727e3c479ed2202114ecc3b3d429dde23d18e9cf37a460cec1a
   result: passed
   checks:
     source_support: passed
@@ -97,10 +105,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed platform overview against 2026-10-11 README snapshot, DevelopmentGuide.md,
-    and ShutdownVoiceFixes.md.
-  - Coordinated shutdown and browser speech typing verified in code; live robot and
-    account validation remain pending.
+  - Reviewed against Fresh Lite installation README snapshot and Installation Guide
+    (2026-10-12).
+  - Verified Trixie 64-bit Lite support, python3-pip prerequisite, and non-destructive
+    service checking.
+  - Hardware activation remains unverified; bounded by host simulation.
 ---
 
 # NinjaRobotPi0 Platform Overview
@@ -242,3 +251,14 @@ Recent updates resolve server exit and browser microphone regressions:[^src-2026
 [^src-20261010-readme-5]: NinjaRobotPi0 English README snapshot (2026-10-11 shutdown & voice fixes).
 [^src-20261010-developmentguide-4]: Current versioned DevelopmentGuide (2026-10-11 shutdown & voice fixes).
 [^src-20261010-shutdownvoicefixes]: Server shutdown and browser voice regression repair evidence note.
+
+## Fresh Lite installation repair and OS support (2026-10-12)
+
+The platform documentation and setup workflow incorporate hardened installation procedures for Raspberry Pi OS Lite 64-bit (Debian 13 Trixie, 2026-10-06 image):[^src-20261012-readme-english] [^src-20261012-installationguide-2]
+
+- **Prerequisites**: Base OS setup requires `curl`, `ca-certificates`, `git`, `python3-pip`, and `python3-venv` prior to running `./install.sh`.[^src-20261012-installationguide-2]
+- **Installer resilience**: Includes streamed stdin `/dev/null` isolation, stage-reported lock handling, and exponential backoff retry logic for critical tooling downloads.[^src-20261012-installationguide-2]
+- **Non-destructive checks**: `./install.sh --check` allows pre-verification of core services and `pigpiod` unit state without starting daemons or energizing hardware.[^src-20261012-installationguide-2]
+
+[^src-20261012-readme-english]: English README snapshot for NinjaRobotPi0 platform (2026-10-12).
+[^src-20261012-installationguide-2]: Fresh Lite installation repair Installation Guide (2026-10-12).

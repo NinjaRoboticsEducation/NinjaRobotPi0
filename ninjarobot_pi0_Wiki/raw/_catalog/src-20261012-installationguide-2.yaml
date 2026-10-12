@@ -1,0 +1,16 @@
+id: src-20261012-installationguide-2
+path: raw/articles/ninjarobotpi0/2026-10-12-fresh-install/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: Installationguide
+added_at: '2026-10-12T14:07:11Z'
+content_hash: sha256:1e929c9bb26c97da6a66a8dd2ac3da5b3bea12a9c22fe7d5e585ceae64b7464f
+state: ingested
+original_uri: urn:llmwiki:source:src-20261012-installationguide-2
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-12T14:08:04Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-12T14:15:24Z'
+last_plan: pi0-fresh-install-ingest-261012

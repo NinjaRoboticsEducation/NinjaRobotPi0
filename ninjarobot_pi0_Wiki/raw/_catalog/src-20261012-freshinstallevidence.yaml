@@ -1,0 +1,16 @@
+id: src-20261012-freshinstallevidence
+path: raw/notes/ninjarobotpi0/2026-10-12-fresh-install/FreshInstallEvidence.md
+media_type: text/markdown
+kind: text
+title: Freshinstallevidence
+added_at: '2026-10-12T14:07:52Z'
+content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
+state: ingested
+original_uri: urn:llmwiki:source:src-20261012-freshinstallevidence
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-12T14:08:32Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-12T14:15:24Z'
+last_plan: pi0-fresh-install-ingest-261012

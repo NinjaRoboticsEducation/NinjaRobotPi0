@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-12T02:43:48Z'
+generated_at: '2026-10-12T14:15:37Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -581,6 +581,11 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-11-web-refinement/WebRefinementEvidence.md
   kind: text
   state: ingested
+- id: src-20261012-developmentguide-2
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-12-fresh-install/DevelopmentGuide.md
+  kind: text
+  state: ingested
 - id: src-20261012-developmentguide
   title: Humanoid built-in movements development guide
   path: raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentGuide.md
@@ -591,9 +596,19 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentLog.md
   kind: text
   state: ingested
+- id: src-20261012-developmentlog-3
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-12-fresh-install/DevelopmentLog.md
+  kind: text
+  state: ingested
 - id: src-20261012-developmentlog
   title: Developmentlog
   path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261012-freshinstallevidence
+  title: Freshinstallevidence
+  path: raw/notes/ninjarobotpi0/2026-10-12-fresh-install/FreshInstallEvidence.md
   kind: text
   state: ingested
 - id: src-20261012-humanoidbuiltinmovementsevidence
@@ -611,8 +626,18 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-12-humanoid-reference/HumanoidReferenceLinkValidation.md
   kind: text
   state: ingested
+- id: src-20261012-installationguide-2
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-12-fresh-install/InstallationGuide.md
+  kind: text
+  state: ingested
 - id: src-20261012-installationguide
   title: Humanoid built-in movements installation guide
   path: raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261012-readme-english
+  title: Readme English
+  path: raw/articles/ninjarobotpi0/2026-10-12-fresh-install/README-English.md
   kind: text
   state: ingested

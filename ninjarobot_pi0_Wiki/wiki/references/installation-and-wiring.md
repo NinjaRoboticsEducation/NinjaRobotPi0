@@ -72,11 +72,19 @@ sources:
   resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
   title: Humanoid built-in movements implementation evidence
   content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-installationguide-2
+  resource: urn:llmwiki:source:src-20261012-installationguide-2
+  title: Installationguide
+  content_hash: sha256:1e929c9bb26c97da6a66a8dd2ac3da5b3bea12a9c22fe7d5e585ceae64b7464f
+- id: src-20261012-freshinstallevidence
+  resource: urn:llmwiki:source:src-20261012-freshinstallevidence
+  title: Freshinstallevidence
+  content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:24332f20ad74bd436e983d292afe90dfcd72cf23397b074864a81366c55d56a6
+  performed_at: '2026-10-12T14:15:00+00:00'
+  target_hash: sha256:ff74d928bdbaa3709f8d07bc0d07d82ecdbd75835b82804a46a8269ffa5463d2
   result: passed
   checks:
     source_support: passed
@@ -85,9 +93,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid GPIO 20–27 channel mapping, shoulder neutral status, and conflict
-    boundaries against src-20261012-installationguide.
-  - Hardware wiring safety requirements and power validation limits verified.
+  - Reviewed against Fresh Lite installation manual and evidence (2026-10-12).
+  - Verified OS target Debian 13 Trixie 2026-10-06 image, python3-pip prerequisite,
+    and pigpio source build requirements.
+  - Hardware operation and GPIO actuation remain pending manual device qualification.
 ---
 
 # Installation and Hardware Wiring Reference
@@ -228,3 +237,15 @@ Check display/buzzer/sensor pin conflicts, external servo power, common ground, 
 
 [^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and channel allocation.
+
+## Fresh Lite OS prerequisites and pigpio build behavior (2026-10-12)
+
+The 2026-10-12 installation update establishes verified hardware setup and package boundaries for fresh deployments:[^src-20261012-installationguide-2] [^src-20261012-freshinstallevidence]
+
+- **Raspberry Pi OS Lite 64-bit target**: Official release is Debian 13 (Trixie), release date 2026-10-06 with kernel 6.18 on Raspberry Pi Zero 2 W; Bookworm is now designated Legacy.[^src-20261012-installationguide-2]
+- **OS prerequisites**: In addition to `curl ca-certificates git python3-venv`, the package `python3-pip` is required prior to running the installer.[^src-20261012-installationguide-2]
+- **Pigpio package availability on Trixie**: Inspection of the official Debian Trixie package repository shows that binary packages supply client tools and Python bindings (`python3-pigpio`), but the `pigpiod` system daemon is omitted.[^src-20261012-freshinstallevidence] Consequently, NinjaRobotPi0 compiles `pigpiod` from the pinned upstream Git repository (`joan2937/pigpio` at commit `c33738a`), building only `libpigpio.so.1` and `pigpiod` to avoid modifying system Python environments.[^src-20261012-freshinstallevidence]
+- **Daemon inspection policy**: Read-only verification `--check` accepts a loaded `inactive` `pigpiod` unit without activating it, while rejecting masked or errored service definitions.[^src-20261012-freshinstallevidence]
+
+[^src-20261012-installationguide-2]: Fresh Lite installation repair Installation Guide (2026-10-12).
+[^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.

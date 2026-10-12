@@ -4,10 +4,10 @@ import argparse
 import os
 import platform
 import re
-import sys
-import shutil
 import shlex
+import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 
@@ -61,7 +61,12 @@ def path_errors(root):
 # Vite 7 and @vitejs/plugin-react engines in the committed package-lock.json.
 NODE_REQUIREMENT = "Node 20.19+ in 20.x, or >=22.12.0"
 UV_FLAGS = (
-    "--locked", "--no-dev", "--python", "--directory", "--all-extras", "--reinstall-package",
+    "--locked",
+    "--no-dev",
+    "--python",
+    "--directory",
+    "--all-extras",
+    "--reinstall-package",
 )
 UV_VENV_FLAGS = ("--allow-existing", "--prompt", "--python")
 CLI_PROVIDERS = {
@@ -79,15 +84,21 @@ def launcher_errors(root):
     for command in CLI_PROVIDERS:
         path = root / ".venv/bin" / command
         if not path.is_file():
-            errors.append(f"Missing .venv/bin/{command}; project installation is incomplete.")
+            errors.append(
+                f"Missing .venv/bin/{command}; project installation is incomplete."
+            )
         elif not os.access(path, os.X_OK):
-            errors.append(f"Not executable: .venv/bin/{command}; project environment needs repair.")
+            errors.append(
+                f"Not executable: .venv/bin/{command}; project environment needs repair."
+            )
     return errors
 
 
 def cli_repair_command():
     """Locked local-provider repair preserving unrelated installed/dev packages."""
-    providers = " ".join(f"--reinstall-package {package}" for package in CLI_PROVIDERS.values())
+    providers = " ".join(
+        f"--reinstall-package {package}" for package in CLI_PROVIDERS.values()
+    )
     return f"env -u UV_PROJECT_ENVIRONMENT -u UV_PROJECT uv sync --locked --inexact --no-dev {providers}"
 
 
@@ -122,9 +133,13 @@ def tool_error(command, executable):
                 return f"Incompatible uv at {executable}: uv sync must support {', '.join(UV_FLAGS)}."
             result = subprocess.run(
                 [str(executable), "venv", "--help"],
-                capture_output=True, text=True, timeout=20,
+                capture_output=True,
+                text=True,
+                timeout=20,
             )
-            missing = [flag for flag in UV_VENV_FLAGS if flag not in result.stdout.split()]
+            missing = [
+                flag for flag in UV_VENV_FLAGS if flag not in result.stdout.split()
+            ]
             if result.returncode or missing:
                 return f"Incompatible uv at {executable}: uv venv must support {', '.join(UV_VENV_FLAGS)}."
         elif command == "pigpiod" and actual != "79":
@@ -149,21 +164,46 @@ def compatible_path(command):
     return None
 
 
+def service_errors():
+    """Inspect unit availability only; inactive is expected after installation."""
+    try:
+        result = subprocess.run(
+            ["systemctl", "show", "pigpiod.service", "--property=LoadState", "--value"],
+            capture_output=True,
+            text=True,
+            timeout=20,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return ["Cannot inspect pigpiod.service; systemd must be available on the Pi."]
+    state = result.stdout.strip()
+    if result.returncode or state != "loaded":
+        return [
+            (
+                f"pigpiod.service is not available (LoadState={state or 'unknown'}). "
+                "Run ./install.sh to create a missing unit; an administrator must "
+                "review masked or invalid units. Do not start hardware until checks pass."
+            )
+        ]
+    return []
+
+
 def check(root):
-    errors = platform_errors() + path_errors(root) + launcher_errors(root)
+    errors = (
+        platform_errors() + path_errors(root) + launcher_errors(root) + service_errors()
+    )
     for command in ("node", "uv", "npm", "pigpiod"):
         error = tool_error(command, shutil.which(command))
         if error:
             errors.append(error)
     for relative in (
         ".venv/bin/python",
+        ".venv/bin/activate",
         "ninja_webapp/dist/index.html",
     ):
         if not (root / relative).is_file():
             errors.append(f"Missing {relative}; project installation is incomplete.")
-        elif relative.startswith(".venv/bin/") and not os.access(
-            root / relative, os.X_OK
-        ):
+        elif relative == ".venv/bin/python" and not os.access(root / relative, os.X_OK):
             errors.append(
                 f"Not executable: {relative}; project environment needs repair."
             )
@@ -213,9 +253,15 @@ def main():
         print(f"FAIL: {error}")
     if errors and not args.platform:
         if (args.root / ".venv/bin/python").is_file() and launcher_errors(args.root):
-            print("If project packages are already installed but CLI launchers are missing:")
-            print(f"  cd -- {shlex.quote(str(args.root.resolve()))} && {cli_repair_command()}")
-            print("This repairs locked local packages only; it does not start the robot.")
+            print(
+                "If project packages are already installed but CLI launchers are missing:"
+            )
+            print(
+                f"  cd -- {shlex.quote(str(args.root.resolve()))} && {cli_repair_command()}"
+            )
+            print(
+                "This repairs locked local packages only; it does not start the robot."
+            )
         print("Installation is incomplete or a required tool is incompatible.")
         print(
             "Run the installer as your normal user (it requests sudo only where needed):"

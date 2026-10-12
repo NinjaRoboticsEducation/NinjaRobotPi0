@@ -95,11 +95,19 @@ sources:
   resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
   title: Humanoid built-in movements implementation evidence
   content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261012-installationguide-2
+  resource: urn:llmwiki:source:src-20261012-installationguide-2
+  title: Installationguide
+  content_hash: sha256:1e929c9bb26c97da6a66a8dd2ac3da5b3bea12a9c22fe7d5e585ceae64b7464f
+- id: src-20261012-freshinstallevidence
+  resource: urn:llmwiki:source:src-20261012-freshinstallevidence
+  title: Freshinstallevidence
+  content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:de8058f1957b4bfccc01d39caf7f84669046ef3393ebe757160c1ebd3f4a0123
+  performed_at: '2026-10-12T14:15:00+00:00'
+  target_hash: sha256:3686d41710f2790cd35fd74f076a7f34ea2001fb8e50765b1a509c050f8e1ae6
   result: passed
   checks:
     source_support: passed
@@ -108,8 +116,12 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid configuration commands and seeding requirements against src-20261012-installationguide.
-  - Non-HAL configuration modification boundaries and physical safety notices verified.
+  - Reviewed against Fresh Lite installation repair manual and evidence (2026-10-12).
+  - Verified python3-pip prerequisite, streamed stdin /dev/null isolation, stage-reported
+    lock handling, and 3-attempt uv backoff retries.
+  - Verified read-only --check pigpiod unit status acceptance and Trixie pigpiod source
+    build rationale.
+  - Hardware activation remains unverified; testing bounded by host simulation.
 ---
 
 # Current installation manual
@@ -217,3 +229,19 @@ After installing the updated package and configuring hardware, run:
 
 [^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and seeding bounds.
+
+## Fresh Lite installation repair and installer resilience (2026-10-12)
+
+The 2026-10-12 fresh-installation update refines Raspberry Pi OS Lite setup on Debian 13 (Trixie 64-bit, official 2026-10-06 image with kernel 6.18, where Bookworm is designated as Legacy):[^src-20261012-installationguide-2] [^src-20261012-freshinstallevidence]
+
+1. **System package prerequisites**: `python3-pip` is explicitly included alongside `curl`, `ca-certificates`, `git`, and `python3-venv` in the initial package setup: `sudo apt update && sudo apt install -y curl ca-certificates git python3-pip python3-venv`.[^src-20261012-installationguide-2]
+2. **Streamed bootstrap stdin isolation**: When invoking `./install.sh` via a streamed curl pipe, the child installer is provided `/dev/null` as stdin to prevent consuming the stream, while interactive confirmation prompts are explicitly routed to `/dev/tty`.[^src-20261012-installationguide-2]
+3. **Stage-aware lock management**: Preflight, confirmation, and lock acquisition failures report the specific interrupted stage. The installer only cleans up locks owned by its own process session (`.ninjarobot-install.lock/`), preserving external locks.[^src-20261012-installationguide-2]
+4. **Administrator policy diagnostics**: Existing `sudo` and administrative policies are preserved and validated with specific diagnostics rather than silently modified.[^src-20261012-installationguide-2]
+5. **Execution sequencing**: System daemons, the locked Python virtual environment, and the frontend web UI build are established prior to downloading the large Ollama model archive, ensuring core offline robot operations remain intact if network errors interrupt model retrieval.[^src-20261012-installationguide-2]
+6. **Upstream network download resilience**: The upstream official `uv` installer (`astral.sh/uv/0.11.29/install.sh`) download is reinforced with up to three attempts with 2 s and 4 s exponential backoff against transient network failures (such as TLS unexpected EOF and DNS lookup errors), verifying script checksums against `install-versions.env`.[^src-20261012-freshinstallevidence]
+7. **Read-only `--check` inspection**: The `--check` mode aggregates core system and Ollama status. It rejects missing virtualenv activation scripts and missing, masked, or error-state `pigpiod` systemd units, but accepts a loaded `inactive` unit without starting it to respect non-actuating verification boundaries.[^src-20261012-installationguide-2] [^src-20261012-freshinstallevidence]
+8. **Pigpio source build requirement**: Because the official Raspberry Pi Trixie ARM64 package repository supplies client tools and libraries but no `pigpiod` daemon package, the daemon is built directly from the pinned upstream source repository (`joan2937/pigpio` commit `c33738a`), building only `libpigpio.so.1` and `pigpiod` without executing global `setup.py`.[^src-20261012-freshinstallevidence]
+
+[^src-20261012-installationguide-2]: Fresh Lite installation repair Installation Guide (2026-10-12).
+[^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.

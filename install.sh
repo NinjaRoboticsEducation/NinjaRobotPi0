@@ -94,7 +94,9 @@ EOF
   rm -rf -- "$staged"; staged=""
   rmdir -- "$lock"; trap - EXIT INT TERM
   printf 'Verified checkout %s.\n' "$target"
-  bash "$destination/scripts/install-rpi.sh" "${forwarded[@]}"
+  # Dependency subprocesses must not consume the remaining bootstrap stream.
+  # Interactive confirmations and sudo use the controlling terminal directly.
+  bash "$destination/scripts/install-rpi.sh" "${forwarded[@]}" < /dev/null
 }
 
 bootstrap "$@"
