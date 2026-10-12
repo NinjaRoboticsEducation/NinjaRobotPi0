@@ -5,6 +5,13 @@ finish_install() {
   local result=$?
   if ((result)); then
     printf '\nInstallation stopped during: %s (exit %s).\n' "${INSTALL_STAGE:-setup}" "$result" >&2
+    if [[ -n "${INSTALL_OPERATION:-}" ]]; then
+      printf 'Failed operation: %s.\n' "$INSTALL_OPERATION" >&2
+    fi
+    if [[ -n "${INSTALL_WORK:-}" && -d "$INSTALL_WORK" ]]; then
+      printf 'Temporary workspace (before cleanup): %s\n' "$INSTALL_WORK" >&2
+      df -h -- "$INSTALL_WORK" >&2 || true
+    fi
     printf 'Read the error above. After resolving it, retry from the same checkout:\n  cd -- %q && ./install.sh\n' "$INSTALL_ROOT" >&2
     echo 'Keep your configuration/calibration files. --check only inspects; it does not repair.' >&2
   fi
@@ -17,6 +24,7 @@ finish_install() {
 
 install_stage() {
   INSTALL_STAGE="$1"
+  INSTALL_OPERATION=""
   printf '\n== %s ==\n' "$INSTALL_STAGE"
 }
 
@@ -49,6 +57,7 @@ NinjaRobotPi0 software installation:
   apt: build-essential ca-certificates curl git python3-dev python3-pip python3-venv xz-utils zstd bluez dbus
   privileged files: Ollama launcher /usr/local/bin, pigpiod /usr/local/bin, library /usr/local/lib, optional inactive systemd unit
   Python: locked production .venv (prompt: ninjarobotpi0); frontend: npm ci and build
+  temporary workspace: $root/.ninjarobot-install (reserve at least 2 GB free; avoid RAM-backed /tmp)
   Ollama: CLI only; ARM64 archive needs 2 GB temporary disk; no daemon or model downloads
   wiki environment: $wiki (0=skip, 1=explicit setup)
 No hardware/service activation, calibration, credentials, robot start, or reboot.
@@ -97,8 +106,13 @@ EOF
   install_stage "Installation lock and temporary workspace"
   mkdir -- "$root/.ninjarobot-install.lock" || { echo 'Installation lock exists; review any interrupted run.' >&2; return 1; }
   INSTALL_LOCK="$root/.ninjarobot-install.lock"; INSTALL_OWNS_LOCK=1
-  work="$(mktemp -d)"
+  # Trixie /tmp is RAM-backed. A Node archive plus its extracted files can
+  # exhaust Zero 2 W resources; child uv/build tools must use disk storage too.
+  mkdir -p -m 0700 -- "$root/.ninjarobot-install"
+  work="$(mktemp -d "$root/.ninjarobot-install/work.XXXXXX")"
   INSTALL_WORK="$work"
+  export TMPDIR="$work"
+  "$python" -B "$root/scripts/install_check.py" --workspace "$work"
   install_stage "OS prerequisites"
   sudo python3 -B "$root/scripts/install_system.py"
   [[ ! -L "$tools" && ! -L "$root/.venv" ]] || { echo "Refusing redirected tools/environment." >&2; return 1; }
@@ -129,9 +143,17 @@ EOF
   install_stage "Compatible Node tooling"
   if [[ -z "$selected_node" ]] || ! npm --version >/dev/null 2>&1; then
     [[ ! -e "$tools/node" && ! -L "$tools/node" ]] || { echo 'Existing private Node installation is incompatible or lacks npm; preserve and repair it before retrying.' >&2; return 1; }
+    INSTALL_OPERATION="Node archive download from nodejs.org"
     download "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.xz" "$work/node.tar.xz"
+    INSTALL_OPERATION="Node archive SHA256 verification"
     verify "$work/node.tar.xz" "$NODE_ARM64_SHA256"
+    INSTALL_OPERATION="Node archive extraction (tar/xz)"
     tar -xJf "$work/node.tar.xz" -C "$work"
+    INSTALL_OPERATION="Downloaded Node and npm capability verification"
+    local node_stage="$work/node-v$NODE_VERSION-linux-arm64"
+    "$python" -B "$root/scripts/install_check.py" --verify-node "$node_stage/bin/node"
+    PATH="$node_stage/bin:$PATH" "$node_stage/bin/npm" --version >/dev/null
+    INSTALL_OPERATION="Private Node installation publication"
     mv -- "$work/node-v$NODE_VERSION-linux-arm64" "$tools/node"
     export PATH="$tools/node/bin:$PATH"
   fi

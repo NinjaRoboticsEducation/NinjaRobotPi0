@@ -154,6 +154,7 @@ if [ "$1" = run ]; then mkdir -p dist; printf fixture > dist/index.html; fi
 case "$*" in
 *--find-tool*) exec {shlex.quote(sys.executable)} "$@";;
 *--platform*) exit "${{PREFLIGHT_EXIT:-0}}";;
+*--workspace*|*--verify-node*) exec {shlex.quote(sys.executable)} "$@";;
 *install_check.py*)
   for file in .venv/bin/activate .venv/bin/python .venv/bin/ninja_core .venv/bin/pi0servo .venv/bin/pi0disp .venv/bin/pi0buzzer .venv/bin/pi0vl53l0x ninja_webapp/dist/index.html; do
     test -f "$FIXTURE_ROOT/$file" || exit 91
@@ -310,3 +311,84 @@ def test_uv_inner_download_retries_are_bounded(fresh, failures, success, attempt
         assert "Software installed." not in result.stdout
         assert not (checkout / ".venv").exists()
         assert "npm:" not in log.read_text()
+
+
+@pytest.mark.parametrize("free,failed", [(1_999_999_999, True), (2_000_000_000, False)])
+def test_workspace_capacity_boundary(tmp_path, monkeypatch, free, failed):
+    check = load("install_check")
+    monkeypatch.setattr(
+        check.shutil, "disk_usage", lambda _: SimpleNamespace(free=free)
+    )
+    errors = check.workspace_errors(tmp_path)
+    assert bool(errors) == failed
+    if failed:
+        assert "2 GB" in errors[0] and "RAM-backed /tmp" in errors[0]
+
+
+def test_workspace_inspection_failure_is_actionable(tmp_path, monkeypatch):
+    check = load("install_check")
+
+    def fail(_):
+        raise OSError("fixture unavailable")
+
+    monkeypatch.setattr(check.shutil, "disk_usage", fail)
+    assert "Cannot inspect installer workspace" in check.workspace_errors(tmp_path)[0]
+
+
+def test_install_ignores_unusable_inherited_tmpdir(fresh):
+    result = run_install(fresh, TMPDIR="/definitely-unusable-ram-temporary-folder")
+    assert result.returncode == 0, result.stdout + result.stderr
+    state = fresh[0] / ".ninjarobot-install"
+    assert state.is_dir() and not list(state.glob("work.*"))
+
+
+def test_node_extraction_failure_is_labelled_cleaned_and_retryable(fresh):
+    checkout, environment, _ = fresh
+    binaries = Path(environment["FIXTURE_BIN"])
+    real_tar = shlex.quote(shutil.which("tar"))
+    executable(
+        binaries / "tar",
+        f"""#!/bin/sh
+case "$*" in
+*node.tar.xz*)
+  mkdir -p "$TMPDIR/node-v22.23.3-linux-arm64"
+  echo 'tar: Cannot write: No space left on device' >&2
+  exit 2;;
+esac
+exec {real_tar} "$@"
+""",
+    )
+    result = run_install(fresh)
+    assert result.returncode == 2
+    assert "Failed operation: Node archive extraction (tar/xz)" in result.stderr
+    assert str(checkout / ".ninjarobot-install/work.") in result.stderr
+    assert not list((checkout / ".ninjarobot-install").glob("work.*"))
+    assert not (
+        Path(environment["HOME"]) / ".local/share/ninjarobot_pi0/tools/node"
+    ).exists()
+    (binaries / "tar").unlink()
+    retry = run_install(fresh)
+    assert retry.returncode == 0, retry.stdout + retry.stderr
+
+
+def test_downloaded_npm_failure_does_not_publish_private_node(fresh):
+    checkout, environment, _ = fresh
+    binaries = Path(environment["FIXTURE_BIN"])
+    real_tar = shlex.quote(shutil.which("tar"))
+    executable(
+        binaries / "tar",
+        f"""#!/bin/sh
+{real_tar} "$@" || exit $?
+case "$*" in
+*node.tar.xz*)
+  printf '#!/bin/sh\\nexit 9\\n' > "$TMPDIR/node-v22.23.3-linux-arm64/bin/npm";;
+esac
+""",
+    )
+    result = run_install(fresh)
+    assert result.returncode == 9
+    assert "Downloaded Node and npm capability verification" in result.stderr
+    assert not (
+        Path(environment["HOME"]) / ".local/share/ninjarobot_pi0/tools/node"
+    ).exists()
+    assert not list((checkout / ".ninjarobot-install").glob("work.*"))

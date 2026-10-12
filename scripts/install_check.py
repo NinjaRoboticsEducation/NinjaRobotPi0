@@ -188,6 +188,21 @@ def service_errors():
     return []
 
 
+def workspace_errors(path):
+    """Check the actual download/build filesystem before expensive setup."""
+    try:
+        free = shutil.disk_usage(path).free
+    except OSError as exc:
+        return [f"Cannot inspect installer workspace {path}: {exc}"]
+    if free < 2_000_000_000:
+        return [
+            f"Installer workspace {path} needs at least 2 GB free storage; "
+            f"available {free / 1_000_000_000:.2f} GB. Free disk space or choose "
+            "a disk-backed checkout. Trixie's RAM-backed /tmp is unsuitable."
+        ]
+    return []
+
+
 def check(root):
     errors = (
         platform_errors() + path_errors(root) + launcher_errors(root) + service_errors()
@@ -233,10 +248,22 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--platform", action="store_true")
     parser.add_argument("--find-tool", choices=("node", "uv"))
+    parser.add_argument("--verify-node", type=Path)
+    parser.add_argument("--workspace", type=Path)
     parser.add_argument(
         "--root", type=Path, default=Path(__file__).resolve().parents[1]
     )
     args = parser.parse_args()
+    if args.workspace is not None:
+        errors = workspace_errors(args.workspace)
+        for error in errors:
+            print(f"FAIL: {error}")
+        return bool(errors)
+    if args.verify_node is not None:
+        error = tool_error("node", args.verify_node)
+        if error:
+            print(f"FAIL: {error}")
+        return bool(error)
     if args.find_tool:
         executable = compatible_path(args.find_tool)
         if executable:

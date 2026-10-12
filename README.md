@@ -167,6 +167,7 @@ The download must succeed before Bash runs; keeping a local copy also avoids fee
 
 - Create the `$HOME/NinjaRobotPi0` directory
 - Install system packages, locked Python dependencies and the web frontend; reuse compatible Node/uv or download verified fallback tools
+- Use a private temporary workspace under the checkout’s `.ninjarobot-install/` directory and reserve at least 2 GB free disk space before downloads; child installers also use that workspace
 - Build/install `pigpiod` and its inactive systemd unit if absent; install the Ollama cloud CLI
 - Set up the locked Python environment in `.venv`, including its activation script and all robot commands
 
@@ -501,6 +502,26 @@ cd "$HOME/NinjaRobotPi0"
 Keep configuration/calibration files. If installation fails again, retain the **first error**; `--check` only inspects and does not repair. After successful installation, start pigpiod again before hardware use. To update an existing checkout first, use `git fetch origin HEAD && git merge --ff-only FETCH_HEAD`; stop if Git reports an error. The installer itself does not update existing Git files.
 
 
+If Node extraction reports **`Cannot write: No space left on device`** or **`Wrote only ... bytes`**, the archive download reached extraction but its destination ran out of space. The earlier installer used the default temporary directory. [Trixie stores `/tmp` in RAM](https://www.debian.org/releases/trixie/release-notes/issues.en.html#the-temporary-files-directory-tmp-is-now-stored-in-a-tmpfs); on a Zero 2 W, Node's archive plus extracted files can exhaust that space even when the SD card has free space. The corrected installer uses `.ninjarobot-install/work.*` on the checkout's filesystem, exports that location to child tools, and checks for at least 2 GB free. Ensure the checkout is on the SD card or another disk with sufficient free space.
+
+You can retry the **currently published earlier installer** with a disk-backed temporary directory, without deleting or downloading the checkout again:
+
+```bash
+cd "$HOME/NinjaRobotPi0"
+df -h "$HOME" /tmp
+mkdir -p -m 700 "$HOME/.cache/ninjarobot-install-tmp"
+TMPDIR="$HOME/.cache/ninjarobot-install-tmp" ./install.sh
+```
+
+Check that `$HOME` has at least 2 GB free; free space there first if necessary. After **Software installed**, run `./install.sh --check` separately. To capture another failure completely, use Bash's pipeline status so `tee` does not hide installer failure:
+
+```bash
+set -o pipefail
+TMPDIR="$HOME/.cache/ninjarobot-install-tmp" ./install.sh 2>&1 | tee "$HOME/ninjarobot-install.log"
+```
+
+Deleting `~/NinjaRobotPi0` does **not** remove reused/private tools under `~/.local/share/ninjarobot_pi0/tools/`; compatible tools are intentionally reused. Do not delete those tools or your configuration as the first recovery step. The corrected failure summary names the exact Node operation (download, checksum, extraction, capability check or publication).
+
 ### Installation Issues
 
 | Problem | Solution |
@@ -509,6 +530,7 @@ Keep configuration/calibration files. If installation fails again, retain the **
 | `Unsupported platform` error | Verify: Raspberry Pi Zero 2 W, `uname -m` shows `aarch64`, Debian-based Raspberry Pi OS 64-bit, Python 3.10+, and you are logged in as a normal user (not root). |
 | `Destination already exists` | The installer will not overwrite an existing folder. Enter that folder and run: `cd "$HOME/NinjaRobotPi0" && ./install.sh` |
 | uv download reports `SSL_read` / `unexpected eof` / `Could not resolve host: github.com` | The download connection or DNS failed before uv installation. The installer retries the verified uv installation up to three times. Check Wi-Fi/internet and DNS resolution for `releases.astral.sh` and `github.com`; restore connectivity, then rerun `./install.sh` in the existing checkout. Keep TLS verification enabled. |
+| Node stage ends with exit 2 and `tar: No space left on device` | Temporary extraction storage is full. Use the disk-backed TMPDIR recovery above or the published corrected installer; inspect free space on the actual checkout filesystem. |
 | Installation stops at OS packages | Check the error message — it is usually an `apt`, network, or `sudo` issue. Fix the underlying problem and re-run `./install.sh`. |
 | `uv is not found` after install | Run `./install.sh --check`. If it passes, uv is private: locate it with `python3 -B scripts/install_check.py --find-tool uv` and use the PATH step above. If it fails, retry the installer and retain its first error. |
 | `Unit pigpiod.service not found` / missing `.venv/bin/activate` | Installation is incomplete. Enter the existing checkout, run `./install.sh`, wait for **Software installed**, then run `./install.sh --check`. Do not start the daemon or activate the environment until checks pass. |
@@ -872,6 +894,17 @@ NinjaRobotPi0/
 
 ## 4. トラブルシューティング
 
+Node 展開時の `No space left on device` は一時領域不足です。Trixie の /tmp は RAM 上にあります。修正版はチェックアウト内の .ninjarobot-install を使い、空き容量2 GB以上を確認します。旧版の復旧は次のとおりです。HOME がディスク上にあり、2 GB以上空いていることを確認してください。
+
+```bash
+cd "$HOME/NinjaRobotPi0"
+df -h "$HOME" /tmp
+mkdir -p -m 700 "$HOME/.cache/ninjarobot-install-tmp"
+TMPDIR="$HOME/.cache/ninjarobot-install-tmp" ./install.sh
+```
+
+削除したチェックアウトの外にある ~/.local/share/ninjarobot_pi0/tools/ のツールは再利用されます。設定やツールを削除せず、Software installed 後に ./install.sh --check を実行してください。
+
 ### 更新後に `ninja_core` を起動できない場合
 
 `Failed to spawn` / `No such file or directory` は CLI 起動ファイルがないことを示します。以前はルートと個別パッケージが同じ起動ファイルを所有していました。修正で重複を解消し、インストーラーが五つを再作成・確認します。稼働中のロボットを安全に停止してから（Poweroff が動く場合があります）、修正済みフォルダーで通常ユーザーとして実行してください：
@@ -1215,6 +1248,17 @@ NinjaRobotPi0/
 
 ## 4. 疑難排解
 
+Node 解壓縮的 `No space left on device` 表示暫存空間不足。Trixie 的 /tmp 位於 RAM。修正版使用專案內 .ninjarobot-install 並檢查至少2 GB可用空間。舊版可用以下步驟重試；確認 HOME 位於磁碟且有至少2 GB空間。
+
+```bash
+cd "$HOME/NinjaRobotPi0"
+df -h "$HOME" /tmp
+mkdir -p -m 700 "$HOME/.cache/ninjarobot-install-tmp"
+TMPDIR="$HOME/.cache/ninjarobot-install-tmp" ./install.sh
+```
+
+刪除專案不會刪除 ~/.local/share/ninjarobot_pi0/tools/ 中可重用的工具。保留設定與工具，看到 Software installed 後再單獨執行 ./install.sh --check。
+
 ### 更新後無法啟動 `ninja_core`
 
 `Failed to spawn` / `No such file or directory` 表示 CLI 啟動檔不存在，不是伺服器設定遭拒。舊版根專案與個別套件重複擁有相同啟動檔；此次修正移除重複，安裝程式會重建並檢查五個啟動檔。先安全停止正在執行的機器人（可能執行 Poweroff），再於含修正的資料夾以一般使用者執行：
@@ -1546,6 +1590,17 @@ NinjaRobotPi0/
 ---
 
 ## 4. 故障排除
+
+Node 解压的 `No space left on device` 表示临时空间不足。Trixie 的 /tmp 位于 RAM。修正版使用项目内 .ninjarobot-install 并检查至少2 GB可用空间。旧版可用以下步骤重试；确认 HOME 位于磁盘且有至少2 GB空间。
+
+```bash
+cd "$HOME/NinjaRobotPi0"
+df -h "$HOME" /tmp
+mkdir -p -m 700 "$HOME/.cache/ninjarobot-install-tmp"
+TMPDIR="$HOME/.cache/ninjarobot-install-tmp" ./install.sh
+```
+
+删除项目不会删除 ~/.local/share/ninjarobot_pi0/tools/ 中可复用的工具。保留配置和工具，看到 Software installed 后再单独运行 ./install.sh --check。
 
 ### 更新后无法启动 `ninja_core`
 
