@@ -1,0 +1,16 @@
+id: src-20261013-installationguide-2
+path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-poweroff/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: Installationguide
+added_at: '2026-10-13T00:44:13Z'
+content_hash: sha256:480dd81da58d9e9f3590e1f349420f8d36cee6e1ec5849493114b9f4401f706c
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-installationguide-2
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T00:44:46Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013

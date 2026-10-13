@@ -1,0 +1,16 @@
+id: src-20261013-nodeinstallevidence
+path: raw/notes/ninjarobotpi0/2026-10-12-node-storage/NodeInstallEvidence.md
+media_type: text/markdown
+kind: text
+title: Nodeinstallevidence
+added_at: '2026-10-13T00:44:05Z'
+content_hash: sha256:9b43b8e7b20b8f4935c3809f015acbb9fd5cb73c4cf09eba66bb5f4914d42676
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-nodeinstallevidence
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T00:44:44Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013

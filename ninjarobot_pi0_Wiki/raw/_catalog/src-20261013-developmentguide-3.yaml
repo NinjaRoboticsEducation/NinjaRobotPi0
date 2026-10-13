@@ -1,0 +1,16 @@
+id: src-20261013-developmentguide-3
+path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Developmentguide
+added_at: '2026-10-13T00:44:23Z'
+content_hash: sha256:39169f1ed923edcc159141b97c4b7499c9f3bbf4a241ce8e9dd578c3ac932d3a
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-developmentguide-3
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T00:44:50Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013

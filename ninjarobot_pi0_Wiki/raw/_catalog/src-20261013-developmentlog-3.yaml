@@ -1,0 +1,16 @@
+id: src-20261013-developmentlog-3
+path: raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentLog.md
+media_type: text/markdown
+kind: text
+title: Developmentlog
+added_at: '2026-10-13T00:44:27Z'
+content_hash: sha256:e3994be98e0caa7091521eca871ac032d22a2fbf0767c9331a6dc9884d527ee5
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-developmentlog-3
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T00:44:52Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013

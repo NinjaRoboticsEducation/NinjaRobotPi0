@@ -1,0 +1,16 @@
+id: src-20261013-developmentguide
+path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Developmentguide
+added_at: '2026-10-13T00:43:52Z'
+content_hash: sha256:864fdc6cf277e57d47d6d90e1aaa01383c7b929cabe6cce0af09d5d6a2ee4830
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-developmentguide
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T00:44:41Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013

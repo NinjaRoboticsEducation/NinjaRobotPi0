@@ -1,0 +1,16 @@
+id: src-20261013-installationguide
+path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: Installationguide
+added_at: '2026-10-13T00:44:01Z'
+content_hash: sha256:42afe79dff9bcb6505366fc6ecb9738e21092c362fde3b6a6fba0fe0dbda9390
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-installationguide
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T00:44:42Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013

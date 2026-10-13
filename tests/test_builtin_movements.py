@@ -54,7 +54,7 @@ def controller(config, pins=None, completed=True):
 
 @pytest.mark.parametrize("kind,name,count", [
     ("spider", "spider_home", 20),
-    ("humanoid", "home", 35),
+    ("humanoid", "humanoid_home", 37),
     ("wheel", "home", 1),
 ])
 def test_import_seeds_profiles_and_is_idempotent(kind, name, count, tmp_path, monkeypatch):

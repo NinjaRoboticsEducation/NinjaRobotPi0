@@ -131,11 +131,35 @@ sources:
   resource: urn:llmwiki:source:src-20261012-freshinstallevidence
   title: Freshinstallevidence
   content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
+- id: src-20261013-developmentguide
+  resource: urn:llmwiki:source:src-20261013-developmentguide
+  title: Developmentguide
+  content_hash: sha256:864fdc6cf277e57d47d6d90e1aaa01383c7b929cabe6cce0af09d5d6a2ee4830
+- id: src-20261013-nodeinstallevidence
+  resource: urn:llmwiki:source:src-20261013-nodeinstallevidence
+  title: Nodeinstallevidence
+  content_hash: sha256:9b43b8e7b20b8f4935c3809f015acbb9fd5cb73c4cf09eba66bb5f4914d42676
+- id: src-20261013-developmentguide-2
+  resource: urn:llmwiki:source:src-20261013-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:909559351ca8b8cff6bd6c5745dbc6a7091c53f420f2f4242b7ed647fee2a591
+- id: src-20261013-humanoidpoweroffevidence
+  resource: urn:llmwiki:source:src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  content_hash: sha256:ea688125c6ec17859dcc06b44450fa26c146c4e7fb034cf88a82cca7979f64c0
+- id: src-20261013-developmentguide-3
+  resource: urn:llmwiki:source:src-20261013-developmentguide-3
+  title: Developmentguide
+  content_hash: sha256:39169f1ed923edcc159141b97c4b7499c9f3bbf4a241ce8e9dd578c3ac932d3a
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T14:15:00+00:00'
-  target_hash: sha256:a92469176a5a2edbf7fe1cd07290afec408e94a8a7fc2a46ffa159d625892ded
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:dd48135c86115c7bee3f2e10c684d31e9f85aaa0f676a04bcea2a974628c1194
   result: passed
   checks:
     source_support: passed
@@ -144,10 +168,13 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Fresh Lite installation Development Guide and evidence (2026-10-12).
-  - Verified network resilience contracts, install stage reporting, pigpiod unit verification,
-    and 124 passing checks.
-  - Hardware activation remains unverified; bounded by host tests.
+  - Reviewed against Node extraction storage repair development manual and evidence
+    (2026-10-12) and Owner Humanoid defaults replacement development manual and evidence
+    (2026-10-13).
+  - Verified private TMPDIR disk workspace contracts, 130 installer test suite, 459
+    host test suite for Humanoid defaults replacement, and data/humanoid_defaults.json
+    resource generation.
+  - Physical Raspberry Pi 0 2W hardware qualification remains pending manual verification.
 ---
 
 # Current development manual
@@ -299,11 +326,11 @@ Host validation passed 146 targeted tests, including all current sequences with 
 
 ## Current Humanoid native catalog integration (2026-10-12)
 
-`builtin_movements.py` loads cached installed `data/humanoid_otto.json`; `builtin_catalog` returns independent copies only for Humanoid with all GPIO 20–27 configured.[^src-20261012-developmentguide] Full Humanoid defaults total 35 entries / 1,204 steps (34 sequences + generic `home`). Partial profiles keep only generic `home`.[^src-20261012-developmentguide] [^src-20261012-humanoidbuiltinmovementsevidence]
+`builtin_movements.py` loads cached installed `data/humanoid_defaults.json`, generated from `DevelopmentPlanDoc/humanoid_movements_updated.json` (canonical movements SHA256: `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`) by `scripts/build_humanoid_defaults.py`.[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] Full Humanoid defaults total 37 unique entries / 1,278 complete eight-channel steps (1,204 M steps, 74 F steps across `humanoid_run_forward` and `humanoid_run_backward`, with `humanoid_home` and `Poweroff`).[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] Partial profiles keep fallback generic `home`.[^src-20261013-developmentguide-3]
 
 `scripts/build_humanoid_movements.py` deterministically extracts standalone library-marker JSON blocks from the reference document, verifying exact installed-resource parity against canonical inner-object hash `49f6c4fe998b3c8500347f56eeeb7e165fb442c206ac373485310af7d280d2d6` via `--check`.[^src-20261012-developmentguide] Shared `validate_movement` recognizes known non-neutral Humanoid trajectories even after renaming or speed edits, normalizing string and integer GPIO keys, while excluding all-neutral center geometry from Humanoid inference.[^src-20261012-developmentguide]
 
-Host validation passed 344 tests with 1 pre-existing missing-Spider-fixture test deselected, confirming full import, idempotency, profile switching, and CLI/web/agent execution.[^src-20261012-developmentguide] [^src-20261012-humanoidbuiltinmovementsevidence] Physical device acceptance and live hardware motion remain pending.[^src-20261012-humanoidbuiltinmovementsevidence]
+Host validation passed 459 inert tests covering all 37 owner movements, exact M/F speeds, type guards, old managed upgrade, and standalone wheel resource loading.[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] Physical device acceptance and live hardware motion remain pending.[^src-20261012-humanoidbuiltinmovementsevidence]
 
 [^src-20261012-developmentguide]: Current versioned Developmentguide (2026-10-12 Humanoid built-in movements).
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and validation boundaries.
@@ -319,3 +346,19 @@ The development guide records the contracts and verification procedures for the 
 
 [^src-20261012-developmentguide-2]: Fresh Lite installation repair Development Guide (2026-10-12).
 [^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.
+
+## Node extraction storage repair and workspace management (2026-10-12)
+
+The development guide records the contracts and verification procedures for the 2026-10-12 installer storage repair:[^src-20261013-developmentguide] [^src-20261013-nodeinstallevidence]
+
+- **Disk Workspace Contracts**: The installer creates a private `work.*` directory under `checkout/.ninjarobot-install/` and exports its absolute path as `TMPDIR` to all child processes, preventing RAM tmpfs exhaustion on Debian 13 (Trixie).[^src-20261013-developmentguide]
+- **Capacity Preflight**: Setup requires at least 2 GB free disk space on the target filesystem before proceeding with extraction.[^src-20261013-nodeinstallevidence]
+- **Staged Operations & Diagnostics**: Operations are strictly sequenced: download, checksum verification against `install-versions.env`, host disk extraction, capability inspection, and publication to `tools/node`. On extraction failure, filesystem free space is reported before cleaning up the invocation's private work directory and lock.[^src-20261013-developmentguide] [^src-20261013-nodeinstallevidence]
+- **Validation**: 130 targeted host tests passed, covering disk capacity boundaries, inherited `TMPDIR` handling, simulated ENOSPC failures, and corrupted downloaded archive rejection.[^src-20261013-developmentguide] [^src-20261013-nodeinstallevidence]
+
+[^src-20261013-developmentguide]: Node extraction storage repair Development Guide (2026-10-12).
+[^src-20261013-nodeinstallevidence]: Primary-source verification and validation evidence for Node installation storage repair.
+[^src-20261013-developmentguide-2]: Humanoid Poweroff default Development Guide (2026-10-13).
+[^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
+[^src-20261013-developmentguide-3]: Owner Humanoid defaults replacement Development Guide (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).

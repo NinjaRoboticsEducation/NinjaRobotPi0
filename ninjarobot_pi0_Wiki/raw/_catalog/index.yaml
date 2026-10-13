@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-12T14:15:37Z'
+generated_at: '2026-10-13T01:06:24Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -639,5 +639,80 @@ sources:
 - id: src-20261012-readme-english
   title: Readme English
   path: raw/articles/ninjarobotpi0/2026-10-12-fresh-install/README-English.md
+  kind: text
+  state: ingested
+- id: src-20261013-developmentguide-2
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-poweroff/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261013-developmentguide-3
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261013-developmentguide
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261013-developmentlog-2
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-13-humanoid-poweroff/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261013-developmentlog-3
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261013-developmentlog
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-12-node-storage/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  path: raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/HumanoidDefaultsReplacementEvidence.md
+  kind: text
+  state: ingested
+- id: src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  path: raw/notes/ninjarobotpi0/2026-10-13-humanoid-poweroff/HumanoidPoweroffEvidence.md
+  kind: text
+  state: ingested
+- id: src-20261013-installationguide-2
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-poweroff/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261013-installationguide-3
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261013-installationguide
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261013-nodeinstallevidence
+  title: Nodeinstallevidence
+  path: raw/notes/ninjarobotpi0/2026-10-12-node-storage/NodeInstallEvidence.md
+  kind: text
+  state: ingested
+- id: src-20261013-readme-english-2
+  title: Readme English
+  path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-poweroff/README-English.md
+  kind: text
+  state: pending
+- id: src-20261013-readme-english-3
+  title: Readme English
+  path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/README-English.md
+  kind: text
+  state: ingested
+- id: src-20261013-readme-english
+  title: Readme English
+  path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/README-English.md
   kind: text
   state: ingested

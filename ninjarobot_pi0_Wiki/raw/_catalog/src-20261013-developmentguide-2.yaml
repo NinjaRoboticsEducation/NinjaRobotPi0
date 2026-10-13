@@ -1,0 +1,16 @@
+id: src-20261013-developmentguide-2
+path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-poweroff/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Developmentguide
+added_at: '2026-10-13T00:44:12Z'
+content_hash: sha256:909559351ca8b8cff6bd6c5745dbc6a7091c53f420f2f4242b7ed647fee2a591
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-developmentguide-2
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T00:44:45Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013

@@ -92,11 +92,27 @@ sources:
   resource: urn:llmwiki:source:src-20261012-installationguide-2
   title: Installationguide
   content_hash: sha256:1e929c9bb26c97da6a66a8dd2ac3da5b3bea12a9c22fe7d5e585ceae64b7464f
+- id: src-20261013-readme-english
+  resource: urn:llmwiki:source:src-20261013-readme-english
+  title: Readme English
+  content_hash: sha256:d38ab91e821bd51f52d9ab0758865e1ace49aa86cc2cceac7af26417775b6ea1
+- id: src-20261013-nodeinstallevidence
+  resource: urn:llmwiki:source:src-20261013-nodeinstallevidence
+  title: Nodeinstallevidence
+  content_hash: sha256:9b43b8e7b20b8f4935c3809f015acbb9fd5cb73c4cf09eba66bb5f4914d42676
+- id: src-20261013-readme-english-3
+  resource: urn:llmwiki:source:src-20261013-readme-english-3
+  title: Readme English
+  content_hash: sha256:0ff7ca331d12764d9cb5bf5bfca6242d70f1210beccccc2b1b5b7f7ff66ed3da
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T14:15:00+00:00'
-  target_hash: sha256:69aced712a20b727e3c479ed2202114ecc3b3d429dde23d18e9cf37a460cec1a
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:33370df038933e85635bd3e282be940398a9f13773cc4dbebc1a66b128642e16
   result: passed
   checks:
     source_support: passed
@@ -105,11 +121,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Fresh Lite installation README snapshot and Installation Guide
-    (2026-10-12).
-  - Verified Trixie 64-bit Lite support, python3-pip prerequisite, and non-destructive
-    service checking.
-  - Hardware activation remains unverified; bounded by host simulation.
+  - Reviewed platform overview against Node extraction storage repair English README/evidence
+    (2026-10-12) and Owner Humanoid defaults replacement English README/evidence (2026-10-13).
+  - Verified private TMPDIR disk workspace contracts, 2GB free disk check, 37-movement
+    Humanoid catalog, and Poweroff rest posture integration.
+  - Hardware verification remains pending owner manual validation.
 ---
 
 # NinjaRobotPi0 Platform Overview
@@ -262,3 +278,23 @@ The platform documentation and setup workflow incorporate hardened installation 
 
 [^src-20261012-readme-english]: English README snapshot for NinjaRobotPi0 platform (2026-10-12).
 [^src-20261012-installationguide-2]: Fresh Lite installation repair Installation Guide (2026-10-12).
+
+## Node extraction storage hardening (2026-10-12)
+
+Recent platform installer updates harden deployment reliability on Raspberry Pi Zero 2 W under Debian 13 (Trixie):[^src-20261013-readme-english] [^src-20261013-nodeinstallevidence]
+
+- **Workspace storage isolation**: Installer creates a dedicated `work.*` workspace directory under checkout and exports it as `TMPDIR`, avoiding RAM exhaustion from Trixie's default tmpfs-backed `/tmp` during large archive extraction.[^src-20261013-nodeinstallevidence]
+- **Disk preflight check**: Requires at least 2 GB available disk space prior to tool installation.[^src-20261013-nodeinstallevidence]
+- **Diagnostic recovery**: On download or extraction interruptions, reports filesystem free space and purges process locks to allow clean subsequent retries.[^src-20261013-nodeinstallevidence]
+
+## Humanoid motion catalog and power management (2026-10-13)
+
+The Humanoid robot profile incorporates an expanded native movement library and coordinated power management:[^src-20261013-readme-english-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+
+- **Native Humanoid Catalog**: Includes 37 unique movements / 1,278 complete eight-channel steps (1,204 at medium speed M, 74 at fast speed F across `humanoid_run_forward` and `humanoid_run_backward`).[^src-20261013-humanoiddefaultsreplacementevidence]
+- **Dedicated Poweroff Pose**: Deliberate exit in movement-tool and coordinated server shutdown command an explicit `Poweroff` rest posture (arms and shoulders deployed, hips and feet centered) before releasing PWM and disconnecting hardware.[^src-20261013-humanoiddefaultsreplacementevidence]
+
+[^src-20261013-readme-english]: English README snapshot for NinjaRobotPi0 platform (2026-10-12 Node storage repair).
+[^src-20261013-nodeinstallevidence]: Primary-source verification and validation evidence for Node installation storage repair.
+[^src-20261013-readme-english-3]: English README snapshot for NinjaRobotPi0 platform (2026-10-13 Humanoid defaults replacement).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).

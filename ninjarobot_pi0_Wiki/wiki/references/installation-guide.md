@@ -103,11 +103,35 @@ sources:
   resource: urn:llmwiki:source:src-20261012-freshinstallevidence
   title: Freshinstallevidence
   content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
+- id: src-20261013-installationguide
+  resource: urn:llmwiki:source:src-20261013-installationguide
+  title: Installationguide
+  content_hash: sha256:42afe79dff9bcb6505366fc6ecb9738e21092c362fde3b6a6fba0fe0dbda9390
+- id: src-20261013-nodeinstallevidence
+  resource: urn:llmwiki:source:src-20261013-nodeinstallevidence
+  title: Nodeinstallevidence
+  content_hash: sha256:9b43b8e7b20b8f4935c3809f015acbb9fd5cb73c4cf09eba66bb5f4914d42676
+- id: src-20261013-installationguide-2
+  resource: urn:llmwiki:source:src-20261013-installationguide-2
+  title: Installationguide
+  content_hash: sha256:480dd81da58d9e9f3590e1f349420f8d36cee6e1ec5849493114b9f4401f706c
+- id: src-20261013-humanoidpoweroffevidence
+  resource: urn:llmwiki:source:src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  content_hash: sha256:ea688125c6ec17859dcc06b44450fa26c146c4e7fb034cf88a82cca7979f64c0
+- id: src-20261013-installationguide-3
+  resource: urn:llmwiki:source:src-20261013-installationguide-3
+  title: Installationguide
+  content_hash: sha256:d59708b5309c7ae3942fad115570df988f8cccec77ac37282b739017e16ddf05
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T14:15:00+00:00'
-  target_hash: sha256:3686d41710f2790cd35fd74f076a7f34ea2001fb8e50765b1a509c050f8e1ae6
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:eb2cf2afdae23ec2a9a2a5d7615b9a00c27f6aca23851f2c750f6493f5362648
   result: passed
   checks:
     source_support: passed
@@ -116,12 +140,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Fresh Lite installation repair manual and evidence (2026-10-12).
-  - Verified python3-pip prerequisite, streamed stdin /dev/null isolation, stage-reported
-    lock handling, and 3-attempt uv backoff retries.
-  - Verified read-only --check pigpiod unit status acceptance and Trixie pigpiod source
-    build rationale.
-  - Hardware activation remains unverified; testing bounded by host simulation.
+  - Reviewed against Node extraction storage repair manual and evidence (2026-10-12)
+    and Owner Humanoid defaults replacement manual and evidence (2026-10-13).
+  - Verified private TMPDIR disk workspace contracts, 2GB free space check, and 37-movement
+    defaults catalog seeding.
+  - Physical Raspberry Pi 0 2W hardware qualification remains pending manual verification.
 ---
 
 # Current installation manual
@@ -225,7 +248,7 @@ After installing the updated package and configuring hardware, run:
 .venv/bin/ninja_core config import
 ```
 
-`import-all` is an equivalent alias. These commands modify configuration data without initializing HAL.[^src-20261012-installationguide] With all BCM GPIO 20–27 in core servo-calibration keys, import seeds the exact 34 documented `humanoid_*` movement sequences (1,203 keyframes) alongside existing generic `home` (35 defaults / 1,204 steps).[^src-20261012-installationguide] [^src-20261012-humanoidbuiltinmovementsevidence] A partial Humanoid configuration receives only generic `home`.[^src-20261012-installationguide] Reimport preserves custom collisions and user edits through fingerprint provenance.[^src-20261012-installationguide]
+`import-all` is an equivalent alias. These commands modify configuration data without initializing HAL.[^src-20261012-installationguide] With all BCM GPIO 20–27 in core servo-calibration keys, import seeds the replacement 37 unique Humanoid movements (1,278 complete eight-channel steps) from `DevelopmentPlanDoc/humanoid_movements_updated.json` (canonical hash `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`), generated into package resource `data/humanoid_defaults.json` via `scripts/build_humanoid_defaults.py`.[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] The full 37-entry catalog provides `humanoid_home` and `Poweroff` (1,204 steps at M speed, 74 steps at F speed across `humanoid_run_forward` and `humanoid_run_backward`), with no extra generic home needed.[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] A partial Humanoid configuration receives only fallback generic `home`.[^src-20261013-installationguide-3] Reimport preserves custom collisions and user edits through fingerprint provenance.[^src-20261013-installationguide-3]
 
 [^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and seeding bounds.
@@ -245,3 +268,18 @@ The 2026-10-12 fresh-installation update refines Raspberry Pi OS Lite setup on D
 
 [^src-20261012-installationguide-2]: Fresh Lite installation repair Installation Guide (2026-10-12).
 [^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.
+
+## Node extraction storage repair and workspace isolation (2026-10-12)
+
+On Debian 13 (Trixie), `/tmp` is mounted on RAM-backed `tmpfs` (allocating up to 50% RAM). The verified Node 22.23.3 ARM64 archive (30,172,012 bytes) expands to 193,713,814 bytes of regular-file payload before filesystem metadata, totaling ~224 MB. On Raspberry Pi Zero 2 W with 512 MB RAM, this creates excessive temporary memory pressure leading to `Cannot write: No space left on device` (tar exit code 2).[^src-20261013-installationguide] [^src-20261013-nodeinstallevidence]
+
+The installer resolves this resource limitation by creating an isolated workspace directory (`work.*`) under `checkout/.ninjarobot-install/`, exporting its absolute path as `TMPDIR` to all child processes, and verifying at least 2 GB free disk space prior to setup.[^src-20261013-installationguide] [^src-20261013-nodeinstallevidence]
+Node operations are explicitly staged and labeled: download, checksum verification, host disk extraction, capability verification (`node -v` and `npm -v`), and publication to `tools/node`.[^src-20261013-installationguide]
+If extraction fails, workspace diagnostics report free filesystem space before cleaning up the invocation's private work directory and lock, enabling reruns without stale lockouts.[^src-20261013-installationguide] [^src-20261013-nodeinstallevidence]
+
+[^src-20261013-installationguide]: Node extraction storage repair Installation Guide (2026-10-12).
+[^src-20261013-nodeinstallevidence]: Primary-source verification and validation evidence for Node installation storage repair.
+[^src-20261013-installationguide-2]: Humanoid Poweroff default Installation Guide (2026-10-13).
+[^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
+[^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).

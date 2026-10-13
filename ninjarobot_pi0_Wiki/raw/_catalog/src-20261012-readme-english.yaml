@@ -12,5 +12,5 @@ retrieved_at: null
 normalized_at: '2026-10-12T14:08:15Z'
 normalizer: llmwiki-text/0.2
 error: null
-ingested_at: '2026-10-12T14:15:24Z'
-last_plan: pi0-fresh-install-ingest-261012
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013

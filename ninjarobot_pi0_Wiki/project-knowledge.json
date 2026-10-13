@@ -1,13 +1,13 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-12T03:40:00+00:00",
+  "reviewed_at": "2026-10-13T01:10:00+00:00",
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/InstallationGuide.md",
-      "source_id": "src-20261012-installationguide",
-      "content_hash": "sha256:30b40b3338f5e9b912b63cb4146f3fa369a13b3d6848869efbce8ebf3f7eed19",
+      "path": "raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md",
+      "source_id": "src-20261013-installationguide-3",
+      "content_hash": "sha256:d59708b5309c7ae3942fad115570df988f8cccec77ac37282b739017e16ddf05",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentGuide.md",
-      "source_id": "src-20261012-developmentguide",
-      "content_hash": "sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a",
+      "path": "raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentGuide.md",
+      "source_id": "src-20261013-developmentguide-3",
+      "content_hash": "sha256:39169f1ed923edcc159141b97c4b7499c9f3bbf4a241ce8e9dd578c3ac932d3a",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentLog.md",
-      "source_id": "src-20261012-developmentlog-2",
-      "content_hash": "sha256:73de870ccfd7a010dec09e97fe68c4c5b24929d14043d3e7e6b57410f2df519e",
+      "path": "raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentLog.md",
+      "source_id": "src-20261013-developmentlog-3",
+      "content_hash": "sha256:e3994be98e0caa7091521eca871ac032d22a2fbf0767c9331a6dc9884d527ee5",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -225,11 +225,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     ".github/workflows/upgrade-validation.yml": {
-      "content_hash": "sha256:8a1fe42f297ab42a37c1653601e6cdb82b4b59d4d6b3a0e3790b5348875b4d53",
+      "content_hash": "sha256:96165451865d31f815f3770038b4a0f7d3ad5328eb029700783fdc58204e5730",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed Trixie target extension: Bookworm/Trixie allowlist, retained model/architecture/user guards, regression cases and Python 3.11/3.13 CI; README matches. Core and dependency locks unchanged; real Pi acceptance pending."
+      "review_note": "CI workflow updated with Node installation disk space check, private TMPDIR handling, and fresh install regression test suite."
     },
     "AGENT.md": {
       "content_hash": "sha256:4df3e1eb23432c66269450225f76e378db6c283db6c2b8a316574a7f96b14794",
@@ -276,11 +276,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "README.md": {
-      "content_hash": "sha256:400450857c8e7d7882fe6ad51193b51fce19968aab95129be60b3ad21ffe0841",
+      "content_hash": "sha256:f7ee5a7c5e1ee41a26e9a0d1e088e16b5e4fb68c672823dc1ebbc0d7dbc3bed7",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Reviewed four-language public documentation, manual links updated to 2026-10-12 Humanoid builtins milestone."
+      "review_note": "Four-language public documentation updated; manual references point to 2026-10-13 humanoid owner defaults release."
     },
     "docs/validation/core_baseline.json": {
       "content_hash": "sha256:e6251e4c71055ac6f1679edc6da0f5d8036a8c269a15dcfa2af381402796512d",
@@ -290,13 +290,13 @@
       "review_note": "Core baseline protected hashes updated for web server and humanoid movement extensions."
     },
     "install.sh": {
-      "content_hash": "sha256:e0a5418e5c1210a30c3a561c47f6dfedd4dfffa3f5e575d7ce33b882be8d2a3b",
+      "content_hash": "sha256:948dd8a9de75715bb7bbd93f8f8294e27acb87c8f54b57d94689bb3f803e9b01",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
+      "review_note": "Installer updated with 2 GB free disk space verification and checkout-local private TMPDIR (.ninjarobot-install/work.*) for Node tarball extraction to prevent Trixie tmpfs OOM."
     },
     "ninja_ble/pyproject.toml": {
       "content_hash": "sha256:8cd1b579adc08cf90769a951469681732c03d8d321895583f063002c60d830db",
@@ -387,14 +387,14 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/builtin_movements.py": {
-      "content_hash": "sha256:6ba00367117cb54b99703da1f6b2f6a321693cb55349e5e1636a218047731ce2",
+      "content_hash": "sha256:b72dfbf946f8fb13857151bc3dd4817700e77e6446d97f214c5678909e216fda",
       "pages": [
         "wiki/concepts/humanoid-otto-waypoint-library.md",
         "wiki/concepts/spider-otto-waypoint-library.md",
         "wiki/concepts/motion-system-and-easing.md",
         "wiki/entities/ninja-core.md"
       ],
-      "review_note": "Native built-in movement catalog with humanoid 34-sequence (1203-keyframe) library loader, robot profile seeding, and preflight step validation."
+      "review_note": "Built-in movement catalog updated to load 37 unique humanoid movements (1,278 steps: 1,204 M, 74 F) from package data humanoid_defaults.json, including Poweroff rest posture."
     },
     "ninja_core/src/ninja_core/config.py": {
       "content_hash": "sha256:88055df8472bce210b792db5bbc3e61eee1a790a90e59425670cce07c8f558c5",
@@ -1756,13 +1756,13 @@
       "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
     },
     "scripts/install-rpi.sh": {
-      "content_hash": "sha256:761ec49e98093354aa02db13f8f3458f4e10f9d7932688ebabb7f37fa9c08481",
+      "content_hash": "sha256:6153337db9d1d90a638750e2f07c927cb2fff4355704a64330af171b10dfe971",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Installer checks all five launchers and uses uv venv --prompt ninjarobotpi0."
+      "review_note": "Raspberry Pi installation script updated with checkout-local private TMPDIR and pre-extraction disk space validation."
     },
     "scripts/install-versions.env": {
       "content_hash": "sha256:a8aae97d246714249744b4c4b23f0f3c0e7f4e1bbded7879e57be6ebdcf189d3",
@@ -1774,13 +1774,13 @@
       "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
     },
     "scripts/install_check.py": {
-      "content_hash": "sha256:504b555f53e39840ffddca700031de61f83b1865ad3a705fb36ff1ac6161b9e5",
+      "content_hash": "sha256:63b3c33f6e6ea0ab1836e00727f06b8604369ab69e9b80b5bd1ba20fd430a96f",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Installation check detects missing launchers and reports minimal locked repair command."
+      "review_note": "Install check script updated to inspect private installer working directory and disk space requirements."
     },
     "scripts/install_ollama.py": {
       "content_hash": "sha256:caa604e09a6c30906fa98dce2d5b6ab0d739548bab41046d35cdfce3bf060b88",
@@ -1800,13 +1800,13 @@
       "review_note": "Reviewed fsync, atomic replacement and finally cleanup; injected failure leaves no temporary record."
     },
     "scripts/install_system.py": {
-      "content_hash": "sha256:a70db4fbe21cab116ceb00d37134ab8308a677d72a3b33ad3deceeede65c7442",
+      "content_hash": "sha256:8fc024cf19e8da9806ad5ac64d623d3fdaad6452b9c44ee23c01cb241ef8e27b",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Additive tooling reviewed against current source versions, readiness/private-state gates, explicit setup and immutable evidence workflow; host fixtures and lint cover supported failure paths."
+      "review_note": "System installer module updated with private extraction workspace and disk capacity guards."
     },
     "scripts/onboard.py": {
       "content_hash": "sha256:62700ae1dbc9f9d823d3e8abe5b85718ab8c9f1177cc994f8db23fadf739a942",
@@ -1881,13 +1881,13 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_builtin_movements.py": {
-      "content_hash": "sha256:78044f458f4f6ca6ba2f4705e4178527d0bf3cb283c55a3e05d6c20b5acef77e",
+      "content_hash": "sha256:07ecc91cb734fd2468566c024da6c9858f8ca687445748a7a7a1ad76627d3091",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md",
         "wiki/concepts/humanoid-otto-waypoint-library.md"
       ],
-      "review_note": "Built-in movement test suite validating catalog discovery, profile seeding, preflight error guards, and robot type scoping for humanoid and spider."
+      "review_note": "Built-in movement test suite expanded to validate 37 unique movements, 1,278 total steps, Poweroff rest posture, and humanoid profile seeding."
     },
     "tests/test_chunking.py": {
       "content_hash": "sha256:2ca4c99ce8c3c897af043b15067e4461fe43ac83b37143c0a47e78a5b31484c1",
@@ -1897,13 +1897,13 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_cli_entrypoints.py": {
-      "content_hash": "sha256:0b76b0c08b8848ad81515ef0e226ce885b4926978c10879e538d686c41396a15",
+      "content_hash": "sha256:0a2c79fc67fb77073adb30a800374696619a26cfd57fb9af3a4e582301aba6fe",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Tests for single console-script ownership, launcher detection in .venv/bin, and repair sync command."
+      "review_note": "CLI entrypoint test suite updated to verify launcher integrity alongside private installer directories."
     },
     "tests/test_config.py": {
       "content_hash": "sha256:db4a8a064c64f22cd17457b4592b26876968e155f55dec826a2383e8f40674c6",
@@ -2029,11 +2029,11 @@
       "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
     },
     "tests/test_upgrade_workflows.py": {
-      "content_hash": "sha256:97271fa5f06c194289b39df17a7ad5b0bc8276c461c66986af2aaaf94cb4383c",
+      "content_hash": "sha256:4efbe936fa0843064607623941610239c6d52e58e6cbf6d9e1ed44da2989b142",
       "pages": [
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Upgrade workflow tests updated for single-ownership launchers and repair sync."
+      "review_note": "Upgrade workflow test suite updated to test private TMPDIR isolation and non-tmpfs extraction paths."
     },
     "tests/web_session_hook.cjs": {
       "content_hash": "sha256:6d4f1e6b20684b9a00e669189de6a20efff6f620b563cb442f38ec7042205203",
@@ -2099,26 +2099,25 @@
       "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
     },
     "DevelopmentGuide.md": {
-      "content_hash": "sha256:e17b2e4521cde392e7e11ccbf725a75236dfd153a44e38323623e0f613015050",
+      "content_hash": "sha256:868b569f8c8d9f816715f7cf2b94b7567db4aa516b8ab764c201e463c006a6b1",
       "pages": [
-        "wiki/concepts/spider-otto-waypoint-library.md",
         "wiki/references/development-guide.md"
       ],
-      "review_note": "Compatibility pointer updated to 2026-10-12 Humanoid builtins DevelopmentGuide."
+      "review_note": "Compatibility pointer updated to 2026-10-13 Humanoid owner defaults DevelopmentGuide."
     },
     "DevelopmentLog.md": {
-      "content_hash": "sha256:75576f2c33c09a40b78685c61bebd84fc8345e3359d7286d4d0de13651f577cc",
+      "content_hash": "sha256:4b00061d133b5dfb96690da6560df7faeb258a2021fbe82fa318e9fef8c1cb78",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ],
-      "review_note": "Compatibility pointer updated to 2026-10-12 Humanoid builtins DevelopmentLog."
+      "review_note": "Compatibility pointer updated to 2026-10-13 Humanoid owner defaults DevelopmentLog."
     },
     "ninjarobot_pi0_Wiki/README.md": {
-      "content_hash": "sha256:9f19a62b47591ac151fb7f9aa676743bd33e3afd59b5ee755e9d0a0aaa34dd9f",
+      "content_hash": "sha256:7de539b088c40c4d1dd20380fea274c174e31e898bdb13ccc26e703f5516517c",
       "pages": [
-        "wiki/concepts/spider-otto-waypoint-library.md"
+        "wiki/overview.md"
       ],
-      "review_note": "Wiki root README updated to link to 2026-10-12 Humanoid builtins manuals."
+      "review_note": "Wiki root README updated to link to 2026-10-13 Humanoid owner defaults manuals."
     },
     "ninja_core/src/ninja_core/data/spider_otto.json": {
       "pages": [
@@ -2135,12 +2134,12 @@
       "review_note": "Owner-validated 20-movement Spider catalog definitions, 566 steps across BCM GPIO 20-27."
     },
     "DevelopmentPlanDoc/HumanoidBuildinMovements.md": {
-      "content_hash": "sha256:4a1735e4de9718fda862d434e07c9278f229caf86f209ba8b56de063e2214647",
+      "content_hash": "sha256:336eaef620ea617ae224b0e288f4150e54fe2b8062f70e9d893d3b8e31af546e",
       "pages": [
         "wiki/concepts/humanoid-otto-waypoint-library.md",
         "wiki/references/development-guide.md"
       ],
-      "review_note": "Comprehensive Humanoid built-in movement specifications, 34 waypoint sequences (1203 keyframes), BCM 20-27 mapping, and deterministic generation rules."
+      "review_note": "Humanoid built-in movement specification updated for owner-approved 37-movement library (1,278 steps) and Poweroff rest posture."
     },
     "ninja_webapp/src/hooks/useAppViewport.js": {
       "content_hash": "sha256:e55042a709e5931661183eed2c5a2409280582b25fbb8efca031d510ce86697f",
@@ -2167,12 +2166,12 @@
       "review_note": "Deterministic compiler extracting humanoid waypoint definitions from documentation into ninja_core package data."
     },
     "tests/test_humanoid_builtin_movements.py": {
-      "content_hash": "sha256:d59490ad3148498450450fbffb517312bf270ba7d4972a70063cf78b7c31eb9a",
+      "content_hash": "sha256:8d9ef603d97c0f91e0303e670813c753f5ccc10d8587bc01a80419fb9adb881f",
       "pages": [
         "wiki/concepts/humanoid-otto-waypoint-library.md",
         "wiki/references/development-guide.md"
       ],
-      "review_note": "Host test suite verifying humanoid movement extraction, keyframe counts, easing transitions, and inert actuator calls."
+      "review_note": "Humanoid test suite verifying 37 movements, 1,278 steps, speed validation (1,204 M, 74 F), and Poweroff angle constraints."
     },
     "tests/test_web_robot_status.py": {
       "content_hash": "sha256:3fa5361a24492e2758c117f516e5073defe399efaadc1038ddb1be9253068ccd",
@@ -2181,6 +2180,23 @@
         "wiki/entities/ninja-core.md"
       ],
       "review_note": "Unit tests for web server robot status endpoint, battery monitoring, and telemetry payload format."
+    },
+    "scripts/build_humanoid_defaults.py": {
+      "content_hash": "sha256:9d971706cbd513ee23fbe2db4378ccea36481126d1289fa9fb549a940e10cda6",
+      "pages": [
+        "wiki/concepts/humanoid-otto-waypoint-library.md",
+        "wiki/references/development-guide.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Generator script compiling canonical DevelopmentPlanDoc/humanoid_movements_updated.json into package data humanoid_defaults.json."
+    },
+    "tests/test_fresh_install.py": {
+      "content_hash": "sha256:2b1dfffba9ae00da4d1490e0ae44ecfc47bcace7915c6f12e87d7b6c906185ee",
+      "pages": [
+        "wiki/references/installation-guide.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Test suite verifying fresh install disk space requirements (>= 2 GB free) and private work directory cleanup during Node.js extraction."
     }
   },
   "adapters": [

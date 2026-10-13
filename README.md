@@ -61,7 +61,7 @@ Follow these steps to build and run your own NinjaRobotPi0 from scratch.
 | **Buzzer** | Passive buzzer (3–5 V) | For sounds and melodies |
 | **Setup Access** | Terminal or SSH, internet, normal user with sudo | For installation and configuration |
 
-> **📎 Full hardware details:** See the [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/InstallationGuide.md)
+> **📎 Full hardware details:** See the [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md)
 
 ### 2.2 Hardware Wiring
 
@@ -431,15 +431,17 @@ After calibrating the servos for your build, select the robot type and import th
 .venv/bin/ninja_core config import
 ```
 
-Spider receives 19 `spider_*` movements and the exact `Poweroff` pose from the Spider proposal when GPIO20–27 are configured. Wheel and Humanoid currently receive only `home`, which commands every configured servo to 0° at Slow speed. Their other default movements will be added later. No movements run during import. Restart an already running server/tool deliberately to load the updated configuration.
+Spider receives 19 `spider_*` movements and the exact `Poweroff` pose from the Spider proposal when GPIO20–27 are configured. Wheel receives `home`, which commands every configured servo to 0° at Slow speed. Humanoid with GPIO20–27 configured receives the exact 37 movements from [the owner default list](DevelopmentPlanDoc/humanoid_movements_updated.json): 36 `humanoid_*` movements (including forward/backward runs) and `Poweroff`. The ordinary movements use Medium speed; the runs use Fast speed. Full Humanoid defaults use `humanoid_home` instead of an extra generic `home`. Humanoid `Poweroff` uses Medium speed with GPIO20–23 at 0°, GPIO24/25 at +30°/−30°, and GPIO26/27 at +90°/−90°. Partial Humanoid profiles receive only `home`. No movements run during import. Restart an already running server/tool deliberately to load the updated configuration.
 
 Once the robot is supported and ready to move, use movement-tool option 4, the web Movement Tool page's movement dropdown, or ask Ninja agent for an available movement. Opening movement-tool or starting the server can initialize hardware; server shutdown can run `Poweroff`. Spider's sampled waypoints preserve targets, not OTTO's exact timing or physical walking distance. Validate direction, clearance, power and calibration before grouped motion, especially the ±90° shutdown pose.
 
 Reimport preserves custom sequences and edited built-ins. Type changes remove only unchanged imported built-ins; edited movements retain their type scope and are hidden/rejected on incompatible profiles. Native playback validates the entire sequence before its first servo command. Invalid or incompatible web requests return an error and are recorded in the page's log. Missing active channels also block playback. Built-ins can be restored by removing an unwanted edited entry and importing again; back up your configuration first. Existing custom `home`/`Poweroff` name collisions are preserved rather than overwritten.
 
-日本語: 校正後にロボット種類を設定し、`config import` を実行すると対応する動作が追加されます。Wheel と Humanoid は現在、全設定サーボを中心に戻す `home` のみです。インポートではサーボは動きません。実行前に機体を支え、配線・方向・可動範囲・電源を確認してください。Spider の `Poweroff` は終了処理でも動く場合があります。
+日本語: 校正後にロボット種類を設定し、`config import` を実行すると対応する動作が追加されます。Wheel は全設定サーボを中心に戻す `home`、GPIO20–27 を設定した Humanoid は 36 個の `humanoid_*`（前進・後退の run を含む）と専用の `Poweroff`（合計 37 個）を受け取ります。通常動作は速度 M、run は F です。全 GPIO を設定した Humanoid は汎用 `home` の代わりに `humanoid_home` を使います。Humanoid の `Poweroff` は速度 M、GPIO20–23 が 0°、24/25 が +30°/−30°、26/27 が +90°/−90° です。一部の GPIO のみを設定した Humanoid は `home` のみです。インポートではサーボは動きません。実行前に機体を支え、配線・方向・可動範囲・電源を確認してください。Spider と Humanoid の `Poweroff` は終了処理でも動く場合があります。
 
-繁體中文：完成校正後設定機器人類型，再執行 `config import`，即可加入適用動作。Wheel 與 Humanoid 目前只有將所有已設定伺服機回中的 `home`。匯入不會驅動硬體。執行前請支撐機體並確認接線、方向、活動範圍與電源；Spider 的 `Poweroff` 也可能在結束伺服器時執行。
+繁體中文：完成校正後設定機器人類型，再執行 `config import`，即可加入適用動作。Wheel 提供將所有已設定伺服機回中的 `home`；已設定 GPIO20–27 的 Humanoid 提供 36 個 `humanoid_*`（包含前進／後退跑步）及專用 `Poweroff`，共 37 個。一般動作使用速度 M、跑步使用 F；完整 Humanoid 使用 `humanoid_home`，不額外加入通用 `home`。Humanoid 的 `Poweroff` 使用速度 M：GPIO20–23 為 0°、24/25 為 +30°/−30°、26/27 為 +90°/−90°。GPIO 不完整的 Humanoid 只提供 `home`。匯入不會驅動硬體。執行前請支撐機體並確認接線、方向、活動範圍與電源；Spider 與 Humanoid 的 `Poweroff` 也可能在結束伺服器時執行。
+
+简体中文：完成校准后设置机器人类型，再执行 `config import`，即可添加适用动作。Wheel 提供 `home`；已配置 GPIO20–27 的 Humanoid 提供 36 个 `humanoid_*`（包含前进／后退跑步）和专用 `Poweroff`，共 37 个。普通动作使用速度 M、跑步使用 F；完整 Humanoid 使用 `humanoid_home`，不额外加入通用 `home`。Humanoid 的 `Poweroff` 使用速度 M：GPIO20–23 为 0°、24/25 为 +30°/−30°、26/27 为 +90°/−90°。GPIO 不完整的 Humanoid 只提供 `home`。导入不会驱动硬件；运行前请支撑机器人并检查接线、方向、活动范围和电源。Spider 和 Humanoid 的 `Poweroff` 也可能在退出时执行。
 
 The [implementation plan](docs/BuiltinMovementsImplementationPlan.md) and [validation report](docs/validation/BuiltinMovements-2026-10-09.md) record the built-in movement implementation and its original validation status.
 
@@ -624,7 +626,7 @@ From the installation folder, `./onboard.sh --status` checks saved configuration
 
 Protect `config.json` (which may contain your Gemini key), ngrok credentials and calibration files; do not publish them. Gemini pricing/quota and ngrok availability depend on your account. The Pi0 control interface has no user-login protection; an encrypted ngrok tunnel does not add application authentication. Use trusted networks and keep control URLs private.
 
-Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-12-humanoid-builtins/DevelopmentLog.md).
+Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentLog.md).
 
 ## License
 

@@ -176,11 +176,35 @@ sources:
   resource: urn:llmwiki:source:src-20261012-freshinstallevidence
   title: Freshinstallevidence
   content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
+- id: src-20261013-developmentlog
+  resource: urn:llmwiki:source:src-20261013-developmentlog
+  title: Developmentlog
+  content_hash: sha256:ec74fefba2f6fc9271327b4820feea46c9acdf24a08c081557fb672f18787318
+- id: src-20261013-nodeinstallevidence
+  resource: urn:llmwiki:source:src-20261013-nodeinstallevidence
+  title: Nodeinstallevidence
+  content_hash: sha256:9b43b8e7b20b8f4935c3809f015acbb9fd5cb73c4cf09eba66bb5f4914d42676
+- id: src-20261013-developmentlog-2
+  resource: urn:llmwiki:source:src-20261013-developmentlog-2
+  title: Developmentlog
+  content_hash: sha256:29c14e292ed0fff4a0d33f89b4c58bbef54203302e816eb0c894065041c98d58
+- id: src-20261013-humanoidpoweroffevidence
+  resource: urn:llmwiki:source:src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  content_hash: sha256:ea688125c6ec17859dcc06b44450fa26c146c4e7fb034cf88a82cca7979f64c0
+- id: src-20261013-developmentlog-3
+  resource: urn:llmwiki:source:src-20261013-developmentlog-3
+  title: Developmentlog
+  content_hash: sha256:e3994be98e0caa7091521eca871ac032d22a2fbf0767c9331a6dc9884d527ee5
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T14:15:00+00:00'
-  target_hash: sha256:a3b06b13f000510eb0217720a24eb0bd30596b00a40757527627297b06c7ae94
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:120ea0473de508563d111f4fee9010e0f99e3a781f489452c3fc8957e3a78315
   result: passed
   checks:
     source_support: passed
@@ -189,10 +213,13 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Fresh Lite installation Development Log and evidence (2026-10-12).
-  - Verified milestone chronology, root-cause diagnosis of TLS/DNS failure, backoff
-    retry implementation, and 124 test baseline.
-  - Hardware qualification remains pending owner manual validation.
+  - Reviewed milestone chronology against Node extraction storage repair DevelopmentLog/evidence
+    (2026-10-12), Humanoid Poweroff DevelopmentLog/evidence (2026-10-13), and Owner
+    Humanoid defaults replacement DevelopmentLog/evidence (2026-10-13).
+  - Verified root-cause diagnosis of /tmp RAM exhaustion, private TMPDIR solution,
+    130 test suite, Humanoid Poweroff pose specifications, and 37-movement defaults
+    catalog replacement.
+  - Physical on-device qualification remains pending manual verification.
 ---
 
 # Development History and Evolution
@@ -409,3 +436,36 @@ The 2026-10-12 Fresh Lite installation repair addresses installation interruptio
 
 [^src-20261012-developmentlog-3]: Fresh Lite installation repair Development Log (2026-10-12).
 [^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.
+
+## Node extraction storage repair (2026-10-12)
+
+The 2026-10-12 Node extraction storage repair resolves an installer resource failure during Raspberry Pi OS Lite setup on Debian 13 (Trixie):[^src-20261013-developmentlog] [^src-20261013-nodeinstallevidence]
+
+- **Root cause diagnosis**: The owner supplied installation logs showing tar short writes (`Wrote only 3072 of 10240 bytes`) and `Cannot write: No space left on device` during Node extraction. The root cause was identified as unqualified `mktemp -d` defaulting to `/tmp`, which Trixie mounts in RAM via `tmpfs` (up to 50% RAM). The verified Node 22.23.3 ARM64 archive (30,172,012 bytes) expands to 193,713,814 bytes of regular-file payload before metadata, totaling ~224 MB, exhausting temporary memory on Zero 2 W (512 MB RAM).[^src-20261013-developmentlog] [^src-20261013-nodeinstallevidence]
+- **Installer workspace isolation**: The installer now creates an isolated `work.*` directory under `checkout/.ninjarobot-install/`, exports that absolute path as `TMPDIR` to all child processes, and verifies at least 2 GB free disk space before setup.[^src-20261013-developmentlog]
+- **Diagnostic and recovery contracts**: Staged operations (download, checksum, extraction, capability verification, and publication) log workspace status and filesystem free space. Failed extractions purge only process-owned workspace data and locks so reruns remain possible.[^src-20261013-developmentlog] [^src-20261013-nodeinstallevidence]
+- **Validation**: 130 targeted host tests passed, covering disk capacity checks, inherited `TMPDIR` handling, simulated ENOSPC failures, and retry cleanup.[^src-20261013-developmentlog] [^src-20261013-nodeinstallevidence]
+
+## Humanoid Poweroff default (2026-10-13)
+
+The 2026-10-13 Humanoid Poweroff milestone adds a dedicated rest pose for Humanoid robots:[^src-20261013-developmentlog-2] [^src-20261013-humanoidpoweroffevidence]
+
+- **Owner-specified geometry**: Defined an exact 1-step posture at speed M: GPIO 20–23 (hips/feet) = 0°, GPIO 24 (shoulder) = 30°, GPIO 25 (shoulder) = -30°, GPIO 26 (arm) = 90°, GPIO 27 (arm) = -90°, `per_servo_speeds={}`.[^src-20261013-developmentlog-2] [^src-20261013-humanoidpoweroffevidence]
+- **Lifecycle integration**: Deliberate exit in movement-tool (option 6) and coordinated server shutdown execute configured `Poweroff` before hardware cleanup; HAL releases PWM upon arrival without subsequent centering.[^src-20261013-humanoidpoweroffevidence]
+- **Validation**: 364 inert host tests passed, verifying discovery across CLI, web dropdown, and Ninja Agent, type switching reconciliation, and shutdown execution.[^src-20261013-developmentlog-2] [^src-20261013-humanoidpoweroffevidence]
+
+## Owner Humanoid defaults replacement (2026-10-13)
+
+The 2026-10-13 defaults replacement milestone integrates owner-supplied movements replacing the prior Otto library pack:[^src-20261013-developmentlog-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+
+- **Owner movement specification**: The owner supplied `DevelopmentPlanDoc/humanoid_movements_updated.json`. One trailing closing brace defect was repaired while retaining all movement data: 37 unique movements / 1,278 complete eight-channel steps, finite angles within nominal ±90°, 1,204 M steps, 74 F steps (`humanoid_run_forward` and `humanoid_run_backward`, 37 steps each), and empty overrides. Canonical movements SHA256: `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`.[^src-20261013-developmentlog-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+- **Resource generation and catalog loading**: Installed package resource `ninja_core/data/humanoid_defaults.json` is generated by `scripts/build_humanoid_defaults.py`. Full Humanoid catalog loads all 37 entries including `humanoid_home` and `Poweroff` (no extra generic home). Partial configurations keep generic `home`.[^src-20261013-developmentlog-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+- **Reconciliation and upgrade preservation**: Module config import (`ninja_core config import` / `import-all`) reconciles managed defaults while preserving customized collisions and servo calibration.[^src-20261013-developmentlog-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+- **Validation**: 459 inert host tests passed across movement, lifecycle, and onboarding flows; wheel package resource exact parity and direct package import verified.[^src-20261013-developmentlog-3] [^src-20261013-humanoiddefaultsreplacementevidence] Physical Pi acceptance remains owner-pending.
+
+[^src-20261013-developmentlog]: Complete immutable DevelopmentLog with Node extraction storage repair milestone (2026-10-12).
+[^src-20261013-nodeinstallevidence]: Primary-source verification and validation evidence for Node installation storage repair (2026-10-12).
+[^src-20261013-developmentlog-2]: Complete immutable DevelopmentLog with Humanoid Poweroff milestone (2026-10-13).
+[^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence and host validation (2026-10-13).
+[^src-20261013-developmentlog-3]: Complete immutable DevelopmentLog with Owner Humanoid defaults replacement milestone (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).

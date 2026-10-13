@@ -48,11 +48,23 @@ sources:
   resource: urn:llmwiki:source:src-20261012-developmentguide
   title: Humanoid built-in movements development guide
   content_hash: sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a
+- id: src-20261013-humanoidpoweroffevidence
+  resource: urn:llmwiki:source:src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  content_hash: sha256:ea688125c6ec17859dcc06b44450fa26c146c4e7fb034cf88a82cca7979f64c0
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-developmentguide-3
+  resource: urn:llmwiki:source:src-20261013-developmentguide-3
+  title: Developmentguide
+  content_hash: sha256:39169f1ed923edcc159141b97c4b7499c9f3bbf4a241ce8e9dd578c3ac932d3a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:5a899e4e6203bdb693909ef24712601b8703cdb22779a3ccc940a4ab72e473e4
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:1489de5da60d18af7e58b7477eaf60691d44be532b0943ad6d867f4f34f8f091
   result: passed
   checks:
     source_support: passed
@@ -61,10 +73,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid waypoint structure, key normalization, and recognition against
-    src-20261012-developmentguide and implementation evidence.
-  - Maintained nominal timing and easing limits without claiming physical velocity
-    or balance acceptance.
+  - Reviewed deliberate exit motion and native Humanoid catalog updates against Humanoid
+    Poweroff evidence and Owner Humanoid defaults replacement evidence (2026-10-13).
+  - Verified Humanoid Poweroff posture execution on exit, M/F speed modes, and 37-movement
+    catalog geometry.
+  - Physical velocity, torque, and hardware motion remain unverified.
 ---
 
 # Motion System and Easing Curves
@@ -138,7 +151,7 @@ The controller lock serializes its own operations to prevent concurrent sequence
 [^src-20261009-2026-10-09-builtin-movements]: Automatic native built-in movement evidence and architecture boundaries.
 ## Deliberate exit motion and lifecycle abort integration (2026-10-10)
 
-Movement-tool deliberate exit (option 6) validates and commands configured `Poweroff` (for Spider) or configured `home` (for Wheel and Humanoid) before HAL shutdown and configuration save.[^src-20261010-lifecyclerefinementsimplementationplan] Unlike earlier versions that unconditionally centered servos upon exit, option 6 executes the target pose once and does not perform subsequent centering. Following pose arrival, HAL shutdown releases PWM rather than electrically holding the position. Errors or KeyboardInterrupt do not request extra recovery motion.[^src-20261010-lifecyclerefinementsevidence]
+Movement-tool deliberate exit (option 6) and coordinated server shutdown validate and command configured `Poweroff` (for Spider and Humanoid) or configured `home` (for Wheel) before HAL shutdown and configuration save.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261013-humanoidpoweroffevidence] Humanoid `Poweroff` executes 1 step at speed M commanding GPIO 20–23 = 0°, GPIO 24 = 30°, GPIO 25 = -30°, GPIO 26 = 90°, GPIO 27 = -90°.[^src-20261013-humanoidpoweroffevidence] Unlike earlier versions that unconditionally centered servos upon exit, option 6 executes the target pose once and does not perform subsequent centering. Following pose arrival, HAL shutdown releases PWM rather than electrically holding the position. Errors or KeyboardInterrupt do not request extra recovery motion.[^src-20261010-lifecyclerefinementsevidence]
 Additionally, `center_all_servos` supports an optional lifecycle abort callback checked within the motion lock to cooperatively halt centering if ownership is lost.[^src-20261010-lifecyclerefinementsevidence]
 
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
@@ -146,7 +159,11 @@ Additionally, `center_all_servos` supports an optional lifecycle abort callback 
 
 ## Native Humanoid built-in movements (2026-10-12)
 
-The 2026-10-12 update packages 34 `humanoid_*` sequences (1,203 keyframes) and generic `home` (35 defaults / 1,204 steps) as native built-in movements for Humanoid robots with all GPIO 20–27 configured.[^src-20261012-humanoidbuiltinmovementsevidence] Waypoints use standard `moves`, `speed: S`, and optional `per_servo_speeds`.[^src-20261012-humanoidbuiltinmovementsevidence] `MovementController` and `validate_movement` recognize known non-neutral Humanoid trajectories even after renaming or speed adjustments, normalizing integer and string GPIO keys while excluding all-neutral center geometry from Humanoid classification.[^src-20261012-developmentguide]
+The 2026-10-13 replacement packages 37 unique movements / 1,278 complete eight-channel steps (including `humanoid_home` and `Poweroff`) as native built-in movements for Humanoid robots with all GPIO 20–27 configured.[^src-20261013-humanoiddefaultsreplacementevidence] Previous movements operate at speed M; two new run movements (`humanoid_run_forward` and `humanoid_run_backward`, 37 steps each) operate at speed F.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-developmentguide-3] `MovementController` and `validate_movement` recognize known non-neutral Humanoid trajectories even after renaming or speed adjustments, normalizing integer and string GPIO keys while excluding all-neutral center geometry from Humanoid classification.[^src-20261012-developmentguide]
 
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and trajectory pack.
 [^src-20261012-developmentguide]: Current versioned DevelopmentGuide with Humanoid motion contract and validation.
+
+[^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+[^src-20261013-developmentguide-3]: Owner Humanoid defaults replacement Development Guide (2026-10-13).

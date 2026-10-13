@@ -72,11 +72,23 @@ sources:
   resource: urn:llmwiki:source:src-20261012-humanoidbuiltinmovementsevidence
   title: Humanoid built-in movements implementation evidence
   content_hash: sha256:95c750e66ffcc4577a463531569d3d000845fe1b32d612e5ce2f09bf89003f4c
+- id: src-20261013-humanoidpoweroffevidence
+  resource: urn:llmwiki:source:src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  content_hash: sha256:ea688125c6ec17859dcc06b44450fa26c146c4e7fb034cf88a82cca7979f64c0
+- id: src-20261013-installationguide-3
+  resource: urn:llmwiki:source:src-20261013-installationguide-3
+  title: Installationguide
+  content_hash: sha256:d59708b5309c7ae3942fad115570df988f8cccec77ac37282b739017e16ddf05
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:abce800e3c8f73391c50a15cd88c8d08dbaaacc05987300d95c9734ccb3b0a88
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:0d21425e731e0577649507c695235993b665874795d07a585616a7742cd3c3cb
   result: passed
   checks:
     source_support: passed
@@ -85,9 +97,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed movement-tool option 4 profile-scoped discovery and option 6 exit rest
-    posture against src-20261012-installationguide.
-  - Hardware tool safety and calibration bounds verified.
+  - Reviewed movement-tool option 4 catalog discovery and option 6 exit rest posture
+    against Humanoid Poweroff evidence and Owner Humanoid defaults replacement evidence
+    (2026-10-13).
+  - Verified option 4 discovery of 37 Humanoid defaults and option 6 Poweroff execution.
+  - Physical actuator motion remains unverified.
 ---
 
 # Hardware Calibration and Testing Tools Reference
@@ -126,8 +140,8 @@ Gemini model validation can take up to 60 seconds for a thinking model. Discover
 ## Motion Recording (`uv run ninja_core movement-tool`)
 
 * **Option 2 (Record new movement)**: Interactively create multi-servo postures (e.g. `20:45/21:-30`), preview transitions, and save named movements to `config.json`.[^src-20260822-developmentguide]
-* **Option 4 (Execute saved movement)**: Discovers and executes movements scoped to the active robot profile; for Humanoid robots with all GPIO 20–27 configured, 35 native movements (34 `humanoid_*` sequences and `home`) are available.[^src-20261012-installationguide] [^src-20261012-humanoidbuiltinmovementsevidence]
-* **Option 6 (Deliberate exit)**: Executes configured `Poweroff` (for Spider) or `home` (for Wheel and Humanoid) before HAL shutdown and saving configuration, releasing PWM without subsequent centering.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence] [^src-20261012-installationguide]
+* **Option 4 (Execute saved movement)**: Discovers and executes movements scoped to the active robot profile; for Humanoid robots with all GPIO 20–27 configured, 37 native movements (including `humanoid_home` and `Poweroff`) are available.[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+* **Option 6 (Deliberate exit)**: Executes configured `Poweroff` (for Spider and Humanoid) or `home` (for Wheel) before HAL shutdown and saving configuration, releasing PWM without subsequent centering.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence] [^src-20261013-humanoidpoweroffevidence]
 
 ## Display Setup & Testing (`uv run pi0disp init` & `display-tool`)
 
@@ -172,7 +186,7 @@ Onboarding validates every numeric servo key and rejects conflicting pulse alias
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 ## Deliberate exit motion and power release (2026-10-10)
 
-Movement-tool option 6 commands configured `Poweroff` once before HAL shutdown and configuration save, with no subsequent centering. HAL releases PWM rather than electrically holding the position. For Spider robots, verify physical clearance for ±90° targets before selecting option 6.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence]
+Movement-tool option 6 commands configured `Poweroff` once before HAL shutdown and configuration save, with no subsequent centering. HAL releases PWM rather than electrically holding the position. For Spider and Humanoid robots, verify physical clearance and support for target poses (e.g., Humanoid shoulders at +30°/-30° and arms at +90°/-90°) before selecting option 6.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence] [^src-20261013-humanoidpoweroffevidence]
 
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
@@ -186,3 +200,7 @@ In `uv run ninja_core init-tool`, option 1 is updated to **Select AI model** (su
 
 [^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and CLI option 4 discovery.
+
+[^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
+[^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).

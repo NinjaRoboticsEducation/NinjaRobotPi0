@@ -21,6 +21,12 @@ SPIDER_POWEROFF = [{
               "24": 90, "25": -90, "26": -90, "27": 90},
     "per_servo_speeds": {},
 }]
+HUMANOID_POWEROFF = [{
+    "speed": "M",
+    "moves": {"20": 0, "21": 0, "22": 0, "23": 0,
+              "24": 30, "25": -30, "26": 90, "27": -90},
+    "per_servo_speeds": {},
+}]
 TYPE_PREFIXES = {"spider_": "spider", "humanoid_": "humanoid",
                  "wheel_": "tire", "tire_": "tire"}
 
@@ -49,7 +55,7 @@ def _spider_catalog() -> dict[str, list]:
 
 @lru_cache(maxsize=1)
 def _humanoid_catalog() -> dict[str, list]:
-    pack = json.loads(files("ninja_core").joinpath("data/humanoid_otto.json").read_text())
+    pack = json.loads(files("ninja_core").joinpath("data/humanoid_defaults.json").read_text())
     return pack["movements"]
 
 
@@ -82,12 +88,12 @@ def builtin_catalog(robot_type: str, pins: Iterable[int]) -> dict[str, list]:
     pins = set(pins)
     if robot_type == "spider":
         return deepcopy(_spider_catalog()) if SPIDER_PINS <= pins else {}
+    if robot_type == "humanoid" and HUMANOID_PINS <= pins:
+        return deepcopy(_humanoid_catalog())
     if robot_type in {"tire", "humanoid"} and pins:
         catalog = {"home": [{
             "moves": {str(pin): 0 for pin in sorted(pins)}, "speed": "S",
         }]}
-        if robot_type == "humanoid" and HUMANOID_PINS <= pins:
-            catalog.update(deepcopy(_humanoid_catalog()))
         return catalog
     return {}
 

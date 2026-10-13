@@ -100,11 +100,19 @@ sources:
   resource: urn:llmwiki:source:src-20261012-developmentguide
   title: Humanoid built-in movements development guide
   content_hash: sha256:0d1ea579a0cf0a798defd67eef35d1830227e52bac179927956e162fae8f0f2a
+- id: src-20261013-installationguide-3
+  resource: urn:llmwiki:source:src-20261013-installationguide-3
+  title: Installationguide
+  content_hash: sha256:d59708b5309c7ae3942fad115570df988f8cccec77ac37282b739017e16ddf05
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:6e838271a97226dfc83f53a9f5b392ff0b3b94541a4cefe88b59aa5ce8f3e2ca
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:c5e1bb4e66f0e19310cada67f45f936dbe1013b6af4a90b2f892986d7a09fc28
   result: passed
   checks:
     source_support: passed
@@ -113,9 +121,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid CLI configuration commands and REST execution HTTP 422 contract
-    against src-20261012-installationguide and DevelopmentGuide.md.
-  - API payload shapes and error handling verified.
+  - Reviewed CLI configuration import behavior and seeded defaults count against Owner
+    Humanoid defaults replacement evidence (2026-10-13).
+  - Verified 37 defaults seeding and REST execution status codes.
+  - Physical hardware operations remain unverified.
 ---
 
 # API and CLI Reference
@@ -269,9 +278,12 @@ CLI configuration commands configure and seed native Humanoid movements:[^src-20
 .venv/bin/ninja_core config import
 ```
 
-`import-all` is an accepted alias. When all GPIO 20–27 are present in calibration keys, import seeds 35 defaults (34 `humanoid_*` sequences and `home`).[^src-20261012-installationguide]
+`import-all` is an accepted alias. When all GPIO 20–27 are present in calibration keys, import seeds 37 unique defaults / 1,278 complete steps (including `humanoid_home` and `Poweroff`).[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence]
 
 In the web REST API, `POST /api/servos/movements/{name}/execute` executes profile-scoped movements; requests with stale or incompatible movement names return HTTP 422 before runtime reclamation.[^src-20261012-developmentguide] [^src-20261012-installationguide]
 
 [^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
 [^src-20261012-developmentguide]: Current versioned Developmentguide with REST movement execution contract.
+
+[^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).

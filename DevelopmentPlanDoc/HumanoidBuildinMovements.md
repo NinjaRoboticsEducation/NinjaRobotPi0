@@ -2,9 +2,11 @@
 
 Research and translation: 2026-10-12. **34 complete movement definitions, 1,203 keyframes. Host validated; physical validation pending.**
 
-This document ports the servo trajectories from the local Otto DIY Python source into NinjaRobotPi0's existing waypoint format. The initial research was documentation-only. The subsequent native integration packages these exact 34 definitions in `ninja_core/data/humanoid_otto.json` and automatically seeds them during module configuration import/type reconciliation for a Humanoid profile with all BCM GPIO20–27 configured. The existing generic `home` remains, giving **35 defaults / 1,204 steps**. See [implementation plan](../docs/HumanoidBuiltinMovementsImplementationPlan.md) and [validation report](../docs/validation/HumanoidBuiltinMovements-2026-10-12.md). Physical acceptance is still pending.
+**Current installed defaults — 2026-10-13:** [humanoid_movements_updated.json](humanoid_movements_updated.json) is the owner-approved list: **37 movements / 1,278 steps**, comprising 36 `humanoid_*` definitions and exact `Poweroff`. The 34 original movement geometries are retained at M; two added run variants copy the corresponding walk geometry at F. The installed `ninja_core/data/humanoid_defaults.json` matches that file exactly apart from the package's `robot_type` envelope. Full Humanoid profiles receive exactly this list, using `humanoid_home` without an extra generic `home`. Partial profiles retain fallback `home`. `scripts/build_humanoid_defaults.py --check` validates source/resource parity, native schema and the reviewed fingerprint. See [replacement plan](../docs/HumanoidDefaultsReplacementPlan-2026-10-13.md) and [validation](../docs/validation/HumanoidDefaultsReplacement-2026-10-13.md).
 
-The request's references to “Spider hardware” are interpreted as reuse of its GPIO-addressed JSON format. The supplied hip/foot/arm table defines a **Humanoid** robot, requiring `robot_type: "humanoid"`; it is not a Spider geometry. This mapping must be physically checked before use. GPIO24/25 remain at **nominal neutral 0°**, not a claimed measured neutral. No shoulder direction was guessed.
+The complete 34 Otto translations below and `data/humanoid_otto.json` remain the original research reference at S, not the current installed defaults. The original native integration had 34 translations plus generic home; the first Poweroff addition had 36 defaults / 1,205 steps. The owner replacement supersedes those installation counts and speeds. The original [implementation plan](../docs/HumanoidBuiltinMovementsImplementationPlan.md) and [validation report](../docs/validation/HumanoidBuiltinMovements-2026-10-12.md) remain historical evidence. Physical acceptance is still pending.
+
+The request's references to “Spider hardware” are interpreted as reuse of its GPIO-addressed JSON format. The supplied hip/foot/arm table defines a **Humanoid** robot, requiring `robot_type: "humanoid"`; it is not a Spider geometry. This mapping must be physically checked before use. The 34 Otto trajectories keep GPIO24/25 at **nominal neutral 0°**, not a claimed measured neutral. The separate owner-supplied `Poweroff` below explicitly commands these shoulders to +30°/−30°; physical direction and clearance still require validation.
 
 ## 1. NinjaRobotPi0 movement system overview
 
@@ -14,9 +16,40 @@ A movement is a named list of steps in the `movements` object of the existing co
 
 The verified path is [NinjaConfig and load/save](../ninja_core/src/ninja_core/config.py) → [catalog discovery and whole-sequence validation](../ninja_core/src/ninja_core/builtin_movements.py) → [MovementController](../ninja_core/src/ninja_core/movement_controller.py) → [ServoGroup.move_all_sync](../pi0servo/src/pi0servo/core/multi_servos.py) → [calibrated Servo pulse conversion](../pi0servo/src/pi0servo/core/servo.py).
 
-`load_config(path)` parses an existing file with `NinjaConfig`; a missing path creates defaults. It does **not** itself seed the native catalog. Hardware configuration import and robot-type selection reconcile managed defaults. Humanoid defaults contain generic `home` when channels exist, plus all 34 `humanoid_*` entries when GPIO20–27 are configured. Partial profiles receive only generic `home`. The controller does not scan Markdown or arbitrary JSON files. The hardware configuration import command is not a general movement-pack importer.
+`load_config(path)` parses an existing file with `NinjaConfig`; a missing path creates defaults. It does **not** itself seed the native catalog. Hardware configuration import and robot-type selection reconcile managed defaults. Full Humanoid defaults are the exact 37-entry owner list when GPIO20–27 are configured. Partial profiles receive only generic `home`. The controller does not scan Markdown or arbitrary JSON files. The hardware configuration import command is not a general movement-pack importer.
 
 The core [HAL](../ninja_core/src/ninja_core/hal.py) chooses active servo channels from `config.servos.calibration` **keys**. Descriptive `servos.pins` labels alone do not activate channels. The actual servo driver obtains physical pulse calibration and speed limits through `ConfigManager("servo.json")` in the runtime working directory; core JSON pulse values are not sufficient evidence that the driver is calibrated. Verify both the active core configuration and the physical driver calibration.
+
+### Humanoid Poweroff default — 2026-10-13
+
+This additional default retains the exact name `Poweroff`, speed `M`, and owner-supplied angles. It is separate from the 34 Otto translations and their fingerprint. It is included unchanged in the current installed `data/humanoid_defaults.json` and seeded only for a Humanoid profile with all GPIO20–27 configured. Import/type selection creates managed scope and hashes; loading an existing configuration alone does not add it.
+
+```json
+{
+  "movements": {
+    "Poweroff": [
+      {
+        "speed": "M",
+        "moves": {
+          "20": 0,
+          "21": 0,
+          "22": 0,
+          "23": 0,
+          "24": 30,
+          "25": -30,
+          "26": 90,
+          "27": -90
+        },
+        "per_servo_speeds": {}
+      }
+    ]
+  }
+}
+```
+
+After updating the installed code, run `.venv/bin/ninja_core config set-type humanoid` and `.venv/bin/ninja_core config import` from the calibrated runtime directory. These configuration commands do not initialize hardware. Restart a running tool/server deliberately to reload configuration. `Poweroff` is available through movement-tool, the web dropdown and Ninja Agent, and is attempted by deliberate movement-tool exit and the existing coordinated server shutdown. Runtime safety/cancellation checks still apply; shutdown releases PWM afterward.
+
+Reimport preserves a custom or edited `Poweroff` instead of overwriting it. Unchanged managed entries are replaced with the correct pose when switching Spider/Humanoid type. A retained edited entry from the other profile remains scoped and blocked; after backing up config, remove that conflicting movement and reimport if the new default is desired. Known Humanoid Poweroff geometry is rejected on other profiles even after renaming or speed edits. Partial profiles cannot seed or execute its full eight-channel pose. Physical acceptance remains pending; see [validation report](../docs/validation/HumanoidPoweroff-2026-10-13.md).
 
 ### Exact supported step fields
 
@@ -1913,7 +1946,7 @@ No sign inversion is supported by measured target evidence. If a joint's mountin
 | `OTTOWAVE` gesture | Mouth animation and sound only. This is different from servo method `handwave`, whose two arm variants are included. |
 | `OTTOFAIL` | Depends on release/unpowered collapse and recovery. A powered waypoint approximation would materially change behavior; omitted until release, timing and a supported physical recovery procedure exist. |
 | Songs, mouths, animations and remote numeric IDs | Not servo movement definitions. They are not invented as JSON movement parameters or duplicate names. |
-| Spider `Poweroff` | Spider geometry must not be copied into Humanoid shutdown. No new `Poweroff` or `Wave_Left_Hand` entry is added; existing installed Spider definitions remain untouched. |
+| Spider `Poweroff` | Spider geometry must not be copied into Humanoid shutdown. The separate owner-supplied Humanoid `Poweroff` below uses Humanoid geometry. Existing installed Spider definitions remain untouched; no `Wave_Left_Hand` entry is added. |
 
 Exact Otto periods, pauses, phase continuity between independently invoked movements, synchronized arrival, and multimodal gestures would require a separate future timing/oscillator controller or caller orchestration. Such timing/oscillator changes remain outside the native catalog integration. Repeating identical zero-distance steps, using a zero speed limit, or adding unrecognized timing keys does not solve these limitations.
 

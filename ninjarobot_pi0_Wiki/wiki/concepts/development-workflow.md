@@ -115,11 +115,35 @@ sources:
   resource: urn:llmwiki:source:src-20261012-freshinstallevidence
   title: Freshinstallevidence
   content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
+- id: src-20261013-developmentguide
+  resource: urn:llmwiki:source:src-20261013-developmentguide
+  title: Developmentguide
+  content_hash: sha256:864fdc6cf277e57d47d6d90e1aaa01383c7b929cabe6cce0af09d5d6a2ee4830
+- id: src-20261013-nodeinstallevidence
+  resource: urn:llmwiki:source:src-20261013-nodeinstallevidence
+  title: Nodeinstallevidence
+  content_hash: sha256:9b43b8e7b20b8f4935c3809f015acbb9fd5cb73c4cf09eba66bb5f4914d42676
+- id: src-20261013-developmentguide-2
+  resource: urn:llmwiki:source:src-20261013-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:909559351ca8b8cff6bd6c5745dbc6a7091c53f420f2f4242b7ed647fee2a591
+- id: src-20261013-humanoidpoweroffevidence
+  resource: urn:llmwiki:source:src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  content_hash: sha256:ea688125c6ec17859dcc06b44450fa26c146c4e7fb034cf88a82cca7979f64c0
+- id: src-20261013-developmentguide-3
+  resource: urn:llmwiki:source:src-20261013-developmentguide-3
+  title: Developmentguide
+  content_hash: sha256:39169f1ed923edcc159141b97c4b7499c9f3bbf4a241ce8e9dd578c3ac932d3a
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T14:15:00+00:00'
-  target_hash: sha256:3a20025d404eb5c5682a57de40845148e7c7eae2a01dcc334de4461f2d71be81
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:c999d5e8a3b318f8fff9adfb4f61547dbe7847d45442b93335ad3905176520d2
   result: passed
   checks:
     source_support: passed
@@ -128,10 +152,12 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Fresh Lite installation Development Guide and evidence (2026-10-12).
-  - Verified 124 host test suite, network retry exponential backoff simulation, and
-    offline mock test boundaries.
-  - Physical hardware operations remain unverified.
+  - Reviewed against Node extraction storage repair development guide and evidence
+    (2026-10-12) and Owner Humanoid defaults replacement development guide and evidence
+    (2026-10-13).
+  - Verified 130 installer test suite, 459 host test suite for Humanoid defaults replacement,
+    deterministic generator check, and standalone wheel packaging verification.
+  - Physical hardware operations remain unverified on physical hardware.
 ---
 
 # Development and immutable documentation workflow
@@ -284,3 +310,27 @@ The 2026-10-12 development milestone integrates a comprehensive verification sui
 
 [^src-20261012-developmentguide-2]: Fresh Lite installation repair Development Guide (2026-10-12).
 [^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.
+
+## Node extraction storage repair and installer verification (2026-10-12)
+
+The 2026-10-12 development milestone integrates a comprehensive verification suite for installer storage management:[^src-20261013-developmentguide] [^src-20261013-nodeinstallevidence]
+
+- **Host validation test suite**: 130 targeted host tests passed, validating disk capacity boundaries (>= 2 GB check), inherited `TMPDIR` validation, and simulated extraction ENOSPC errors.[^src-20261013-developmentguide]
+- **Cleanup and retry contracts**: Tests confirm that failed extractions clean up the invocation's private `work.*` directory and lockfile, allowing subsequent runs to succeed.[^src-20261013-nodeinstallevidence]
+- **Passive archive inspection**: Verified pinned Node 22.23.3 ARM64 archive checksum and inspected ELF headers and npm structure on host disk without binary execution.[^src-20261013-nodeinstallevidence]
+
+## Humanoid defaults replacement and regression workflow (2026-10-13)
+
+The 2026-10-13 Humanoid defaults replacement milestone establishes strict verification standards for native motion catalogs:[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+
+- **Deterministic Generator Parity**: `scripts/build_humanoid_defaults.py --check` validates canonical source JSON (`DevelopmentPlanDoc/humanoid_movements_updated.json`, canonical hash `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`) against generated package data `ninja_core/data/humanoid_defaults.json`.[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+- **Host Regression Suite**: 459 inert tests passed across current and default movements, lifecycle sequences, waypoint actions, and onboarding workflows, validating all 37 unique movements / 1,278 complete eight-channel steps, M and F speeds, and type guards.[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+- **Standalone Wheel Packaging**: Package build and direct zip import tests verify that standalone wheels bundle exact current, legacy, and Spider resource bytes, matching all 37 movements without external development plan dependencies.[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence]
+- **Testing Boundaries**: Host software tests and inert mocks do not substitute for physical Raspberry Pi Zero 2W testing; mechanical motion, balance, power limits, and cloud/browser acceptance remain pending owner validation.[^src-20261013-humanoiddefaultsreplacementevidence]
+
+[^src-20261013-developmentguide]: Node extraction storage repair Development Guide (2026-10-12).
+[^src-20261013-nodeinstallevidence]: Primary-source verification and validation evidence for Node installation storage repair.
+[^src-20261013-developmentguide-2]: Humanoid Poweroff default Development Guide (2026-10-13).
+[^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
+[^src-20261013-developmentguide-3]: Owner Humanoid defaults replacement Development Guide (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).

@@ -36,11 +36,31 @@ sources:
   resource: urn:llmwiki:source:src-20261012-installationguide
   title: Humanoid built-in movements installation guide
   content_hash: sha256:30b40b3338f5e9b912b63cb4146f3fa369a13b3d6848869efbce8ebf3f7eed19
+- id: src-20261013-humanoidpoweroffevidence
+  resource: urn:llmwiki:source:src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  content_hash: sha256:ea688125c6ec17859dcc06b44450fa26c146c4e7fb034cf88a82cca7979f64c0
+- id: src-20261013-developmentlog-2
+  resource: urn:llmwiki:source:src-20261013-developmentlog-2
+  title: Developmentlog
+  content_hash: sha256:29c14e292ed0fff4a0d33f89b4c58bbef54203302e816eb0c894065041c98d58
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-developmentlog-3
+  resource: urn:llmwiki:source:src-20261013-developmentlog-3
+  title: Developmentlog
+  content_hash: sha256:e3994be98e0caa7091521eca871ac032d22a2fbf0767c9331a6dc9884d527ee5
+- id: src-20261013-installationguide-3
+  resource: urn:llmwiki:source:src-20261013-installationguide-3
+  title: Installationguide
+  content_hash: sha256:d59708b5309c7ae3942fad115570df988f8cccec77ac37282b739017e16ddf05
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:44:00+00:00'
-  target_hash: sha256:a11e709f30e77dc34d991edc15765d6e298374c0388e724974d527407b01f13a
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:083eab2f5e6291aa3376cb9f5700d08fce1efca6ffe999c3094418de0a872580
   result: passed
   checks:
     source_support: passed
@@ -49,15 +69,17 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid native catalog integration against src-20261012-humanoidbuiltinmovementsevidence,
-    DevelopmentLog.md, DevelopmentGuide.md, and InstallationGuide.md.
-  - Catalog packaging (35 defaults / 1,204 steps with GPIO 20–27), deterministic extraction,
-    and host validation verified without asserting physical Pi hardware acceptance.
+  - Reviewed Humanoid native catalog replacement against Owner Humanoid defaults replacement
+    evidence and Humanoid Poweroff evidence (2026-10-13).
+  - Verified 37 unique movements / 1,278 complete eight-channel steps, speed modes
+    (1,204 M, 74 F), data/humanoid_defaults.json resource, and Poweroff rest posture
+    geometry.
+  - Physical Raspberry Pi 0 2W hardware qualification remains pending manual verification.
 ---
 
 # Humanoid Otto movement reference and native catalog integration
 
-`DevelopmentPlanDoc/HumanoidBuildinMovements.md` contains 34 complete JSON sequences (1,203 keyframes): 24 variants covering all 16 public Otto servo motion methods and 10 servo-containing gestures.[^src-20261012-humanoidmovementreferenceevidence] Following the reference deliverable, the library has been packaged as an installed package resource in `ninja_core/data/humanoid_otto.json` and integrated into native built-in movements.[^src-20261012-humanoidbuiltinmovementsevidence] [^src-20261012-developmentlog-2] Full Humanoid profiles with all BCM GPIO 20–27 configured receive all 34 `humanoid_*` sequences plus generic `home` (35 defaults / 1,204 steps), while partial profiles keep only generic `home`.[^src-20261012-humanoidbuiltinmovementsevidence]
+`DevelopmentPlanDoc/HumanoidBuildinMovements.md` contains 34 complete JSON sequences (1,203 keyframes): 24 variants covering all 16 public Otto servo motion methods and 10 servo-containing gestures.[^src-20261012-humanoidmovementreferenceevidence] Following owner replacement (`DevelopmentPlanDoc/humanoid_movements_updated.json`, canonical hash `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`), the native Humanoid movement catalog is generated into installed package resource `ninja_core/data/humanoid_defaults.json` via `scripts/build_humanoid_defaults.py`.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-developmentlog-3] Full Humanoid profiles with all BCM GPIO 20–27 configured receive 37 unique movements / 1,278 complete eight-channel steps (1,204 M steps, 74 F steps across `humanoid_run_forward` and `humanoid_run_backward`, with `humanoid_home` and `Poweroff`), while partial profiles keep fallback generic `home`.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-installationguide-3]
 
 ## Native built-in movement integration and CLI configuration
 
@@ -65,7 +87,7 @@ Configuration import (`ninja_core config import` or alias `import-all`) automati
 
 `scripts/build_humanoid_movements.py` extracts standalone library-marker JSON blocks from the reference, verifying exact installed-resource parity against canonical inner-object hash `49f6c4fe998b3c8500347f56eeeb7e165fb442c206ac373485310af7d280d2d6` via `--check`.[^src-20261012-developmentguide] Shared `validate_movement` recognizes known non-neutral Humanoid trajectories even after renaming or speed edits, normalizing string and integer GPIO keys, while excluding all-neutral center geometry from Humanoid inference.[^src-20261012-developmentguide]
 
-CLI movement-tool option 4, the web Movement dropdown (which returns HTTP 422 on stale/incompatible requests), and Ninja Agent share profile-aware discovery and preflight guards.[^src-20261012-installationguide]
+CLI movement-tool option 4, the web Movement dropdown (which returns HTTP 422 on stale/incompatible requests), and Ninja Agent share profile-aware discovery and preflight guards.[^src-20261012-installationguide] Deliberate exit (movement-tool option 6) and coordinated server shutdown execute configured `Poweroff` (1 step at speed M, shoulders GPIO 24 at +30° and GPIO 25 at -30°, arms GPIO 26 at +90° and GPIO 27 at -90°, hips/feet 0°) before releasing HAL and PWM.[^src-20261013-humanoidpoweroffevidence] [^src-20261013-developmentlog-2]
 
 ## Mapping and execution limits
 
@@ -93,3 +115,9 @@ The Otto research files are referenced by their explicit sibling-workspace direc
 [^src-20261012-developmentlog-2]: Complete immutable DevelopmentLog with the Humanoid native built-in movements release.
 [^src-20261012-developmentguide]: Current versioned DevelopmentGuide with Humanoid native movement integration and validation details.
 [^src-20261012-installationguide]: Current versioned InstallationGuide with Humanoid configuration import and channel wiring guidance.
+
+[^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
+[^src-20261013-developmentlog-2]: Complete immutable DevelopmentLog with Humanoid Poweroff milestone (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+[^src-20261013-developmentlog-3]: Complete immutable DevelopmentLog with Owner Humanoid defaults replacement milestone (2026-10-13).
+[^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).

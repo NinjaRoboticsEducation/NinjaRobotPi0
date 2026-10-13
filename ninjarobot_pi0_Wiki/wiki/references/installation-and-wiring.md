@@ -80,11 +80,27 @@ sources:
   resource: urn:llmwiki:source:src-20261012-freshinstallevidence
   title: Freshinstallevidence
   content_hash: sha256:bcc137870807fb03f1764793db18cb0b480dff6023922ed0bd57483f6c2bc0d0
+- id: src-20261013-installationguide-2
+  resource: urn:llmwiki:source:src-20261013-installationguide-2
+  title: Installationguide
+  content_hash: sha256:480dd81da58d9e9f3590e1f349420f8d36cee6e1ec5849493114b9f4401f706c
+- id: src-20261013-humanoidpoweroffevidence
+  resource: urn:llmwiki:source:src-20261013-humanoidpoweroffevidence
+  title: Humanoidpoweroffevidence
+  content_hash: sha256:ea688125c6ec17859dcc06b44450fa26c146c4e7fb034cf88a82cca7979f64c0
+- id: src-20261013-installationguide-3
+  resource: urn:llmwiki:source:src-20261013-installationguide-3
+  title: Installationguide
+  content_hash: sha256:d59708b5309c7ae3942fad115570df988f8cccec77ac37282b739017e16ddf05
+- id: src-20261013-humanoiddefaultsreplacementevidence
+  resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+  title: Humanoiddefaultsreplacementevidence
+  content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T14:15:00+00:00'
-  target_hash: sha256:ff74d928bdbaa3709f8d07bc0d07d82ecdbd75835b82804a46a8269ffa5463d2
+  performed_at: '2026-10-13T00:53:19+00:00'
+  target_hash: sha256:010e1c28a67b0cf012103ec95766999292a3b132d54a05da49aa2d1d85019e21
   result: passed
   checks:
     source_support: passed
@@ -93,10 +109,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Fresh Lite installation manual and evidence (2026-10-12).
-  - Verified OS target Debian 13 Trixie 2026-10-06 image, python3-pip prerequisite,
-    and pigpio source build requirements.
-  - Hardware operation and GPIO actuation remain pending manual device qualification.
+  - Reviewed Humanoid channel allocations against Humanoid Poweroff evidence and Owner
+    Humanoid defaults replacement evidence (2026-10-13).
+  - Verified shoulder and arm angle assignments in Poweroff rest pose without asserting
+    physical device clearance.
+  - Actuator operation remains unverified on physical hardware.
 ---
 
 # Installation and Hardware Wiring Reference
@@ -231,7 +248,7 @@ Humanoid built-in movement import requires all eight BCM GPIO channels 20–27 t
 * **GPIO 20 & 21**: Left and right hips (source YL/YR).[^src-20261012-installationguide]
 * **GPIO 22 & 23**: Left and right feet (source RL/RR).[^src-20261012-installationguide]
 * **GPIO 26 & 27**: Left and right arms (source LA/RA).[^src-20261012-installationguide]
-* **GPIO 24 & 25**: Fore and aft shoulders; remain at nominal 0° pending measured neutral and direction.[^src-20261012-installationguide]
+* **GPIO 24 & 25**: Fore and aft shoulders; remain at nominal 0° during generic home, but receive specific targets in the native `Poweroff` default pose (+30° for GPIO 24, -30° for GPIO 25, alongside arms GPIO 26 at +90° and GPIO 27 at -90° at speed M).[^src-20261013-installationguide-2] [^src-20261013-humanoidpoweroffevidence]
 
 Check display/buzzer/sensor pin conflicts, external servo power, common ground, and calibrated limits before enabling actuators.[^src-20261012-installationguide]
 
@@ -249,3 +266,8 @@ The 2026-10-12 installation update establishes verified hardware setup and packa
 
 [^src-20261012-installationguide-2]: Fresh Lite installation repair Installation Guide (2026-10-12).
 [^src-20261012-freshinstallevidence]: Primary-source verification and validation evidence for Fresh Lite installation repair.
+
+[^src-20261013-installationguide-2]: Humanoid Poweroff default Installation Guide (2026-10-13).
+[^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
+[^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
+[^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).

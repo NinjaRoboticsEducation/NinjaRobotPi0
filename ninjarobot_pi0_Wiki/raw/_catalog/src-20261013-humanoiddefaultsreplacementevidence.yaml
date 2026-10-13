@@ -1,0 +1,16 @@
+id: src-20261013-humanoiddefaultsreplacementevidence
+path: raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/HumanoidDefaultsReplacementEvidence.md
+media_type: text/markdown
+kind: text
+title: Humanoiddefaultsreplacementevidence
+added_at: '2026-10-13T00:44:28Z'
+content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T00:44:53Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T01:05:54Z'
+last_plan: pi0-owner-defaults-node-storage-ingest-261013
