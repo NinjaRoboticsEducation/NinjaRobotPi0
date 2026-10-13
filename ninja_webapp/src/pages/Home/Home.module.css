@@ -5,7 +5,7 @@
     min-height: 0;
     margin: 8px auto;
     padding: clamp(12px, 1.6cqh, 24px);
-    border: 1px solid var(--color-primary);
+    border: 1px solid var(--color-card-border);
     border-radius: 24px;
     background: var(--color-surface);
     display: flex;
@@ -19,7 +19,7 @@
     flex: 1 0 auto;
     min-width: 0;
     padding: clamp(12px, 1.6cqh, 22px);
-    border: 1px solid var(--color-primary);
+    border: 1px solid var(--color-card-border);
     border-radius: 16px;
     background: var(--color-bg);
     display: flex;
@@ -28,8 +28,8 @@
 }
 .block h2 { color: var(--color-primary); font-size: clamp(17px, 3.5vw, 22px); line-height: 1.25; margin-bottom: 8px; }
 .block p { color: var(--color-subtext); margin-bottom: 8px; font-size: clamp(14px, 3.5vw, 16px); line-height: 1.5; font-weight: 600; }
-.interfaceAction { display: flex; align-items: center; justify-content: center; flex-shrink: 0; gap: 10px; width: 100%; min-height: 44px; padding: 8px; border: 1px solid var(--color-primary); border-radius: 12px; background: #062238; color: var(--color-primary); font-size: clamp(18px, 4vw, 26px); font-weight: 750; text-align: center; line-height: 1.25; }
-.interfaceAction:hover { color: var(--color-accent); background: #09324e; text-decoration: none; }
+.interfaceAction { display: flex; align-items: center; justify-content: center; flex-shrink: 0; gap: 10px; width: 100%; min-height: 44px; padding: 8px; border: 1px solid var(--color-primary); border-radius: 12px; background: var(--color-button-blue); color: var(--color-subtext); font-size: clamp(18px, 4vw, 26px); font-weight: 750; text-align: center; line-height: 1.25; }
+.interfaceAction:hover { color: var(--color-text); background: var(--color-button-hover); text-decoration: none; }
 .interfaceAction svg { flex-shrink: 0; }
 .movementAction { margin-bottom: 10px; }
 .movementAction span { font-size: 26px; }

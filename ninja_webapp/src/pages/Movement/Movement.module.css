@@ -1,37 +1,31 @@
-/* Each card shares spare height instead of leaving a void above the activity tab. */
-.movementPage {
-    width: min(100%, 684px);
-    flex: 1;
-    min-height: 0;
-    margin: 0 auto var(--activity-space);
-    padding: 12px max(12px, env(safe-area-inset-right)) 12px max(12px, env(safe-area-inset-left));
-    display: flex;
-    flex-direction: column;
-    gap: clamp(12px, 2cqh, 22px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-}
-.card { min-width: 0; flex: 1 0 auto; border: 1px solid var(--color-primary); border-radius: 16px; padding: clamp(12px, 2cqh, 22px); background: var(--color-bg); display: flex; flex-direction: column; justify-content: space-evenly; }
-.card h1, .card h2 { color: var(--color-primary); font-size: clamp(17px, 3.5vw, 22px); line-height: 1.25; margin-bottom: 8px; }
-.card p { color: var(--color-subtext); font-size: clamp(14px, 3.4vw, 16px); line-height: 1.5; font-weight: 600; margin-bottom: 8px; }
-.distance { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; line-height: 1.2; gap: 4px; }
-.distance span { color: var(--color-power); font-size: clamp(36px, 7cqh, 64px); font-weight: 750; }
-.distance small { color: var(--color-primary); font-size: 18px; font-weight: 700; }
+.movementPage { width: min(100%, 684px); flex: 1; min-height: 0; margin: 0 auto var(--activity-space); padding: 12px max(12px, env(safe-area-inset-right)) 12px max(12px, env(safe-area-inset-left)); display: flex; flex-direction: column; gap: clamp(12px, 2cqh, 22px); overflow-y: auto; overscroll-behavior: contain; }
+.padRegion { --gamepad-size: clamp(148px, 31cqh, 250px); position: relative; min-width: 0; flex: 2 0 auto; display: grid; place-items: center; padding: 0 0 4px; }
+.distanceReadout { position: absolute; top: 0; left: 0; width: calc((100% - var(--gamepad-size)) / 2 - 8px); min-width: 56px; }
+.distanceReadout h1 { color: var(--color-primary); font-size: 12px; line-height: 1.3; margin-bottom: 4px; overflow-wrap: anywhere; }
+.distance { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; gap: 2px; }
+.distance span { color: var(--color-power); font-size: clamp(28px, 5.5cqh, 48px); font-weight: 750; max-width: 100%; overflow-wrap: anywhere; }
+.distance small { color: var(--color-primary); font-size: 12px; font-weight: 700; overflow-wrap: anywhere; }
+.card { min-width: 0; flex: 1 0 auto; border: 1px solid var(--color-card-border); border-radius: 16px; padding: clamp(12px, 2cqh, 22px); background: var(--color-bg); display: flex; flex-direction: column; justify-content: space-evenly; }
+.card h2 { color: var(--color-primary); font-size: clamp(17px, 3.5vw, 22px); line-height: 1.25; margin-bottom: 8px; }
 .controlRow { display: grid; flex-shrink: 0; grid-template-columns: minmax(0, 1fr) 48px; gap: 8px; }
 .controlRow select { min-width: 0; width: 100%; min-height: 44px; padding: 8px 10px; font-size: clamp(16px, 3.5vw, 24px); font-weight: 700; border: 1px solid var(--color-primary); border-radius: 10px; background: var(--color-bg); }
 .controlRow button { min-height: 44px; border: 0; border-radius: 10px; color: white; background: var(--color-power); font-size: 24px; cursor: pointer; }
 .controlRow button:disabled { opacity: .4; cursor: default; }
+.actionError { margin: 0; color: var(--color-danger); font-size: 13px; line-height: 1.45; }
 @container robot-page (max-height: 640px) {
+    .padRegion { --gamepad-size: 156px; }
     .movementPage { gap: 10px; padding-top: 10px; }
     .card { padding: 10px; }
-    .card h1, .card h2 { font-size: 16px; margin-bottom: 6px; }
-    .card p { font-size: 13px; line-height: 1.45; margin-bottom: 6px; }
-    .distance span { font-size: 32px; }
-    .distance small { font-size: 16px; }
+    .card h2 { font-size: 16px; margin-bottom: 6px; }
+    .distance span { font-size: 28px; }
 }
 @container robot-page (max-height: 500px) and (min-width: 480px) {
-    .movementPage { width: min(100%, 1000px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(min-content, 1fr)); gap: 10px; }
-    .card { padding: 8px 10px; }
-    .card h1, .card h2 { margin-bottom: 4px; }
-    .card p { font-size: 12px; line-height: 1.45; margin-bottom: 4px; }
+    .movementPage { width: min(100%, 1000px); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); grid-template-rows: repeat(3, minmax(min-content, 1fr)); align-items: stretch; gap: 10px; }
+    .padRegion { grid-column: 1; grid-row: 1 / 4; padding-top: 68px; align-content: center; }
+    .distanceReadout { width: 100%; }
+    .distanceReadout h1 { display: inline; margin-right: 6px; }
+    .distance { display: inline-flex; flex-direction: row; align-items: baseline; gap: 4px; }
+    .card { grid-column: 2; padding: 8px 10px; }
+    .card h2 { margin-bottom: 4px; }
+    .actionError { grid-column: 1 / -1; }
 }

@@ -1,0 +1,16 @@
+.wrapper { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.pad { display: grid; grid-template-columns: repeat(3, minmax(44px, 1fr)); grid-template-rows: repeat(3, minmax(44px, 1fr)); gap: 4px; width: var(--gamepad-size); max-width: 100%; aspect-ratio: 1; }
+.button { min-width: 44px; min-height: 44px; padding: 7px; border: 1px solid var(--color-subtext); background: var(--color-pad-blue); color: #fff; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.button svg { width: 65%; height: 65%; fill: currentColor; display: block; margin: auto; pointer-events: none; }
+.up { grid-column: 2; grid-row: 1; border-radius: 14px 14px 0 0; }
+.left { grid-column: 1; grid-row: 2; border-radius: 14px 0 0 14px; }
+.left svg { transform: rotate(-90deg); }
+.center { grid-column: 2; grid-row: 2; }
+.right { grid-column: 3; grid-row: 2; border-radius: 0 14px 14px 0; }
+.right svg { transform: rotate(90deg); }
+.down { grid-column: 2; grid-row: 3; border-radius: 0 0 14px 14px; }
+.down svg { transform: rotate(180deg); }
+.pressed { background: var(--color-pad-orange); }
+.button:disabled { opacity: .4; cursor: default; }
+.guidance { color: var(--color-subtext); font-size: 12px; line-height: 1.45; text-align: center; margin: 0; max-width: 32em; }
+@container robot-page (max-height: 640px) { .wrapper { gap: 6px; } }

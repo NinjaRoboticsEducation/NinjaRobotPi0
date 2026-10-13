@@ -22,7 +22,7 @@ const shots = process.env.UI_SCREENSHOTS;
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   let browser, checks = 0;
   try {
-    browser = await chromium.launch({ headless: true });
+    browser = await chromium.launch({ headless: true, ...(process.env.PLAYWRIGHT_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH } : {}) });
     const base = `http://127.0.0.1:${server.address().port}`;
     for (const viewport of [{width:390,height:670},{width:390,height:740},{width:390,height:844},{width:320,height:568},{width:360,height:640},{width:360,height:800},{width:430,height:932},{width:568,height:320},{width:844,height:390},{width:768,height:1024},{width:1280,height:900}]) {
       const mobile = viewport.width < 1000;
@@ -63,7 +63,8 @@ const shots = process.env.UI_SCREENSHOTS;
         if (url.pathname === '/api/robot/status') body = { robot_type: 'spider' };
         if (url.pathname === '/api/display/expressions') body = { expressions: ['idle'] };
         if (url.pathname === '/api/sound/emotions') body = { emotions: ['happy'] };
-        if (url.pathname === '/api/servos/movements') body = { movements: ['spider_dance'] };
+        if (url.pathname === '/api/servos/movements') body = { movements: ['spider_dance','spider_run_forward','spider_run_backward','spider_turn_left','spider_turn_right','spider_home'] };
+        if (/^\/api\/servos\/movements\/.+\/execute$/.test(url.pathname)) body = { status: 'executed' };
         if (url.pathname === '/api/agent/chat') body = { response: 'Fixture reply' };
         await route.fulfill({status:200, contentType:'application/json', body:JSON.stringify(body)});
       });
@@ -84,7 +85,12 @@ const shots = process.env.UI_SCREENSHOTS;
         checks++;
       };
       const snapshot = async name => {
-        if (shots) {fs.mkdirSync(shots,{recursive:true});await page.screenshot({path:path.join(shots,`${name}-${viewport.width}x${viewport.height}.png`),fullPage:true});}
+        if (shots) {
+          fs.mkdirSync(shots,{recursive:true});
+          await page.evaluate(()=>document.fonts.ready);
+          await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+          await page.screenshot({path:path.join(shots,`${name}-${viewport.width}x${viewport.height}.png`),fullPage:true,animations:'disabled'});
+        }
       };
       const sliderLabelFits = async () => {
         const geometry = await page.getByRole('slider').evaluate(thumb=>{
@@ -112,6 +118,8 @@ const shots = process.env.UI_SCREENSHOTS;
       catch(error) { console.error({errors,body:await page.locator('body').innerText()}); throw error; }
       await fits();await snapshot('home');
       await sliderLabelFits();await distributedCards(0);
+      assert.equal(await page.locator('main > div').evaluate(el=>getComputedStyle(el).borderTopColor),'rgba(0, 163, 255, 0.25)');checks++;
+      assert.equal(await page.getByRole('slider').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(255, 138, 0)');checks++;
       if(viewport.width===390 && viewport.height===844) {
         // Browser chrome can reduce only the visual viewport, leaving media-query height tall.
         for(const height of [670,740]) {
@@ -125,7 +133,7 @@ const shots = process.env.UI_SCREENSHOTS;
         for(const [label,route] of [['Movement Tool','/movement'],['Chat with Robot','/agent']]) {
           const link=page.getByRole('link',{name:label,exact:true});
           assert.equal(await link.getAttribute('aria-current'),expected===route?'true':null);
-          assert.equal(await link.evaluate(el=>getComputedStyle(el).backgroundColor),expected===route?'rgb(255, 138, 0)':'rgb(6, 34, 56)');
+          assert.equal(await link.evaluate(el=>getComputedStyle(el).backgroundColor),expected===route?'rgb(255, 138, 0)':'rgb(6, 71, 128)');
         }
         checks++;
       };
@@ -150,18 +158,35 @@ const shots = process.env.UI_SCREENSHOTS;
       await page.getByText('Fixture live activity',{exact:true}).waitFor();checks++;
       await page.locator('#robot-activity-log').getByRole('button',{name:'Clear Messages'}).click();
       await page.getByText('Events will appear here.').waitFor();checks++;
+      assert.equal(await activity.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(255, 138, 0)');checks++;
       await page.keyboard.press('Escape');assert.equal(await activity.getAttribute('aria-expanded'),'false');checks++;
-      await event('/ws/distance',{distance_mm:125});await fits();await distributedCards(56);await snapshot('movement');
+      assert.equal(await activity.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(6, 71, 128)');checks++;
+      await event('/ws/distance',{distance_mm:125});await fits();await distributedCards(56);
+      for (const button of await page.locator('[data-direction]').all()) {
+        const box=await button.boundingBox();assert.ok(box.width>=44 && box.height>=44);
+      } checks++;
+      assert.equal(await page.locator('main section').last().evaluate(el=>getComputedStyle(el).borderTopColor),'rgba(0, 163, 255, 0.25)');checks++;
+      const readout=await page.getByRole('status',{name:'Distance Detection: 125 mm'}).boundingBox();
+      assert.ok(readout.x<viewport.width/3);checks++;
+      await snapshot('movement');
       await page.getByRole('link',{name:'Open robot menu'}).click();await page.getByRole('link',{name:'Movement Tool',exact:true}).waitFor();await selection('/movement');
       await page.getByRole('link',{name:'Chat with Robot'}).click();await page.getByRole('heading',{name:'Conversation',exact:true}).waitFor();
       assert.equal(await page.getByRole('combobox').count(),0);checks++;
-      const voice = page.getByRole('button',{name:'Voice Input',exact:true});await voice.click();
+      const voice = page.getByRole('button',{name:'Voice Input',exact:true});
+      assert.equal(await voice.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(6, 71, 128)');checks++;
+      assert.equal(await page.locator('section').evaluate(el=>getComputedStyle(el).borderTopColor),'rgba(0, 163, 255, 0.25)');checks++;
+      assert.equal(await page.getByText('Hello, NinjaRobot Agent is ready.',{exact:true}).evaluate(el=>getComputedStyle(el).borderTopColor),'rgba(189, 196, 202, 0.25)');checks++;
+      await voice.click();
       assert.equal(await voice.getAttribute('aria-pressed'),'true');checks++;await snapshot('voice-on');
       await page.evaluate(()=>window.__recognizers.at(-1).onresult({results:[[{transcript:'Fixture speech'}]]}));
       await page.waitForFunction(()=>document.querySelector('textarea').value==='Fixture speech');
       await voice.click();assert.equal(await page.evaluate(()=>window.__recognizers.at(-1).stopped),true);checks++;
       await Promise.all([page.waitForResponse(r=>new URL(r.url()).pathname==='/api/agent/chat'),page.getByRole('button',{name:'Send',exact:true}).click()]);
       await page.getByText('Fixture reply',{exact:true}).waitFor();
+      assert.equal(await page.getByText('Fixture speech',{exact:true}).evaluate(el=>getComputedStyle(el).borderTopColor),'rgba(0, 163, 255, 0.25)');checks++;
+      await event('/ws/events',{type:'execute_received',full_code:'Fixture system code',code_length:19});
+      await page.getByText('Fixture system code',{exact:true}).waitFor();
+      assert.equal(await page.getByText('Fixture system code',{exact:true}).evaluate(el=>getComputedStyle(el.parentElement).borderTopColor),'rgba(0, 163, 255, 0.25)');checks++;
       assert.deepEqual(JSON.parse(requests.at(-1).body),{message:'Fixture speech',language:'en'});checks++;
       await page.locator('section').getByRole('button',{name:'Clear Messages'}).click();
       assert.equal(await page.getByText('Fixture reply',{exact:true}).count(),0);checks++;
@@ -182,6 +207,13 @@ const shots = process.env.UI_SCREENSHOTS;
         await sliderLabelFits();
         await page.getByRole('link',{name:labels.home.movementButton}).click();
         await page.getByRole('heading',{name:labels.agent.distance}).waitFor();checks++;await fits();
+        for(const direction of ['up','down','left','right','center']) await page.getByRole('button',{name:labels.gamepad[direction],exact:true}).waitFor();checks++;
+        if(viewport.width===390 && viewport.height===740) {
+          await page.evaluate(()=>{window.__fontOriginals=[...document.querySelectorAll('main h1, main h2, main p, main select')].map(el=>[el,el.style.fontSize]);for(const [el] of window.__fontOriginals)el.style.fontSize=`${parseFloat(getComputedStyle(el).fontSize)*1.5}px`;});
+          await fits();checks++;await snapshot(`movement-enlarged-${locale}`);
+          await page.evaluate(()=>{for(const [el,size] of window.__fontOriginals)el.style.fontSize=size;delete window.__fontOriginals;});
+        }
+        assert.equal(await page.getByText(labels.movement.movementsDescription,{exact:true}).count(),0);checks++;
         await page.getByRole('link',{name:`NINJA ROBOT Pi0 - ${labels.robotType.spider}`,exact:true}).waitFor();checks++;
         await page.getByRole('link',{name:labels.header.openMenu}).click();await page.getByRole('link',{name:labels.home.chatButton}).click();
         await page.getByRole('heading',{name:labels.agent.conversation}).waitFor();checks++;await fits();
@@ -224,6 +256,10 @@ const shots = process.env.UI_SCREENSHOTS;
       });
       await page.getByRole('link',{name:'Chat with Robot',exact:true}).click();await page.getByRole('heading',{name:'Conversation',exact:true}).waitFor();
       assert.equal(await page.evaluate(()=>window.__prefixedFullscreen),true);checks++;
+      if(viewport.width===390 && viewport.height===740) {
+        await page.evaluate(()=>{for(const el of document.querySelectorAll('main h1, main h2, main p, main button, main select, main textarea')) el.style.fontSize=`${parseFloat(getComputedStyle(el).fontSize)*1.5}px`;});
+        await fits();checks++;await snapshot('chat-enlarged');
+      }
       await page.goto(base+'/help');await page.getByRole('heading',{name:'Welcome to NinjaRobot'}).waitFor();assert.equal(new URL(page.url()).pathname,'/');checks++;
       assert.deepEqual(errors,[]);checks++;await context.close();
     }

@@ -45,7 +45,7 @@ function Layout() {
         <div className={styles.layout}>
             {pathname !== '/' && <Header status={status} robotType={robotType} />}
             <main className={styles.main}>
-                {status === 'connected' ? <Outlet context={{ selectedInterface, selectInterface }} /> : (
+                {status === 'connected' ? <Outlet context={{ selectedInterface, selectInterface, robotType }} /> : (
                     <p role="status" aria-live="polite">{t(`session.${status}`)}</p>
                 )}
             </main>

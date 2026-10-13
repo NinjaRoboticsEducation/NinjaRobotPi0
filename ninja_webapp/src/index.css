@@ -13,6 +13,12 @@
   --color-accent: #75cdff;
   --color-cta: #00a3ff;
   --color-border: #00a3ff;
+  --color-card-border: rgba(0, 163, 255, .25);
+  --color-message-border: rgba(189, 196, 202, .25);
+  --color-button-blue: #064780;
+  --color-button-hover: #09558f;
+  --color-pad-blue: linear-gradient(135deg, #3b6f9e, #0b2d4d);
+  --color-pad-orange: linear-gradient(135deg, #ffa333, #814600);
   --color-success: #16c553;
   --color-danger: #ff526d;
 

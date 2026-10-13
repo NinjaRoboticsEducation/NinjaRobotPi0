@@ -98,5 +98,19 @@
         "tire": "轮胎型",
         "humanoid": "人形",
         "spider": "蜘蛛型"
+    },
+    "gamepad": {
+        "title": "方向控制器",
+        "up": "前进",
+        "down": "后退",
+        "left": "左转",
+        "right": "右转",
+        "center": "初始姿势",
+        "guidance": "按住以重复动作。松开后会完成当前动作再停止。",
+        "finishing": "正在完成当前动作…",
+        "unavailable": "此机器人无法使用方向控制器动作。",
+        "error": "无法完成动作。",
+        "uncertain": "动作状态不明。重新加载前请先检查机器人。",
+        "actionUnavailable": "此机器人无法使用此动作。"
     }
 }

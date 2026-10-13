@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './SystemActivity.module.css';
 
-export default function SystemActivity({ logs, onClear }) {
+export default function SystemActivity({ logs, onClear, onOpen }) {
     const { t, i18n } = useTranslation();
     const [open, setOpen] = useState(false);
     const contentRef = useRef(null);
@@ -17,7 +17,7 @@ export default function SystemActivity({ logs, onClear }) {
     }, [open]);
     return (
         <aside className={`${styles.panel} ${open ? styles.open : ''}`} aria-label={t('agent.systemLog')}>
-            <button className={styles.tab} aria-expanded={open} aria-controls="robot-activity-log" onClick={() => setOpen(previous => !previous)}>
+            <button className={styles.tab} aria-expanded={open} aria-controls="robot-activity-log" onClick={() => { if (!open) onOpen?.(); setOpen(previous => !previous); }}>
                 <span className={styles.handle} aria-hidden="true" />
                 {t('agent.systemLog')} <span className={styles.count}>({logs.length})</span>
             </button>

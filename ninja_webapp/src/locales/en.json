@@ -98,5 +98,19 @@
         "tire": "Tire",
         "humanoid": "Humanoid",
         "spider": "Spider"
+    },
+    "gamepad": {
+        "title": "Gamepad",
+        "up": "Move forward",
+        "down": "Move backward",
+        "left": "Turn left",
+        "right": "Turn right",
+        "center": "Home position",
+        "guidance": "Hold to repeat. Release finishes the current movement.",
+        "finishing": "Finishing the current movement…",
+        "unavailable": "Gamepad movements are unavailable for this robot.",
+        "error": "Movement could not be completed.",
+        "uncertain": "Movement status unknown. Check the robot before reloading.",
+        "actionUnavailable": "This movement is unavailable for this robot."
     }
 }

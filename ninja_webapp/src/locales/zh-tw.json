@@ -98,5 +98,19 @@
         "tire": "輪胎型",
         "humanoid": "人形",
         "spider": "蜘蛛型"
+    },
+    "gamepad": {
+        "title": "方向控制器",
+        "up": "前進",
+        "down": "後退",
+        "left": "左轉",
+        "right": "右轉",
+        "center": "初始姿勢",
+        "guidance": "按住以重複動作。放開後會完成目前動作再停止。",
+        "finishing": "正在完成目前動作…",
+        "unavailable": "此機器人無法使用方向控制器動作。",
+        "error": "無法完成動作。",
+        "uncertain": "動作狀態不明。重新載入前請先檢查機器人。",
+        "actionUnavailable": "此機器人無法使用此動作。"
     }
 }

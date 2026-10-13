@@ -1,6 +1,6 @@
 /* Equal thumb clearance on both sides keeps the label at the true track center. */
 .sliderContainer { position: relative; container-type: inline-size; width: 100%; height: 64px; flex-shrink: 0; border: 1px solid var(--color-primary); border-radius: 999px; background: var(--color-bg); overflow: hidden; user-select: none; touch-action: none; }
 .sliderTrack { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-inline: 54px; }
-.sliderText { color: var(--color-primary); font-weight: 700; font-size: clamp(16px, 6.4cqw, 22px); line-height: 1.25; text-align: center; transition: opacity .3s; pointer-events: none; }
-.sliderThumb { position: absolute; top: 7px; left: 4px; width: 48px; height: 48px; border: 3px solid var(--color-power); border-radius: 50%; background: var(--color-bg); color: var(--color-power); display: flex; align-items: center; justify-content: center; cursor: grab; }
+.sliderText { color: var(--color-button-blue); font-weight: 700; font-size: clamp(16px, 6.4cqw, 22px); line-height: 1.25; text-align: center; transition: opacity .3s; pointer-events: none; }
+.sliderThumb { position: absolute; top: 7px; left: 4px; width: 48px; height: 48px; border: 3px solid var(--color-power); border-radius: 50%; background: var(--color-power); color: #fff; display: flex; align-items: center; justify-content: center; cursor: grab; }
 .sliderThumb.dragging { cursor: grabbing; }
