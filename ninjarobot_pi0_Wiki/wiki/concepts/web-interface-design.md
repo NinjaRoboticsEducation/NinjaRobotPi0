@@ -63,11 +63,51 @@ sources:
   resource: urn:llmwiki:source:src-20261011-mobilespacingvalidation
   title: Mobile spacing validation and owner screenshot evidence
   content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
+- id: src-20261013-developmentguide-4
+  resource: urn:llmwiki:source:src-20261013-developmentguide-4
+  title: 20261013 Developmentguide 4
+  content_hash: sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947
+- id: src-20261013-webgamepadvalidation
+  resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
+  title: 20261013 Webgamepadvalidation
+  content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
+- id: src-20261013-chat-390x740
+  resource: urn:llmwiki:source:src-20261013-chat-390x740
+  title: 20261013 Chat 390X740
+  content_hash: sha256:0305fa9d3c3563bf654e5c6ec98ee9dbacb8ee9f70afba6e021f9288729de3a9
+- id: src-20261013-gamepad-pressed
+  resource: urn:llmwiki:source:src-20261013-gamepad-pressed
+  title: 20261013 Gamepad Pressed
+  content_hash: sha256:9ac9d963d010577f301aff265ca24f8fc69aa58b1bac5d6d134f19c8d9792795
+- id: src-20261013-home-390x740
+  resource: urn:llmwiki:source:src-20261013-home-390x740
+  title: 20261013 Home 390X740
+  content_hash: sha256:2ac44f5c620a4ee8c7a04a7335a514113b0bd8d1f9c22b5b1ff0f6c027b4956d
+- id: src-20261013-home-selected-390x740
+  resource: urn:llmwiki:source:src-20261013-home-selected-390x740
+  title: 20261013 Home Selected 390X740
+  content_hash: sha256:0313e87e779898cdd5b1628feeec754c709e02f9fbc3e57346f3fd70af9c20ff
+- id: src-20261013-long-log-390x740
+  resource: urn:llmwiki:source:src-20261013-long-log-390x740
+  title: 20261013 Long Log 390X740
+  content_hash: sha256:973c01a7052dd03256f5d1d1a4f77ba127c3518822e387624e32c15294dd94c9
+- id: src-20261013-movement-390x740
+  resource: urn:llmwiki:source:src-20261013-movement-390x740
+  title: 20261013 Movement 390X740
+  content_hash: sha256:abe4dac757a9022a38e0e9861dd5b41e64d8b0b0bf5204ff08a3d311982f4298
+- id: src-20261013-movement-568x320
+  resource: urn:llmwiki:source:src-20261013-movement-568x320
+  title: 20261013 Movement 568X320
+  content_hash: sha256:ade65bf3558cb9ba69eabc41e55d7cc7d5836a8b7dec488089b50637aab78a49
+- id: src-20261013-movement-enlarged-ja-390x740
+  resource: urn:llmwiki:source:src-20261013-movement-enlarged-ja-390x740
+  title: 20261013 Movement Enlarged Ja 390X740
+  content_hash: sha256:71d28e29478c0df5baa3291938e523fad9e724fc33baa9eeef261122e2a86ad3
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T11:18:33.727677+00:00'
-  target_hash: sha256:b232aecd51c9285404d95e3ae9d561e99111b2af2dcf7533488b818abafb8f0d
+  performed_at: '2026-10-13T04:45:00+00:00'
+  target_hash: sha256:2429c522448d56de81821865b5a1174b947953acb4dc519e54f7975ddf24998d
   result: passed
   checks:
     source_support: passed
@@ -76,12 +116,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: passed
   notes:
-  - Reviewed named size container robot-page, card gap sharing, two-column short-landscape
-    Home, and symmetric PowerOffSlider centering against DevelopmentGuide.md and MobileSpacingValidation.md.
-  - Inspected visual screenshot evidence across 11 screen resolutions from inert Chromium
-    test matrix.
-  - Automated tests passed (813 assertions); native phone testing in Chrome and Safari
-    and Pi hardware acceptance remain pending.
+  - Reviewed Web Gamepad and palette refinement against DevelopmentGuide.md and WebGamePadValidation.md.
+  - Inspected visual screenshot evidence across 8 mobile viewports and states (390x740,
+    568x320, enlarged Japanese, gamepad-pressed).
+  - Automated browser tests passed (813+ assertions); native phone testing in Chrome
+    and Safari and Pi hardware acceptance remain pending.
 ---
 
 # Pi0 web interface design and compatibility
@@ -155,3 +194,23 @@ Following native mobile browser testing on owner devices, spacing and slider geo
 
 [^src-20261011-developmentguide-3]: Mobile spacing current development guide (2026-10-11 mobile spacing).
 [^src-20261011-mobilespacingvalidation]: Mobile spacing validation and owner screenshot evidence (2026-10-11 mobile spacing).
+
+## Web gamepad and palette refinement (2026-10-13)
+
+Following owner approval of `DevelopmentPlanDoc/NinjaRobotPi0WebRefinement_261013.md`, the web interface received targeted visual and interactive gamepad refinements:[^src-20261013-developmentguide-4] [^src-20261013-webgamepadvalidation]
+* **Refined Palette and Contrast Tokens**: Home default interface navigation buttons and the header hamburger use medium blue fills. Selecting an interface applies an orange highlight that persists until the page is reloaded, resetting to medium blue.[^src-20261013-developmentguide-4] [^src-20261013-home-390x740] [^src-20261013-home-selected-390x740] The power slider features an orange thumb with a white icon and a centered blue track label.[^src-20261013-home-390x740] Idle Voice Input and the folded System Activity tab use blue/white, switching to orange/white during active recording and open activity drawers.[^src-20261013-developmentguide-4] [^src-20261013-chat-390x740] [^src-20261013-long-log-390x740] Content cards, panels, and colored chat messages use cyan borders at alpha 0.25 (75% transparency), while assistant messages retain gray borders at alpha 0.25.[^src-20261013-developmentguide-4] [^src-20261013-chat-390x740] Text, focus rings, and interactive outlines do not inherit reduced opacity.[^src-20261013-developmentguide-4]
+* **Movement Tool Five-Button Gamepad**: The Movement Tool features an unboxed millimetre distance telemetry indicator at the top left of a centered five-button cross-shaped gamepad.[^src-20261013-webgamepadvalidation] [^src-20261013-movement-390x740] Explanatory paragraphs were removed from the three selector cards (Movements, Face Expressions, Sounds) for a streamlined interface.[^src-20261013-webgamepadvalidation] [^src-20261013-movement-390x740] In short landscape viewports, the pad sits beside the selector column, maintaining internal scrollability without document-level overflow.[^src-20261013-webgamepadvalidation] [^src-20261013-movement-568x320] [^src-20261013-movement-enlarged-ja-390x740]
+* **Directional Hold Loop and Finish-Current-Cycle Release**: Directional buttons (`run_forward`, `run_backward`, `turn_left`, `turn_right`) issue one POST request at a time to `/api/servos/movements/run`, awaiting exact executed completion before repeating.[^src-20261013-webgamepadvalidation] Releasing the button cancels repetition and immediately clears orange styling, while allowing the in-flight cycle to finish its complete trajectory.[^src-20261013-webgamepadvalidation] [^src-20261013-gamepad-pressed] Home triggers a single execution and stays orange until release; assistive clicks trigger one cycle.[^src-20261013-webgamepadvalidation]
+* **Hardware & Type Scoping**: Supported Spider and Humanoid robots map to advertised native movements (`run_forward`, `run_backward`, `turn_left`, `turn_right`, `home`). On Tire or unsupported robot profiles, directional buttons are cleanly disabled with localized explanatory tooltips.[^src-20261013-developmentguide-4] [^src-20261013-webgamepadvalidation]
+* **Safety Guards and Unknown-Status Latch**: Pointer capture loss, keyboard autorepeat rejection, window blur, visibility change, and route navigation invalidate hold intent.[^src-20261013-webgamepadvalidation] An HTTP 4xx error halts repetition and allows re-pressing. An HTTP 5xx, network error, or unconfirmed completion latches an unknown-status lock across routes, requiring the operator to inspect the robot before reloading the browser.[^src-20261013-webgamepadvalidation] Browser reload clears the frontend latch without providing a hardware stop guarantee.[^src-20261013-webgamepadvalidation]
+
+[^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
+[^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).
+[^src-20261013-chat-390x740]: Chat page 390x740 screenshot showing refined border alpha and voice states.
+[^src-20261013-gamepad-pressed]: Movement tool 390x740 screenshot showing active orange directional press.
+[^src-20261013-home-390x740]: Home page 390x740 screenshot showing medium blue navigation buttons and centered power track.
+[^src-20261013-home-selected-390x740]: Home page 390x740 screenshot showing persistent single orange selection.
+[^src-20261013-long-log-390x740]: System activity log 390x740 screenshot showing expanded drawer events.
+[^src-20261013-movement-390x740]: Movement tool 390x740 screenshot showing 5-button gamepad and unboxed distance.
+[^src-20261013-movement-568x320]: Movement tool 568x320 short landscape screenshot showing side-by-side pad layout.
+[^src-20261013-movement-enlarged-ja-390x740]: Movement tool 390x740 enlarged Japanese text screenshot showing clean containment.

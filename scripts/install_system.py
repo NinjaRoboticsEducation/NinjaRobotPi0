@@ -16,6 +16,7 @@ PACKAGES = (
     "xz-utils",
     "zstd",
     "bluez",
+    "rfkill",
     "dbus",
 )
 

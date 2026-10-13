@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-13T01:06:24Z'
+generated_at: '2026-10-13T04:49:02Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -641,6 +641,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-12-fresh-install/README-English.md
   kind: text
   state: ingested
+- id: src-20261013-chat-390x740
+  title: Chat 390X740
+  path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/chat-390x740.png
+  kind: image
+  state: ingested
 - id: src-20261013-developmentguide-2
   title: Developmentguide
   path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-poweroff/DevelopmentGuide.md
@@ -649,6 +654,11 @@ sources:
 - id: src-20261013-developmentguide-3
   title: Developmentguide
   path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261013-developmentguide-4
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentGuide.md
   kind: text
   state: ingested
 - id: src-20261013-developmentguide
@@ -666,10 +676,30 @@ sources:
   path: raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentLog.md
   kind: text
   state: ingested
+- id: src-20261013-developmentlog-4
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentLog.md
+  kind: text
+  state: ingested
 - id: src-20261013-developmentlog
   title: Developmentlog
   path: raw/notes/ninjarobotpi0/2026-10-12-node-storage/DevelopmentLog.md
   kind: text
+  state: ingested
+- id: src-20261013-gamepad-pressed
+  title: Gamepad Pressed
+  path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/gamepad-pressed.png
+  kind: image
+  state: ingested
+- id: src-20261013-home-390x740
+  title: Home 390X740
+  path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/home-390x740.png
+  kind: image
+  state: ingested
+- id: src-20261013-home-selected-390x740
+  title: Home Selected 390X740
+  path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/home-selected-390x740.png
+  kind: image
   state: ingested
 - id: src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
@@ -696,6 +726,26 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/InstallationGuide.md
   kind: text
   state: ingested
+- id: src-20261013-long-log-390x740
+  title: Long Log 390X740
+  path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/long-log-390x740.png
+  kind: image
+  state: ingested
+- id: src-20261013-movement-390x740
+  title: Movement 390X740
+  path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/movement-390x740.png
+  kind: image
+  state: ingested
+- id: src-20261013-movement-568x320
+  title: Movement 568X320
+  path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/movement-568x320.png
+  kind: image
+  state: ingested
+- id: src-20261013-movement-enlarged-ja-390x740
+  title: Movement Enlarged Ja 390X740
+  path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/movement-enlarged-ja-390x740.png
+  kind: image
+  state: ingested
 - id: src-20261013-nodeinstallevidence
   title: Nodeinstallevidence
   path: raw/notes/ninjarobotpi0/2026-10-12-node-storage/NodeInstallEvidence.md
@@ -714,5 +764,10 @@ sources:
 - id: src-20261013-readme-english
   title: Readme English
   path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/README-English.md
+  kind: text
+  state: ingested
+- id: src-20261013-webgamepadvalidation
+  title: Webgamepadvalidation
+  path: raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/WebGamePadValidation.md
   kind: text
   state: ingested

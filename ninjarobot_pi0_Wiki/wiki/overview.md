@@ -108,11 +108,15 @@ sources:
   resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
   content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-developmentguide-4
+  resource: urn:llmwiki:source:src-20261013-developmentguide-4
+  title: 20261013 Developmentguide 4
+  content_hash: sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:33370df038933e85635bd3e282be940398a9f13773cc4dbebc1a66b128642e16
+  performed_at: '2026-10-13T04:45:00+00:00'
+  target_hash: sha256:b40e762692439fad334c85827048db2e6a82ac7e142e1294ea1179ad5d7f2363
   result: passed
   checks:
     source_support: passed
@@ -121,11 +125,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed platform overview against Node extraction storage repair English README/evidence
-    (2026-10-12) and Owner Humanoid defaults replacement English README/evidence (2026-10-13).
-  - Verified private TMPDIR disk workspace contracts, 2GB free disk check, 37-movement
-    Humanoid catalog, and Poweroff rest posture integration.
-  - Hardware verification remains pending owner manual validation.
+  - Reviewed Web Gamepad and refined mobile navigation features against DevelopmentGuide.md.
+  - Verified 5-button touch pad, finish-current-cycle behavior, and palette updates.
+  - Physical device and hardware acceptance remain pending.
 ---
 
 # NinjaRobotPi0 Platform Overview
@@ -298,3 +300,9 @@ The Humanoid robot profile incorporates an expanded native movement library and 
 [^src-20261013-nodeinstallevidence]: Primary-source verification and validation evidence for Node installation storage repair.
 [^src-20261013-readme-english-3]: English README snapshot for NinjaRobotPi0 platform (2026-10-13 Humanoid defaults replacement).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+
+## Web Interface Gamepad Controls (2026-10-13)
+
+The Movement Tool features a touch-optimized five-button cross gamepad for direct gait execution (with finish-current-cycle release behavior) alongside manual servo, face expression, and buzzer controls in four languages, styled with refined contrast tokens and cyan card outlines.[^src-20261013-developmentguide-4]
+
+[^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).

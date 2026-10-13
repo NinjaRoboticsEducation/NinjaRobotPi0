@@ -155,11 +155,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
   content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-developmentguide-4
+  resource: urn:llmwiki:source:src-20261013-developmentguide-4
+  title: 20261013 Developmentguide 4
+  content_hash: sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947
+- id: src-20261013-webgamepadvalidation
+  resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
+  title: 20261013 Webgamepadvalidation
+  content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:dd48135c86115c7bee3f2e10c684d31e9f85aaa0f676a04bcea2a974628c1194
+  performed_at: '2026-10-13T04:45:00+00:00'
+  target_hash: sha256:e461096337d18497f83e8ffcf2ba3deecbf5449e647b130b875b9ea0099b4084
   result: passed
   checks:
     source_support: passed
@@ -168,13 +176,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Node extraction storage repair development manual and evidence
-    (2026-10-12) and Owner Humanoid defaults replacement development manual and evidence
-    (2026-10-13).
-  - Verified private TMPDIR disk workspace contracts, 130 installer test suite, 459
-    host test suite for Humanoid defaults replacement, and data/humanoid_defaults.json
-    resource generation.
-  - Physical Raspberry Pi 0 2W hardware qualification remains pending manual verification.
+  - Reviewed Web Gamepad and palette refinement workflow against DevelopmentGuide.md
+    and WebGamePadValidation.md.
+  - Verified frontend source additions (GamePad.jsx, useGamePad.js, nativeMovement.js)
+    and unchanged backend/driver boundary.
+  - Real hardware and native phone browser acceptance remain pending owner testing.
 ---
 
 # Current development manual
@@ -362,3 +368,14 @@ The development guide records the contracts and verification procedures for the 
 [^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
 [^src-20261013-developmentguide-3]: Owner Humanoid defaults replacement Development Guide (2026-10-13).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+
+## Web gamepad and palette refinement workflow (2026-10-13)
+
+The 2026-10-13 development manual records the owner-approved web gamepad and palette refinement (`DevelopmentPlanDoc/NinjaRobotPi0WebRefinement_261013.md`):[^src-20261013-developmentguide-4] [^src-20261013-webgamepadvalidation]
+* **Frontend Additions**: Introduces `components/common/GamePad.jsx`, `hooks/useGamePad.js`, and `utils/nativeMovement.js` to provide directional continuous control over existing advertised native movements.[^src-20261013-webgamepadvalidation]
+* **Interactive Execution Contract**: Sequential single-cycle POST execution awaiting verified server completion before repeating; release finishes the current cycle and cancels repetition.[^src-20261013-webgamepadvalidation] Tire robots and unadvertised movements are disabled.[^src-20261013-webgamepadvalidation]
+* **Palette Updates**: Medium-blue default button fills, persistent single orange selection resetting on reload, orange/white power thumb with blue track label, and 75% transparent cyan borders (`rgba(..., 0.25)`) on cards and colored messages.[^src-20261013-developmentguide-4]
+* **Validation**: 813+ assertions in `tests/browser_ui.cjs` across 11 viewports and toolbar shifts; all existing backend, driver, and robot Python modules remain unchanged.[^src-20261013-webgamepadvalidation]
+
+[^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
+[^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).

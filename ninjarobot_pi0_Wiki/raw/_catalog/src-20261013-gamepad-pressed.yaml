@@ -1,0 +1,26 @@
+id: src-20261013-gamepad-pressed
+path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/gamepad-pressed.png
+media_type: image/png
+kind: image
+title: Gamepad Pressed
+added_at: '2026-10-13T04:31:01Z'
+content_hash: sha256:9ac9d963d010577f301aff265ca24f8fc69aa58b1bac5d6d134f19c8d9792795
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-gamepad-pressed
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T04:32:11Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 740
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:cd65d54587335cb4a2a49be253e05fae9ce79f187cf470148be51f241352f31b
+ingested_at: '2026-10-13T04:48:41Z'
+last_plan: pi0-web-gamepad-refinement-ingest-261013

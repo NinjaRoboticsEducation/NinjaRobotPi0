@@ -1,7 +1,7 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-13T01:10:00+00:00",
+  "reviewed_at": "2026-10-13T04:50:00+00:00",
   "documents": [
     {
       "name": "InstallationGuide.md",
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentGuide.md",
-      "source_id": "src-20261013-developmentguide-3",
-      "content_hash": "sha256:39169f1ed923edcc159141b97c4b7499c9f3bbf4a241ce8e9dd578c3ac932d3a",
+      "path": "raw/articles/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentGuide.md",
+      "source_id": "src-20261013-developmentguide-4",
+      "content_hash": "sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentLog.md",
-      "source_id": "src-20261013-developmentlog-3",
-      "content_hash": "sha256:e3994be98e0caa7091521eca871ac032d22a2fbf0767c9331a6dc9884d527ee5",
+      "path": "raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentLog.md",
+      "source_id": "src-20261013-developmentlog-4",
+      "content_hash": "sha256:539e4daccc4b42208959ee469d79cc528c49d1209c59ed44a7205ed06bd0402f",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -276,11 +276,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "README.md": {
-      "content_hash": "sha256:f7ee5a7c5e1ee41a26e9a0d1e088e16b5e4fb68c672823dc1ebbc0d7dbc3bed7",
+      "content_hash": "sha256:848fdd4ba6b3b835cf224df43709fe80d63f7ab0527288a5b23f81e6b7110cca",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Four-language public documentation updated; manual references point to 2026-10-13 humanoid owner defaults release."
+      "review_note": "Public README manual references updated to 2026-10-13 web gamepad and palette refinement release."
     },
     "docs/validation/core_baseline.json": {
       "content_hash": "sha256:e6251e4c71055ac6f1679edc6da0f5d8036a8c269a15dcfa2af381402796512d",
@@ -782,12 +782,12 @@
       "review_note": "Reviewed viewport ResizeObserver geometry only; staged drag/keyboard intent, confirmation and shutdown request logic are preserved. Protected core remains unchanged."
     },
     "ninja_webapp/src/components/common/PowerOffSlider.module.css": {
-      "content_hash": "sha256:04de12cbd6a9cbdd0567e47693efceb594fb1ff1116af6f15ab780bbd2d966d2",
+      "content_hash": "sha256:264742bb65668f4a88f7cc0a4dc5faa23fd14ce5b3156b7bf12db6411d80f586",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Safe power-off confirmation slider styling preventing accidental robot shutdown."
+      "review_note": "Power off slider thumb and track styles refined with orange/white thumb and centered blue label."
     },
     "ninja_webapp/src/components/layout/Footer.jsx": {
       "content_hash": "sha256:1b4fc074e9be821b7441c8a4e8fff67fe33600e2656d09e052e43594066b9538",
@@ -814,20 +814,20 @@
       "review_note": "Web application navigation header with system status indicators, power-off trigger, and language switching."
     },
     "ninja_webapp/src/components/layout/Header.module.css": {
-      "content_hash": "sha256:891ea0009004cc9a85f6c09cabe4e0f688396cf96559b9da40841fce26101f01",
+      "content_hash": "sha256:9ed35ec1d0de5d05c7c2e283099b2a2425178cb50bd93525000bde6af4e6f9f2",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Header component responsive layout and badge styling across mobile and desktop viewport widths."
+      "review_note": "Header hamburger fill refined to medium blue."
     },
     "ninja_webapp/src/components/layout/Layout.jsx": {
-      "content_hash": "sha256:ab574306e9001aa2e3f0becd3d47d818ff6b440fa5f97d9943ffd9c7bd3e5625",
+      "content_hash": "sha256:f718785b6a1bd0013bf9cbe89a7f14fa9d4a9ce7e8b299f150a30c737dcb937d",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Main application shell integrating responsive viewport scaling, full-screen toggle, and subpage routing."
+      "review_note": "Layout component passes active robotType to child Outlet context."
     },
     "ninja_webapp/src/components/layout/Layout.module.css": {
       "content_hash": "sha256:cada3111aebaa2d10830e014f379b844b16fc0198f2c348550fb3c4ba9b2e9d7",
@@ -854,44 +854,44 @@
       "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/index.css": {
-      "content_hash": "sha256:7f3aae7ad8f1080fe2b517e6cc02ed25006f0a8d556836afe4e7850f31259f19",
+      "content_hash": "sha256:86fd165459347e7cb7ca73579de2fe07a0dfd389b295798a31ade6f7ea14c81e",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Global design system tokens, typography, color palette, and reset styles."
+      "review_note": "Global stylesheet palette tokens refined: medium blue button fills, 0.25 cyan card border alpha."
     },
     "ninja_webapp/src/locales/en.json": {
-      "content_hash": "sha256:54e4ada37df891b18d44117c4dd46e350afafc1ce2073247b411adb434cfee0c",
+      "content_hash": "sha256:f0ec7c2deb4f952675c868ac0b7aeea7237b5987a8677582fd532d06dc75effa",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "English localization strings for navigation, movements, robot status, and diagnostics."
+      "review_note": "English locale bundle updated with gamepad action names, disabled notices, and safety alerts."
     },
     "ninja_webapp/src/locales/ja.json": {
-      "content_hash": "sha256:19cbc04a2e88b7a89ab3dd05f42e376c6549339ad9b3023f569aaf99f05aea5c",
+      "content_hash": "sha256:e51ab156221a80801d3a3d25a16267dea6fd412e1cc596153e3230f96534b0fa",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Japanese localization strings for navigation, movements, robot status, and diagnostics."
+      "review_note": "Japanese locale bundle updated with gamepad action names, disabled notices, and safety alerts."
     },
     "ninja_webapp/src/locales/zh-cn.json": {
-      "content_hash": "sha256:59dd460ed79c9b33e8978aeb3f9e46c1afad9b56dd2a7a120e02bb4a4f8bcf1d",
+      "content_hash": "sha256:472900e47dfe1abd629d9e037ef93137d556ad2c6740f4feec7f8d6972eda868",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Simplified Chinese localization strings for navigation, movements, robot status, and diagnostics."
+      "review_note": "Simplified Chinese locale bundle updated with gamepad action names, disabled notices, and safety alerts."
     },
     "ninja_webapp/src/locales/zh-tw.json": {
-      "content_hash": "sha256:b6be11bcc6a02dd3338103d2dae50bca66144beb76e1b22713d059507c66492f",
+      "content_hash": "sha256:cbf045431ef6d2367cd2549eaa4902c49886c6dda58eb384c8e48d22c56d0724",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Traditional Chinese localization strings for navigation, movements, robot status, and diagnostics."
+      "review_note": "Traditional Chinese locale bundle updated with gamepad action names, disabled notices, and safety alerts."
     },
     "ninja_webapp/src/main.jsx": {
       "content_hash": "sha256:227fb9cc1dd4c0f0c2384eb498eee6e1d97dd9615fc3c5213335885595304a09",
@@ -902,13 +902,12 @@
       "review_note": "Presentation/locale review and inert browser fixtures preserve Pi0 routes, payloads, events, units and power confirmation; existing runtime lock retained."
     },
     "ninja_webapp/src/pages/Agent/Agent.module.css": {
-      "content_hash": "sha256:160d21bf80a4ecb561cd33fb8ae9a24a265ed23a5c845299946ac4f873993f61",
+      "content_hash": "sha256:bf96c459b8e06a4245d2802fc18894871baece56f887d01032455b52955e0d48",
       "pages": [
         "wiki/concepts/web-interface-design.md",
-        "wiki/concepts/action-library-and-ai-agent.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Interactive AI agent and voice chat page styling with responsive transcript display."
+      "review_note": "Chat page stylesheet refined with 0.25 cyan borders on user/system cards and blue/white voice buttons."
     },
     "ninja_webapp/src/pages/Agent/index.jsx": {
       "content_hash": "sha256:45081a638ce61f7148b2648dea55b5c321b620f1c791a32172c478b06a347ec9",
@@ -919,12 +918,12 @@
       "review_note": "Reviewed frontend-only Home/menu, Movement/Chat and shared activity presentation against current source and src-20261011-webrefinementevidence. Existing request/session/power contracts preserved; lint/build and locale/session/stream checks passed. Browser validation waived; no physical acceptance."
     },
     "ninja_webapp/src/pages/Home/Home.module.css": {
-      "content_hash": "sha256:bbc85daa620b35425fbd36557fe3043b27a53ea7153d56ccf121ede6e36fa92b",
+      "content_hash": "sha256:937db5bb5e6d1cd9f23b23d2cf6acabe82230b05260fb096e1896e47f91e0897",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Home dashboard styling with robot visualizer, quick action cards, and sensor telemetry."
+      "review_note": "Home page stylesheet updated with medium blue navigation buttons and single orange active selection."
     },
     "ninja_webapp/src/pages/Home/index.jsx": {
       "content_hash": "sha256:7eb1b775f5c83ca778a1f1645dae91859eed6dddb7448f48acb6c64d2711bf1d",
@@ -1845,12 +1844,12 @@
       "review_note": "Reviewed explicit setup-only private uv fallback and cleared inherited UV_PROJECT; query paths remain no-sync."
     },
     "tests/browser_ui.cjs": {
-      "content_hash": "sha256:d47921b7056714d6a6436437a8c31f451b59d48278632adf8176d5ea0c9e8f49",
+      "content_hash": "sha256:fbb2d3f9cc25e895452699dbc94e7f7ea5410cb2656302b2578dafadf3698649",
       "pages": [
-        "wiki/references/development-guide.md",
+        "wiki/concepts/web-interface-design.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "End-to-end browser integration suite covering mobile viewports, localization, and movement selection."
+      "review_note": "Chromium UI test suite expanded with 813+ assertions covering gamepad, palette tokens, and viewports."
     },
     "tests/conftest.py": {
       "content_hash": "sha256:2a6742af9e8c1f1a740334bf56bec080dbb63019ca7ac1240356492036784557",
@@ -2067,57 +2066,57 @@
       "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
     },
     "ninja_webapp/src/components/common/SystemActivity.module.css": {
-      "content_hash": "sha256:7d2fc15a0bd5c45909f4f3b453ea690a87fbbd6e9ae06c844dcf9c6347086b6a",
+      "content_hash": "sha256:6100499bf3a175e506e8c36a53d2e492c6554f65ea0317cedad7b56ca9390c2d",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "System activity monitor component styling for real-time CPU, memory, and servo load indicators."
+      "review_note": "System Activity tab styling updated with blue/white folded state and orange/white open state."
     },
     "ninja_webapp/src/components/common/SystemActivity.jsx": {
-      "content_hash": "sha256:a70132ced3ecf80b4054283da768ae41befea1d0d3614db4d78f7ff46eca9266",
-      "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
-      ],
-      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
-    },
-    "ninja_webapp/src/pages/Movement/Movement.module.css": {
-      "content_hash": "sha256:a4c799a44441eedfa1463d8435f1e42e53f93d365e65df8e0499bc1de48fee11",
+      "content_hash": "sha256:c209e852cbd2724140563bf147cd00970c5ae3fe584b609815fc023ab7bb7573",
       "pages": [
         "wiki/concepts/web-interface-design.md",
         "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "Movement control page styling for sequence triggers, speed selectors, and pose previews."
+      "review_note": "System Activity drawer component invokes gamepad release callback when opened."
+    },
+    "ninja_webapp/src/pages/Movement/Movement.module.css": {
+      "content_hash": "sha256:a9a1ea66256f4fc0450b63e5ef4a5da5201852a4c435540628ad40c8f122ffd1",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
+      ],
+      "review_note": "Movement Tool stylesheet updated for unboxed distance, 5-button gamepad, and side-by-side landscape layout."
     },
     "ninja_webapp/src/pages/Movement/index.jsx": {
-      "content_hash": "sha256:61766f1188de11f42d44a4288e826a1682009d252811ca79f75151faa883eba2",
+      "content_hash": "sha256:db0c1427a0696d29c6e138f60122a390b3cbc11fc52bd665d1d857bcad29c0a0",
       "pages": [
-        "wiki/entities/ninja-webapp.md",
-        "wiki/concepts/web-interface-design.md"
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
       ],
-      "review_note": "New frontend-only Movement page/shared activity and auxiliary stream component reviewed against current endpoint contracts and immutable web-refinement evidence. Lint/build and inert stream checks passed; browser/device validation is owner-manual."
+      "review_note": "Movement Tool page integrates GamePad component, unboxed distance, and shared movement execution lock."
     },
     "DevelopmentGuide.md": {
-      "content_hash": "sha256:868b569f8c8d9f816715f7cf2b94b7567db4aa516b8ab764c201e463c006a6b1",
+      "content_hash": "sha256:987469bf0efa347341501b2d503bdb9be4eef8cb1e8f7324286dc662d888133b",
       "pages": [
         "wiki/references/development-guide.md"
       ],
-      "review_note": "Compatibility pointer updated to 2026-10-13 Humanoid owner defaults DevelopmentGuide."
+      "review_note": "Root compatibility pointer updated to 2026-10-13 web gamepad DevelopmentGuide."
     },
     "DevelopmentLog.md": {
-      "content_hash": "sha256:4b00061d133b5dfb96690da6560df7faeb258a2021fbe82fa318e9fef8c1cb78",
+      "content_hash": "sha256:a96c276c9ce7e3f9bcf2b808a5a821496522047a3c50e5de3a79626ed0d73dea",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ],
-      "review_note": "Compatibility pointer updated to 2026-10-13 Humanoid owner defaults DevelopmentLog."
+      "review_note": "Root compatibility pointer updated to 2026-10-13 web gamepad DevelopmentLog."
     },
     "ninjarobot_pi0_Wiki/README.md": {
-      "content_hash": "sha256:7de539b088c40c4d1dd20380fea274c174e31e898bdb13ccc26e703f5516517c",
+      "content_hash": "sha256:84a9ffa40dc667e10c2450c371d4bb8d9f9c30e848fbac791fa2429fc5e59139",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Wiki root README updated to link to 2026-10-13 Humanoid owner defaults manuals."
+      "review_note": "Wiki README manual links updated to 2026-10-13 web gamepad DevelopmentGuide and DevelopmentLog."
     },
     "ninja_core/src/ninja_core/data/spider_otto.json": {
       "pages": [
@@ -2197,6 +2196,46 @@
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Test suite verifying fresh install disk space requirements (>= 2 GB free) and private work directory cleanup during Node.js extraction."
+    },
+    "ninja_webapp/src/components/common/GamePad.jsx": {
+      "content_hash": "sha256:b2264ec14b2eee60ca1d514ab6a5101e711ed27149b3f78479c5ffff624dfc2a",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
+      ],
+      "review_note": "New five-button cross-shaped touch gamepad component with unboxed distance and disabled Tire buttons."
+    },
+    "ninja_webapp/src/components/common/GamePad.module.css": {
+      "content_hash": "sha256:51ce9db9b205f175be65284b9eee105b8033fafa96b2596dac43961069187ecf",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
+      ],
+      "review_note": "Gamepad component styles with cross-button grid, orange active state, and container-query layout."
+    },
+    "ninja_webapp/src/hooks/useGamePad.js": {
+      "content_hash": "sha256:34b216d0d50fc127e5aa54f3acdfa682c97d7ce830d86a23cf911aeedc4edf9d",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
+      ],
+      "review_note": "Custom React hook managing pointer/keyboard hold loops, finish-current-cycle release, and window blur cleanup."
+    },
+    "ninja_webapp/src/utils/nativeMovement.js": {
+      "content_hash": "sha256:da729416159136330193e8d13bc2e5bb0a06663683b6886ce11a6fec85c00877",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/entities/ninja-webapp.md"
+      ],
+      "review_note": "Shared native movement execution coordinator with cross-route locking and unknown-status error latching."
+    },
+    "tests/browser_gamepad.cjs": {
+      "content_hash": "sha256:d4929e0c2886b207e63862c61e8c6a406b288edfcc439aad4633f264b8be7ee5",
+      "pages": [
+        "wiki/concepts/web-interface-design.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Dedicated automated test suite validating gamepad pointer interactions, finish-current-cycle loops, and route locks."
     }
   },
   "adapters": [

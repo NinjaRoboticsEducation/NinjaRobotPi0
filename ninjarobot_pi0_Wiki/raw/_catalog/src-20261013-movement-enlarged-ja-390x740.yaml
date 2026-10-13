@@ -1,0 +1,26 @@
+id: src-20261013-movement-enlarged-ja-390x740
+path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/movement-enlarged-ja-390x740.png
+media_type: image/png
+kind: image
+title: Movement Enlarged Ja 390X740
+added_at: '2026-10-13T04:31:06Z'
+content_hash: sha256:71d28e29478c0df5baa3291938e523fad9e724fc33baa9eeef261122e2a86ad3
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-movement-enlarged-ja-390x740
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T04:32:18Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 740
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:c9ae64397aa5eb9e7d0cdb24aaa8b3fe0318863ea0fa20da66073bd4f0538345
+ingested_at: '2026-10-13T04:48:41Z'
+last_plan: pi0-web-gamepad-refinement-ingest-261013

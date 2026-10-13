@@ -671,6 +671,9 @@ def test_onboarding_import_then_identity_seeds_exact_owner_catalog(
     tmp_path, monkeypatch
 ):
     import importlib.util
+    from ninja_ble import system_setup
+
+    monkeypatch.setattr(system_setup, "run_setup", lambda **_: True)
 
     spec = importlib.util.spec_from_file_location(
         "owner_defaults_onboard", ROOT / "scripts/onboard.py"

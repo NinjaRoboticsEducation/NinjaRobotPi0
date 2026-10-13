@@ -255,9 +255,11 @@ The wizard walks you through these steps in order:
 | **3. Servo** | Type `READY` only after supporting the robot; calibrate each servo's range and neutral point | Each servo moves to its expected position |
 | **4. Distance** | Read sensor values, then calibrate at a known distance | Readings match the real distance |
 | **5. Import** | Import display, buzzer, and servo settings into the main `config.json` | All settings pass validation |
-| **6. Identity** | Set a BLE name and choose your robot type: `tire`, `humanoid`, or `spider` | Name and type match your build |
+| **6. Identity / Bluetooth** | Check and enable Bluetooth, then set the BLE name and robot type | Bluetooth service/controller and a temporary advertisement pass verification |
 | **7. Select model provider** | Choose Google, OpenAI, Anthropic or Ollama Cloud; enter a hidden API key and select a live model | Model validates successfully (internet required; small provider charge possible) |
 | **8. ngrok** | Optionally enter your ngrok authtoken for remote access | Token is saved (no tunnel opens yet) |
+
+To repair Bluetooth separately, stop the robot server and run `./onboard.sh --step identity`, then choose **Configure this step**. Setup enables/starts Bluetooth when needed, unblocks its software radio switch, powers the controller and removes its temporary test advertisement. It may request your sudo password; press ENTER at the name/type prompts to keep existing settings. Masked services, hardware blocks, missing firmware/controllers or another active BLE application produce guidance rather than a false success. For a read-only check, use `.venv/bin/python -m ninja_ble.system_setup --check`. These checks do not start the robot or move servos.
 
 > ⚠️ **Servo warning:** The servo tool can **immediately move** previously calibrated servos when it opens — even before its menu appears. Always support the robot before opening the servo tool.
 
@@ -348,6 +350,15 @@ If you want the robot to start automatically when you turn on the power, follow 
 > **Ngrok requirement:** Autostart checks that a saved token exists and aborts if none is found. Token presence does not prove validity; verify manual server startup first.
 
 #### Step1: Install the Startup Service
+
+> [!IMPORTANT]
+> **Prerequisites:** To enable auto poweroff function, you need to disabel the sudo password confirmation by following steps:
+> 1. run "sudo visudo" and scroll to the very bottom.
+> 2. Add the follow line (replace "pi" with your actual username if it differs)
+>```bash
+>pi ALL=(ALL) NOPASSWD: ALL
+>```
+>3. Save and exit the editor (if it defaults to nano, press Ctrl+X, then Y, and hit Enter).
 
 From the project root, as your normal user, select a compatible uv using the installer’s checker, then run the service helper:
 
@@ -626,7 +637,7 @@ From the installation folder, `./onboard.sh --status` checks saved configuration
 
 Protect `config.json` (which may contain your Gemini key), ngrok credentials and calibration files; do not publish them. Gemini pricing/quota and ngrok availability depend on your account. The Pi0 control interface has no user-login protection; an encrypted ngrok tunnel does not add application authentication. Use trusted networks and keep control URLs private.
 
-Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentLog.md).
+Full references: [Installation Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md), [Development Guide](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentGuide.md), [Development Log](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentLog.md).
 
 ## License
 

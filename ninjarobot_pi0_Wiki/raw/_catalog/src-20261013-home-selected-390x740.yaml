@@ -1,0 +1,26 @@
+id: src-20261013-home-selected-390x740
+path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/home-selected-390x740.png
+media_type: image/png
+kind: image
+title: Home Selected 390X740
+added_at: '2026-10-13T04:31:03Z'
+content_hash: sha256:0313e87e779898cdd5b1628feeec754c709e02f9fbc3e57346f3fd70af9c20ff
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-home-selected-390x740
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T04:32:13Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 740
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:2ac6db55b5b650570cd95d7be0a5c8a7d3c1c487dc5b875df009431c8a9af732
+ingested_at: '2026-10-13T04:48:41Z'
+last_plan: pi0-web-gamepad-refinement-ingest-261013

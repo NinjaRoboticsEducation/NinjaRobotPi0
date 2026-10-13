@@ -84,11 +84,19 @@ sources:
   resource: urn:llmwiki:source:src-20261011-mobilespacingvalidation
   title: Mobile spacing validation and owner screenshot evidence
   content_hash: sha256:0cf9ba894356f52d73db4b4150a110ea3c53cbbbd2b059ec1e970b5f2843341b
+- id: src-20261013-developmentguide-4
+  resource: urn:llmwiki:source:src-20261013-developmentguide-4
+  title: 20261013 Developmentguide 4
+  content_hash: sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947
+- id: src-20261013-webgamepadvalidation
+  resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
+  title: 20261013 Webgamepadvalidation
+  content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-11T11:18:33.727677+00:00'
-  target_hash: sha256:ae3eb052e5aded2af0fc7887c259501f7a369b7a56613f679c5edc0583d43541
+  performed_at: '2026-10-13T04:45:00+00:00'
+  target_hash: sha256:b1fd05e86eb9868792030bb0c05e67a267e6e7fa28073946fec59c6c1bd66839
   result: passed
   checks:
     source_support: passed
@@ -97,11 +105,12 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed robot-page container queries, Layout.module.css, Home/Movement spacing
-    CSS rules, and PowerOffSlider dimensions against DevelopmentGuide.md and MobileSpacingValidation.md.
-  - Verified citations for earlier sources and inert Chromium browser test matrix
-    expansion (813 assertions).
-  - Native phone browser and physical Raspberry Pi testing remain pending owner acceptance.
+  - Reviewed GamePad component architecture, useGamePad hook, nativeMovement shared
+    utility, and palette refinements against DevelopmentGuide.md and WebGamePadValidation.md.
+  - Verified finish-current-cycle release behavior, cross-route request locking, and
+    disabled Tire controls.
+  - Physical touchscreen and Raspberry Pi hardware validation remain pending owner
+    acceptance.
 ---
 
 # ninja_webapp Package
@@ -188,3 +197,15 @@ Following owner native phone inspection, `ninja_webapp` styling was updated to r
 
 [^src-20261011-developmentguide-3]: Mobile spacing current development guide (2026-10-11 mobile spacing).
 [^src-20261011-mobilespacingvalidation]: Mobile spacing validation and owner screenshot evidence (2026-10-11 mobile spacing).
+
+## Web Gamepad and Palette Refinement Architecture (2026-10-13)
+
+The 2026-10-13 web refinement introduced dedicated interactive gamepad infrastructure and updated palette tokens while preserving all existing backend APIs and driver abstractions:[^src-20261013-developmentguide-4] [^src-20261013-webgamepadvalidation]
+* **Gamepad Component (`components/common/GamePad.jsx`, `GamePad.module.css`)**: Implements a cross-shaped five-button control pad (Up, Down, Left, Right, Center Home) with unboxed upper-left millimetre distance readout.[^src-20261013-webgamepadvalidation] Uses `@container` sizing for dynamic landscape arrangement (positioning the pad beside movement selector cards on wide viewports) and compact vertical bounds.[^src-20261013-webgamepadvalidation] Buttons for Tire profiles or unadvertised actions are rendered in disabled state with localized guidance.[^src-20261013-webgamepadvalidation]
+* **Interactive Hold Hook (`hooks/useGamePad.js`)**: Encapsulates pointer and keyboard events with pointer capture. Directional holding triggers sequential POST execution awaiting complete response before dispatching the next cycle.[^src-20261013-webgamepadvalidation] Releasing the button immediately cancels repetition and clears active styling while allowing the in-flight cycle to complete cleanly.[^src-20261013-webgamepadvalidation] Rejects synthetic keyboard repeat events and invalidates hold intent on window blur, visibility change, or component unmount.[^src-20261013-webgamepadvalidation]
+* **Shared Request Lock and Error Latching (`utils/nativeMovement.js`)**: Coordinates command execution between the gamepad and selector cards, persisting a request lock across route navigation to prevent conflicting physical commands.[^src-20261013-webgamepadvalidation] If an execution request encounters a 5xx server error, network timeout, or ambiguous completion, it engages an unknown-status latch across all routes requiring physical robot verification before reloading.[^src-20261013-webgamepadvalidation]
+* **System Activity Release Integration (`SystemActivity.jsx`)**: When the folded System Activity drawer is opened, it fires a release callback to cleanly cancel any active gamepad hold state.[^src-20261013-webgamepadvalidation]
+* **Layout Context & Locale Bundles**: `Layout.jsx` injects the active `robotType` into the Outlet context. All four locale bundles (`en`, `ja`, `zh-TW`, `zh-CN`) supply identical localized strings for gamepad actions, disabled notices, and safety alerts.[^src-20261013-developmentguide-4] [^src-20261013-webgamepadvalidation]
+
+[^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
+[^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).

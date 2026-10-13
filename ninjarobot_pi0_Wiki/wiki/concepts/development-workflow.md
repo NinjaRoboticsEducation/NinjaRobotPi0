@@ -139,11 +139,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
   content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-developmentguide-4
+  resource: urn:llmwiki:source:src-20261013-developmentguide-4
+  title: 20261013 Developmentguide 4
+  content_hash: sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947
+- id: src-20261013-webgamepadvalidation
+  resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
+  title: 20261013 Webgamepadvalidation
+  content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:c999d5e8a3b318f8fff9adfb4f61547dbe7847d45442b93335ad3905176520d2
+  performed_at: '2026-10-13T04:45:00+00:00'
+  target_hash: sha256:dd2cde32cb495bb53f1f29ad23f8675afab2445c1d5bc2a254a9b827d39a06c1
   result: passed
   checks:
     source_support: passed
@@ -152,12 +160,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Node extraction storage repair development guide and evidence
-    (2026-10-12) and Owner Humanoid defaults replacement development guide and evidence
-    (2026-10-13).
-  - Verified 130 installer test suite, 459 host test suite for Humanoid defaults replacement,
-    deterministic generator check, and standalone wheel packaging verification.
-  - Physical hardware operations remain unverified on physical hardware.
+  - Reviewed Web Gamepad and palette refinement validation boundaries against DevelopmentGuide.md
+    and WebGamePadValidation.md.
+  - Verified browser test suite expansion (813+ assertions) and strict separation
+    from physical hardware acceptance.
+  - Physical Raspberry Pi Zero 2 W acceptance remains pending.
 ---
 
 # Development and immutable documentation workflow
@@ -334,3 +341,13 @@ The 2026-10-13 Humanoid defaults replacement milestone establishes strict verifi
 [^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
 [^src-20261013-developmentguide-3]: Owner Humanoid defaults replacement Development Guide (2026-10-13).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+
+## Web gamepad and palette refinement validation (2026-10-13)
+
+The 2026-10-13 web refinement demonstrates the project's strict boundary between frontend host validation and physical hardware acceptance:[^src-20261013-developmentguide-4] [^src-20261013-webgamepadvalidation]
+* **Automated Browser Verification**: 813+ assertions in `tests/browser_ui.cjs` across 11 viewport sizes (including 390×670, 390×740, and landscape 568×320) verified viewport fit, touch target sizes (>=44px), directional hold loop cancellation, and cross-route locking without running physical robot hardware.[^src-20261013-webgamepadvalidation]
+* **Contract Integrity**: Web changes were strictly confined to `ninja_webapp` (components, hooks, styles, and locales). Python drivers, HAL, API endpoints, calibration, and robot runtime remained untouched.[^src-20261013-webgamepadvalidation]
+* **Acceptance Boundary**: Passing inert browser tests does not imply physical gait stability or mobile touchscreen acceptance, which remain pending owner verification on actual Raspberry Pi Zero 2 W hardware.[^src-20261013-webgamepadvalidation]
+
+[^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
+[^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).

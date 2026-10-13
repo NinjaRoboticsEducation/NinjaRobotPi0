@@ -230,8 +230,11 @@ def _worker(action):
                 "ngrok token saved through existing storage; remote access not tested."
             )
         elif action == "identity":
+            from ninja_ble.system_setup import run_setup
             from ninja_core.config import set_robot_name, set_robot_type
 
+            if not run_setup(repair=True):
+                return 1
             name = input("Robot name (blank to keep): ").strip()
             kind = input("Type tire/humanoid/spider (blank to keep): ").strip()
             if name:
@@ -528,11 +531,13 @@ def wizard(root, state_path, args, ask=input, execute=run_child):
                         )
                     else:
                         print(
-                            "Set the BLE name and select tire, humanoid or spider to match your robot."
+                            "Check and enable Bluetooth, verify a temporary BLE advertisement, then set the BLE name and robot type. This step enables the Bluetooth radio and may ask for your sudo password. Stop the robot server before setup."
                         )
                     if prior.get("result") == "configured_unverified":
                         print(
-                            "Previously configured; account validity is not rechecked automatically."
+                            "Bluetooth readiness will be checked again when you configure this step."
+                            if step == "identity"
+                            else "Previously configured; account validity is not rechecked automatically."
                         )
                     while True:
                         selected = choice(

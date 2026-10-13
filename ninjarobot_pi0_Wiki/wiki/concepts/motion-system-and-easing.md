@@ -60,11 +60,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-developmentguide-3
   title: Developmentguide
   content_hash: sha256:39169f1ed923edcc159141b97c4b7499c9f3bbf4a241ce8e9dd578c3ac932d3a
+- id: src-20261013-developmentguide-4
+  resource: urn:llmwiki:source:src-20261013-developmentguide-4
+  title: 20261013 Developmentguide 4
+  content_hash: sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947
+- id: src-20261013-webgamepadvalidation
+  resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
+  title: 20261013 Webgamepadvalidation
+  content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:1489de5da60d18af7e58b7477eaf60691d44be532b0943ad6d867f4f34f8f091
+  performed_at: '2026-10-13T04:45:00+00:00'
+  target_hash: sha256:a9d33b2db5c1a4f54dee5605872f1b66a2e53a026c100c517018c04f286a6a8e
   result: passed
   checks:
     source_support: passed
@@ -73,11 +81,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed deliberate exit motion and native Humanoid catalog updates against Humanoid
-    Poweroff evidence and Owner Humanoid defaults replacement evidence (2026-10-13).
-  - Verified Humanoid Poweroff posture execution on exit, M/F speed modes, and 37-movement
-    catalog geometry.
-  - Physical velocity, torque, and hardware motion remain unverified.
+  - Reviewed Web Gamepad directional hold loop and finish-current-cycle release behavior
+    against DevelopmentGuide.md and WebGamePadValidation.md.
+  - Verified sequential single-cycle dispatch, absence of mid-step motor cutoff, and
+    unknown-status cross-route latching.
+  - Physical Raspberry Pi Zero 2 W motion and hardware acceptance remain pending.
 ---
 
 # Motion System and Easing Curves
@@ -167,3 +175,10 @@ The 2026-10-13 replacement packages 37 unique movements / 1,278 complete eight-c
 [^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
 [^src-20261013-developmentguide-3]: Owner Humanoid defaults replacement Development Guide (2026-10-13).
+
+## Web Gamepad Hold Loop and Finish-Current-Cycle Execution (2026-10-13)
+
+The Movement Tool five-button gamepad invokes server-advertised native movement endpoints (`/api/servos/movements/run`) during directional button holds.[^src-20261013-developmentguide-4] [^src-20261013-webgamepadvalidation] Each hold dispatches exactly one POST request at a time, awaiting verified completed execution before dispatching the next cycle.[^src-20261013-webgamepadvalidation] Releasing the hold cancels further repetition and immediately clears active button styling; the in-flight movement cycle finishes its full trajectory rather than abruptly aborting mid-step.[^src-20261013-webgamepadvalidation] Single-click presses trigger one complete cycle. In the event of 5xx server errors or connection dropouts, an unknown-status latch blocks subsequent requests across routes until the physical robot state is inspected, preventing unsafe queuing of physical movements.[^src-20261013-webgamepadvalidation]
+
+[^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
+[^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).

@@ -1,0 +1,26 @@
+id: src-20261013-movement-390x740
+path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/movement-390x740.png
+media_type: image/png
+kind: image
+title: Movement 390X740
+added_at: '2026-10-13T04:31:04Z'
+content_hash: sha256:abe4dac757a9022a38e0e9861dd5b41e64d8b0b0bf5204ff08a3d311982f4298
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-movement-390x740
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T04:32:16Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 740
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:7bc0da4ac85e336c565b4825d13069d82d127b635a2ba0f4b60a0d5489752c4a
+ingested_at: '2026-10-13T04:48:41Z'
+last_plan: pi0-web-gamepad-refinement-ingest-261013

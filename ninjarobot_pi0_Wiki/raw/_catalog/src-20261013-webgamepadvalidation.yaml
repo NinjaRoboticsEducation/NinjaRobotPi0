@@ -1,0 +1,16 @@
+id: src-20261013-webgamepadvalidation
+path: raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/WebGamePadValidation.md
+media_type: text/markdown
+kind: text
+title: Webgamepadvalidation
+added_at: '2026-10-13T04:30:58Z'
+content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-webgamepadvalidation
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T04:32:07Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T04:48:41Z'
+last_plan: pi0-web-gamepad-refinement-ingest-261013

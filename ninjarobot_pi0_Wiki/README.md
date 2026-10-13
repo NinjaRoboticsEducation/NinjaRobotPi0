@@ -4,8 +4,8 @@ Read [the parent policy](../AGENTS.md) and [project workflow](docs/PROJECT_WORKF
 Current full manuals:
 
 - [InstallationGuide.md](raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md)
-- [DevelopmentGuide.md](raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentGuide.md)
-- [DevelopmentLog.md](raw/notes/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/DevelopmentLog.md)
+- [DevelopmentGuide.md](raw/articles/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentGuide.md)
+- [DevelopmentLog.md](raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentLog.md)
 
 The [knowledge map](project-knowledge.json) resolves active source versions and reviewed code.
 Curated pages begin at [overview](wiki/overview.md). Registered raw originals are immutable.

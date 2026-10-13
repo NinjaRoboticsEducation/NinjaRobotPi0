@@ -1,0 +1,16 @@
+id: src-20261013-developmentguide-4
+path: raw/articles/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Developmentguide
+added_at: '2026-10-13T04:30:56Z'
+content_hash: sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-developmentguide-4
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T04:32:06Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T04:48:41Z'
+last_plan: pi0-web-gamepad-refinement-ingest-261013

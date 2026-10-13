@@ -108,11 +108,15 @@ sources:
   resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
   content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-webgamepadvalidation
+  resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
+  title: 20261013 Webgamepadvalidation
+  content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:c5e1bb4e66f0e19310cada67f45f936dbe1013b6af4a90b2f892986d7a09fc28
+  performed_at: '2026-10-13T04:45:00+00:00'
+  target_hash: sha256:14e5a66b40b5be68ace693b82b9d809b0b1cf4d71a42774836916f44d98ef317
   result: passed
   checks:
     source_support: passed
@@ -121,10 +125,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed CLI configuration import behavior and seeded defaults count against Owner
-    Humanoid defaults replacement evidence (2026-10-13).
-  - Verified 37 defaults seeding and REST execution status codes.
-  - Physical hardware operations remain unverified.
+  - Reviewed Web Gamepad API usage of /api/servos/movements/run against WebGamePadValidation.md.
+  - Verified single-cycle sequential execution, request locking, and unknown-status
+    latch.
+  - Hardware execution and live robot control remain unverified.
 ---
 
 # API and CLI Reference
@@ -287,3 +291,9 @@ In the web REST API, `POST /api/servos/movements/{name}/execute` executes profil
 
 [^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+
+## Movement Tool Gamepad Dispatch Contract (2026-10-13)
+
+The web gamepad dispatches sequential POST requests to `/api/servos/movements/run` with payload `{"name": "<movement_name>"}`. Each request awaits complete execution before dispatching the next cycle. An in-flight request lock shared across routes prevents concurrent command submission, and 5xx/network errors engage an unknown-status latch until manual inspection.[^src-20261013-webgamepadvalidation]
+
+[^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).

@@ -1,0 +1,26 @@
+id: src-20261013-long-log-390x740
+path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/long-log-390x740.png
+media_type: image/png
+kind: image
+title: Long Log 390X740
+added_at: '2026-10-13T04:31:03Z'
+content_hash: sha256:973c01a7052dd03256f5d1d1a4f77ba127c3518822e387624e32c15294dd94c9
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-long-log-390x740
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T04:32:14Z'
+normalizer: llmwiki-image/pillow-12.3.0
+error: null
+image:
+  format: PNG
+  width: 390
+  height: 740
+  frames: 1
+  contains_gps_metadata: false
+  contains_sensitive_metadata: false
+  asset_status: not-published
+  ocr_status: completed
+  rendition_hash: sha256:81f06835ce73b23f2941279afd9fe85667fe021d5c844bb32dfa4b9aeb428501
+ingested_at: '2026-10-13T04:48:41Z'
+last_plan: pi0-web-gamepad-refinement-ingest-261013

@@ -164,3 +164,9 @@ Ninja AI Agent initialized and attached to Dispatcher.
 ## License
 
 MIT License © 2025 Chihkuang Chang
+
+## Bluetooth readiness before server startup
+
+Onboarding's identity/Bluetooth step now checks OS Bluetooth readiness before saving name/type settings. Run `./onboard.sh --step identity` from the project root with the server stopped. Repair enables/starts `bluetooth.service` only when needed, unblocks only Bluetooth soft blocks, powers the selected controller and verifies/removes a temporary connectable advertisement. Sudo authorization may be requested. Legacy `hciuart.service` is considered only when no controller exists and legacy UART prerequisites are present; kernel-managed controllers do not require it.
+
+Use `.venv/bin/python -m ninja_ble.system_setup --check` for a read-only check, or `--repair` for Bluetooth-only setup without identity prompts. Read-only checks never change service/radio state or register an advertisement. Setup does not instantiate HAL, start a GATT robot server, restart healthy services, power-cycle controllers, change Wi-Fi, edit boot/UART settings, remove pairings, unmask policy or enable BlueZ experimental features. Existing GATT UUIDs, chunking and commands are unchanged. Hard blocks, missing controllers/firmware, busy advertisements and permission errors require the displayed corrective guidance. Passing readiness is a local advertisement check, not proof of end-to-end robot operation or persistent controller power after every reboot.
