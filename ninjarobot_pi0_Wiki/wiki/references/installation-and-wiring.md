@@ -96,11 +96,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
   content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-installationguide-4
+  resource: urn:llmwiki:source:src-20261013-installationguide-4
+  title: 20261013 Installationguide 4
+  content_hash: sha256:de6600243df33ce5a3cd5fe6d3bf2e33a4ae7d44bed7c69ccf05e7147cc5ecff
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:010e1c28a67b0cf012103ec95766999292a3b132d54a05da49aa2d1d85019e21
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:5fb6fe3181c4c7c9a4ee362b6b217e519d0e14fff44e37ed6bae13d0866da143
   result: passed
   checks:
     source_support: passed
@@ -109,11 +117,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid channel allocations against Humanoid Poweroff evidence and Owner
-    Humanoid defaults replacement evidence (2026-10-13).
-  - Verified shoulder and arm angle assignments in Poweroff rest pose without asserting
-    physical device clearance.
-  - Actuator operation remains unverified on physical hardware.
+  - Reviewed installation prerequisites and kernel vs legacy UART controller handling.
+  - Verified rfkill requirement and non-actuating advertisement test boundary.
+  - Physical hardware wiring and Bluetooth operation remain unverified.
 ---
 
 # Installation and Hardware Wiring Reference
@@ -271,3 +277,13 @@ The 2026-10-12 installation update establishes verified hardware setup and packa
 [^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
 [^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+
+## Bluetooth Radio Prerequisites and Setup Boundary (2026-10-13)
+
+System-level installation enforces prerequisites for Bluetooth Low Energy operation:[^src-20261013-installationguide-4] [^src-20261013-bleonboardingvalidation]
+* **System Dependencies**: `scripts/install_system.py` installs `rfkill` alongside `bluez` and `dbus` to enable programmatic inspection and soft unblocking of Bluetooth radio interfaces.[^src-20261013-installationguide-4]
+* **Onboarding Radio Activation**: The `./onboard.sh --step identity` wizard activates the Bluetooth radio and verifies an inert test advertisement prior to saving robot identity.[^src-20261013-installationguide-4]
+* **Controller Requirements**: Modern Raspberry Pi OS 64-bit kernels manage the Zero 2 W Broadcom/Cypress Bluetooth controller natively; forcing legacy `hciuart.service` is bypassed unless a controller is absent and legacy UART prerequisites exist.[^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-installationguide-4]: Bluetooth-enabled onboarding and installation guide (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).

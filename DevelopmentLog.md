@@ -1,6 +1,6 @@
 # DevelopmentLog
 
-[Open the current complete version](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentLog.md).
+[Open the current complete version](ninjarobot_pi0_Wiki/raw/notes/ninjarobotpi0/2026-10-13-ble-onboarding/DevelopmentLog.md).
 
 This file preserves existing public links. Full manuals live as immutable versions in the wiki.
 

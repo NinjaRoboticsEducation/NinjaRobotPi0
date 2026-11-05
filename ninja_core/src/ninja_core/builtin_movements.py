@@ -79,7 +79,10 @@ def _spider_poses() -> list[list[dict]]:
 @lru_cache(maxsize=1)
 def _humanoid_poses() -> list[list[dict]]:
     # Generic all-channel centering must remain usable by other profiles.
-    return [_movement_poses(sequence) for sequence in _humanoid_catalog().values()
+    # Keep recognizing pre-November saved poses after the owner remapped arm GPIOs.
+    legacy = json.loads(files("ninja_core").joinpath("data/humanoid_otto.json").read_text())
+    sequences = [*_humanoid_catalog().values(), *legacy["movements"].values()]
+    return [_movement_poses(sequence) for sequence in sequences
             if any(angle != 0 for step in sequence for angle in step["moves"].values())]
 
 

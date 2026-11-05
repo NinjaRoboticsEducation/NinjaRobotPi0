@@ -163,11 +163,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
   title: 20261013 Webgamepadvalidation
   content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
+- id: src-20261013-developmentguide-5
+  resource: urn:llmwiki:source:src-20261013-developmentguide-5
+  title: 20261013 Developmentguide 5
+  content_hash: sha256:aa186b9c45bca29cca91a952105dda5dee4f31c72416e0649bab093ff172ae43
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T04:45:00+00:00'
-  target_hash: sha256:e461096337d18497f83e8ffcf2ba3deecbf5449e647b130b875b9ea0099b4084
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:e738cb8daebbfde9a75af3ded2de8ad44a940874add3bcc30554cfdd3dd79164
   result: passed
   checks:
     source_support: passed
@@ -176,11 +184,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Web Gamepad and palette refinement workflow against DevelopmentGuide.md
-    and WebGamePadValidation.md.
-  - Verified frontend source additions (GamePad.jsx, useGamePad.js, nativeMovement.js)
-    and unchanged backend/driver boundary.
-  - Real hardware and native phone browser acceptance remain pending owner testing.
+  - Reviewed ninja_ble.system_setup architecture and onboarding identity integration
+    in DevelopmentGuide.
+  - Verified safety boundaries, inert test fixtures, and full regression status.
+  - Physical Pi Zero 2W testing remains pending owner verification.
 ---
 
 # Current development manual
@@ -379,3 +386,13 @@ The 2026-10-13 development manual records the owner-approved web gamepad and pal
 
 [^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
 [^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).
+
+## Bluetooth Readiness Helper and Onboarding Workflow (2026-10-13)
+
+The 2026-10-13 development manual documents the architecture, safety contracts, and test procedures for Bluetooth onboarding enablement:[^src-20261013-developmentguide-5] [^src-20261013-bleonboardingvalidation]
+* **Dedicated Setup Module**: Implements `ninja_ble.system_setup` with `--check` and `--repair` CLI options, integrated directly into `scripts/onboard.py` identity worker.[^src-20261013-developmentguide-5]
+* **Safety Contracts**: Setup never imports HAL, starts the robot runtime, restarts healthy daemons, cycles controller power, edits boot/config files, or removes existing pairings.[^src-20261013-developmentguide-5]
+* **Test Coverage**: 130 focused inert tests validate unit states, sysfs rfkill parsing, D-Bus adapter power toggling, temporary advertisement lifecycle, and error guidance; full test regression passed 707 tests and 3 subtests in 55.67s.[^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-developmentguide-5]: Bluetooth onboarding development guide (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).

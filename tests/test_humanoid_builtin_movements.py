@@ -47,7 +47,7 @@ def test_pack_matches_complete_reference_and_is_independent():
     assert len(extracted) == 34
     assert sum(map(len, extracted.values())) == 1203
     supplied = json.loads(
-        (ROOT / "DevelopmentPlanDoc/humanoid_movements_updated.json").read_text()
+        (ROOT / "DevelopmentPlanDoc/humanoid_movements_261105.json").read_text()
     )["movements"]
     assert builtin_catalog("humanoid", range(20, 28)) == supplied
     assert len(HUMANOID) == 36
@@ -55,7 +55,7 @@ def test_pack_matches_complete_reference_and_is_independent():
     assert not set(HUMANOID) & set(builtin_catalog("spider", range(20, 28)))
     assert all(
         step["moves"]["24"] == step["moves"]["25"] == 0
-        for sequence in HUMANOID.values()
+        for sequence in extracted.values()
         for step in sequence
     )
     copy = builtin_catalog("humanoid", range(20, 28))
@@ -617,7 +617,7 @@ def test_owner_default_builder_parity_and_rejects_bad_source(tmp_path):
 
     sys.path.insert(0, str(ROOT / "scripts"))
     builder = runpy.run_path(str(ROOT / "scripts/build_humanoid_defaults.py"))
-    source = ROOT / "DevelopmentPlanDoc/humanoid_movements_updated.json"
+    source = ROOT / "DevelopmentPlanDoc/humanoid_movements_261105.json"
     movements = builder["extract_defaults"](source)
     resource = ROOT / "ninja_core/src/ninja_core/data/humanoid_defaults.json"
     assert resource.read_text() == builder["render_resource"](movements)
@@ -690,10 +690,36 @@ def test_onboarding_import_then_identity_seeds_exact_owner_catalog(
     assert onboard._worker("identity") == 0
     config = load_config()
     supplied = json.loads(
-        (ROOT / "DevelopmentPlanDoc/humanoid_movements_updated.json").read_text()
+        (ROOT / "DevelopmentPlanDoc/humanoid_movements_261105.json").read_text()
     )["movements"]
     assert config.movements == supplied
     assert "home" not in config.movements
     assert set(config.movement_robot_types.values()) == {"humanoid"}
     assert onboard._worker("import") == 0
     assert load_config().movements == supplied
+
+
+@pytest.mark.parametrize("other", ["tire", "spider"])
+def test_previous_owner_geometry_still_rejected_on_other_profiles(other):
+    old = json.loads(
+        (ROOT / "DevelopmentPlanDoc/humanoid_movements_updated.json").read_text()
+    )["movements"]
+    config = profile(other)
+    config.movements["renamed_old_walk"] = deepcopy(old["humanoid_walk_forward"])
+    ctrl, servos = controller(config)
+    with pytest.raises(MovementValidationError, match="requires humanoid"):
+        ctrl.execute_movement("renamed_old_walk")
+    assert servos.calls == []
+
+
+def test_previous_owner_managed_upgrade_uses_november_defaults():
+    old = json.loads(
+        (ROOT / "DevelopmentPlanDoc/humanoid_movements_updated.json").read_text()
+    )["movements"]
+    config = profile("humanoid")
+    config.movements = deepcopy(old)
+    config.builtin_movement_hashes = {n: movement_hash(s) for n, s in old.items()}
+    config.movement_robot_types = {n: "humanoid" for n in old}
+    seed_builtin_movements(config)
+    assert config.movements == builtin_catalog("humanoid", range(20, 28))
+    assert not seed_builtin_movements(config)

@@ -112,11 +112,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
   title: 20261013 Webgamepadvalidation
   content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
+- id: src-20261013-ninja-ble-readme
+  resource: urn:llmwiki:source:src-20261013-ninja-ble-readme
+  title: 20261013 Ninja Ble Readme
+  content_hash: sha256:ad753692c64d2f1dbd3053dc3dccd0a9f6a9b62a7c4e1cfa669e76b388ee4b0d
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T04:45:00+00:00'
-  target_hash: sha256:14e5a66b40b5be68ace693b82b9d809b0b1cf4d71a42774836916f44d98ef317
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:1e01e3e9d35d5bc6fa5d73bbcd9217ce430f8c5b9b8d1e16905a4bbc1a1ad8a9
   result: passed
   checks:
     source_support: passed
@@ -125,10 +133,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Web Gamepad API usage of /api/servos/movements/run against WebGamePadValidation.md.
-  - Verified single-cycle sequential execution, request locking, and unknown-status
-    latch.
-  - Hardware execution and live robot control remain unverified.
+  - Reviewed ninja_ble.system_setup CLI options and onboarding identity worker invocation.
+  - Verified non-root terminal sudo authentication handling and read-only vs repair
+    boundaries.
+  - Physical Bluetooth pairing and hardware actuation remain unverified.
 ---
 
 # API and CLI Reference
@@ -297,3 +305,22 @@ In the web REST API, `POST /api/servos/movements/{name}/execute` executes profil
 The web gamepad dispatches sequential POST requests to `/api/servos/movements/run` with payload `{"name": "<movement_name>"}`. Each request awaits complete execution before dispatching the next cycle. An in-flight request lock shared across routes prevents concurrent command submission, and 5xx/network errors engage an unknown-status latch until manual inspection.[^src-20261013-webgamepadvalidation]
 
 [^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).
+
+## Bluetooth System Readiness and Repair CLI (2026-10-13)
+
+The `ninja_ble.system_setup` module provides scriptable CLI commands for OS-level Bluetooth inspection and repair without starting robot hardware:[^src-20261013-ninja-ble-readme] [^src-20261013-bleonboardingvalidation]
+
+```bash
+# Read-only readiness inspection (default)
+.venv/bin/python -m ninja_ble.system_setup --check
+
+# Active enablement, unblock, power, and temporary advertisement probe
+.venv/bin/python -m ninja_ble.system_setup --repair
+```
+
+* `--check`: Inspects `bluetooth.service` status, reads `/sys/class/rfkill` sysfs attributes, verifies controller power via BlueZ D-Bus, and checks LE advertising manager availability without changing system state or registering advertisements.[^src-20261013-ninja-ble-readme]
+* `--repair`: Enables/starts inactive Bluetooth services, unblocks soft-blocked radios, powers the default controller (`org.bluez.Adapter1`), and registers/cleans up a temporary test advertisement (`ReadinessAdvertisement`). Prompts for `sudo` directly in the terminal without capturing passwords in memory.[^src-20261013-bleonboardingvalidation]
+* **Onboarding Integration**: `./onboard.sh --step identity` invokes `run_setup(repair=True)` before prompting for robot name and profile type.[^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-ninja-ble-readme]: ninja_ble package README with Bluetooth readiness contracts (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).

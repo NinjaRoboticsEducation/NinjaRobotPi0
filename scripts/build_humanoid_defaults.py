@@ -11,9 +11,9 @@ from pathlib import Path
 from build_humanoid_movements import render_resource, unique_object
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "DevelopmentPlanDoc/humanoid_movements_updated.json"
+SOURCE = ROOT / "DevelopmentPlanDoc/humanoid_movements_261105.json"
 RESOURCE = ROOT / "ninja_core/src/ninja_core/data/humanoid_defaults.json"
-FINGERPRINT = "2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24"
+FINGERPRINT = "6a2397a7838d091dc1c7eaae2a6fc9eaa59ea8c33dc50c5b29e201d307a8f281"
 
 
 def extract_defaults(source: Path = SOURCE) -> dict[str, list]:

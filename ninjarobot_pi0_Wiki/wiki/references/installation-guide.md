@@ -127,11 +127,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
   content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-installationguide-4
+  resource: urn:llmwiki:source:src-20261013-installationguide-4
+  title: 20261013 Installationguide 4
+  content_hash: sha256:de6600243df33ce5a3cd5fe6d3bf2e33a4ae7d44bed7c69ccf05e7147cc5ecff
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:eb2cf2afdae23ec2a9a2a5d7615b9a00c27f6aca23851f2c750f6493f5362648
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:5a2fd3c6376c20943facbd6bd8ebedb8d81b421aca97a547dafd0a637345c492
   result: passed
   checks:
     source_support: passed
@@ -140,11 +148,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed against Node extraction storage repair manual and evidence (2026-10-12)
-    and Owner Humanoid defaults replacement manual and evidence (2026-10-13).
-  - Verified private TMPDIR disk workspace contracts, 2GB free space check, and 37-movement
-    defaults catalog seeding.
-  - Physical Raspberry Pi 0 2W hardware qualification remains pending manual verification.
+  - Reviewed rfkill inclusion in install_system.py and identity onboarding repair
+    in scripts/onboard.py.
+  - Verified alignment with InstallationGuide and BLEOnboardingValidation evidence.
+  - Target hardware radio state across system reboot remains pending physical verification.
 ---
 
 # Current installation manual
@@ -283,3 +290,14 @@ If extraction fails, workspace diagnostics report free filesystem space before c
 [^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
 [^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+
+## Bluetooth Readiness and OS Package Prerequisites (2026-10-13)
+
+The 2026-10-13 update incorporates automated Bluetooth readiness and essential radio management packages into the standard setup workflow:[^src-20261013-installationguide-4] [^src-20261013-bleonboardingvalidation]
+* **OS Package Management**: `scripts/install_system.py` includes `rfkill` in the core apt package list alongside `bluez` and `dbus` to support programmatic radio unblocking.[^src-20261013-installationguide-4]
+* **Onboarding Repair Flow**: `./onboard.sh --step identity` runs Bluetooth repair before naming, ensuring systemd services are enabled, the adapter is powered, and a test advertisement can register cleanly.[^src-20261013-installationguide-4]
+* **Independent Diagnostic Verification**: Operators can verify setup without touching configuration using `.venv/bin/python -m ninja_ble.system_setup --check` (or `--repair` for standalone fixes).[^src-20261013-installationguide-4]
+* **Testing Limits**: Bounded host tests verify service logic and failure recovery; actual Bluetooth communication and reboot power persistence remain pending verification on physical Raspberry Pi hardware.[^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-installationguide-4]: Bluetooth-enabled onboarding and installation guide (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).

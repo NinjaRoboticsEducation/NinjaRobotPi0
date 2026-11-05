@@ -36,11 +36,19 @@ sources:
   resource: urn:llmwiki:source:src-20261010-lifecyclerefinementsevidence
   title: Lifecyclerefinementsevidence
   content_hash: sha256:c34468e740adccacc6546a2afe39fd41562eed229ae5795255577b044d4fd09e
+- id: src-20261013-ninja-ble-readme
+  resource: urn:llmwiki:source:src-20261013-ninja-ble-readme
+  title: 20261013 Ninja Ble Readme
+  content_hash: sha256:ad753692c64d2f1dbd3053dc3dccd0a9f6a9b62a7c4e1cfa669e76b388ee4b0d
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-10T12:07:31.827347+00:00'
-  target_hash: sha256:45d874d13f415c12c4258ac4a2c9819f955869c3a82cb3db4789904d2790343d
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:3a7ff54d72106f56e3d86f44748f96bd22c7bf7eb1d333cb5ace18f072c49e81
   result: passed
   checks:
     source_support: passed
@@ -49,11 +57,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed connectivity protocols against web_server.py, web_sessions.py, and ninja_ble.
-    Session ownership via /ws/session and HttpOnly cookie, 423/503 status codes, and
-    BLE independence match code.
-  - Session ownership provides connection management, not user authentication. BLE
-    advertising is not an active controller.
+  - Reviewed OS Bluetooth readiness contracts against ninja_ble.system_setup and BLEOnboardingValidation.
+  - Verified distinction between inert setup advertisement probe and active GATT server
+    dispatch.
+  - Physical radio validation and client pairing remain pending owner verification
+    on target hardware.
 ---
 
 # Dual Connectivity and Communication Protocols
@@ -128,3 +136,14 @@ This protocol governs connection ownership rather than login authentication. API
 
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
+
+## Operating System Bluetooth Readiness and Advertisement Probing (2026-10-13)
+
+To ensure zero-configuration BLE works reliably on fresh Raspberry Pi OS deployments without manual system administration, the Bluetooth transport is backed by automated OS readiness checks:[^src-20261013-ninja-ble-readme] [^src-20261013-bleonboardingvalidation]
+* **Debian Service Activation Gap**: While `scripts/install_system.py` installs `bluez`, `dbus`, and `rfkill`, Debian package installation intentionally suppresses automatic service startup. The setup helper bridges this gap by enabling and starting `bluetooth.service` when missing.[^src-20261013-bleonboardingvalidation]
+* **Software Switch Management**: Directly inspects `/sys/class/rfkill` sysfs attributes for Bluetooth soft blocks, clearing them via `rfkill unblock bluetooth` during onboarding repair while alerting operators to hardware switches.[^src-20261013-bleonboardingvalidation]
+* **Preflight Advertisement Verification**: Probes `org.bluez.LEAdvertisingManager1` by temporarily registering an inert peripheral advertisement (`ReadinessAdvertisement`), verifying controller availability and unexporting the object before starting full robot services.[^src-20261013-bleonboardingvalidation] Active external advertisements abort setup to prevent conflicting GATT instances.[^src-20261013-bleonboardingvalidation]
+* **Isolation & Boundaries**: System setup operates independently of `CommandDispatcher`, never opens HAL devices or moves servos, and never treats BLE advertising as an active browser control session.[^src-20261013-ninja-ble-readme] [^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-ninja-ble-readme]: ninja_ble package README with Bluetooth readiness contracts (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).

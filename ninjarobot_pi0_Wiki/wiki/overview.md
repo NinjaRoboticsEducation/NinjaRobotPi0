@@ -112,11 +112,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-developmentguide-4
   title: 20261013 Developmentguide 4
   content_hash: sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947
+- id: src-20261013-readme
+  resource: urn:llmwiki:source:src-20261013-readme
+  title: 20261013 Readme
+  content_hash: sha256:a86c8bc27c010c9a85f722bec14e6c56158e515373f4ad28dd1677a6fe5782b3
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T04:45:00+00:00'
-  target_hash: sha256:b40e762692439fad334c85827048db2e6a82ac7e142e1294ea1179ad5d7f2363
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:3f0060fb081dc5524dafeb32c3f84cfec6114445618446adcd348d0fa38eb630
   result: passed
   checks:
     source_support: passed
@@ -125,9 +133,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Web Gamepad and refined mobile navigation features against DevelopmentGuide.md.
-  - Verified 5-button touch pad, finish-current-cycle behavior, and palette updates.
-  - Physical device and hardware acceptance remain pending.
+  - Reviewed platform overview additions against README and BLEOnboardingValidation.
+  - Verified automated identity step repair and standalone CLI diagnostic verification.
+  - Physical robot hardware and wireless connectivity remain pending live validation.
 ---
 
 # NinjaRobotPi0 Platform Overview
@@ -306,3 +314,12 @@ The Humanoid robot profile incorporates an expanded native movement library and 
 The Movement Tool features a touch-optimized five-button cross gamepad for direct gait execution (with finish-current-cycle release behavior) alongside manual servo, face expression, and buzzer controls in four languages, styled with refined contrast tokens and cyan card outlines.[^src-20261013-developmentguide-4]
 
 [^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
+
+## Automated Bluetooth Readiness and Onboarding Support (2026-10-13)
+
+The platform integrates automated Bluetooth Low Energy system readiness into standard onboarding:[^src-20261013-readme] [^src-20261013-bleonboardingvalidation]
+* **Zero-Configuration Setup**: Running `./onboard.sh --step identity` automatically checks and enables required BlueZ systemd services, clears software radio blocks via `rfkill`, powers the controller, and validates advertising readiness before saving identity settings.[^src-20261013-readme]
+* **Diagnostic Transparency**: Dedicated CLI commands (`.venv/bin/python -m ninja_ble.system_setup --check` and `--repair`) allow operators to verify radio availability and inspect actionable troubleshooting guidance without launching the robot server or moving actuators.[^src-20261013-readme] [^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-readme]: NinjaRobotPi0 English README snapshot with BLE onboarding guidance (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).

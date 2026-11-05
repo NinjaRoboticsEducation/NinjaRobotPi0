@@ -84,11 +84,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
   content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261013-installationguide-4
+  resource: urn:llmwiki:source:src-20261013-installationguide-4
+  title: 20261013 Installationguide 4
+  content_hash: sha256:de6600243df33ce5a3cd5fe6d3bf2e33a4ae7d44bed7c69ccf05e7147cc5ecff
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:0d21425e731e0577649507c695235993b665874795d07a585616a7742cd3c3cb
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:45ef6eb844caff71fe11af0e0d222e8679e95c033326a74e86da3b55daa84ea4
   result: passed
   checks:
     source_support: passed
@@ -97,11 +105,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed movement-tool option 4 catalog discovery and option 6 exit rest posture
-    against Humanoid Poweroff evidence and Owner Humanoid defaults replacement evidence
-    (2026-10-13).
-  - Verified option 4 discovery of 37 Humanoid defaults and option 6 Poweroff execution.
-  - Physical actuator motion remains unverified.
+  - Reviewed onboarding identity step enhancement against InstallationGuide and BLEOnboardingValidation.
+  - Verified sudo execution isolation, temporary advertisement verification, and error
+    reporting.
+  - Physical actuator motion and real radio validation remain unverified.
 ---
 
 # Hardware Calibration and Testing Tools Reference
@@ -204,3 +211,14 @@ In `uv run ninja_core init-tool`, option 1 is updated to **Select AI model** (su
 [^src-20261013-humanoidpoweroffevidence]: Humanoid Poweroff implementation evidence (2026-10-13).
 [^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+
+## Onboarding Identity Step and Bluetooth Readiness Inspection (2026-10-13)
+
+The guided onboarding wizard (`./onboard.sh --step identity`) automates Bluetooth radio verification before collecting robot identity settings:[^src-20261013-installationguide-4] [^src-20261013-bleonboardingvalidation]
+* **Automatic Readiness & Repair**: Selecting the identity step invokes `ninja_ble.system_setup.run_setup(repair=True)` to ensure `bluetooth.service` is loaded/active, rfkill software switches are unblocked, and the adapter is powered.[^src-20261013-installationguide-4]
+* **Temporary Advertisement Probe**: Confirms advertising capabilities by registering and immediately tearing down an inert connectable advertisement without launching the robot command server.[^src-20261013-bleonboardingvalidation]
+* **Privilege Elevation**: Requests administrative privileges using interactive `sudo -v` directly on the terminal; setup never stores or echoes credentials.[^src-20261013-installationguide-4]
+* **Failure Guidance**: Reports actionable diagnostics for hardware blocks, masked systemd units, missing kernel controllers, or busy advertising slots without altering healthy system states.[^src-20261013-installationguide-4] [^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-installationguide-4]: Bluetooth-enabled onboarding and installation guide (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).

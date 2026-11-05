@@ -1,0 +1,16 @@
+id: src-20261013-installationguide-4
+path: raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: Installationguide
+added_at: '2026-10-13T05:46:03Z'
+content_hash: sha256:de6600243df33ce5a3cd5fe6d3bf2e33a4ae7d44bed7c69ccf05e7147cc5ecff
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-installationguide-4
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T05:46:37Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T06:58:20Z'
+last_plan: pi0-ble-onboarding-ingest-261013

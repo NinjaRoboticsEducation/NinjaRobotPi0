@@ -147,11 +147,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
   title: 20261013 Webgamepadvalidation
   content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
+- id: src-20261013-developmentguide-5
+  resource: urn:llmwiki:source:src-20261013-developmentguide-5
+  title: 20261013 Developmentguide 5
+  content_hash: sha256:aa186b9c45bca29cca91a952105dda5dee4f31c72416e0649bab093ff172ae43
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T04:45:00+00:00'
-  target_hash: sha256:dd2cde32cb495bb53f1f29ad23f8675afab2445c1d5bc2a254a9b827d39a06c1
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:122f7e8371cf2f02270d09fc5875976f0f76628bbe1b5c571f1917f35e7cd029
   result: passed
   checks:
     source_support: passed
@@ -160,11 +168,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Web Gamepad and palette refinement validation boundaries against DevelopmentGuide.md
-    and WebGamePadValidation.md.
-  - Verified browser test suite expansion (813+ assertions) and strict separation
-    from physical hardware acceptance.
-  - Physical Raspberry Pi Zero 2 W acceptance remains pending.
+  - Reviewed test automation in tests/test_ble_setup.py and onboarding identity test
+    fixtures.
+  - Verified inert D-Bus mocking, branch coverage, and execution times.
+  - Physical Bluetooth pairing and radio testing remain unverified.
 ---
 
 # Development and immutable documentation workflow
@@ -351,3 +358,13 @@ The 2026-10-13 web refinement demonstrates the project's strict boundary between
 
 [^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
 [^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).
+
+## Bluetooth System Readiness and Onboarding Verification (2026-10-13)
+
+The 2026-10-13 milestone integrates comprehensive inert test coverage for system-level Bluetooth readiness:[^src-20261013-developmentguide-5] [^src-20261013-bleonboardingvalidation]
+* **Inert System Fixtures**: Tests in `tests/test_ble_setup.py` (130 test cases) utilize mock D-Bus message buses and sysfs attributes to simulate loaded/masked units, rfkill blocks, permission errors, and busy advertising slots without executing real OS commands or root privileges.[^src-20261013-bleonboardingvalidation]
+* **Onboarding Fixture Adaptation**: Verified that onboarding test suites properly mock Bluetooth setup checks, ensuring full regression of 707 tests and 3 subtests passes in 55.67s.[^src-20261013-bleonboardingvalidation]
+* **Acceptance Boundaries**: Passing host mocks validates software branch coverage and error reporting; physical Bluetooth transmission, signal strength, and client pairing remain pending validation on Raspberry Pi hardware.[^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-developmentguide-5]: Bluetooth onboarding development guide (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).

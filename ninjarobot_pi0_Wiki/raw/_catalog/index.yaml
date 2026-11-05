@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-13T04:49:02Z'
+generated_at: '2026-10-13T06:58:43Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -641,6 +641,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-12-fresh-install/README-English.md
   kind: text
   state: ingested
+- id: src-20261013-bleonboardingvalidation
+  title: Bleonboardingvalidation
+  path: raw/notes/ninjarobotpi0/2026-10-13-ble-onboarding/BLEOnboardingValidation.md
+  kind: text
+  state: ingested
 - id: src-20261013-chat-390x740
   title: Chat 390X740
   path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/chat-390x740.png
@@ -661,6 +666,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentGuide.md
   kind: text
   state: ingested
+- id: src-20261013-developmentguide-5
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/DevelopmentGuide.md
+  kind: text
+  state: ingested
 - id: src-20261013-developmentguide
   title: Developmentguide
   path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/DevelopmentGuide.md
@@ -679,6 +689,11 @@ sources:
 - id: src-20261013-developmentlog-4
   title: Developmentlog
   path: raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261013-developmentlog-5
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-10-13-ble-onboarding/DevelopmentLog.md
   kind: text
   state: ingested
 - id: src-20261013-developmentlog
@@ -721,6 +736,11 @@ sources:
   path: raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md
   kind: text
   state: ingested
+- id: src-20261013-installationguide-4
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/InstallationGuide.md
+  kind: text
+  state: ingested
 - id: src-20261013-installationguide
   title: Installationguide
   path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/InstallationGuide.md
@@ -746,6 +766,11 @@ sources:
   path: raw/media/ninjarobotpi0/2026-10-13-web-gamepad/movement-enlarged-ja-390x740.png
   kind: image
   state: ingested
+- id: src-20261013-ninja-ble-readme
+  title: Ninja Ble Readme
+  path: raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/ninja-ble-README.md
+  kind: text
+  state: ingested
 - id: src-20261013-nodeinstallevidence
   title: Nodeinstallevidence
   path: raw/notes/ninjarobotpi0/2026-10-12-node-storage/NodeInstallEvidence.md
@@ -764,6 +789,11 @@ sources:
 - id: src-20261013-readme-english
   title: Readme English
   path: raw/articles/ninjarobotpi0/2026-10-12-node-storage/README-English.md
+  kind: text
+  state: ingested
+- id: src-20261013-readme
+  title: Readme
+  path: raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/README.md
   kind: text
   state: ingested
 - id: src-20261013-webgamepadvalidation

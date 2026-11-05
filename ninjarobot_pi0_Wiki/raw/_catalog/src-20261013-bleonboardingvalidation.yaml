@@ -1,0 +1,16 @@
+id: src-20261013-bleonboardingvalidation
+path: raw/notes/ninjarobotpi0/2026-10-13-ble-onboarding/BLEOnboardingValidation.md
+media_type: text/markdown
+kind: text
+title: Bleonboardingvalidation
+added_at: '2026-10-13T05:46:19Z'
+content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T05:46:39Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T06:58:20Z'
+last_plan: pi0-ble-onboarding-ingest-261013

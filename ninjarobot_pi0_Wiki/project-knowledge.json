@@ -1,13 +1,13 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-13T04:50:00+00:00",
+  "reviewed_at": "2026-10-13T07:00:00+00:00",
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-13-humanoid-owner-defaults/InstallationGuide.md",
-      "source_id": "src-20261013-installationguide-3",
-      "content_hash": "sha256:d59708b5309c7ae3942fad115570df988f8cccec77ac37282b739017e16ddf05",
+      "path": "raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/InstallationGuide.md",
+      "source_id": "src-20261013-installationguide-4",
+      "content_hash": "sha256:de6600243df33ce5a3cd5fe6d3bf2e33a4ae7d44bed7c69ccf05e7147cc5ecff",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentGuide.md",
-      "source_id": "src-20261013-developmentguide-4",
-      "content_hash": "sha256:e05052fa905ffde7ae31a2eb5b36a5a06a262fe15b2be2509f20a1ae215d0947",
+      "path": "raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/DevelopmentGuide.md",
+      "source_id": "src-20261013-developmentguide-5",
+      "content_hash": "sha256:aa186b9c45bca29cca91a952105dda5dee4f31c72416e0649bab093ff172ae43",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/DevelopmentLog.md",
-      "source_id": "src-20261013-developmentlog-4",
-      "content_hash": "sha256:539e4daccc4b42208959ee469d79cc528c49d1209c59ed44a7205ed06bd0402f",
+      "path": "raw/notes/ninjarobotpi0/2026-10-13-ble-onboarding/DevelopmentLog.md",
+      "source_id": "src-20261013-developmentlog-5",
+      "content_hash": "sha256:1b1db087d02a26f015f3c5e219a021f6205a0ceb8c7d1d0c625e5ec92481d142",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -276,11 +276,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "README.md": {
-      "content_hash": "sha256:848fdd4ba6b3b835cf224df43709fe80d63f7ab0527288a5b23f81e6b7110cca",
+      "content_hash": "sha256:94426993ccd412a49bdf14a835744c28a585fb1d33bf8a40ac03098195ca68c5",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Public README manual references updated to 2026-10-13 web gamepad and palette refinement release."
+      "review_note": "Public README manual references updated with Bluetooth Low Energy setup, rfkill prerequisites, and onboarding identity verification."
     },
     "docs/validation/core_baseline.json": {
       "content_hash": "sha256:e6251e4c71055ac6f1679edc6da0f5d8036a8c269a15dcfa2af381402796512d",
@@ -1799,22 +1799,22 @@
       "review_note": "Reviewed fsync, atomic replacement and finally cleanup; injected failure leaves no temporary record."
     },
     "scripts/install_system.py": {
-      "content_hash": "sha256:8fc024cf19e8da9806ad5ac64d623d3fdaad6452b9c44ee23c01cb241ef8e27b",
+      "content_hash": "sha256:e8659632f158d69c391a97c3c36498407c607250ee1299006a1ca33b07a54966",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "System installer module updated with private extraction workspace and disk capacity guards."
+      "review_note": "System package installer updated to include rfkill alongside bluez and dbus for programmatic Bluetooth radio management."
     },
     "scripts/onboard.py": {
-      "content_hash": "sha256:62700ae1dbc9f9d823d3e8abe5b85718ab8c9f1177cc994f8db23fadf739a942",
+      "content_hash": "sha256:1e36e1c8c861f3561f2a1e19ef8639cb08cea0028b1aea7691041884afbd0aaa",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/concepts/guided-onboarding.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Reviewed compatibility policy and call sites: locked Vite engine range, read-only uv sync capability probe, reuse existing compatible PATH tools before private fallbacks, no codename allowlist, actual Python runtime minimum, unchanged device/user/core constraints. Tests cover reuse, boundaries, missing environment, failure and retry; checksum downloads and lockfiles retained."
+      "review_note": "Onboarding identity step updated to invoke ninja_ble.system_setup.run_setup(repair=True) before setting robot name and profile type."
     },
     "scripts/verify_core.py": {
       "content_hash": "sha256:bb1943c6120fb7c4daa1cfce815ab92dd895a9a513fddd59aa585c460f97846c",
@@ -2098,21 +2098,21 @@
       "review_note": "Movement Tool page integrates GamePad component, unboxed distance, and shared movement execution lock."
     },
     "DevelopmentGuide.md": {
-      "content_hash": "sha256:987469bf0efa347341501b2d503bdb9be4eef8cb1e8f7324286dc662d888133b",
+      "content_hash": "sha256:158b8ec9c235a84bf6e194eef65a5e7285909ffc0c5f81069ae8334598d206d1",
       "pages": [
         "wiki/references/development-guide.md"
       ],
       "review_note": "Root compatibility pointer updated to 2026-10-13 web gamepad DevelopmentGuide."
     },
     "DevelopmentLog.md": {
-      "content_hash": "sha256:a96c276c9ce7e3f9bcf2b808a5a821496522047a3c50e5de3a79626ed0d73dea",
+      "content_hash": "sha256:74438a1dc211cc1832875e5c2eae149cc104e685e5e3515ecc930e72ecd97b0e",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ],
       "review_note": "Root compatibility pointer updated to 2026-10-13 web gamepad DevelopmentLog."
     },
     "ninjarobot_pi0_Wiki/README.md": {
-      "content_hash": "sha256:84a9ffa40dc667e10c2450c371d4bb8d9f9c30e848fbac791fa2429fc5e59139",
+      "content_hash": "sha256:edf9b713b997acd0dca1a7eb41af93e3cfeb043313f78a80590e657127efa6e5",
       "pages": [
         "wiki/overview.md"
       ],
@@ -2165,12 +2165,12 @@
       "review_note": "Deterministic compiler extracting humanoid waypoint definitions from documentation into ninja_core package data."
     },
     "tests/test_humanoid_builtin_movements.py": {
-      "content_hash": "sha256:8d9ef603d97c0f91e0303e670813c753f5ccc10d8587bc01a80419fb9adb881f",
+      "content_hash": "sha256:538245d0260497c9ab7e20845e4c2f1ca6d80653f5a304606340efd0b61306a8",
       "pages": [
         "wiki/concepts/humanoid-otto-waypoint-library.md",
         "wiki/references/development-guide.md"
       ],
-      "review_note": "Humanoid test suite verifying 37 movements, 1,278 steps, speed validation (1,204 M, 74 F), and Poweroff angle constraints."
+      "review_note": "Humanoid test suite updated with inert system_setup mock during onboarding identity seeding tests."
     },
     "tests/test_web_robot_status.py": {
       "content_hash": "sha256:3fa5361a24492e2758c117f516e5073defe399efaadc1038ddb1be9253068ccd",
@@ -2236,6 +2236,25 @@
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Dedicated automated test suite validating gamepad pointer interactions, finish-current-cycle loops, and route locks."
+    },
+    "ninja_ble/src/ninja_ble/system_setup.py": {
+      "content_hash": "sha256:6f26cf5f5e3417db843214b42c8e9a26b7d7502ce4d4b8a03698c866a151c486",
+      "pages": [
+        "wiki/entities/ninja-ble.md",
+        "wiki/concepts/dual-connectivity-and-protocols.md",
+        "wiki/references/api-and-cli-reference.md",
+        "wiki/references/development-guide.md"
+      ],
+      "review_note": "Bluetooth-only OS readiness and repair module providing --check and --repair CLI and programmatic onboarding verification."
+    },
+    "tests/test_ble_setup.py": {
+      "content_hash": "sha256:4a7c750cfe99d179e356b82f6d01bd3dccbec111bb19fba6125be72e30f9e863",
+      "pages": [
+        "wiki/entities/ninja-ble.md",
+        "wiki/concepts/dual-connectivity-and-protocols.md",
+        "wiki/concepts/development-workflow.md"
+      ],
+      "review_note": "Comprehensive inert test suite covering Bluetooth readiness checks, unit states, rfkill attributes, adapter power, and advertisement lifecycle."
     }
   },
   "adapters": [

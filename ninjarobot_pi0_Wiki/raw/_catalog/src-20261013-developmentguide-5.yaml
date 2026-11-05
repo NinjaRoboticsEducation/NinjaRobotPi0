@@ -1,0 +1,16 @@
+id: src-20261013-developmentguide-5
+path: raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/DevelopmentGuide.md
+media_type: text/markdown
+kind: text
+title: Developmentguide
+added_at: '2026-10-13T05:45:54Z'
+content_hash: sha256:aa186b9c45bca29cca91a952105dda5dee4f31c72416e0649bab093ff172ae43
+state: ingested
+original_uri: urn:llmwiki:source:src-20261013-developmentguide-5
+source_version: null
+retrieved_at: null
+normalized_at: '2026-10-13T05:46:36Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-10-13T06:58:20Z'
+last_plan: pi0-ble-onboarding-ingest-261013

@@ -208,11 +208,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
   title: 20261013 Webgamepadvalidation
   content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
+- id: src-20261013-developmentlog-5
+  resource: urn:llmwiki:source:src-20261013-developmentlog-5
+  title: 20261013 Developmentlog 5
+  content_hash: sha256:1b1db087d02a26f015f3c5e219a021f6205a0ceb8c7d1d0c625e5ec92481d142
+- id: src-20261013-bleonboardingvalidation
+  resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
+  title: 20261013 Bleonboardingvalidation
+  content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T04:45:00+00:00'
-  target_hash: sha256:df70700e20b331e27d4e7ce190a9ffe9927048fc042d092914c22a623ff369df
+  performed_at: '2026-10-13T05:55:00+00:00'
+  target_hash: sha256:8afef24f8bc194e14ff5d65a27b7835fce687d029f327e543b8733025b487d05
   result: passed
   checks:
     source_support: passed
@@ -221,11 +229,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Web Gamepad and palette refinement milestone against DevelopmentLog.md
-    and WebGamePadValidation.md.
-  - Verified sequential single-cycle gamepad loop, palette contrast updates, and unchanged
-    robot Python drivers.
-  - Physical robot acceptance and native mobile browser testing remain pending.
+  - Reviewed BLE readiness milestone in DevelopmentLog and BLEOnboardingValidation.
+  - Verified historical context of BlueZ service suppression and automated onboarding
+    repair.
+  - Physical Raspberry Pi validation remains pending owner acceptance.
 ---
 
 # Development History and Evolution
@@ -485,3 +492,13 @@ Following owner approval of `DevelopmentPlanDoc/NinjaRobotPi0WebRefinement_26101
 
 [^src-20261013-developmentlog-4]: Web gamepad and palette refinement Development Log (2026-10-13).
 [^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).
+
+## BLE readiness and automatic enablement milestone (2026-10-13)
+
+The 2026-10-13 development milestone addresses a setup-readiness gap where Debian package installation suppressed automatic BlueZ service startup, causing subsequent BLE advertising attempts to fail without diagnostics:[^src-20261013-developmentlog-5] [^src-20261013-bleonboardingvalidation]
+* **Automated System Setup**: Implemented `ninja_ble.system_setup` to check service/radio/controller status and repair missing unit states, soft blocks, and unpowered adapters before prompting for robot identity in `./onboard.sh`.[^src-20261013-developmentlog-5]
+* **Non-destructive Probing**: Verified advertising capabilities via a temporary test advertisement that is immediately unregistered and disconnected, avoiding conflicts with future `ninja_core server` execution.[^src-20261013-bleonboardingvalidation]
+* **Host Validation**: 130 focused inert tests and 707 full regression tests passed on Python 3.11.15; physical on-device radio verification and reboot persistence remain pending owner acceptance.[^src-20261013-developmentlog-5] [^src-20261013-bleonboardingvalidation]
+
+[^src-20261013-developmentlog-5]: Development log with BLE readiness and automatic enablement milestone (2026-10-13).
+[^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
