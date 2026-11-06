@@ -86,7 +86,7 @@ def test_fresh_default_import_and_existing_load_are_non_actuating(tmp_path, monk
 
 def test_resource_matches_owner_validated_pack_and_document():
     root = Path(__file__).resolve().parents[1]
-    supplied = json.loads("{" + (root / "DevelopmentPlanDoc/spider_movement.json").read_text() + "}")["movements"]
+    supplied = json.loads((root / "DevelopmentPlanDoc/spider_movements_261106.json").read_text())["movements"]
     catalog = builtin_catalog("spider", range(20, 28))
     assert catalog == supplied
     assert "spider_moonwalk_right" in catalog
@@ -389,3 +389,40 @@ def test_validated_catalog_upgrade_replaces_managed_directions_and_preserves_edi
     assert config.movements["spider_turn_right"] == edited
     assert config.movements["custom"] == custom
     assert not seed_builtin_movements(config)
+
+
+def test_november_spider_builder_and_previous_catalog_upgrade(monkeypatch, tmp_path):
+    import runpy
+    import sys
+    from ninja_core import builtin_movements
+
+    root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(root / "scripts"))
+    builder = runpy.run_path(str(root / "scripts/build_spider_defaults.py"))
+    current = builder["extract_defaults"]()
+    assert builtin_catalog("spider", range(20, 28)) == current
+    source = root / "DevelopmentPlanDoc/spider_movements_261106.json"
+    bad = tmp_path / "bad.json"
+    bad.write_text(source.read_text() + "}")
+    with pytest.raises(json.JSONDecodeError):
+        builder["extract_defaults"](bad)
+    bad.write_text(source.read_text().replace('"speed": "M"', '"speed": "S"', 1))
+    with pytest.raises(ValueError, match="Owner catalog changed"):
+        builder["extract_defaults"](bad)
+    old = json.loads((root / "ninja_core/src/ninja_core/data/spider_otto.json").read_text())["movements"]
+    config = profile()
+    with monkeypatch.context() as patch:
+        patch.setattr(builtin_movements, "builtin_catalog", lambda *_: deepcopy(old))
+        seed_builtin_movements(config)
+    config.movements["spider_dance"][0]["moves"]["20"] = 1
+    seed_builtin_movements(config)
+    for name in ["spider_walk_forward", "spider_walk_backward", "spider_run_forward", "spider_run_backward"]:
+        assert config.movements[name] == current[name]
+    assert config.movements["spider_dance"][0]["moves"]["20"] == 1
+    assert not seed_builtin_movements(config)
+    other = profile("humanoid")
+    other.movements["renamed_legacy_walk"] = old["spider_walk_forward"]
+    ctrl, servos = controller(other)
+    with pytest.raises(MovementValidationError, match="requires spider"):
+        ctrl.execute_movement("renamed_legacy_walk")
+    assert servos.calls == []

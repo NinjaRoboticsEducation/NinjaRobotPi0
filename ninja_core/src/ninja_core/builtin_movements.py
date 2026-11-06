@@ -44,13 +44,8 @@ def movement_hash(sequence: list) -> str:
 
 @lru_cache(maxsize=1)
 def _spider_catalog() -> dict[str, list]:
-    pack = json.loads(files("ninja_core").joinpath("data/spider_otto.json").read_text())
-    movements = {
-        name.replace("spider_otto_", "spider_", 1): steps
-        for name, steps in pack["movements"].items()
-    }
-    movements["Poweroff"] = SPIDER_POWEROFF
-    return movements
+    pack = json.loads(files("ninja_core").joinpath("data/spider_defaults.json").read_text())
+    return pack["movements"]
 
 
 @lru_cache(maxsize=1)
@@ -73,7 +68,9 @@ def _movement_poses(sequence: list) -> list[dict | None]:
 @lru_cache(maxsize=1)
 def _spider_poses() -> list[list[dict]]:
     # Speed edits and omitted empty overrides do not change robot geometry.
-    return [_movement_poses(sequence) for sequence in _spider_catalog().values()]
+    legacy = json.loads(files("ninja_core").joinpath("data/spider_otto.json").read_text())
+    return [_movement_poses(sequence) for sequence in
+            [*_spider_catalog().values(), *legacy["movements"].values()]]
 
 
 @lru_cache(maxsize=1)
