@@ -120,11 +120,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
   title: 20261013 Bleonboardingvalidation
   content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+- id: src-20261106-developmentguide-2
+  resource: urn:llmwiki:source:src-20261106-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:3e4e56d6423823c62c46849d41649c55e531ab9f667479987946337d1e8c94d6
+- id: src-20261106-installationguide-2
+  resource: urn:llmwiki:source:src-20261106-installationguide-2
+  title: Installationguide
+  content_hash: sha256:d33d18c47e5756552ac5fc5d067a0dc9bff747fa6c6f94cade053b9a4d22b89a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T05:55:00+00:00'
-  target_hash: sha256:3f0060fb081dc5524dafeb32c3f84cfec6114445618446adcd348d0fa38eb630
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:7e796f694cac56b5f493075736336afcc4635d595e9b8d7d2190cc7959b5895a
   result: passed
   checks:
     source_support: passed
@@ -133,8 +141,9 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed platform overview additions against README and BLEOnboardingValidation.
-  - Verified automated identity step repair and standalone CLI diagnostic verification.
+  - Reviewed platform overview additions against 2026-11-06 development and installation
+    guides.
+  - Verified catalog specifications for Humanoid (37 movements) and Spider (20 movements).
   - Physical robot hardware and wireless connectivity remain pending live validation.
 ---
 
@@ -323,3 +332,13 @@ The platform integrates automated Bluetooth Low Energy system readiness into sta
 
 [^src-20261013-readme]: NinjaRobotPi0 English README snapshot with BLE onboarding guidance (2026-10-13).
 [^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
+
+## Humanoid and Spider Default Movement Catalogs (2026-11-05 and 2026-11-06)
+
+The platform incorporates verified native default movement catalogs for Humanoid and Spider configurations:[^src-20261106-developmentguide-2] [^src-20261106-installationguide-2]
+* **Humanoid Default Library (2026-11-05)**: 37 unique movements / 1,278 complete eight-channel steps compiled into `ninja_core/data/humanoid_defaults.json`, transferring arm keyframes to shoulders GPIO 24/25 with 74 S, 148 F, and 1,056 M steps.[^src-20261106-developmentguide-2]
+* **Spider Default Library (2026-11-06)**: 20 unique movements / 566 steps compiled into `ninja_core/data/spider_defaults.json`, with walk sequences executing at slow speed S and runs at fast speed F (417 M, 75 S, 74 F steps).[^src-20261106-installationguide-2]
+* **Automated Reconciliation**: `.venv/bin/ninja_core config import` automatically populates the appropriate catalog based on active robot type (`ninja_core config set-type <type>`), preserving custom user edits and calibration.[^src-20261106-installationguide-2]
+
+[^src-20261106-developmentguide-2]: Spider default replacement Development Guide (2026-11-06).
+[^src-20261106-installationguide-2]: Spider default replacement Installation Guide (2026-11-06).

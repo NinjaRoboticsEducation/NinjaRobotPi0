@@ -104,11 +104,27 @@ sources:
   resource: urn:llmwiki:source:src-20261013-humanoiddefaultsreplacementevidence
   title: Humanoiddefaultsreplacementevidence
   content_hash: sha256:a1408d739b45e0428dc8faba585d658ec7773431310472bbb1248e54cc690c25
+- id: src-20261106-developmentguide
+  resource: urn:llmwiki:source:src-20261106-developmentguide
+  title: Developmentguide
+  content_hash: sha256:09bb5b57fff138c8cfa57e5a4a9ec82ec86165722625b21138a40cae1c2d1f99
+- id: src-20261106-evidence
+  resource: urn:llmwiki:source:src-20261106-evidence
+  title: Evidence
+  content_hash: sha256:a94ce8a4adc6e0d7b8d69f8b68560ddf4a4a374704a4c29572524386a829254a
+- id: src-20261106-developmentguide-2
+  resource: urn:llmwiki:source:src-20261106-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:3e4e56d6423823c62c46849d41649c55e531ab9f667479987946337d1e8c94d6
+- id: src-20261106-evidence-2
+  resource: urn:llmwiki:source:src-20261106-evidence-2
+  title: Evidence
+  content_hash: sha256:32d8fc6764ef04f8a81df9cfa49c04f0c1a555236bffd7ef32f7b41d6c1992d5
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:8e8f9129c9c7d123eddaa6b49cb2cd92d1517e84ca81b211bd8216ed8b63b450
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:c0662e8138bcc0c9f4ea57089552e3cb2e849c1e344c4a6687ae16292224fd92
   result: passed
   checks:
     source_support: passed
@@ -117,11 +133,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ninja_core Humanoid movement catalog resource loading and reconciliation
-    against Owner Humanoid defaults replacement evidence (2026-10-13).
-  - Verified package data path data/humanoid_defaults.json, 37-movement defaults catalog,
-    and builder verification check.
-  - Physical actuator execution remains unverified.
+  - Reviewed ninja_core package updates for Humanoid (2026-11-05) and Spider (2026-11-06)
+    default movement catalogs.
+  - Verified data/humanoid_defaults.json (37 movements / 1,278 steps) and data/spider_defaults.json
+    (20 movements / 566 steps).
+  - Physical HAL hardware execution remains unverified.
 ---
 
 # ninja_core Package
@@ -139,7 +155,7 @@ New onboarding orchestration calls existing core settings/import helpers from an
 |--------|---------|
 | **`hal.py`** | Hardware Abstraction Layer with dynamic driver loading via `DRIVER_REGISTRY`.[^src-20260822-readme-3] |
 | **`config.py`** | `NinjaConfig` manager for master `config.json`, robot naming, robot types, Gemini keys, selected agent model, and built-in movement profile reconciliation.[^src-20260822-readme-3] [^src-20260822-developmentguide] [^src-20261009-2026-10-09-builtin-movements] |
-| **`builtin_movements.py`** | Hardware-free movement catalog, installed package resource loader (`data/spider_otto.json`), profile seeding, and preflight step validation.[^src-20261009-readme] [^src-20261009-2026-10-09-builtin-movements] |
+| **`builtin_movements.py`** | Hardware-free movement catalog, installed package resource loaders (`data/spider_defaults.json` and `data/humanoid_defaults.json`), profile seeding, and preflight step validation.[^src-20261009-readme] [^src-20261009-2026-10-09-builtin-movements] [^src-20261012-developmentguide] [^src-20261012-humanoidbuiltinmovementsevidence] [^src-20261106-developmentguide-2] |
 | **`dispatcher.py`** | `CommandDispatcher` central message router bridging Web, BLE, and AI inputs.[^src-20260822-readme-3] [^src-20260822-developmentguide] |
 | **`safe_executor.py`** | Sandboxed Python code executor with AST import filters and syntax preflight.[^src-20260822-readme-3] [^src-20260822-developmentlog] |
 | **`runtime_pipeline.py`** | Coordinator managing native robot idle state vs uploaded Blockly execution ownership.[^src-20260822-developmentlog] |
@@ -250,3 +266,17 @@ Option 6 of `movement_cli.py` is updated to execute configured `Poweroff` (or `h
 
 [^src-20261013-developmentguide-3]: Owner Humanoid defaults replacement Development Guide (2026-10-13).
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
+
+## Humanoid native movement catalog update (2026-11-05)
+
+`ninja_core.builtin_movements` loads cached installed package resource `data/humanoid_defaults.json`, compiled from `DevelopmentPlanDoc/humanoid_movements_261105.json` (canonical movements SHA256: `6a2397a7838d091dc1c7eaae2a6fc9eaa59ea8c33dc50c5b29e201d307a8f281`) by `scripts/build_humanoid_defaults.py`.[^src-20261106-developmentguide] [^src-20261106-evidence] Six walk, run, and turn sequences transfer arm trajectories to shoulders GPIO 24/25, distributing 74 S, 148 F, and 1,056 M steps across 37 unique movements (1,278 total steps).[^src-20261106-developmentguide] Reimport preserves custom collisions and calibration; 462 inert host tests pass.[^src-20261106-evidence]
+
+[^src-20261106-developmentguide]: Humanoid default replacement Development Guide (2026-11-05).
+[^src-20261106-evidence]: Primary-source verification and validation evidence for Humanoid default replacement (2026-11-05).
+
+## Native Spider movement catalog update (2026-11-06)
+
+`ninja_core.builtin_movements` loads cached installed package resource `data/spider_defaults.json` (replacing `data/spider_otto.json`), compiled from `DevelopmentPlanDoc/spider_movements_261106.json` (canonical movements SHA256: `f2c7a50dd9458182e3eac8a73fb749370269c58443d37645a9562d7fb02e1b3c`) by `scripts/build_spider_defaults.py`.[^src-20261106-developmentguide-2] [^src-20261106-evidence-2] When configured for `spider`, `builtin_catalog` provides 20 unique movements / 566 steps (417 M, 75 S, 74 F steps). Runtime reads this resource directly without overriding `Poweroff`; 463 inert host tests pass.[^src-20261106-developmentguide-2] [^src-20261106-evidence-2]
+
+[^src-20261106-developmentguide-2]: Spider default replacement Development Guide (2026-11-06).
+[^src-20261106-evidence-2]: Primary-source verification and validation evidence for Spider default replacement (2026-11-06).

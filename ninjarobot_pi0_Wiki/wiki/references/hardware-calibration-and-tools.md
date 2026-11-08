@@ -92,11 +92,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
   title: 20261013 Bleonboardingvalidation
   content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+- id: src-20261106-evidence
+  resource: urn:llmwiki:source:src-20261106-evidence
+  title: Evidence
+  content_hash: sha256:a94ce8a4adc6e0d7b8d69f8b68560ddf4a4a374704a4c29572524386a829254a
+- id: src-20261106-evidence-2
+  resource: urn:llmwiki:source:src-20261106-evidence-2
+  title: Evidence
+  content_hash: sha256:32d8fc6764ef04f8a81df9cfa49c04f0c1a555236bffd7ef32f7b41d6c1992d5
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T05:55:00+00:00'
-  target_hash: sha256:45ef6eb844caff71fe11af0e0d222e8679e95c033326a74e86da3b55daa84ea4
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:d0615a980f023b5070252c8be10e40194a73565b8cbecdb5336e5de56cfc8b84
   result: passed
   checks:
     source_support: passed
@@ -105,10 +113,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed onboarding identity step enhancement against InstallationGuide and BLEOnboardingValidation.
-  - Verified sudo execution isolation, temporary advertisement verification, and error
-    reporting.
-  - Physical actuator motion and real radio validation remain unverified.
+  - Reviewed hardware calibration and tool guidance against 2026-11-05 Humanoid and
+    2026-11-06 Spider evidence.
+  - Verified movement-tool option 4 execution and option 6 Poweroff exit across both
+    profiles.
+  - Physical servo travel, torque, and clearance remain pending on-device observation.
 ---
 
 # Hardware Calibration and Testing Tools Reference
@@ -193,7 +202,7 @@ Onboarding validates every numeric servo key and rejects conflicting pulse alias
 [^src-20261007-2026-10-08-upgrade-audit]: Pi0 upgrade audit findings and boundaries.
 ## Deliberate exit motion and power release (2026-10-10)
 
-Movement-tool option 6 commands configured `Poweroff` once before HAL shutdown and configuration save, with no subsequent centering. HAL releases PWM rather than electrically holding the position. For Spider and Humanoid robots, verify physical clearance and support for target poses (e.g., Humanoid shoulders at +30°/-30° and arms at +90°/-90°) before selecting option 6.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence] [^src-20261013-humanoidpoweroffevidence]
+In movement-tool option 4 (movement execution)[^src-20261012-humanoidbuiltinmovementsevidence] [^src-20261012-installationguide] and option 6 (deliberate exit), configured `Poweroff` executes once before HAL shutdown and configuration save, with no subsequent centering. HAL releases PWM rather than electrically holding the position. For Spider and Humanoid robots, verify physical clearance and support for target poses (e.g., Humanoid shoulders at +30°/-30° and arms at +90°/-90°) before selecting option 6.[^src-20261010-lifecyclerefinementsimplementationplan] [^src-20261010-lifecyclerefinementsevidence] [^src-20261013-humanoidpoweroffevidence]
 
 [^src-20261010-lifecyclerefinementsimplementationplan]: Lifecycle refinements implementation plan.
 [^src-20261010-lifecyclerefinementsevidence]: Lifecycle refinements implementation evidence.
@@ -222,3 +231,19 @@ The guided onboarding wizard (`./onboard.sh --step identity`) automates Bluetoot
 
 [^src-20261013-installationguide-4]: Bluetooth-enabled onboarding and installation guide (2026-10-13).
 [^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
+
+## Humanoid default movement commissioning (2026-11-05)
+
+When commissioning Humanoid movements via interactive tools (`uv run ninja_core movement-tool` option 4):[^src-20261106-evidence]
+* **Channel Readiness**: Verify all eight channels GPIO 20–27 are calibrated. Because arm trajectories transfer to shoulders GPIO 24/25 in the 2026-11-05 catalog, confirm shoulder neutral angle and clearance before running complete walking or turning sequences.[^src-20261106-evidence]
+* **Safe Exit**: Option 6 executes configured `Poweroff` once before releasing PWM without extra recovery motion.[^src-20261106-evidence]
+
+[^src-20261106-evidence]: Primary-source verification and validation evidence for Humanoid default replacement (2026-11-05).
+
+## Spider default movement commissioning (2026-11-06)
+
+When commissioning Spider movements via interactive tools (`uv run ninja_core movement-tool` option 4):[^src-20261106-evidence-2]
+* **Speed Verification**: The 2026-11-06 defaults execute walks at slow speed S and runs at fast speed F. Confirm joint limits and external power capacity before executing fast run gaits.[^src-20261106-evidence-2]
+* **Safe Exit**: Option 6 commands configured `Poweroff` rest pose before HAL shutdown and PWM release.[^src-20261106-evidence-2]
+
+[^src-20261106-evidence-2]: Primary-source verification and validation evidence for Spider default replacement (2026-11-06).

@@ -1,0 +1,16 @@
+id: src-20261106-evidence-2
+path: raw/notes/ninjarobotpi0/2026-11-06-spider-defaults/Evidence.md
+media_type: text/markdown
+kind: text
+title: Evidence
+added_at: '2026-11-06T07:55:21Z'
+content_hash: sha256:32d8fc6764ef04f8a81df9cfa49c04f0c1a555236bffd7ef32f7b41d6c1992d5
+state: ingested
+original_uri: urn:llmwiki:source:src-20261106-evidence-2
+source_version: null
+retrieved_at: null
+normalized_at: '2026-11-06T07:56:54Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-11-06T11:02:08Z'
+last_plan: pi0-defaults-replacement-ingest-261106

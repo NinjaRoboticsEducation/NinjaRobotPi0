@@ -36,11 +36,19 @@ sources:
   resource: urn:llmwiki:source:src-20261012-developmentlog-2
   title: Humanoid built-in movements development log
   content_hash: sha256:73de870ccfd7a010dec09e97fe68c4c5b24929d14043d3e7e6b57410f2df519e
+- id: src-20261106-developmentlog-2
+  resource: urn:llmwiki:source:src-20261106-developmentlog-2
+  title: Developmentlog
+  content_hash: sha256:6ce59eaac79499be46efb7960b2f782a119d9fa9ce1eebda763fdee87b8bf19d
+- id: src-20261106-evidence-2
+  resource: urn:llmwiki:source:src-20261106-evidence-2
+  title: Evidence
+  content_hash: sha256:32d8fc6764ef04f8a81df9cfa49c04f0c1a555236bffd7ef32f7b41d6c1992d5
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-12T02:35:00+00:00'
-  target_hash: sha256:f44c82052875a838e13e96979ea4e1a3dd05dc776509ca1518793ea9a92f714a
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:297a1c014db8f6f28993ec8c70ab5f4233efe6873c2c7ad8221f6dbff4b18ce5
   result: passed
   checks:
     source_support: passed
@@ -49,10 +57,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed superseded Humanoid-home-only catalog statements against 2026-10-12 Humanoid
-    native catalog evidence.
-  - Preserved Spider catalog facts and historical provenance without asserting new
-    hardware validation.
+  - Reviewed owner Spider default replacement against 2026-11-06 raw evidence.
+  - Verified installed resource data/spider_defaults.json (20 entries / 566 steps,
+    417 M / 75 S / 74 F) and build_spider_defaults.py generator check.
+  - Physical Raspberry Pi Zero 2 W gait stability and mechanical clearance remain
+    pending.
 ---
 
 # Spider OTTO waypoint library and native movement integration
@@ -114,3 +123,15 @@ The movement document's 20 inline JSON blocks equal the installed data and suppl
 
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and profile catalog scope.
 [^src-20261012-developmentlog-2]: Complete immutable DevelopmentLog with Humanoid native catalog integration.
+
+## Owner Spider defaults replacement (2026-11-06)
+
+The current Spider default movement authority is `DevelopmentPlanDoc/spider_movements_261106.json`, packaged as installed resource `ninja_core/data/spider_defaults.json` (replacing `data/spider_otto.json`).[^src-20261106-developmentlog-2] [^src-20261106-evidence-2]
+The catalog comprises 20 unique movement definitions across 566 total steps:
+* **Gait Geometry & Velocity**: Both walks (`spider_walk_forward` and `spider_walk_backward`) modify all 37 keyframe poses at slow speed S (75 total S steps). Runs retain earlier geometry and execute at fast speed F (74 total F steps). Remaining movements and `Poweroff` remain unchanged at medium speed M (417 total M steps). Canonical movements SHA256: `f2c7a50dd9458182e3eac8a73fb749370269c58443d37645a9562d7fb02e1b3c`.[^src-20261106-developmentlog-2]
+* **Deterministic Resource Generation**: `scripts/build_spider_defaults.py` compiles the canonical JSON source into the package resource; `--check` verifies the reviewed source fingerprint and exact byte parity.[^src-20261106-evidence-2]
+* **Runtime Access & Migration**: `ninja_core.builtin_movements` reads `data/spider_defaults.json` directly without overriding `Poweroff`. Onboarding and `ninja_core config import` reconcile unchanged managed defaults to the new definitions, while custom user edits and calibration are preserved.[^src-20261106-developmentlog-2]
+* **Validation Bounds**: 463 inert host tests passed. Software verification confirms correct speed mode dispatch and preflight validation, but physical gait stability, joint clearance, and torque limits on Raspberry Pi Zero 2 W hardware remain pending.[^src-20261106-developmentlog-2] [^src-20261106-evidence-2]
+
+[^src-20261106-developmentlog-2]: Spider default replacement Development Log (2026-11-06).
+[^src-20261106-evidence-2]: Primary-source verification and validation evidence for Spider default replacement (2026-11-06).

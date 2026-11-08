@@ -1,0 +1,16 @@
+id: src-20261106-installationguide
+path: raw/articles/ninjarobotpi0/2026-11-05-humanoid-defaults/InstallationGuide.md
+media_type: text/markdown
+kind: text
+title: Installationguide
+added_at: '2026-11-06T07:55:16Z'
+content_hash: sha256:672978973ee6fe3f789103e06ef118a6cebaf6249daa9a5d1bae2553db95f4b5
+state: ingested
+original_uri: urn:llmwiki:source:src-20261106-installationguide
+source_version: null
+retrieved_at: null
+normalized_at: '2026-11-06T07:56:50Z'
+normalizer: llmwiki-text/0.2
+error: null
+ingested_at: '2026-11-06T11:02:08Z'
+last_plan: pi0-defaults-replacement-ingest-261106

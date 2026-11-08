@@ -68,11 +68,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-webgamepadvalidation
   title: 20261013 Webgamepadvalidation
   content_hash: sha256:611953219329c89116d5eed85f0fb77c6e0d1a1c7880dbee9566c5866bd10750
+- id: src-20261106-evidence
+  resource: urn:llmwiki:source:src-20261106-evidence
+  title: Evidence
+  content_hash: sha256:a94ce8a4adc6e0d7b8d69f8b68560ddf4a4a374704a4c29572524386a829254a
+- id: src-20261106-evidence-2
+  resource: urn:llmwiki:source:src-20261106-evidence-2
+  title: Evidence
+  content_hash: sha256:32d8fc6764ef04f8a81df9cfa49c04f0c1a555236bffd7ef32f7b41d6c1992d5
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T04:45:00+00:00'
-  target_hash: sha256:a9d33b2db5c1a4f54dee5605872f1b66a2e53a026c100c517018c04f286a6a8e
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:5938c1140d278100e73f69952945f391cf1dc04bb78416a7289b514c8f26ee2c
   result: passed
   checks:
     source_support: passed
@@ -81,11 +89,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Web Gamepad directional hold loop and finish-current-cycle release behavior
-    against DevelopmentGuide.md and WebGamePadValidation.md.
-  - Verified sequential single-cycle dispatch, absence of mid-step motor cutoff, and
-    unknown-status cross-route latching.
-  - Physical Raspberry Pi Zero 2 W motion and hardware acceptance remain pending.
+  - Reviewed velocity allocations and keyframe trajectories for 2026-11-05 Humanoid
+    and 2026-11-06 Spider defaults.
+  - Verified 74 S / 148 F / 1,056 M steps for Humanoid and 75 S / 74 F / 417 M steps
+    for Spider.
+  - Physical motor acceleration and joint torque limits remain unverified.
 ---
 
 # Motion System and Easing Curves
@@ -167,7 +175,7 @@ Additionally, `center_all_servos` supports an optional lifecycle abort callback 
 
 ## Native Humanoid built-in movements (2026-10-12)
 
-The 2026-10-13 replacement packages 37 unique movements / 1,278 complete eight-channel steps (including `humanoid_home` and `Poweroff`) as native built-in movements for Humanoid robots with all GPIO 20–27 configured.[^src-20261013-humanoiddefaultsreplacementevidence] Previous movements operate at speed M; two new run movements (`humanoid_run_forward` and `humanoid_run_backward`, 37 steps each) operate at speed F.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-developmentguide-3] `MovementController` and `validate_movement` recognize known non-neutral Humanoid trajectories even after renaming or speed adjustments, normalizing integer and string GPIO keys while excluding all-neutral center geometry from Humanoid classification.[^src-20261012-developmentguide]
+Following the 2026-10-12 native integration,[^src-20261012-humanoidbuiltinmovementsevidence] the 2026-10-13 replacement packages 37 unique movements / 1,278 complete eight-channel steps (including `humanoid_home` and `Poweroff`) as native built-in movements for Humanoid robots with all GPIO 20–27 configured.[^src-20261013-humanoiddefaultsreplacementevidence] Previous movements operate at speed M; two new run movements (`humanoid_run_forward` and `humanoid_run_backward`, 37 steps each) operate at speed F.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-developmentguide-3] `MovementController` and `validate_movement` recognize known non-neutral Humanoid trajectories even after renaming or speed adjustments, normalizing integer and string GPIO keys while excluding all-neutral center geometry from Humanoid classification.[^src-20261012-developmentguide]
 
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and trajectory pack.
 [^src-20261012-developmentguide]: Current versioned DevelopmentGuide with Humanoid motion contract and validation.
@@ -182,3 +190,15 @@ The Movement Tool five-button gamepad invokes server-advertised native movement 
 
 [^src-20261013-developmentguide-4]: Web gamepad and palette refinement Development Guide (2026-10-13).
 [^src-20261013-webgamepadvalidation]: Web gamepad and palette refinement validation evidence (2026-10-13).
+
+## Current Humanoid native default trajectories (2026-11-05)
+
+The 2026-11-05 default authority (`DevelopmentPlanDoc/humanoid_movements_261105.json`) refines the 37 movements / 1,278 steps by transferring arm trajectories from GPIO 26/27 to shoulders GPIO 24/25 across six walk, run, and turn movements.[^src-20261106-evidence] Step speeds are re-allocated to 74 slow (S) steps for walks, 148 fast (F) steps for runs and turns, and 1,056 medium (M) steps for all other sequences, preserving the exact `Poweroff` rest pose.[^src-20261106-evidence]
+
+[^src-20261106-evidence]: Primary-source verification and validation evidence for Humanoid default replacement (2026-11-05).
+
+## Native Spider built-in movements replacement (2026-11-06)
+
+The 2026-11-06 Spider default replacement (`DevelopmentPlanDoc/spider_movements_261106.json`, canonical hash `f2c7a50dd9458182e3eac8a73fb749370269c58443d37645a9562d7fb02e1b3c`) installs 20 unique movements / 566 steps.[^src-20261106-evidence-2] Both walk sequences change all 37 poses at slow speed S (75 total S steps); runs execute at fast speed F (74 total F steps); other movements and `Poweroff` remain at medium speed M (417 total M steps).[^src-20261106-evidence-2]
+
+[^src-20261106-evidence-2]: Primary-source verification and validation evidence for Spider default replacement (2026-11-06).

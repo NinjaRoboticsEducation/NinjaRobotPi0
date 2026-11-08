@@ -216,11 +216,27 @@ sources:
   resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
   title: 20261013 Bleonboardingvalidation
   content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+- id: src-20261106-developmentlog
+  resource: urn:llmwiki:source:src-20261106-developmentlog
+  title: Developmentlog
+  content_hash: sha256:c0a1f4dcc8a75d1fe26e4e61a2e016b1316e2eee6c54317649dedcf3fe99ef9d
+- id: src-20261106-evidence
+  resource: urn:llmwiki:source:src-20261106-evidence
+  title: Evidence
+  content_hash: sha256:a94ce8a4adc6e0d7b8d69f8b68560ddf4a4a374704a4c29572524386a829254a
+- id: src-20261106-developmentlog-2
+  resource: urn:llmwiki:source:src-20261106-developmentlog-2
+  title: Developmentlog
+  content_hash: sha256:6ce59eaac79499be46efb7960b2f782a119d9fa9ce1eebda763fdee87b8bf19d
+- id: src-20261106-evidence-2
+  resource: urn:llmwiki:source:src-20261106-evidence-2
+  title: Evidence
+  content_hash: sha256:32d8fc6764ef04f8a81df9cfa49c04f0c1a555236bffd7ef32f7b41d6c1992d5
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T05:55:00+00:00'
-  target_hash: sha256:8afef24f8bc194e14ff5d65a27b7835fce687d029f327e543b8733025b487d05
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:0a0118816637be24439a8e930bc1f51e3dd8342e1f16d95efb150fbba8fe0798
   result: passed
   checks:
     source_support: passed
@@ -229,10 +245,12 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed BLE readiness milestone in DevelopmentLog and BLEOnboardingValidation.
-  - Verified historical context of BlueZ service suppression and automated onboarding
-    repair.
-  - Physical Raspberry Pi validation remains pending owner acceptance.
+  - Reviewed Humanoid default replacement (2026-11-05) and Spider default replacement
+    (2026-11-06) milestones against raw development logs and validation evidence.
+  - Verified 37 Humanoid movements (1,278 steps, arm transfer to GPIO 24/25) and 20
+    Spider movements (566 steps, S walk/F run speeds).
+  - Physical Raspberry Pi Zero 2 W motion, balance, and hardware execution remain
+    pending manual validation.
 ---
 
 # Development History and Evolution
@@ -502,3 +520,23 @@ The 2026-10-13 development milestone addresses a setup-readiness gap where Debia
 
 [^src-20261013-developmentlog-5]: Development log with BLE readiness and automatic enablement milestone (2026-10-13).
 [^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
+
+## Humanoid default replacement milestone (2026-11-05)
+
+The 2026-11-05 Humanoid default replacement milestone updates the default motion authority from `DevelopmentPlanDoc/humanoid_movements_261105.json`, packaged into `ninja_core/data/humanoid_defaults.json`:[^src-20261106-developmentlog] [^src-20261106-evidence]
+* **Trajectory & Channel Reallocation**: Exactly 37 unique movements / 1,278 complete eight-channel steps. Six walk, run, and turn sequences transfer arm trajectories from GPIO 26/27 to GPIO 24/25. Walks execute at slow speed S (74 steps), runs and turns at fast speed F (148 steps), and remaining sequences at medium speed M (1,056 steps). Canonical movements SHA256: `6a2397a7838d091dc1c7eaae2a6fc9eaa59ea8c33dc50c5b29e201d307a8f281`.[^src-20261106-developmentlog]
+* **Configuration Reconciliation**: Configuration import (`ninja_core config import`) and robot type selection (`ninja_core config set-type humanoid`) update unchanged managed definitions while preserving custom edits, collisions, and calibration. All eight configured channels (GPIO 20–27) are required; partial profiles retain fallback generic home.[^src-20261106-evidence]
+* **Host Verification & Boundaries**: 462 inert host tests passed along with builder parity, protected-core baseline checks, standalone wheel packaging checks, and documentation links; physical Raspberry Pi and browser acceptance remain pending.[^src-20261106-developmentlog] [^src-20261106-evidence]
+
+[^src-20261106-developmentlog]: Humanoid default replacement Development Log (2026-11-05).
+[^src-20261106-evidence]: Primary-source verification and validation evidence for Humanoid default replacement (2026-11-05).
+
+## Spider default replacement milestone (2026-11-06)
+
+The 2026-11-06 Spider default replacement milestone integrates the owner-supplied `DevelopmentPlanDoc/spider_movements_261106.json`, installed as `ninja_core/data/spider_defaults.json`:[^src-20261106-developmentlog-2] [^src-20261106-evidence-2]
+* **Catalog Specification & Speeds**: 20 entries / 566 steps. Both walks (`spider_walk_forward`, `spider_walk_backward`) update all 37 poses at slow speed S (75 steps); runs retain geometry at fast speed F (74 steps); remaining sequences and `Poweroff` remain at medium speed M (417 steps). Canonical movements SHA256: `f2c7a50dd9458182e3eac8a73fb749370269c58443d37645a9562d7fb02e1b3c`.[^src-20261106-developmentlog-2]
+* **Resource Generation & Runtime Direct Access**: `scripts/build_spider_defaults.py --check` verifies reviewed source fingerprint and exact packaged bytes. Runtime loads this resource directly without overriding `Poweroff`.[^src-20261106-evidence-2]
+* **Host Validation & Acceptance Limits**: 463 inert host tests passed alongside Ruff syntax/Pyflakes, builder parity, protected-core checks, standalone wheel packaging, and documentation links. Physical Raspberry Pi clearance, joint direction, and gait acceptance remain pending.[^src-20261106-developmentlog-2] [^src-20261106-evidence-2]
+
+[^src-20261106-developmentlog-2]: Spider default replacement Development Log (2026-11-06).
+[^src-20261106-evidence-2]: Primary-source verification and validation evidence for Spider default replacement (2026-11-06).

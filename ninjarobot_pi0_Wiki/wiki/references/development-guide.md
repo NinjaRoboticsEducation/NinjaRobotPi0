@@ -171,11 +171,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
   title: 20261013 Bleonboardingvalidation
   content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+- id: src-20261106-developmentguide
+  resource: urn:llmwiki:source:src-20261106-developmentguide
+  title: Developmentguide
+  content_hash: sha256:09bb5b57fff138c8cfa57e5a4a9ec82ec86165722625b21138a40cae1c2d1f99
+- id: src-20261106-developmentguide-2
+  resource: urn:llmwiki:source:src-20261106-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:3e4e56d6423823c62c46849d41649c55e531ab9f667479987946337d1e8c94d6
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T05:55:00+00:00'
-  target_hash: sha256:e738cb8daebbfde9a75af3ded2de8ad44a940874add3bcc30554cfdd3dd79164
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:8a7cd6b804f81bc4b622f56c1c9a58292b644ba25e251497bb0f8d774972674d
   result: passed
   checks:
     source_support: passed
@@ -184,10 +192,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ninja_ble.system_setup architecture and onboarding identity integration
-    in DevelopmentGuide.
-  - Verified safety boundaries, inert test fixtures, and full regression status.
-  - Physical Pi Zero 2W testing remains pending owner verification.
+  - Reviewed development guide additions against 2026-11-05 Humanoid and 2026-11-06
+    Spider development guides.
+  - Verified generator checks build_humanoid_defaults.py --check and build_spider_defaults.py
+    --check.
+  - Physical robot execution and gait commissioning remain pending.
 ---
 
 # Current development manual
@@ -339,7 +348,7 @@ Host validation passed 146 targeted tests, including all current sequences with 
 
 ## Current Humanoid native catalog integration (2026-10-12)
 
-`builtin_movements.py` loads cached installed `data/humanoid_defaults.json`, generated from `DevelopmentPlanDoc/humanoid_movements_updated.json` (canonical movements SHA256: `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`) by `scripts/build_humanoid_defaults.py`.[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] Full Humanoid defaults total 37 unique entries / 1,278 complete eight-channel steps (1,204 M steps, 74 F steps across `humanoid_run_forward` and `humanoid_run_backward`, with `humanoid_home` and `Poweroff`).[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] Partial profiles keep fallback generic `home`.[^src-20261013-developmentguide-3]
+`builtin_movements.py` loads cached installed `data/humanoid_defaults.json`, generated from `DevelopmentPlanDoc/humanoid_movements_updated.json` (canonical movements SHA256: `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`) by `scripts/build_humanoid_defaults.py`.[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] Full Humanoid defaults total 37 unique entries / 1,278 complete eight-channel steps (with Poweroff rest posture)[^src-20261013-developmentguide-2] [^src-20261013-humanoidpoweroffevidence] (1,204 M steps, 74 F steps across `humanoid_run_forward` and `humanoid_run_backward`, with `humanoid_home` and `Poweroff`).[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] Partial profiles keep fallback generic `home`.[^src-20261013-developmentguide-3]
 
 `scripts/build_humanoid_movements.py` deterministically extracts standalone library-marker JSON blocks from the reference document, verifying exact installed-resource parity against canonical inner-object hash `49f6c4fe998b3c8500347f56eeeb7e165fb442c206ac373485310af7d280d2d6` via `--check`.[^src-20261012-developmentguide] Shared `validate_movement` recognizes known non-neutral Humanoid trajectories even after renaming or speed edits, normalizing string and integer GPIO keys, while excluding all-neutral center geometry from Humanoid inference.[^src-20261012-developmentguide]
 
@@ -396,3 +405,21 @@ The 2026-10-13 development manual documents the architecture, safety contracts, 
 
 [^src-20261013-developmentguide-5]: Bluetooth onboarding development guide (2026-10-13).
 [^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
+
+## Humanoid default replacement workflow (2026-11-05)
+
+The 2026-11-05 development manual documents the Humanoid default replacement workflow (`DevelopmentPlanDoc/humanoid_movements_261105.json`):[^src-20261106-developmentguide]
+* **Catalog Reallocation**: 37 movements / 1,278 steps. Transfers arm trajectories from GPIO 26/27 to GPIO 24/25 across six walk, run, and turn movements; step speeds allocate 74 S, 148 F, and 1,056 M steps.
+* **Builder Verification**: `scripts/build_humanoid_defaults.py --check` confirms exact schema, reviewed fingerprint, and package parity against `ninja_core/data/humanoid_defaults.json`.
+* **Testing Limits**: 462 inert host tests passed; physical Raspberry Pi joint direction, clearance, and balance remain pending operator verification.
+
+[^src-20261106-developmentguide]: Humanoid default replacement Development Guide (2026-11-05).
+
+## Spider default replacement workflow (2026-11-06)
+
+The 2026-11-06 development manual documents the Spider default replacement workflow (`DevelopmentPlanDoc/spider_movements_261106.json`):[^src-20261106-developmentguide-2]
+* **Catalog Specification**: 20 movements / 566 steps installed as `data/spider_defaults.json`. Walks execute at S, runs at F, others at M (417 M, 75 S, 74 F steps).
+* **Deterministic Builder**: `scripts/build_spider_defaults.py --check` validates package resource parity.
+* **Testing Limits**: 463 inert host tests passed; physical Raspberry Pi Zero 2 W motion and timing remain pending operator verification.
+
+[^src-20261106-developmentguide-2]: Spider default replacement Development Guide (2026-11-06).

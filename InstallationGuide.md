@@ -1,6 +1,6 @@
 # InstallationGuide
 
-[Open the current complete version](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/InstallationGuide.md).
+[Open the current complete version](ninjarobot_pi0_Wiki/raw/articles/ninjarobotpi0/2026-11-06-spider-defaults/InstallationGuide.md).
 
 This file preserves existing public links. Full manuals live as immutable versions in the wiki.
 

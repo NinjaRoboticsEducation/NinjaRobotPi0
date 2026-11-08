@@ -56,11 +56,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-installationguide-3
   title: Installationguide
   content_hash: sha256:d59708b5309c7ae3942fad115570df988f8cccec77ac37282b739017e16ddf05
+- id: src-20261106-developmentlog
+  resource: urn:llmwiki:source:src-20261106-developmentlog
+  title: Developmentlog
+  content_hash: sha256:c0a1f4dcc8a75d1fe26e4e61a2e016b1316e2eee6c54317649dedcf3fe99ef9d
+- id: src-20261106-evidence
+  resource: urn:llmwiki:source:src-20261106-evidence
+  title: Evidence
+  content_hash: sha256:a94ce8a4adc6e0d7b8d69f8b68560ddf4a4a374704a4c29572524386a829254a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T00:53:19+00:00'
-  target_hash: sha256:083eab2f5e6291aa3376cb9f5700d08fce1efca6ffe999c3094418de0a872580
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:076a32ce5758261a3b6269dffc7d0852f8e09f51d8ca53e9a64a5e9eabe823e9
   result: passed
   checks:
     source_support: passed
@@ -69,17 +77,15 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed Humanoid native catalog replacement against Owner Humanoid defaults replacement
-    evidence and Humanoid Poweroff evidence (2026-10-13).
-  - Verified 37 unique movements / 1,278 complete eight-channel steps, speed modes
-    (1,204 M, 74 F), data/humanoid_defaults.json resource, and Poweroff rest posture
-    geometry.
-  - Physical Raspberry Pi 0 2W hardware qualification remains pending manual verification.
+  - Reviewed Humanoid default replacement against 2026-11-05 raw evidence.
+  - Verified 37 movements / 1,278 steps, arm transfer to GPIO 24/25, S/F/M speeds,
+    and build_humanoid_defaults.py check.
+  - Physical Raspberry Pi Zero 2 W shoulder clearance and hardware motion remain pending.
 ---
 
 # Humanoid Otto movement reference and native catalog integration
 
-`DevelopmentPlanDoc/HumanoidBuildinMovements.md` contains 34 complete JSON sequences (1,203 keyframes): 24 variants covering all 16 public Otto servo motion methods and 10 servo-containing gestures.[^src-20261012-humanoidmovementreferenceevidence] Following owner replacement (`DevelopmentPlanDoc/humanoid_movements_updated.json`, canonical hash `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`), the native Humanoid movement catalog is generated into installed package resource `ninja_core/data/humanoid_defaults.json` via `scripts/build_humanoid_defaults.py`.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-developmentlog-3] Full Humanoid profiles with all BCM GPIO 20–27 configured receive 37 unique movements / 1,278 complete eight-channel steps (1,204 M steps, 74 F steps across `humanoid_run_forward` and `humanoid_run_backward`, with `humanoid_home` and `Poweroff`), while partial profiles keep fallback generic `home`.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-installationguide-3]
+`DevelopmentPlanDoc/HumanoidBuildinMovements.md` contains 34 complete JSON sequences (1,203 keyframes): 24 variants covering all 16 public Otto servo motion methods and 10 servo-containing gestures.[^src-20261012-humanoidmovementreferenceevidence] Following the 2026-10-12 native integration milestone,[^src-20261012-developmentlog-2] owner replacement (`DevelopmentPlanDoc/humanoid_movements_updated.json`, canonical hash `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`), the native Humanoid movement catalog is generated into installed package resource `ninja_core/data/humanoid_defaults.json` via `scripts/build_humanoid_defaults.py`.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-developmentlog-3] Full Humanoid profiles with all BCM GPIO 20–27 configured receive 37 unique movements / 1,278 complete eight-channel steps (1,204 M steps, 74 F steps across `humanoid_run_forward` and `humanoid_run_backward`, with `humanoid_home` and `Poweroff`), while partial profiles keep fallback generic `home`.[^src-20261013-humanoiddefaultsreplacementevidence] [^src-20261013-installationguide-3]
 
 ## Native built-in movement integration and CLI configuration
 
@@ -121,3 +127,14 @@ The Otto research files are referenced by their explicit sibling-workspace direc
 [^src-20261013-humanoiddefaultsreplacementevidence]: Owner Humanoid defaults replacement evidence and verification records (2026-10-13).
 [^src-20261013-developmentlog-3]: Complete immutable DevelopmentLog with Owner Humanoid defaults replacement milestone (2026-10-13).
 [^src-20261013-installationguide-3]: Owner Humanoid defaults replacement Installation Guide (2026-10-13).
+
+## Current Humanoid defaults replacement (2026-11-05)
+
+The current Humanoid default movement authority is `DevelopmentPlanDoc/humanoid_movements_261105.json`, packaged as installed package resource `ninja_core/data/humanoid_defaults.json`:[^src-20261106-developmentlog] [^src-20261106-evidence]
+* **Arm Channel Transfer**: Exactly 37 unique movements / 1,278 complete eight-channel steps. Six walk, run, and turn sequences transfer arm trajectories from GPIO 26/27 to shoulders GPIO 24/25. Walks use slow speed S (74 steps), runs and turns use fast speed F (148 steps), and other movements use medium speed M (1,056 steps). Canonical movements SHA256: `6a2397a7838d091dc1c7eaae2a6fc9eaa59ea8c33dc50c5b29e201d307a8f281`.[^src-20261106-developmentlog]
+* **Resource Generation**: `scripts/build_humanoid_defaults.py` compiles the source JSON; `--check` verifies strict schema conformance, reviewed fingerprint, and exact rendered parity.[^src-20261106-evidence]
+* **Configuration Reconciliation**: Running `.venv/bin/ninja_core config set-type humanoid` followed by `.venv/bin/ninja_core config import` updates unchanged managed values to the current catalog while preserving custom collisions and calibration. All eight configured channels (GPIO 20–27) are required; partial profiles keep fallback generic home.[^src-20261106-developmentlog]
+* **Validation Bounds**: 462 inert host tests passed. Physical Pi and browser acceptance remain pending; verify calibrated shoulder direction (GPIO 24/25) and joint clearance before operating hardware.[^src-20261106-developmentlog] [^src-20261106-evidence]
+
+[^src-20261106-developmentlog]: Humanoid default replacement Development Log (2026-11-05).
+[^src-20261106-evidence]: Primary-source verification and validation evidence for Humanoid default replacement (2026-11-05).

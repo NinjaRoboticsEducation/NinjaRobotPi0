@@ -12,5 +12,5 @@ retrieved_at: null
 normalized_at: '2026-10-13T05:46:36Z'
 normalizer: llmwiki-text/0.2
 error: null
-ingested_at: '2026-10-13T06:58:20Z'
-last_plan: pi0-ble-onboarding-ingest-261013
+ingested_at: '2026-11-06T11:02:08Z'
+last_plan: pi0-defaults-replacement-ingest-261106

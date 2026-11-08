@@ -1,13 +1,13 @@
 {
   "version": 1,
   "integration_status": "ready",
-  "reviewed_at": "2026-10-13T07:00:00+00:00",
+  "reviewed_at": "2026-11-06T20:00:00+00:00",
   "documents": [
     {
       "name": "InstallationGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/InstallationGuide.md",
-      "source_id": "src-20261013-installationguide-4",
-      "content_hash": "sha256:de6600243df33ce5a3cd5fe6d3bf2e33a4ae7d44bed7c69ccf05e7147cc5ecff",
+      "path": "raw/articles/ninjarobotpi0/2026-11-06-spider-defaults/InstallationGuide.md",
+      "source_id": "src-20261106-installationguide-2",
+      "content_hash": "sha256:d33d18c47e5756552ac5fc5d067a0dc9bff747fa6c6f94cade053b9a4d22b89a",
       "pages": [
         "wiki/references/installation-guide.md",
         "wiki/references/installation-and-wiring.md"
@@ -15,9 +15,9 @@
     },
     {
       "name": "DevelopmentGuide.md",
-      "path": "raw/articles/ninjarobotpi0/2026-10-13-ble-onboarding/DevelopmentGuide.md",
-      "source_id": "src-20261013-developmentguide-5",
-      "content_hash": "sha256:aa186b9c45bca29cca91a952105dda5dee4f31c72416e0649bab093ff172ae43",
+      "path": "raw/articles/ninjarobotpi0/2026-11-06-spider-defaults/DevelopmentGuide.md",
+      "source_id": "src-20261106-developmentguide-2",
+      "content_hash": "sha256:3e4e56d6423823c62c46849d41649c55e531ab9f667479987946337d1e8c94d6",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
@@ -25,9 +25,9 @@
     },
     {
       "name": "DevelopmentLog.md",
-      "path": "raw/notes/ninjarobotpi0/2026-10-13-ble-onboarding/DevelopmentLog.md",
-      "source_id": "src-20261013-developmentlog-5",
-      "content_hash": "sha256:1b1db087d02a26f015f3c5e219a021f6205a0ceb8c7d1d0c625e5ec92481d142",
+      "path": "raw/notes/ninjarobotpi0/2026-11-06-spider-defaults/DevelopmentLog.md",
+      "source_id": "src-20261106-developmentlog-2",
+      "content_hash": "sha256:6ce59eaac79499be46efb7960b2f782a119d9fa9ce1eebda763fdee87b8bf19d",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ]
@@ -261,12 +261,12 @@
       "review_note": "Reviewed new additive Spider artifact against source parameters, corrected GPIO mapping, unchanged runtime schema, 71 host tests and explicit timing/hardware limitations. Refinement fields are future proposals only; no hardware initialization or live config changes."
     },
     "DevelopmentPlanDoc/SpiderBuildinMovements.md": {
-      "content_hash": "sha256:77f7a4f415abd530efe4d6772c43b755d6cdc6570694b0261878af2ba20b341f",
+      "content_hash": "sha256:efdc60de97a3a0e0503741323daf3aa3787522da5bcc8751ff2adeb9759d762a",
       "pages": [
         "wiki/concepts/spider-otto-waypoint-library.md",
         "wiki/concepts/motion-system-and-easing.md"
       ],
-      "review_note": "Reviewed owner-validated Spider replacement: installed resource and 20 inline definitions equal supplied source; six direction sequences and moonwalk rename verified. 146 targeted tests cover inert execution and managed migration preserving edits. Pointer-only manual links updated where applicable; runtime functions, calibration and live config unchanged."
+      "review_note": "Spider built-in movement specification updated for owner-approved 20-movement library (566 steps: 417 M, 75 S, 74 F) replacing spider_otto.json with spider_defaults.json."
     },
     "GEMINI.md": {
       "content_hash": "sha256:d50fb2b678f918a638cc2257666e2d4028365492b821a165d384b0e35eaa1e24",
@@ -276,11 +276,11 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "README.md": {
-      "content_hash": "sha256:94426993ccd412a49bdf14a835744c28a585fb1d33bf8a40ac03098195ca68c5",
+      "content_hash": "sha256:ee7139c49c755d476d259d8b8f65910a0695772ffc03524fefb8bdf9432e8797",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Public README manual references updated with Bluetooth Low Energy setup, rfkill prerequisites, and onboarding identity verification."
+      "review_note": "Public README manual references updated for 2026-11-06 Spider defaults documentation."
     },
     "docs/validation/core_baseline.json": {
       "content_hash": "sha256:e6251e4c71055ac6f1679edc6da0f5d8036a8c269a15dcfa2af381402796512d",
@@ -387,14 +387,14 @@
       "review_note": "Existing runtime/driver boundary reviewed for this upgrade; source unchanged against captured baseline. Prior package evidence is retained; no new algorithm qualification is implied."
     },
     "ninja_core/src/ninja_core/builtin_movements.py": {
-      "content_hash": "sha256:b72dfbf946f8fb13857151bc3dd4817700e77e6446d97f214c5678909e216fda",
+      "content_hash": "sha256:c7b8867f3e07ddd4bd17dd769d8381c3d55ba3313c81b9be462b86aa6c81922a",
       "pages": [
         "wiki/concepts/humanoid-otto-waypoint-library.md",
         "wiki/concepts/spider-otto-waypoint-library.md",
         "wiki/concepts/motion-system-and-easing.md",
         "wiki/entities/ninja-core.md"
       ],
-      "review_note": "Built-in movement catalog updated to load 37 unique humanoid movements (1,278 steps: 1,204 M, 74 F) from package data humanoid_defaults.json, including Poweroff rest posture."
+      "review_note": "Built-in movement catalog updated with humanoid GPIO 24/25 arm trajectory migrations and 20-movement spider defaults replacement."
     },
     "ninja_core/src/ninja_core/config.py": {
       "content_hash": "sha256:88055df8472bce210b792db5bbc3e61eee1a790a90e59425670cce07c8f558c5",
@@ -1880,13 +1880,14 @@
       "review_note": "Development/test/policy boundary reviewed for the approved upgrade. Shared adapters, isolated validation and locked evidence workflow remain consistent; no hardware operation implied."
     },
     "tests/test_builtin_movements.py": {
-      "content_hash": "sha256:07ecc91cb734fd2468566c024da6c9858f8ca687445748a7a7a1ad76627d3091",
+      "content_hash": "sha256:00824dd2657f66d2c5a4ab1ad3e1e170fc0a68f86680d224c041e4ed9cfa1583",
       "pages": [
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md",
-        "wiki/concepts/humanoid-otto-waypoint-library.md"
+        "wiki/concepts/humanoid-otto-waypoint-library.md",
+        "wiki/concepts/spider-otto-waypoint-library.md"
       ],
-      "review_note": "Built-in movement test suite expanded to validate 37 unique movements, 1,278 total steps, Poweroff rest posture, and humanoid profile seeding."
+      "review_note": "Built-in movement tests updated to validate 37 humanoid movements and 20 spider movements with canonical hashes."
     },
     "tests/test_chunking.py": {
       "content_hash": "sha256:2ca4c99ce8c3c897af043b15067e4461fe43ac83b37143c0a47e78a5b31484c1",
@@ -2098,25 +2099,25 @@
       "review_note": "Movement Tool page integrates GamePad component, unboxed distance, and shared movement execution lock."
     },
     "DevelopmentGuide.md": {
-      "content_hash": "sha256:158b8ec9c235a84bf6e194eef65a5e7285909ffc0c5f81069ae8334598d206d1",
+      "content_hash": "sha256:b54a51ad976d8086cf35922c8e26bd262ae8ceb9cdea296e35eb07130c22221b",
       "pages": [
         "wiki/references/development-guide.md"
       ],
-      "review_note": "Root compatibility pointer updated to 2026-10-13 web gamepad DevelopmentGuide."
+      "review_note": "Root compatibility pointer updated to 2026-11-06 Spider defaults DevelopmentGuide."
     },
     "DevelopmentLog.md": {
-      "content_hash": "sha256:74438a1dc211cc1832875e5c2eae149cc104e685e5e3515ecc930e72ecd97b0e",
+      "content_hash": "sha256:620175b7843ed0cb7368cdf84a27b9c24060a2e5984af01114e9c9ef6ac4673a",
       "pages": [
         "wiki/analyses/development-history-and-evolution.md"
       ],
-      "review_note": "Root compatibility pointer updated to 2026-10-13 web gamepad DevelopmentLog."
+      "review_note": "Root compatibility pointer updated to 2026-11-06 Spider defaults DevelopmentLog."
     },
     "ninjarobot_pi0_Wiki/README.md": {
-      "content_hash": "sha256:edf9b713b997acd0dca1a7eb41af93e3cfeb043313f78a80590e657127efa6e5",
+      "content_hash": "sha256:df2197a4fa640a08a115321ec97754c1f114a7250227c523b7ef237bb54ed792",
       "pages": [
         "wiki/overview.md"
       ],
-      "review_note": "Wiki README manual links updated to 2026-10-13 web gamepad DevelopmentGuide and DevelopmentLog."
+      "review_note": "Wiki README manual links updated to 2026-11-06 Spider defaults manuals and log."
     },
     "ninja_core/src/ninja_core/data/spider_otto.json": {
       "pages": [
@@ -2133,12 +2134,12 @@
       "review_note": "Owner-validated 20-movement Spider catalog definitions, 566 steps across BCM GPIO 20-27."
     },
     "DevelopmentPlanDoc/HumanoidBuildinMovements.md": {
-      "content_hash": "sha256:336eaef620ea617ae224b0e288f4150e54fe2b8062f70e9d893d3b8e31af546e",
+      "content_hash": "sha256:5d0ba7fcbb7d6cc5d059dd12c591c7be4306054f9373c44ecc0ac341db1ebbec",
       "pages": [
         "wiki/concepts/humanoid-otto-waypoint-library.md",
         "wiki/references/development-guide.md"
       ],
-      "review_note": "Humanoid built-in movement specification updated for owner-approved 37-movement library (1,278 steps) and Poweroff rest posture."
+      "review_note": "Humanoid built-in movement specification updated with GPIO 24/25 arm trajectory migration in walk/run/turn movements."
     },
     "ninja_webapp/src/hooks/useAppViewport.js": {
       "content_hash": "sha256:e55042a709e5931661183eed2c5a2409280582b25fbb8efca031d510ce86697f",
@@ -2165,12 +2166,12 @@
       "review_note": "Deterministic compiler extracting humanoid waypoint definitions from documentation into ninja_core package data."
     },
     "tests/test_humanoid_builtin_movements.py": {
-      "content_hash": "sha256:538245d0260497c9ab7e20845e4c2f1ca6d80653f5a304606340efd0b61306a8",
+      "content_hash": "sha256:5bcb3c3fddd07bfc84ba35525280875dcdd00465a0517b45a01e43fd1c6078e4",
       "pages": [
         "wiki/concepts/humanoid-otto-waypoint-library.md",
         "wiki/references/development-guide.md"
       ],
-      "review_note": "Humanoid test suite updated with inert system_setup mock during onboarding identity seeding tests."
+      "review_note": "Humanoid test suite updated to verify GPIO 24/25 arm movement step assignments and velocity mode distribution."
     },
     "tests/test_web_robot_status.py": {
       "content_hash": "sha256:3fa5361a24492e2758c117f516e5073defe399efaadc1038ddb1be9253068ccd",
@@ -2181,13 +2182,13 @@
       "review_note": "Unit tests for web server robot status endpoint, battery monitoring, and telemetry payload format."
     },
     "scripts/build_humanoid_defaults.py": {
-      "content_hash": "sha256:9d971706cbd513ee23fbe2db4378ccea36481126d1289fa9fb549a940e10cda6",
+      "content_hash": "sha256:77cfbc0e872258b3f33d0eba66bb8c4b1b7934926a4354cd3b9c25e8841d5dac",
       "pages": [
         "wiki/concepts/humanoid-otto-waypoint-library.md",
         "wiki/references/development-guide.md",
         "wiki/concepts/development-workflow.md"
       ],
-      "review_note": "Generator script compiling canonical DevelopmentPlanDoc/humanoid_movements_updated.json into package data humanoid_defaults.json."
+      "review_note": "Generator script compiling canonical DevelopmentPlanDoc/humanoid_movements_261105.json into package data humanoid_defaults.json."
     },
     "tests/test_fresh_install.py": {
       "content_hash": "sha256:2b1dfffba9ae00da4d1490e0ae44ecfc47bcace7915c6f12e87d7b6c906185ee",
@@ -2255,6 +2256,14 @@
         "wiki/concepts/development-workflow.md"
       ],
       "review_note": "Comprehensive inert test suite covering Bluetooth readiness checks, unit states, rfkill attributes, adapter power, and advertisement lifecycle."
+    },
+    "scripts/build_spider_defaults.py": {
+      "content_hash": "sha256:00b3b7e8aa1ddf03f3ce50119c723e33e5608035d97177dcbe127ff5fd3c0168",
+      "pages": [
+        "wiki/concepts/spider-otto-waypoint-library.md",
+        "wiki/entities/ninja-core.md"
+      ],
+      "review_note": "Deterministic generator script and parity checker for Spider native default movements."
     }
   },
   "adapters": [

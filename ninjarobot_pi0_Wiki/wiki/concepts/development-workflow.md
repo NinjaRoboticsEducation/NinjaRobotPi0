@@ -155,11 +155,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
   title: 20261013 Bleonboardingvalidation
   content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+- id: src-20261106-developmentguide
+  resource: urn:llmwiki:source:src-20261106-developmentguide
+  title: Developmentguide
+  content_hash: sha256:09bb5b57fff138c8cfa57e5a4a9ec82ec86165722625b21138a40cae1c2d1f99
+- id: src-20261106-developmentguide-2
+  resource: urn:llmwiki:source:src-20261106-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:3e4e56d6423823c62c46849d41649c55e531ab9f667479987946337d1e8c94d6
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T05:55:00+00:00'
-  target_hash: sha256:122f7e8371cf2f02270d09fc5875976f0f76628bbe1b5c571f1917f35e7cd029
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:a3680311f907cca93f2470508c2841ffeaa92f91a13b8f3fe006547064fe3843
   result: passed
   checks:
     source_support: passed
@@ -168,10 +176,10 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed test automation in tests/test_ble_setup.py and onboarding identity test
-    fixtures.
-  - Verified inert D-Bus mocking, branch coverage, and execution times.
-  - Physical Bluetooth pairing and radio testing remain unverified.
+  - Reviewed development workflow additions against 2026-11-05 Humanoid and 2026-11-06
+    Spider development guides.
+  - Verified host test regressions (462 and 463 passed) and builder parity checks.
+  - Physical Raspberry Pi Zero 2 W hardware acceptance remains pending.
 ---
 
 # Development and immutable documentation workflow
@@ -333,7 +341,9 @@ The 2026-10-12 development milestone integrates a comprehensive verification sui
 - **Cleanup and retry contracts**: Tests confirm that failed extractions clean up the invocation's private `work.*` directory and lockfile, allowing subsequent runs to succeed.[^src-20261013-nodeinstallevidence]
 - **Passive archive inspection**: Verified pinned Node 22.23.3 ARM64 archive checksum and inspected ELF headers and npm structure on host disk without binary execution.[^src-20261013-nodeinstallevidence]
 
-## Humanoid defaults replacement and regression workflow (2026-10-13)
+## Humanoid Poweroff and defaults regression workflow (2026-10-13)
+
+Following the dedicated Poweroff default release,[^src-20261013-developmentguide-2] [^src-20261013-humanoidpoweroffevidence]
 
 The 2026-10-13 Humanoid defaults replacement milestone establishes strict verification standards for native motion catalogs:[^src-20261013-developmentguide-3] [^src-20261013-humanoiddefaultsreplacementevidence]
 
@@ -368,3 +378,21 @@ The 2026-10-13 milestone integrates comprehensive inert test coverage for system
 
 [^src-20261013-developmentguide-5]: Bluetooth onboarding development guide (2026-10-13).
 [^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
+
+## Humanoid default replacement validation workflow (2026-11-05)
+
+The 2026-11-05 development milestone establishes verification procedures for the updated Humanoid defaults:[^src-20261106-developmentguide]
+* **Generator & Catalog Parity**: `scripts/build_humanoid_defaults.py --check` verifies `DevelopmentPlanDoc/humanoid_movements_261105.json` (canonical hash `6a2397a7838d091dc1c7eaae2a6fc9eaa59ea8c33dc50c5b29e201d307a8f281`) matches packaged resource `data/humanoid_defaults.json`.[^src-20261106-developmentguide]
+* **Host Regression Testing**: 462 inert host tests passed covering all 37 movements, channel transfer from GPIO 26/27 to GPIO 24/25, S/F/M speeds, type guards, and wheel package inclusion.[^src-20261106-developmentguide]
+* **Testing Boundaries**: Inert host tests do not substitute for physical Raspberry Pi Zero 2W testing; joint direction, support, and power acceptance remain pending.[^src-20261106-developmentguide]
+
+[^src-20261106-developmentguide]: Humanoid default replacement Development Guide (2026-11-05).
+
+## Spider default replacement validation workflow (2026-11-06)
+
+The 2026-11-06 development milestone establishes verification procedures for the replacement Spider defaults:[^src-20261106-developmentguide-2]
+* **Generator & Catalog Parity**: `scripts/build_spider_defaults.py --check` validates `DevelopmentPlanDoc/spider_movements_261106.json` (canonical hash `f2c7a50dd9458182e3eac8a73fb749370269c58443d37645a9562d7fb02e1b3c`) against `data/spider_defaults.json`.[^src-20261106-developmentguide-2]
+* **Host Regression Testing**: 463 inert host tests passed covering 20 entries / 566 steps (417 M, 75 S, 74 F steps), walk/run speed execution, and profile reconciliation.[^src-20261106-developmentguide-2]
+* **Testing Boundaries**: Real hardware motion, clearance, and stopping acceptance remain pending owner validation on physical hardware.[^src-20261106-developmentguide-2]
+
+[^src-20261106-developmentguide-2]: Spider default replacement Development Guide (2026-11-06).

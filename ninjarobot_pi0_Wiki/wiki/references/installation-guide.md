@@ -135,11 +135,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
   title: 20261013 Bleonboardingvalidation
   content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+- id: src-20261106-installationguide
+  resource: urn:llmwiki:source:src-20261106-installationguide
+  title: Installationguide
+  content_hash: sha256:672978973ee6fe3f789103e06ef118a6cebaf6249daa9a5d1bae2553db95f4b5
+- id: src-20261106-installationguide-2
+  resource: urn:llmwiki:source:src-20261106-installationguide-2
+  title: Installationguide
+  content_hash: sha256:d33d18c47e5756552ac5fc5d067a0dc9bff747fa6c6f94cade053b9a4d22b89a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T05:55:00+00:00'
-  target_hash: sha256:5a2fd3c6376c20943facbd6bd8ebedb8d81b421aca97a547dafd0a637345c492
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:073b420fe7e2fc48e3a8e734e9cc9add012505cb63128723c6022f4a3951787e
   result: passed
   checks:
     source_support: passed
@@ -148,10 +156,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed rfkill inclusion in install_system.py and identity onboarding repair
-    in scripts/onboard.py.
-  - Verified alignment with InstallationGuide and BLEOnboardingValidation evidence.
-  - Target hardware radio state across system reboot remains pending physical verification.
+  - Reviewed installation guide additions against 2026-11-05 Humanoid and 2026-11-06
+    Spider installation guides.
+  - Verified CLI configuration commands config set-type and config import for humanoid
+    and spider profiles.
+  - Physical servo motion and calibration limits remain pending live verification.
 ---
 
 # Current installation manual
@@ -255,7 +264,7 @@ After installing the updated package and configuring hardware, run:
 .venv/bin/ninja_core config import
 ```
 
-`import-all` is an equivalent alias. These commands modify configuration data without initializing HAL.[^src-20261012-installationguide] With all BCM GPIO 20–27 in core servo-calibration keys, import seeds the replacement 37 unique Humanoid movements (1,278 complete eight-channel steps) from `DevelopmentPlanDoc/humanoid_movements_updated.json` (canonical hash `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`), generated into package resource `data/humanoid_defaults.json` via `scripts/build_humanoid_defaults.py`.[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] The full 37-entry catalog provides `humanoid_home` and `Poweroff` (1,204 steps at M speed, 74 steps at F speed across `humanoid_run_forward` and `humanoid_run_backward`), with no extra generic home needed.[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] A partial Humanoid configuration receives only fallback generic `home`.[^src-20261013-installationguide-3] Reimport preserves custom collisions and user edits through fingerprint provenance.[^src-20261013-installationguide-3]
+`import-all` is an equivalent alias. These commands modify configuration data without initializing HAL.[^src-20261012-installationguide] With all BCM GPIO 20–27 in core servo-calibration keys, import seeds the replacement 37 unique Humanoid movements (1,278 complete eight-channel steps) from `DevelopmentPlanDoc/humanoid_movements_updated.json` (canonical hash `2497b7a778be779f97fd8c271398f5261711874c32b2d18e74de57f99a992a24`), generated into package resource `data/humanoid_defaults.json` via `scripts/build_humanoid_defaults.py`.[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] Following the 2026-10-12 built-in movements release[^src-20261012-humanoidbuiltinmovementsevidence] and dedicated Poweroff release,[^src-20261013-installationguide-2] [^src-20261013-humanoidpoweroffevidence] the full 37-entry catalog provides `humanoid_home` and `Poweroff` (1,204 steps at M speed, 74 steps at F speed across `humanoid_run_forward` and `humanoid_run_backward`), with no extra generic home needed.[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] A partial Humanoid configuration receives only fallback generic `home`.[^src-20261013-installationguide-3] Reimport preserves custom collisions and user edits through fingerprint provenance.[^src-20261013-installationguide-3]
 
 [^src-20261012-installationguide]: Current versioned Installationguide (2026-10-12 Humanoid built-in movements).
 [^src-20261012-humanoidbuiltinmovementsevidence]: Humanoid built-in movements implementation evidence and seeding bounds.
@@ -301,3 +310,29 @@ The 2026-10-13 update incorporates automated Bluetooth readiness and essential r
 
 [^src-20261013-installationguide-4]: Bluetooth-enabled onboarding and installation guide (2026-10-13).
 [^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
+
+## Humanoid default configuration and import (2026-11-05)
+
+Following the 2026-11-05 Humanoid defaults replacement, operators configure native Humanoid movements via CLI:[^src-20261106-installationguide]
+
+```bash
+.venv/bin/ninja_core config set-type humanoid
+.venv/bin/ninja_core config import
+```
+
+When all GPIO 20–27 are configured in calibration keys, import seeds the 37 unique Humanoid movements / 1,278 steps from `DevelopmentPlanDoc/humanoid_movements_261105.json` (packaged as `ninja_core/data/humanoid_defaults.json`).[^src-20261106-installationguide] Arm trajectories are transferred to shoulders GPIO 24/25. Reimport updates unchanged managed entries while preserving custom edits, collisions, and calibration.[^src-20261106-installationguide]
+
+[^src-20261106-installationguide]: Humanoid default replacement Installation Guide (2026-11-05).
+
+## Spider default configuration and import (2026-11-06)
+
+Following the 2026-11-06 Spider defaults replacement, operators configure native Spider movements via CLI:[^src-20261106-installationguide-2]
+
+```bash
+.venv/bin/ninja_core config set-type spider
+.venv/bin/ninja_core config import
+```
+
+Import seeds 20 movement entries / 566 steps from `DevelopmentPlanDoc/spider_movements_261106.json` (packaged as `ninja_core/data/spider_defaults.json`), with walk sequences updated at slow speed S and runs at fast speed F.[^src-20261106-installationguide-2] Unchanged managed entries update while custom edits and calibration remain preserved.[^src-20261106-installationguide-2]
+
+[^src-20261106-installationguide-2]: Spider default replacement Installation Guide (2026-11-06).

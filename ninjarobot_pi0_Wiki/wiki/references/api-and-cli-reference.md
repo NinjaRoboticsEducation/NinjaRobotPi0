@@ -120,11 +120,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
   title: 20261013 Bleonboardingvalidation
   content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+- id: src-20261106-developmentguide
+  resource: urn:llmwiki:source:src-20261106-developmentguide
+  title: Developmentguide
+  content_hash: sha256:09bb5b57fff138c8cfa57e5a4a9ec82ec86165722625b21138a40cae1c2d1f99
+- id: src-20261106-developmentguide-2
+  resource: urn:llmwiki:source:src-20261106-developmentguide-2
+  title: Developmentguide
+  content_hash: sha256:3e4e56d6423823c62c46849d41649c55e531ab9f667479987946337d1e8c94d6
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T05:55:00+00:00'
-  target_hash: sha256:1e01e3e9d35d5bc6fa5d73bbcd9217ce430f8c5b9b8d1e16905a4bbc1a1ad8a9
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:1b7ce264b5a76af3289e56a5d84a54eb12d77d861d2e582f7fc51a4b1aaef941
   result: passed
   checks:
     source_support: passed
@@ -133,10 +141,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed ninja_ble.system_setup CLI options and onboarding identity worker invocation.
-  - Verified non-root terminal sudo authentication handling and read-only vs repair
-    boundaries.
-  - Physical Bluetooth pairing and hardware actuation remain unverified.
+  - Reviewed CLI and API reference additions against 2026-11-05 Humanoid and 2026-11-06
+    Spider development guides.
+  - Verified command syntax for config set-type, config import, and generator --check
+    verification.
+  - Physical actuator responses and runtime service execution remain unverified.
 ---
 
 # API and CLI Reference
@@ -324,3 +333,37 @@ The `ninja_ble.system_setup` module provides scriptable CLI commands for OS-leve
 
 [^src-20261013-ninja-ble-readme]: ninja_ble package README with Bluetooth readiness contracts (2026-10-13).
 [^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
+
+## Humanoid Default Movement Import and Validation Commands (2026-11-05)
+
+CLI commands to configure and verify native Humanoid default movements:[^src-20261106-developmentguide]
+
+```bash
+# Set robot type and seed 37 Humanoid movements (1,278 steps)
+.venv/bin/ninja_core config set-type humanoid
+.venv/bin/ninja_core config import
+
+# Verify generator parity and schema conformance
+python3 scripts/build_humanoid_defaults.py --check
+```
+
+The catalog transfers arm motion to GPIO 24/25 and allocates 74 S, 148 F, and 1,056 M steps. Reimport updates unchanged managed entries while preserving custom edits.[^src-20261106-developmentguide]
+
+[^src-20261106-developmentguide]: Humanoid default replacement Development Guide (2026-11-05).
+
+## Spider Default Movement Import and Validation Commands (2026-11-06)
+
+CLI commands to configure and verify native Spider default movements:[^src-20261106-developmentguide-2]
+
+```bash
+# Set robot type and seed 20 Spider movements (566 steps)
+.venv/bin/ninja_core config set-type spider
+.venv/bin/ninja_core config import
+
+# Verify generator parity and schema conformance
+python3 scripts/build_spider_defaults.py --check
+```
+
+The catalog installs `data/spider_defaults.json` (417 M, 75 S, 74 F steps). Walks execute at S, runs at F, and other sequences at M.[^src-20261106-developmentguide-2]
+
+[^src-20261106-developmentguide-2]: Spider default replacement Development Guide (2026-11-06).

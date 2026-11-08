@@ -1,5 +1,5 @@
 version: 2
-generated_at: '2026-10-13T06:58:43Z'
+generated_at: '2026-11-06T11:02:37Z'
 sources:
 - id: src-20260822-developmentguide
   title: Developmentguide
@@ -799,5 +799,45 @@ sources:
 - id: src-20261013-webgamepadvalidation
   title: Webgamepadvalidation
   path: raw/notes/ninjarobotpi0/2026-10-13-web-gamepad/WebGamePadValidation.md
+  kind: text
+  state: ingested
+- id: src-20261106-developmentguide-2
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-11-06-spider-defaults/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261106-developmentguide
+  title: Developmentguide
+  path: raw/articles/ninjarobotpi0/2026-11-05-humanoid-defaults/DevelopmentGuide.md
+  kind: text
+  state: ingested
+- id: src-20261106-developmentlog-2
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-11-06-spider-defaults/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261106-developmentlog
+  title: Developmentlog
+  path: raw/notes/ninjarobotpi0/2026-11-05-humanoid-defaults/DevelopmentLog.md
+  kind: text
+  state: ingested
+- id: src-20261106-evidence-2
+  title: Evidence
+  path: raw/notes/ninjarobotpi0/2026-11-06-spider-defaults/Evidence.md
+  kind: text
+  state: ingested
+- id: src-20261106-evidence
+  title: Evidence
+  path: raw/notes/ninjarobotpi0/2026-11-05-humanoid-defaults/Evidence.md
+  kind: text
+  state: ingested
+- id: src-20261106-installationguide-2
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-11-06-spider-defaults/InstallationGuide.md
+  kind: text
+  state: ingested
+- id: src-20261106-installationguide
+  title: Installationguide
+  path: raw/articles/ninjarobotpi0/2026-11-05-humanoid-defaults/InstallationGuide.md
   kind: text
   state: ingested

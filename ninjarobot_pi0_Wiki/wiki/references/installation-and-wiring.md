@@ -104,11 +104,19 @@ sources:
   resource: urn:llmwiki:source:src-20261013-bleonboardingvalidation
   title: 20261013 Bleonboardingvalidation
   content_hash: sha256:075fc0ec0750428ab1b408ba66b4e81100528d3bbb6e0498ca84eb3e5b04f181
+- id: src-20261106-installationguide
+  resource: urn:llmwiki:source:src-20261106-installationguide
+  title: Installationguide
+  content_hash: sha256:672978973ee6fe3f789103e06ef118a6cebaf6249daa9a5d1bae2553db95f4b5
+- id: src-20261106-installationguide-2
+  resource: urn:llmwiki:source:src-20261106-installationguide-2
+  title: Installationguide
+  content_hash: sha256:d33d18c47e5756552ac5fc5d067a0dc9bff747fa6c6f94cade053b9a4d22b89a
 semantic_review:
   version: 1
   performed_by: agent:antigravity
-  performed_at: '2026-10-13T05:55:00+00:00'
-  target_hash: sha256:5fb6fe3181c4c7c9a4ee362b6b217e519d0e14fff44e37ed6bae13d0866da143
+  performed_at: '2026-11-06T08:15:00+00:00'
+  target_hash: sha256:80e612ab097decadf1b1256f0284160ed0335cfd0f49f70e322fda637e35b6b4
   result: passed
   checks:
     source_support: passed
@@ -117,9 +125,11 @@ semantic_review:
     claim_strength: passed
     visual_evidence: not_applicable
   notes:
-  - Reviewed installation prerequisites and kernel vs legacy UART controller handling.
-  - Verified rfkill requirement and non-actuating advertisement test boundary.
-  - Physical hardware wiring and Bluetooth operation remain unverified.
+  - Reviewed wiring and installation notes against 2026-11-05 Humanoid and 2026-11-06
+    Spider installation guides.
+  - Verified channel assignments and speed profiles across all eight servo channels
+    (GPIO 20–27).
+  - Physical wire connections, power supply capacity, and joint limits remain pending.
 ---
 
 # Installation and Hardware Wiring Reference
@@ -254,7 +264,7 @@ Humanoid built-in movement import requires all eight BCM GPIO channels 20–27 t
 * **GPIO 20 & 21**: Left and right hips (source YL/YR).[^src-20261012-installationguide]
 * **GPIO 22 & 23**: Left and right feet (source RL/RR).[^src-20261012-installationguide]
 * **GPIO 26 & 27**: Left and right arms (source LA/RA).[^src-20261012-installationguide]
-* **GPIO 24 & 25**: Fore and aft shoulders; remain at nominal 0° during generic home, but receive specific targets in the native `Poweroff` default pose (+30° for GPIO 24, -30° for GPIO 25, alongside arms GPIO 26 at +90° and GPIO 27 at -90° at speed M).[^src-20261013-installationguide-2] [^src-20261013-humanoidpoweroffevidence]
+* **GPIO 24 & 25**: Fore and aft shoulders; remain at nominal 0° during generic home, receive specific targets in `Poweroff`, and receive arm trajectories in the updated defaults catalog[^src-20261013-installationguide-3] [^src-20261013-humanoiddefaultsreplacementevidence] (+30° for GPIO 24, -30° for GPIO 25, alongside arms GPIO 26 at +90° and GPIO 27 at -90° at speed M).[^src-20261013-installationguide-2] [^src-20261013-humanoidpoweroffevidence]
 
 Check display/buzzer/sensor pin conflicts, external servo power, common ground, and calibrated limits before enabling actuators.[^src-20261012-installationguide]
 
@@ -287,3 +297,19 @@ System-level installation enforces prerequisites for Bluetooth Low Energy operat
 
 [^src-20261013-installationguide-4]: Bluetooth-enabled onboarding and installation guide (2026-10-13).
 [^src-20261013-bleonboardingvalidation]: BLE onboarding validation evidence and system setup records (2026-10-13).
+
+## Humanoid shoulder wiring and default import (2026-11-05)
+
+The 2026-11-05 default replacement assigns active arm trajectories in six walk, run, and turn movements to shoulders GPIO 24/25 rather than GPIO 26/27:[^src-20261106-installationguide]
+* **Shoulder Clearances**: Verify calibrated travel and physical clearance for GPIO 24 (+30° nominal) and GPIO 25 (-30° nominal) before commanding walking or turning gaits.[^src-20261106-installationguide]
+* **Managed Seeding**: Running `.venv/bin/ninja_core config set-type humanoid` followed by `.venv/bin/ninja_core config import` automatically updates the 37 movement definitions without altering physical calibration.[^src-20261106-installationguide]
+
+[^src-20261106-installationguide]: Humanoid default replacement Installation Guide (2026-11-05).
+
+## Spider default configuration and import (2026-11-06)
+
+The 2026-11-06 Spider default replacement updates walking and running gait keyframes across all eight servo channels (GPIO 20–27):[^src-20261106-installationguide-2]
+* **Speed Profile**: Walks execute at slow speed S; runs execute at fast speed F; other movements remain at medium speed M.[^src-20261106-installationguide-2]
+* **Reconciliation**: Running `.venv/bin/ninja_core config set-type spider` and `.venv/bin/ninja_core config import` seeds the 20 movement definitions into `config.json` while preserving custom calibration and user-edited trajectories.[^src-20261106-installationguide-2]
+
+[^src-20261106-installationguide-2]: Spider default replacement Installation Guide (2026-11-06).
